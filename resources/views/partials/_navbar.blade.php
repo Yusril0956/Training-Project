@@ -6,7 +6,7 @@
       </button>
       <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
         <a href=".">
-          <img src="{{asset('static/logo.png')}}" class="navbar-brand-image " alt="">Aerospacae
+          <img src="{{asset('logo.png')}}" class="navbar-brand-image " alt="">Aerospacae
         </a>
       </h1>
       <div class="navbar-nav flex-row order-md-last">
