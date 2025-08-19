@@ -11,7 +11,7 @@ class DashboardController extends Controller
         return view('index');
     }
 
-    public function users()
+    public function training()
     {
         return view('pages.users');
     }

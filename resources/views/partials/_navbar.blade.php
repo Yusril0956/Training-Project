@@ -141,16 +141,16 @@ data-bs-placement="bottom">
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/users" >
+              <a class="nav-link" href="/training" >
                 <span class="nav-link-title">
-                  Users
+                  Training
                 </span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/music" >
+              <a class="nav-link" href="/admin" >
                 <span class="nav-link-title">
-                  Music
+                  Admin
                 </span>
               </a>
             </li>

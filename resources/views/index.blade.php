@@ -27,7 +27,7 @@
     <div class="page">
       {{-- include navbar --}}
       @include('partials._navbar')
-      
+       
 
 		<div class="page-wrapper">
         <!-- Page header -->

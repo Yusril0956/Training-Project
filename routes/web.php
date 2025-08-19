@@ -7,7 +7,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/users', [DashboardController::class, 'users']);
+Route::get('/training', [DashboardController::class, 'training']);
 
 Route::get('/music', [DashboardController::class, 'music']);
 
@@ -22,3 +22,7 @@ Route::get('/register', function () {
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class,'logout']);
+
+Route::get('/admin', function () {
+    return view('pages.admin');
+});
