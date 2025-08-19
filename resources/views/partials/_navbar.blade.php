@@ -110,7 +110,7 @@ data-bs-placement="bottom">
         {{-- logout button --}}
         <form action="{{ url('/logout') }}" method="POST" class="d-inline">
           @csrf
-          <button type="submit" class="btn btn-link text-danger">Logout</button>
+          <button type="submit" class="btn btn-primary">Logout</button>
         </form>
         <div class="nav-item dropdown">
           <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
@@ -152,7 +152,7 @@ data-bs-placement="bottom">
     <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
   </ul>
 </li>
-
+            @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
             <li class="nav-item">
               <a class="nav-link" href="/admin" >
                 <span class="nav-link-title">
@@ -160,6 +160,7 @@ data-bs-placement="bottom">
                 </span>
               </a>
             </li>
+            @endif
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                 <span class="nav-link-title">
