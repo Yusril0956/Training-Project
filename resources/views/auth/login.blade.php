@@ -43,7 +43,7 @@
         </div>
         <div class="card card-md">
           <div class="card-body">
-            <h2 class="h2 text-center mb-4">Login to your account</h2>
+            <h2 class="h2 text-center mb-4">Login Sekarang</h2>
             
             @if ($errors->any())
               <div class="alert alert-danger">
@@ -58,7 +58,7 @@
             <form action="{{ url('/login') }}" method="POST" autocomplete="off" novalidate>
               @csrf
               <div class="mb-3">
-                <label class="form-label">Email address</label>
+                <label class="form-label">Alamat Email</label>
                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="your@email.com" autocomplete="off" required>
                 @error('email')
                   <div class="invalid-feedback">{{ $message }}</div>
@@ -68,7 +68,7 @@
                 <label class="form-label">
                   Password
                   <span class="form-label-description">
-                    <a href="./forgot-password.html">I forgot password</a>
+                    <a href="./forgot-password.html">Saya lupa password</a>
                   </span>
                 </label>
                 <div class="input-group input-group-flat">
@@ -86,32 +86,32 @@
               <div class="mb-2">
                 <label class="form-check">
                   <input type="checkbox" class="form-check-input" name="remember"/>
-                  <span class="form-check-label">Remember me on this device</span>
+                  <span class="form-check-label">Ingat saya di perangkat ini</span>
                 </label>
               </div>
               <div class="form-footer">
-                <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                <button type="submit" class="btn btn-primary w-100">Masuk</button>
               </div>
             </form>
           </div>
-          <div class="hr-text">or</div>
+          <div class="hr-text">Atau</div>
           <div class="card-body">
             <div class="row">
               <div class="col"><a href="#" class="btn w-100">
                   <!-- Download SVG icon from http://tabler-icons.io/i/brand-github -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon text-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
-                  Login with Github
+                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-brand-google"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2a9.96 9.96 0 0 1 6.29 2.226a1 1 0 0 1 .04 1.52l-1.51 1.362a1 1 0 0 1 -1.265 .06a6 6 0 1 0 2.103 6.836l.001 -.004h-3.66a1 1 0 0 1 -.992 -.883l-.007 -.117v-2a1 1 0 0 1 1 -1h6.945a1 1 0 0 1 .994 .89c.04 .367 .061 .737 .061 1.11c0 5.523 -4.477 10 -10 10s-10 -4.477 -10 -10s4.477 -10 10 -10z" /></svg>
+                  Login dengan google
                 </a></div>
-              <div class="col"><a href="#" class="btn w-100">
-                  <!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
+              <!--<div class="col"><a href="#" class="btn w-100">
+                  Download SVG icon from http://tabler-icons.io/i/brand-twitter 
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon text-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c0 -.249 1.51 -2.772 1.818 -4.013z" /></svg>
                   Login with Twitter
-                </a></div>
+                </a></div> -->
             </div>
           </div>
         </div>
         <div class="text-center text-secondary mt-3">
-          Don't have account yet? <a href="/register" tabindex="-1">Sign up</a>
+          Tidak memiliki akun? <a href="/register" tabindex="-1">Sign up</a>
         </div>
       </div>
     </div>
