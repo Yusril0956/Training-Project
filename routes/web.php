@@ -9,6 +9,8 @@ Route::get('/', [DashboardController::class, 'index']);
 
 Route::get('/users', [DashboardController::class, 'users']);
 
+Route::get('/music', [DashboardController::class, 'music']);
+
 Route::get('/login', function () {
     return view('auth.login');
 });

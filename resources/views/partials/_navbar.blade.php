@@ -134,44 +134,43 @@ data-bs-placement="bottom">
         <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="./#" >
+              <a class="nav-link" href="/" >
                 <span class="nav-link-title">
-                  First
+                  Home
                 </span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./#" >
+              <a class="nav-link" href="/users" >
                 <span class="nav-link-title">
-                  Second
+                  Users
                 </span>
-                <span class="badge badge-sm bg-red">2</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/music" >
+                <span class="nav-link-title">
+                  Music
+                </span>
               </a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                 <span class="nav-link-title">
-                  Third
+                  More
                 </span>
               </a>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="./#">
-                  First
+                  Settings
                 </a>
                 <a class="dropdown-item" href="./#">
-                  Second
+                  Profile
                 </a>
                 <a class="dropdown-item" href="./#">
-                  Third
+                  Help
                 </a>
               </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="./#" >
-                <span class="nav-link-title">
-                  Disabled
-                </span>
-              </a>
             </li>
           </ul>
         </div>

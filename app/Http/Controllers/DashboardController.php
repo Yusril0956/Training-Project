@@ -15,4 +15,9 @@ class DashboardController extends Controller
     {
         return view('pages.users');
     }
+
+    public function music()
+    {
+        return view('pages.music');
+    }
 }
