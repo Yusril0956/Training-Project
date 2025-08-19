@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -14,6 +15,13 @@ class DashboardController extends Controller
     public function training()
     {
         return view('pages.users');
+    }
+
+    public function admin()
+    {
+        // variable for table manage user
+        $users = User::all();
+        return view('pages.admin', compact('users'));
     }
 
     public function music()

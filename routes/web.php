@@ -23,6 +23,4 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::post('/logout', [AuthController::class,'logout']);
 
-Route::get('/admin', function () {
-    return view('pages.admin');
-});
+Route::get('/admin', [DashboardController::class, 'admin']);
