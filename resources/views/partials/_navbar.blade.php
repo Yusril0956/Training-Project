@@ -140,13 +140,19 @@ data-bs-placement="bottom">
                 </span>
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/training" >
-                <span class="nav-link-title">
-                  Training
-                </span>
-              </a>
-            </li>
+            <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="trainingDropdown" role="button" 
+     data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="nav-link-title">Training</span>
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="trainingDropdown">
+    <li><a class="dropdown-item" href="/training/basic">Basic Training</a></li>
+    <li><a class="dropdown-item" href="/training/advanced">Advanced Training</a></li>
+    <li><a class="dropdown-item" href="/training/online">Online Training</a></li>
+    <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
+  </ul>
+</li>
+
             <li class="nav-item">
               <a class="nav-link" href="/admin" >
                 <span class="nav-link-title">
