@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('role', ['super_admin', 'admin', 'staff', 'user'])->default('user');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('password');
+            // profile image
+            $table->string('profile_image')->default('images/default_avatar.png');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -14,7 +14,11 @@
         <div class="content">
             <h2>PT.Dirgantara</h2>
             <p>INDONESIAN AEROSPACE(IAe)</p>
-            <a href="#">Login</a>
+            @if (Auth::check())
+                <a href="/dashboard">dashboard</a>
+            @else
+                <a href="/logout">Logout</a>
+            @endif
         </div>
         <img src="wiwit.png" alt="" class="product_img">
     </div>

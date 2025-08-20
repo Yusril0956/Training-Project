@@ -107,14 +107,9 @@ data-bs-placement="bottom">
           </div>
         </div>
         @if (Auth::check())
-        {{-- logout button --}}
-        <form action="{{ url('/logout') }}" method="POST" class="d-inline">
-          @csrf
-          <button type="submit" class="btn btn-primary">Logout</button>
-        </form>
         <div class="nav-item dropdown">
           <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-            <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000f.jpg)"></span>
+            <span class="avatar avatar-sm" style="background-image: url({{asset('images/default_avatar.png')}})"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
             <a href="#" class="dropdown-item">Status</a>

@@ -18,7 +18,7 @@ class AuthController extends Controller
         // Attempt to log the user in...
         if (Auth::attempt($request->only('email', 'password'))) {
             // Authentication passed...
-            return redirect('/');
+            return redirect('/dashboard');
         }
 
         // Authentication failed...
@@ -45,7 +45,7 @@ class AuthController extends Controller
         // Log the user in
         Auth::login($user);
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     public function logout()

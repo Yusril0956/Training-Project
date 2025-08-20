@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
 // Dashboard utama
-Route::get('/', [DashboardController::class, 'index']);
+Route::get('/', [DashboardController::class, 'test']);
 
 // Training page
 Route::get('/training', [DashboardController::class, 'training']);
@@ -30,13 +30,11 @@ Route::post('/logout', [AuthController::class,'logout']);
 // Admin page
 Route::get('/admin', [DashboardController::class, 'admin']);
 
-// Test page
-Route::get('/test', [DashboardController::class, 'test']);
-
-// Setting page
 Route::get('/setting', function () {
     return view('pages.setting');
 });
+
+Route::get('/dashboard', [DashboardController::class, 'index']);
 
 // Route khusus admin
 Route::group(['middleware' => ['auth', 'check_role:admin']], function () {

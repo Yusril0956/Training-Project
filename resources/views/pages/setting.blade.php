@@ -67,7 +67,7 @@
                     <div class="row align-items-center">
                       <div class="col-auto"><span class="avatar avatar-xl" style="background-image: url({{asset('images/default_avatar.png')}})"></span>
                       </div>
-                      <div class="col-auto"><a href="#" class="btn">
+                      <div class="col-auto"><a href="#" class="btn"  data-bs-toggle="modal" data-bs-target="#modal-image">
                           Change avatar
                         </a></div>
                       <div class="col-auto"><a href="#" class="btn btn-ghost-danger">
@@ -95,7 +95,7 @@
                     <div>
                       <div class="row g-2">
                         <div class="col-auto">
-                          <input type="text" class="form-control w-auto" value="paweluna@howstuffworks.com">
+                          <input type="text" class="form-control w-auto" value="{{ $user->email }}">
                         </div>
                         <div class="col-auto"><a href="#" class="btn">
                             Change
@@ -171,6 +171,33 @@
           </div>
         </footer>
       </div>
+
+      <div class="modal modal-blur fade" id="modal-image" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Profile Picture</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 align-items-end">
+                    <input type="image" src="http://www.w3.org/2000/svg" width="100" height="100" alt="">
+                    <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                    <span class="avatar-upload-text">drop or add</span>
+                    </a>
+                </div>
+                <div class="mb-3">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Team</button>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
