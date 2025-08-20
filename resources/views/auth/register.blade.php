@@ -53,86 +53,85 @@
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
           <div class="card-body">
-  <h2 class="card-title text-center mb-4">Buat akun baru</h2>
+            <h2 class="card-title text-center mb-4">Buat akun baru</h2>
 
-  <!-- Nama -->
-  <div class="mb-3">
-    <label class="form-label">Nama</label>
-    <input type="text" class="form-control" name="name" placeholder="Enter name">
-  </div>
+            <!-- Nama -->
+            <div class="mb-3">
+              <label class="form-label">Nama</label>
+              <input type="text" class="form-control" name="name" placeholder="Enter name">
+            </div>
 
-  <!-- NIK -->
-  <div class="mb-3">
-    <label class="form-label">NIK</label>
-    <input type="text" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan">
-  </div>
+            <!-- NIK -->
+            <div class="mb-3">
+              <label class="form-label">NIK</label>
+              <input type="text" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan">
+            </div>
 
-  <!-- Nomor Telepon -->
-  <div class="mb-3">
-    <label class="form-label">Nomor Telepon</label>
-    <input type="text" class="form-control" name="phone" placeholder="08xxxxxxxxxx">
-  </div>
+            <!-- Nomor Telepon -->
+            <div class="mb-3">
+              <label class="form-label">Nomor Telepon</label>
+              <input type="text" class="form-control" name="phone" placeholder="08xxxxxxxxxx">
+            </div>
 
-  <!-- Alamat Lengkap -->
-  <div class="mb-3">
-    <label class="form-label">Alamat</label>
-    <textarea class="form-control" name="address" rows="3" placeholder="Alamat lengkap"></textarea>
-  </div>
+            <!-- Alamat Lengkap -->
+            <div class="mb-3">
+              <label class="form-label">Alamat</label>
+              <textarea class="form-control" name="address" rows="3" placeholder="Alamat lengkap"></textarea>
+            </div>
 
-  <!-- Kota -->
-  <div class="mb-3">
-    <label class="form-label">Kota</label>
-    <input type="text" class="form-control" name="city" placeholder="Kota tempat tinggal">
-  </div>
+            <!-- Kota -->
+            <div class="mb-3">
+              <label class="form-label">Kota</label>
+              <input type="text" class="form-control" name="city" placeholder="Kota tempat tinggal">
+            </div>
 
-  <!-- Kode Pos -->
-  <div class="mb-3">
-    <label class="form-label">Kode Pos</label>
-    <input type="text" class="form-control" name="postal_code" placeholder="Kode Pos">
-  </div>
+            <!-- Kode Pos -->
+            <div class="mb-3">
+              <label class="form-label">Kode Pos</label>
+              <input type="text" class="form-control" name="postal_code" placeholder="Kode Pos">
+            </div>
 
-  <!-- Email -->
-  <div class="mb-3">
-    <label class="form-label">Alamat Email</label>
-    <input type="email" class="form-control" name="email" placeholder="masukan email">
-  </div>
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="form-label">Alamat Email</label>
+              <input type="email" class="form-control" name="email" placeholder="masukan email">
+            </div>
 
-  <!-- Password -->
-  <div class="mb-3">
-    <label class="form-label">Password</label>
-    <div class="input-group input-group-flat">
-      <input type="password" class="form-control" name="password"  placeholder="Password" autocomplete="off">
-      <span class="input-group-text">
-        <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" 
-               viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
-               fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-            <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
-                     c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-          </svg>
-        </a>
-      </span>
-    </div>
-  </div>
+            <!-- Password -->
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <div class="input-group input-group-flat">
+                <input type="password" class="form-control" name="password"  placeholder="Password" autocomplete="off">
+                <span class="input-group-text">
+                  <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" 
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" 
+                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                      <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6
+                              c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                    </svg>
+                  </a>
+                </span>
+              </div>
+            </div>
 
-  <!-- Checkbox -->
-  <div class="mb-3">
-    <label class="form-check">
-      <input type="checkbox" class="form-check-input"/>
-      <span class="form-check-label">Agree the 
-        <a href="./terms-of-service.html" tabindex="-1">ketentuan dan kebijakan</a>.
-      </span>
-    </label>
-  </div>
+            <!-- Checkbox -->
+            <div class="mb-3">
+              <label class="form-check">
+                <input type="checkbox" class="form-check-input"/>
+                <span class="form-check-label">Agree the 
+                  <a href="./terms-of-service.html" tabindex="-1">ketentuan dan kebijakan</a>.
+                </span>
+              </label>
+            </div>
 
-  <!-- Submit -->
-  <div class="form-footer">
-    <button type="submit" class="btn btn-primary w-100">Buat akun baru</button>
-  </div>
-</div>
-
+            <!-- Submit -->
+            <div class="form-footer">
+              <button type="submit" class="btn btn-primary w-100">Buat akun baru</button>
+            </div>
+          </div>
         </form>
         <div class="text-center text-secondary mt-3">
           Sudah memiliki akun? <a href="/login" tabindex="-1">Sign in</a>

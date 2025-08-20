@@ -25,6 +25,10 @@ Route::post('/logout', [AuthController::class,'logout']);
 
 Route::get('/admin', [DashboardController::class, 'admin']);
 
+Route::get('/setting', function () {
+    return view('pages.setting');
+});
+
 Route::group(['middleware' => ['auth', 'check_role:admin']], function () {
     Route::get('/admin', [DashboardController::class, 'admin']);
 });

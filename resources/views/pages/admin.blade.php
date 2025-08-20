@@ -44,6 +44,8 @@
                 <h2 class="page-title">
                   Datatables
                 </h2>
+                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
+                  Add User</a>               
               </div>
             </div>
           </div>
@@ -75,7 +77,7 @@
                             {{-- <td class="sort-status">{{ $user->status }}</td> --}}
                             <td class="sort-date" data-date="{{ $user->created_at }}">{{ $user->created_at->format('F d, Y') }}</td>
                             <td class="sort-action">
-                              <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">Edit</a>
+                              <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit">Edit</a>
                               <form action="#" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -127,7 +129,7 @@
         </footer>
         </div>
 
-        <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
           <form action="/useredit" method="POST">
             @csrf
             @method('PUT')
@@ -170,6 +172,68 @@
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                     Edit User
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
+          <form action="/register" method="POST">
+            @csrf
+            @method('POST')
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add User</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">No. Telepon</label>
+                    <input type="text" class="form-control" name="phone">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Alamat</label>
+                    <input type="text" class="form-control" name="address">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Your report name">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Your report name">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Role</label>
+                      <select class="form-select" name="role">
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                        <option value="3">Training</option>
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Status</label>
+                      <select class="form-select" name="status">
+                        <option value="1">Active</option>
+                        <option value="2">Inactive</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    Cancel
+                  </a>
+                  <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                    Add User
                   </a>
                 </div>
               </div>
