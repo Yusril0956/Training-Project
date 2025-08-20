@@ -8,7 +8,7 @@ use App\Models\User;
 class DashboardController extends Controller
 {
     public function index()
-    {
+    { 
         return view('index');
     }
 
@@ -19,13 +19,16 @@ class DashboardController extends Controller
 
     public function admin()
     {
-        // variable for table manage user
         $users = User::all();
         return view('pages.admin', compact('users'));
     }
-
     public function music()
     {
         return view('pages.music');
+    }
+
+    public function UserEdit()
+    {
+
     }
 }

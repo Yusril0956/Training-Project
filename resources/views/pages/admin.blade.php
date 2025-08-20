@@ -57,11 +57,12 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th><button c                        <th><button class="table-sort" data                        <th><button class="table-sort" data-sort="sort-city">Email</button></th>
-                        <th><button class="table-sort" data-sort="sort-type">Role</button></th>
-                        <th><button class="table-sort" data-sort="sort-score">Status</button></th>
+                        <th><button class="table-sort" data-sort="sort-name">Name</button></th>
+                        <th><button class="table-sort" data-sort="sort-email">Email</button></th>
+                        <th><button class="table-sort" data-sort="sort-role">Role</button></th>
+                        {{-- <th><button class="table-sort" data-sort="sort-status">Status</button></th>  --}}
                         <th><button class="table-sort" data-sort="sort-date">Date</button></th>
-                        <th><button class="table-sort" data-sort="sort-quantity">Action</button></th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody class="table-tbody">
@@ -69,11 +70,11 @@
                         @foreach ($users as $user)
                           <tr>
                             <td class="sort-name">{{ $user->name }}</td>
-                            <td class="sort-city">{{ $user->email }}</td>
-                            <td class="sort-type">{{ $user->role }}</td>
-                            <td class="sort-score">{{ $user->status }}</td>
+                            <td class="sort-email">{{ $user->email }}</td>
+                            <td class="sort-role">{{ $user->role }}</td>
+                            {{-- <td class="sort-status">{{ $user->status }}</td> --}}
                             <td class="sort-date" data-date="{{ $user->created_at }}">{{ $user->created_at->format('F d, Y') }}</td>
-                            <td class="sort-quantity">
+                            <td class="sort-action">
                               <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-report">Edit</a>
                               <form action="#" method="POST" class="d-inline">
                                 @csrf
@@ -127,49 +128,53 @@
         </div>
 
         <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">User Edit</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="form-label">Name</label>
-              <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+          <form action="/useredit" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">User Edit</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Your report name">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Role</label>
+                      <select class="form-select" name="role">
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                        <option value="3">Training</option>
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Status</label>
+                      <select class="form-select" name="status">
+                        <option value="1">Active</option>
+                        <option value="2">Inactive</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    Cancel
+                  </a>
+                  <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                    Edit User
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Role</label>
-                <select class="form-select">
-                  <option value="1">Admin</option>
-                  <option value="2">User</option>
-                  <option value="3">Training</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Status</label>
-                <select class="form-select">
-                  <option value="1">Active</option>
-                  <option value="2">Inactive</option>
-                </select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-              Cancel
-            </a>
-            <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-              Edit User
-            </a>
-          </div>
-        </div>
-      </div>
+          </form>
         </div>
 
     </div>
@@ -183,7 +188,7 @@
       const list = new List('table-default', {
       	sortClass: 'table-sort',
       	listClass: 'table-tbody',
-      	valueNames: [ 'sort-name', 'sort-type', 'sort-city', 'sort-score',
+      	valueNames: [ 'sort-name', 'sort-email', 'sort-role', 'sort-date', 
       		{ attr: 'data-date', name: 'sort-date' },
       		{ attr: 'data-progress', name: 'sort-progress' },
       		'sort-quantity'
