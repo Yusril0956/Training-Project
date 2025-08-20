@@ -95,7 +95,8 @@
                     <div>
                       <div class="row g-2">
                         <div class="col-auto">
-                          <input type="text" class="form-control w-auto" value="{{ $user->email }}">
+                          <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                          <input type="text" class="form-control" name="email" value="{{ $user->email }}">
                         </div>
                         <div class="col-auto"><a href="#" class="btn">
                             Change
