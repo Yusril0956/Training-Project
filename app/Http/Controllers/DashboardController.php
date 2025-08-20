@@ -28,4 +28,9 @@ class DashboardController extends Controller
     {
         return view('pages.music');
     }
+
+    public function test()
+    {
+        return view('test');
+    }
 }

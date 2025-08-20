@@ -24,3 +24,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class,'logout']);
 
 Route::get('/admin', [DashboardController::class, 'admin']);
+
+Route::get('/test', [DashboardController::class, 'test']);
