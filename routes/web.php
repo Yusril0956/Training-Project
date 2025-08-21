@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
+Route::get('/help', function () {
+    return view('help');
+})->middleware('auth');
+
 // Dashboard utama
 Route::get('/', [DashboardController::class, 'test']);
 
