@@ -44,4 +44,16 @@ class DashboardController extends Controller
     {
         return view('user.edit');
     }
+
+    public function userUpdate(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->status = $request->status;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User updated successfully!');
+    }
 }

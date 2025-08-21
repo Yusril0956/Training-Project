@@ -38,3 +38,6 @@ Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
 Route::group(['middleware' => ['auth', 'check_role:admin']], function () {
     Route::get('/admin', [DashboardController::class, 'admin']);
 });
+
+// Edit user (update)
+Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');

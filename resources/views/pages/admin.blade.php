@@ -12,7 +12,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Datatables - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
+    <title>Admin - {{config('app.name')}}</title>
     <!-- CSS files -->
     <link href="./dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
     <link href="./dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
@@ -77,7 +77,17 @@
                             {{-- <td class="sort-status">{{ $user->status }}</td> --}}
                             <td class="sort-date" data-date="{{ $user->created_at }}">{{ $user->created_at->format('F d, Y') }}</td>
                             <td class="sort-action">
-                              <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit">Edit</a>
+                              <a href="#" 
+                                 class="btn btn-sm btn-primary btn-edit-user" 
+                                 data-bs-toggle="modal" 
+                                 data-bs-target="#modal-edit"
+                                 data-id="{{ $user->id }}"
+                                 data-name="{{ $user->name }}"
+                                 data-email="{{ $user->email }}"
+                                 data-role="{{ (string) $user->role }}"
+                                 data-status="{{ (string) $user->status }}">
+                                 Edit
+                              </a>
                               <form action="#" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -130,7 +140,7 @@
         </div>
 
         <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
-  <form action="/useredit/{{ $user->id }}" method="POST">
+  <form id="form-edit-user" method="POST">
     @csrf
     @method('PUT')
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -142,47 +152,40 @@
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+            <input type="text" class="form-control" name="name" id="edit-name">
           </div>
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+            <input type="text" class="form-control" name="email" id="edit-email">
           </div>
           <div class="mb-3">
             <label class="form-label">Role</label>
-            <select class="form-select" name="role">
-              <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
-              <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>User</option>
-              <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Training</option>
+            <select class="form-select" name="role" id="edit-role">
+              <option value="1">Admin</option>
+              <option value="2">User</option>
+              <option value="3">Training</option>
             </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Status</label>
-            <select class="form-select" name="status">
-              <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
-              <option value="2" {{ $user->status == 2 ? 'selected' : '' }}>Inactive</option>
+            <select class="form-select" name="status" id="edit-status">
+              <option value="1">Active</option>
+              <option value="2">Inactive</option>
             </select>
           </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-primary ms-auto">
+            Edit User
+          </button>
         </div>
       </div>
     </div>
   </form>
 </div>
-
-                <div class="modal-footer">
-                  <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                    Cancel
-                  </a>
-                  <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                    Edit User
-                  </a>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
 
         <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
           <form action="/register" method="POST">
@@ -217,7 +220,7 @@
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Role</label>
-                      <select class="form-select" name="role">
+                      <select class="form-select" name="role" id="edit-role">
                         <option value="1">Admin</option>
                         <option value="2">User</option>
                         <option value="3">Training</option>
@@ -225,7 +228,7 @@
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Status</label>
-                      <select class="form-select" name="status">
+                      <select class="form-select" name="status" id="edit-status">
                         <option value="1">Active</option>
                         <option value="2">Inactive</option>
                       </select>
@@ -265,5 +268,18 @@
       });
       })
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.btn-edit-user').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            // Isi value input modal
+            document.getElementById('edit-name').value = this.dataset.name;
+            document.getElementById('edit-email').value = this.dataset.email;
+            // Set value langsung untuk role dan status
+            document.getElementById('form-edit-user').action = '/useredit/' + this.dataset.id;
+        });
+    });
+});
+</script>
   </body>
 </html>
