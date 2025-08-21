@@ -47,13 +47,17 @@ class DashboardController extends Controller
 
     public function userUpdate(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = $request->role;
-        $user->status = $request->status;
-        $user->save();
+        try {
+            $user = User::findOrFail($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->status = $request->status;
+            $user->save();
 
-        return redirect()->back()->with('success', 'User updated successfully!');
+            return redirect()->back()->with('success', 'User berhasil diupdate!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengupdate user!');
+        }
     }
 }

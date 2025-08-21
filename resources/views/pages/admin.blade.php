@@ -27,6 +27,21 @@
       body {
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
+      .alert-fixed-top-right {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        min-width: 300px;
+        margin-top: 33px;
+        background: #fff !important;
+        z-index: 1055; /* lebih tinggi dari modal backdrop */
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+      }
+      .alert-fixed-top-right.fade {
+        opacity: 0;
+      }
     </style>
   </head>
   <body >
@@ -50,6 +65,9 @@
             </div>
           </div>
         </div>
+
+        @include('partials._alert')
+
         <!-- Page body -->
         <div class="page-body">
           <div class="container-xl">
@@ -68,7 +86,6 @@
                       </tr>
                     </thead>
                     <tbody class="table-tbody">
-                        {{-- User rows will be populated here --}}
                         @foreach ($users as $user)
                           <tr>
                             <td class="sort-name">{{ $user->name }}</td>
@@ -139,10 +156,9 @@
         </footer>
         </div>
 
+        <!-- Modal Edit User (hanya satu, tidak dobel) -->
         <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
-<<<<<<< HEAD
-HEAD 
-          <form action="/useredit" method="POST">
+          <form id="form-edit-user" method="POST">
             @csrf
             @method('PUT')
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -154,79 +170,42 @@ HEAD
                 <div class="modal-body">
                   <div class="mb-3">
                     <label class="form-label">Name</label>
-                  <input type="text" class="form-control" name="name" value="{{ old('name', $user->name ?? '') }}">
-
+                    <input type="text" class="form-control" name="name" id="edit-name">
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="text" class="form-control" name="email" placeholder="Your report name">
+                    <input type="text" class="form-control" name="email" id="edit-email">
                   </div>
                   <div class="mb-3">
-                      <label class="form-label">Role</label>
-                      <select class="form-select" name="role">
-                        <option value="1">Admin</option>
-                        <option value="2">User</option>
-                        <option value="3">Training</option>
-                      </select>
+                    <label class="form-label">Role</label>
+                    <select class="form-select" name="role" id="edit-role">
+                      <option value="1">Admin</option>
+                      <option value="2">User</option>
+                      <option value="3">Training</option>
+                    </select>
                   </div>
                   <div class="mb-3">
-                      <label class="form-label">Status</label>
-                      <select class="form-select" name="status">
-                        <option value="1">Active</option>
-                        <option value="2">Inactive</option>
-                      </select>
+                    <label class="form-label">Status</label>
+                    <select class="form-select" name="status" id="edit-status">
+                      <option value="1">Active</option>
+                      <option value="2">Inactive</option>
+                    </select>
                   </div>
                 </div>
-  <form action="/useredit/{{ $user->id }}" method="POST">
-=======
-  <form id="form-edit-user" method="POST">
->>>>>>> 0e821597e7258d87e01749d5898995fb5888d38b
-    @csrf
-    @method('PUT')
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">User Edit</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-footer">
+                  <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    Cancel
+                  </a>
+                  <button type="submit" class="btn btn-primary ms-auto">
+                    Edit User
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" id="edit-name">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="text" class="form-control" name="email" id="edit-email">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Role</label>
-            <select class="form-select" name="role" id="edit-role">
-              <option value="1">Admin</option>
-              <option value="2">User</option>
-              <option value="3">Training</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Status</label>
-            <select class="form-select" name="status" id="edit-status">
-              <option value="1">Active</option>
-              <option value="2">Inactive</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-            Cancel
-          </a>
-          <button type="submit" class="btn btn-primary ms-auto">
-            Edit User
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
 
+        <!-- Modal Add User (tidak diubah) -->
         <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
           <form action="/register" method="POST">
             @csrf
@@ -298,13 +277,13 @@ HEAD
     <script>
       document.addEventListener("DOMContentLoaded", function() {
       const list = new List('table-default', {
-      	sortClass: 'table-sort',
-      	listClass: 'table-tbody',
-      	valueNames: [ 'sort-name', 'sort-email', 'sort-role', 'sort-date', 
-      		{ attr: 'data-date', name: 'sort-date' },
-      		{ attr: 'data-progress', name: 'sort-progress' },
-      		'sort-quantity'
-      	]
+          sortClass: 'table-sort',
+          listClass: 'table-tbody',
+          valueNames: [ 'sort-name', 'sort-email', 'sort-role', 'sort-date', 
+              { attr: 'data-date', name: 'sort-date' },
+              { attr: 'data-progress', name: 'sort-progress' },
+              'sort-quantity'
+          ]
       });
       })
     </script>
@@ -315,9 +294,38 @@ document.addEventListener('DOMContentLoaded', function () {
             // Isi value input modal
             document.getElementById('edit-name').value = this.dataset.name;
             document.getElementById('edit-email').value = this.dataset.email;
-            // Set value langsung untuk role dan status
+            document.getElementById('edit-role').value = this.dataset.role;
+            document.getElementById('edit-status').value = this.dataset.status;
+            // Set action form
             document.getElementById('form-edit-user').action = '/useredit/' + this.dataset.id;
         });
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Auto dismiss alert after 4 seconds
+    setTimeout(function() {
+        document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
+            if(alert) alert.classList.add('fade');
+            setTimeout(function() {
+                if(alert) alert.remove();
+            }, 500); // waktu fade out
+        });
+    }, 4000);
+
+    // Dismiss alert on scroll
+    let alertDismissed = false;
+    window.addEventListener('scroll', function() {
+        if (!alertDismissed) {
+            document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
+                if(alert) alert.classList.add('fade');
+                setTimeout(function() {
+                    if(alert) alert.remove();
+                }, 500);
+            });
+            alertDismissed = true;
+        }
     });
 });
 </script>
