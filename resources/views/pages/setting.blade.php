@@ -79,19 +79,17 @@
                         <div class="form-control-plaintext">{{ $user->telepon }}</div>
                       </div>
                     </div>
-
-                    <div class="row g-3 mt-2">
-                      <div class="col-md">
-                        <div class="form-label">Alamat</div>
-                        <div class="form-control-plaintext">{{ $user->alamat }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="form-label">Role</div>
-                        <div class="form-control-plaintext">{{ $user->role }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="form-label">Status</div>
-                        <div class="form-control-plaintext">{{ $user->status }}</div>
+                    <h3 class="card-title mt-4">Email</h3>
+                    <p class="card-subtitle">This contact will be shown to others publicly, so choose it carefully.</p>
+                    <div>
+                      <div class="row g-2">
+                        <div class="col-auto">
+                          <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                          <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+                        </div>
+                        <div class="col-auto"><a href="#" class="btn">
+                            Change
+                          </a></div>
                       </div>
                     </div>
 
@@ -130,7 +128,14 @@
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item"><a href="https://tabler.io/docs" target="_blank" class="link-secondary">Documentation</a></li>
                   <li class="list-inline-item"><a href="./license.html" class="link-secondary">License</a></li>
-                  <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary">Source code</a></li>
+                  <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
+                  <li class="list-inline-item">
+                    <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary" rel="noopener">
+                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
+                      Sponsor
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div class="col-12 col-lg-auto mt-3 mt-lg-0">
@@ -159,12 +164,16 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3 align-items-end">
-                <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                  <span class="avatar-upload-text">drop or add</span>
-                </a>
-              </div>
+                <div class="mb-3 align-items-end">
+                    <input type="image" src="http://www.w3.org/2000/svg" width="100" height="100" alt="">
+                    <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                    <span class="avatar-upload-text">drop or add</span>
+                    </a>
+                </div>
+                <div class="mb-3">
+                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
@@ -174,9 +183,9 @@
         </div>
       </div>
     </div>
-
-    <!-- Tabler JS -->
-    <script src="./dist/js/tabler.min.js" defer></script>
-    <script src="./dist/js/demo.min.js" defer></script>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script src="./dist/js/tabler.min.js?1692870487" defer></script>
+    <script src="./dist/js/demo.min.js?1692870487" defer></script>
   </body>
 </html>

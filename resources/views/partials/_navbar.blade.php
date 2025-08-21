@@ -117,7 +117,7 @@ data-bs-placement="bottom">
             <a href="#" class="dropdown-item">Feedback</a>
             <div class="dropdown-divider"></div>
             <a href="/setting" class="dropdown-item">Settings</a>
-            <form action="{{ url('/logout') }}" method="POST" class="d-inline">
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
               @csrf
               <button type="submit" class="dropdown-item">Logout</button>
             </form>
@@ -125,7 +125,7 @@ data-bs-placement="bottom">
         </div>
         @else
         {{-- button login --}}
-        <a href="/login" class="btn btn-primary">Login</a>
+        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
         @endif
       </div>
       <div class="collapse navbar-collapse" id="navbar-menu">
@@ -172,7 +172,7 @@ data-bs-placement="bottom">
                 <a class="dropdown-item" href="./#">
                   Profile
                 </a>
-                <a class="dropdown-item" href="./#">
+                <a class="dropdown-item" href="{{ url('/help') }}">
                   Help
                 </a>
               </div>

@@ -140,7 +140,47 @@
         </div>
 
         <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+<<<<<<< HEAD
+HEAD 
+          <form action="/useredit" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">User Edit</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label">Name</label>
+                  <input type="text" class="form-control" name="name" value="{{ old('name', $user->name ?? '') }}">
+
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Your report name">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Role</label>
+                      <select class="form-select" name="role">
+                        <option value="1">Admin</option>
+                        <option value="2">User</option>
+                        <option value="3">Training</option>
+                      </select>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Status</label>
+                      <select class="form-select" name="status">
+                        <option value="1">Active</option>
+                        <option value="2">Inactive</option>
+                      </select>
+                  </div>
+                </div>
+  <form action="/useredit/{{ $user->id }}" method="POST">
+=======
   <form id="form-edit-user" method="POST">
+>>>>>>> 0e821597e7258d87e01749d5898995fb5888d38b
     @csrf
     @method('PUT')
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

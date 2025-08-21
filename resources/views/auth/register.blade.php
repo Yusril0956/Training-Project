@@ -52,6 +52,18 @@
               @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
               @enderror
+              @error('nik')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+              @error('phone')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+              @error('address')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+              @error('city')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
           <div class="card-body">
             <h2 class="card-title text-center mb-4">Buat akun baru</h2>
 
@@ -64,13 +76,14 @@
             <!-- NIK -->
             <div class="mb-3">
               <label class="form-label">NIK</label>
-              <input type="text" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan">
+              <input type="text" maxlength="16" class="form-control" name="nik" placeholder="Nomor Induk Kependudukan">
             </div>
 
             <!-- Nomor Telepon -->
             <div class="mb-3">
               <label class="form-label">Nomor Telepon</label>
-              <input type="text" class="form-control" name="phone" placeholder="08xxxxxxxxxx">
+              <input type="text" maxlength="15" class="form-control" name="phone" 
+                    placeholder="Contoh: 081234567890" pattern="\d*">
             </div>
 
             <!-- Alamat Lengkap -->
@@ -83,12 +96,6 @@
             <div class="mb-3">
               <label class="form-label">Kota</label>
               <input type="text" class="form-control" name="city" placeholder="Kota tempat tinggal">
-            </div>
-
-            <!-- Kode Pos -->
-            <div class="mb-3">
-              <label class="form-label">Kode Pos</label>
-              <input type="text" class="form-control" name="postal_code" placeholder="Kode Pos">
             </div>
 
             <!-- Email -->
