@@ -60,4 +60,36 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Gagal mengupdate user!');
         }
     }
+
+    public function addUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nik' => 'required|numeric|digits:16',
+            'phone' => 'required|numeric|digits_between:10,15',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'role' => 'required',
+            'status' => 'required',
+        ]);
+
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'nik' => $request->nik,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'password' => bcrypt($request->password),
+                'role' => $request->role,
+                'status' => $request->status,
+            ]);
+            return redirect()->back()->with('success', 'User berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menambahkan user!');
+        }
+    }
 }

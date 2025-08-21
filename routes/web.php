@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     // Route khusus admin
     Route::group(['middleware' => ['check_role:admin']], function () {
         Route::get('/admin', [DashboardController::class, 'admin']);
+        Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('admin.user.add');
     });
 
     // Edit user (update)

@@ -117,7 +117,7 @@ data-bs-placement="bottom">
             <a href="#" class="dropdown-item">Feedback</a>
             <div class="dropdown-divider"></div>
             <a href="/setting" class="dropdown-item">Settings</a>
-            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+            <form action="{{ url('/logout') }}" method="POST" class="d-inline">
               @csrf
               <button type="submit" class="dropdown-item">Logout</button>
             </form>
@@ -125,39 +125,35 @@ data-bs-placement="bottom">
         </div>
         @else
         {{-- button login --}}
-        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+        <a href="/login" class="btn btn-primary">Login</a>
         @endif
       </div>
       <div class="collapse navbar-collapse" id="navbar-menu">
         <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
           <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
               <a class="nav-link" href="/" >
-                <span class="nav-link-title">
-                  Home
-                </span>
+                <span class="nav-link-title">Home</span>
               </a>
             </li>
             <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="trainingDropdown" role="button" 
-     data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="nav-link-title">Training</span>
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="trainingDropdown">
-    <li><a class="dropdown-item" href="/training/basic">Basic Training</a></li>
-    <li><a class="dropdown-item" href="/training/advanced">Advanced Training</a></li>
-    <li><a class="dropdown-item" href="/training/online">Online Training</a></li>
-    <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
-  </ul>
-</li>
-            @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
-            <li class="nav-item">
-              <a class="nav-link" href="/admin" >
-                <span class="nav-link-title">
-                  Admin
-                </span>
+              <a class="nav-link dropdown-toggle" href="#" id="trainingDropdown" role="button" 
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="nav-link-title">Training</span>
               </a>
+              <ul class="dropdown-menu" aria-labelledby="trainingDropdown">
+                <li><a class="dropdown-item" href="/training/basic">Basic Training</a></li>
+                <li><a class="dropdown-item" href="/training/advanced">Advanced Training</a></li>
+                <li><a class="dropdown-item" href="/training/online">Online Training</a></li>
+                <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
+              </ul>
             </li>
+            @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
+              <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
+                <a class="nav-link" href="/admin" >
+                  <span class="nav-link-title">Admin</span>
+                </a>
+              </li>
             @endif
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
@@ -172,7 +168,7 @@ data-bs-placement="bottom">
                 <a class="dropdown-item" href="./#">
                   Profile
                 </a>
-                <a class="dropdown-item" href="{{ url('/help') }}">
+                <a class="dropdown-item" href="./#">
                   Help
                 </a>
               </div>
