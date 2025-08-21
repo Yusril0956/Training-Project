@@ -18,15 +18,15 @@ Route::get('/music', [DashboardController::class, 'music']);
 Route::get('/login', function () {
     return view('auth.login');
 });
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get('/register', function () {
     return view('auth.register');
 });
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 // Logout
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Dashboard user
 Route::get('/dashboard', [DashboardController::class, 'index']);
