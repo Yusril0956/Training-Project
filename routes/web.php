@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SettingController;
 
 Route::get('/help', function () {
     return view('help');
@@ -29,18 +30,18 @@ Route::get('/register', function () {
 Route::post('/register', [AuthController::class, 'register']);
 
 // Logout
-Route::post('/logout', [AuthController::class,'logout']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
-// Admin page
-Route::get('/admin', [DashboardController::class, 'admin']);
-
-Route::get('/setting', function () {
-    return view('pages.setting');
-});
-
+// Dashboard user
 Route::get('/dashboard', [DashboardController::class, 'index']);
+
+// Setting page (gunakan controller, jangan pakai closure lagi!)
+Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
 
 // Route khusus admin
 Route::group(['middleware' => ['auth', 'check_role:admin']], function () {
     Route::get('/admin', [DashboardController::class, 'admin']);
 });
+
+// Edit user (update)
+Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');

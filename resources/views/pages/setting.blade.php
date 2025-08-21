@@ -83,8 +83,13 @@
                     <div>
                       <div class="row g-2">
                         <div class="col-auto">
+<<<<<<< HEAD
                           <!-- FIX: hindari Undefined variable $user -->
                           <input type="text" class="form-control w-auto" value="{{ auth()->user()?->email }}">
+=======
+                          <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                          <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+>>>>>>> 0e821597e7258d87e01749d5898995fb5888d38b
                         </div>
                         <div class="col-auto"><a href="#" class="btn">
                             Change
