@@ -19,6 +19,10 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'email_verified_at' => now(),
+                'phone' => '08123456789',
+                'address' => 'Jalan Super Admin No. 1',
+                'nik' => '1234567890123456',
+                'city' => 'Jakarta',
                 'role' => 'super_admin',
                 'password' => bcrypt('123456'),
             ]
@@ -30,6 +34,10 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin User',
                 'email_verified_at' => now(),
+                'phone' => '08123456789',
+                'address' => 'Jalan Admin No. 1',
+                'nik' => '1234567890123456',
+                'city' => 'Jakarta',
                 'role' => 'admin',
                 'password' => bcrypt('123456'),
             ]
@@ -41,6 +49,10 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Staff Member',
                 'email_verified_at' => now(),
+                'phone' => '08123456789',
+                'address' => 'Jalan Staff No. 1',
+                'nik' => '1234567890123456',
+                'city' => 'Palembang',
                 'role' => 'staff',
                 'password' => bcrypt('123456'),
             ]
@@ -52,6 +64,10 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Regular User',
                 'email_verified_at' => now(),
+                'phone' => '08123456789',
+                'address' => 'Jalan User No. 1',
+                'nik' => '1234567890123456',
+                'city' => 'Bandung',
                 'role' => 'user',
                 'password' => bcrypt('123456'),
             ]
