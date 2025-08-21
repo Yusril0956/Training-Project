@@ -130,6 +130,7 @@
         </div>
 
         <div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+HEAD 
           <form action="/useredit" method="POST">
             @csrf
             @method('PUT')
@@ -165,6 +166,45 @@
                       </select>
                   </div>
                 </div>
+  <form action="/useredit/{{ $user->id }}" method="POST">
+    @csrf
+    @method('PUT')
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">User Edit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <select class="form-select" name="role">
+              <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
+              <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>User</option>
+              <option value="3" {{ $user->role == 3 ? 'selected' : '' }}>Training</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select class="form-select" name="status">
+              <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
+              <option value="2" {{ $user->status == 2 ? 'selected' : '' }}>Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
                 <div class="modal-footer">
                   <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                     Cancel

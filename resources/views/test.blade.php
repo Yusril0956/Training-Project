@@ -17,7 +17,7 @@
             @if (Auth::check())
                 <a href="/dashboard">dashboard</a>
             @else
-                <a href="/logout">Logout</a>
+                <a href="/login">Login</a>
             @endif
         </div>
         <img src="wiwit.png" alt="" class="product_img">
