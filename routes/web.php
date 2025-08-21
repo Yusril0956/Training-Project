@@ -5,6 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingController;
 
+Route::get('/help', function () {
+    return view('help');
+})->middleware('auth');
+
 // Dashboard utama
 Route::get('/', [DashboardController::class, 'test']);
 

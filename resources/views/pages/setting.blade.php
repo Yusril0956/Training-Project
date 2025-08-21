@@ -27,18 +27,6 @@
       <!-- Navbar -->
         @include('partials._navbar')
       <div class="page-wrapper">
-        <!-- Page header -->
-        {{-- <div class="page-header d-print-none">
-          <div class="container-xl">
-            <div class="row g-2 align-items-center">
-              <div class="col">
-                <h2 class="page-title">
-                  Account Settings
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div> --}}
         <!-- Page body -->
         <div class="page-body">
           <div class="container-xl">
@@ -95,8 +83,13 @@
                     <div>
                       <div class="row g-2">
                         <div class="col-auto">
+<<<<<<< HEAD
+                          <!-- FIX: hindari Undefined variable $user -->
+                          <input type="text" class="form-control w-auto" value="{{ auth()->user()?->email }}">
+=======
                           <input type="text" class="form-control" name="name" value="{{ $user->name }}">
                           <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+>>>>>>> 0e821597e7258d87e01749d5898995fb5888d38b
                         </div>
                         <div class="col-auto"><a href="#" class="btn">
                             Change
@@ -147,7 +140,6 @@
                   <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank" class="link-secondary" rel="noopener">Source code</a></li>
                   <li class="list-inline-item">
                     <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary" rel="noopener">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink icon-filled icon-inline" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
                       Sponsor
                     </a>
@@ -184,7 +176,6 @@
                 <div class="mb-3 align-items-end">
                     <input type="image" src="http://www.w3.org/2000/svg" width="100" height="100" alt="">
                     <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
                     <span class="avatar-upload-text">drop or add</span>
                     </a>
@@ -201,7 +192,6 @@
         </div>
     </div>
     <!-- Libs JS -->
-    <!-- Tabler Core -->
     <script src="./dist/js/tabler.min.js?1692870487" defer></script>
     <script src="./dist/js/demo.min.js?1692870487" defer></script>
   </body>
