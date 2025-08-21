@@ -76,14 +76,14 @@
                       </div>
                       <div class="col-md">
                         <div class="form-label">Telepon</div>
-                        <div class="form-control-plaintext">{{ $user->telepon }}</div>
+                        <div class="form-control-plaintext">{{ $user->phone }}</div>
                       </div>
                     </div>
 
                     <div class="row g-3 mt-2">
                       <div class="col-md">
                         <div class="form-label">Alamat</div>
-                        <div class="form-control-plaintext">{{ $user->alamat }}</div>
+                        <div class="form-control-plaintext">{{ $user->address }}</div>
                       </div>
                       <div class="col-md">
                         <div class="form-label">Role</div>
