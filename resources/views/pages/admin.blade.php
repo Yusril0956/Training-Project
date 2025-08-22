@@ -94,6 +94,7 @@
                             {{-- <td class="sort-status">{{ $user->status }}</td> --}}
                             <td class="sort-date" data-date="{{ $user->created_at }}">{{ $user->created_at->format('F d, Y') }}</td>
                             <td class="sort-action">
+                              @if ($user->role !== 'super_admin')
                               <a href="#" 
                                  class="btn btn-sm btn-primary btn-edit-user" 
                                  data-bs-toggle="modal" 
@@ -106,6 +107,9 @@
                                  Edit
                               </a>
                               <button type="submit" class="btn btn-sm btn-danger btn-delete-user" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#modal-danger">Delete</button>
+                              @else
+                                  <span class="text-muted">No action available</span>
+                              @endif
                             </td>
                           </tr>
                         @endforeach

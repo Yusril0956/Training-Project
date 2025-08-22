@@ -49,6 +49,9 @@ class DashboardController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            if ($user->role === 'super_admin') {
+                return redirect()->back()->with('error', 'Akun super admin tidak dapat diupdate!');
+            }
             $user->name = $request->name;
             $user->email = $request->email;
             $user->role = $request->role;
@@ -71,7 +74,7 @@ class DashboardController extends Controller
             'city' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role' => 'required',
+            'role' => 'required|in:admin,user,staff',
             'status' => 'required',
         ]);
 
@@ -97,6 +100,9 @@ class DashboardController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            if ($user->role === 'super_admin') {
+                return redirect()->back()->with('error', 'Akun super admin tidak dapat dihapus!');
+            }
             $user->delete();
             return redirect()->back()->with('success', 'User berhasil dihapus!');
         } catch (\Exception $e) {
