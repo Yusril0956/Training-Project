@@ -239,6 +239,10 @@
                     <input type="text" class="form-control" name="address">
                   </div>
                   <div class="mb-3">
+                    <label class="form-label">Kota</label>
+                    <input type="text" class="form-control" name="city">
+                  </div>
+                  <div class="mb-3">
                     <label class="form-label">Email</label>
                     <input type="text" class="form-control" name="email" placeholder="Your report name">
                   </div>
@@ -249,16 +253,16 @@
                   <div class="mb-3">
                       <label class="form-label">Role</label>
                       <select class="form-select" name="role" id="add-role">
-                        <option value="1">Admin</option>
-                        <option value="2">User</option>
-                        <option value="3">Training</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="staff">Staff</option>
                       </select>
                   </div>
                   <div class="mb-3">
                       <label class="form-label">Status</label>
                       <select class="form-select" name="status" id="add-status">
-                        <option value="1">Active</option>
-                        <option value="2">Inactive</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
                       </select>
                   </div>
                 </div>
