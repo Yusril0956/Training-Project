@@ -27,6 +27,7 @@ class User extends Authenticatable
         'role',
         'status',
         'password',
+        'profile', // Assuming this is the column for avatar/profile picture
     ];
 
     /**

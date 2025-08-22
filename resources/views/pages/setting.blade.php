@@ -20,6 +20,18 @@
         font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
+    <script>
+    function previewAvatar(event) {
+        const input = event.target;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('avatar-preview').src = e.target.result;
+        }
+        if(input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    </script>
   </head>
   <body>
     <script src="./dist/js/demo-theme.min.js"></script>
@@ -153,24 +165,23 @@
       <!-- Modal avatar -->
       <div class="modal modal-blur fade" id="modal-image" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
+          <form class="modal-content" method="POST" action="{{ route('setting.avatar') }}" enctype="multipart/form-data">
+            @csrf
             <div class="modal-header">
               <h5 class="modal-title">Profile Picture</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3 align-items-end">
-                <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                  <span class="avatar-upload-text">drop or add</span>
-                </a>
+              <div class="mb-3 text-center">
+                <img id="avatar-preview" src="{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}" class="avatar avatar-xl mb-2" style="object-fit:cover;" alt="Avatar Preview">
+                <input type="file" class="form-control mt-2" name="avatar" accept="image/*" onchange="previewAvatar(event)">
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Team</button>
+              <button type="submit" class="btn btn-primary">Save Avatar</button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

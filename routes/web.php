@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/training', [DashboardController::class, 'training']);
     Route::get('/music', [DashboardController::class, 'music']);
     Route::get('/setting', [SettingController::class, 'index']);
+    Route::post('/setting/avatar', [SettingController::class, 'updateAvatar'])->name('setting.avatar');
 
     Route::group(['middleware' => ['check_role:admin']], function () {
         Route::get('/admin', [DashboardController::class, 'admin']);
