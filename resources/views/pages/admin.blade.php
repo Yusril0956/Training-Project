@@ -101,15 +101,11 @@
                                  data-id="{{ $user->id }}"
                                  data-name="{{ $user->name }}"
                                  data-email="{{ $user->email }}"
-                                 data-role="{{ (string) $user->role }}"
-                                 data-status="{{ (string) $user->status }}">
+                                 data-role="{{ $user->role }}"
+                                 data-status="{{ $user->status }}">
                                  Edit
                               </a>
-                              <form action="#" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                              </form>
+                              <button type="submit" class="btn btn-sm btn-danger btn-delete-user" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-bs-toggle="modal" data-bs-target="#modal-danger">Delete</button>
                             </td>
                           </tr>
                         @endforeach
@@ -179,16 +175,16 @@
                   <div class="mb-3">
                     <label class="form-label">Role</label>
                     <select class="form-select" name="role" id="edit-role">
-                      <option value="1">Admin</option>
-                      <option value="2">User</option>
-                      <option value="3">Training</option>
+                      <option value="admin">Admin</option>
+                      <option value="user">User</option>
+                      <option value="staff">Staff</option>
                     </select>
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Status</label>
                     <select class="form-select" name="status" id="edit-status">
-                      <option value="1">Active</option>
-                      <option value="2">Inactive</option>
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
                     </select>
                   </div>
                 </div>
@@ -279,6 +275,8 @@
           </form>
         </div>
 
+        @include('partials._modal')
+
     </div>
     <!-- Libs JS -->
     <script src="./dist/libs/list.js/dist/list.min.js?1692870487" defer></script>
@@ -299,46 +297,88 @@
       })
     </script>
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.btn-edit-user').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            // Isi value input modal
-            document.getElementById('edit-name').value = this.dataset.name;
-            document.getElementById('edit-email').value = this.dataset.email;
-            document.getElementById('edit-role').value = this.dataset.role;
-            document.getElementById('edit-status').value = this.dataset.status;
-            // Set action form
-            document.getElementById('form-edit-user').action = '/useredit/' + this.dataset.id;
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-edit-user').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                // Isi value input modal
+                document.getElementById('edit-name').value = this.dataset.name;
+                document.getElementById('edit-email').value = this.dataset.email;
+                document.getElementById('edit-role').value = this.dataset.role;
+                document.getElementById('edit-status').value = this.dataset.status;
+                // Set action form
+                document.getElementById('form-edit-user').action = '/useredit/' + this.dataset.id;
+            });
         });
     });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // Auto dismiss alert after 4 seconds
-    setTimeout(function() {
-        document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
-            if(alert) alert.classList.add('fade');
-            setTimeout(function() {
-                if(alert) alert.remove();
-            }, 500); // waktu fade out
-        });
-    }, 4000);
-
-    // Dismiss alert on scroll
-    let alertDismissed = false;
-    window.addEventListener('scroll', function() {
-        if (!alertDismissed) {
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Auto dismiss alert after 4 seconds
+        setTimeout(function() {
             document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
                 if(alert) alert.classList.add('fade');
                 setTimeout(function() {
                     if(alert) alert.remove();
-                }, 500);
+                }, 500); // waktu fade out
             });
-            alertDismissed = true;
+        }, 4000);
+
+        // Dismiss alert on scroll
+        let alertDismissed = false;
+        window.addEventListener('scroll', function() {
+            if (!alertDismissed) {
+                document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
+                    if(alert) alert.classList.add('fade');
+                    setTimeout(function() {
+                        if(alert) alert.remove();
+                    }, 500);
+                });
+                alertDismissed = true;
+            }
+        });
+    });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let deleteUserId = null;
+        let deleteUserName = null;
+
+        // Saat tombol delete diklik, simpan id user
+        document.querySelectorAll('.btn-delete-user').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                deleteUserId = this.dataset.id;
+                deleteUserName = this.dataset.name;
+                // Ubah pesan modal jika mau
+                document.querySelector('#modal-danger h3').innerText = 'Hapus User?';
+                document.querySelector('#modal-danger .text-secondary').innerText = 'Yakin ingin menghapus user "' + deleteUserName + '"?';
+            });
+        });
+
+        // Saat tombol konfirmasi di modal diklik, submit form delete via JS
+        document.getElementById('btn-confirm-delete').onclick = function(e) {
+            if(deleteUserId) {
+                // Buat form dinamis dan submit
+                let form = document.createElement('form');
+                form.action = '/admin/user/' + deleteUserId;
+                form.method = 'POST';
+
+                let csrf = document.createElement('input');
+                csrf.type = 'hidden';
+                csrf.name = '_token';
+                csrf.value = '{{ csrf_token() }}';
+                form.appendChild(csrf);
+
+                let method = document.createElement('input');
+                method.type = 'hidden';
+                method.name = '_method';
+                method.value = 'DELETE';
+                form.appendChild(method);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
         }
     });
-});
-</script>
+    </script>
   </body>
 </html>

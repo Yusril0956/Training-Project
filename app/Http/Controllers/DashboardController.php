@@ -92,4 +92,15 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan user!');
         }
     }
+
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return redirect()->back()->with('success', 'User berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus user!');
+        }
+    }
 }
