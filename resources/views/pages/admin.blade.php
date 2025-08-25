@@ -386,6 +386,30 @@
                 form.submit();
             }
         }
+
+        // Auto show configurable modal if session variables are present
+        @if(session('modal_type'))
+            const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
+            modal.show();
+            
+            // Add event listener for the configurable modal button
+            document.getElementById('btn-confirm-action').addEventListener('click', function() {
+                // You can add custom action here based on modal type
+                console.log('Modal action confirmed:', '{{ session('modal_type') }}');
+                
+                // If you need to perform different actions based on modal type:
+                @if(session('modal_type') == 'success')
+                    // Success action
+                    console.log('Success action performed');
+                @elseif(session('modal_type') == 'warning')
+                    // Warning action  
+                    console.log('Warning action performed');
+                @elseif(session('modal_type') == 'info')
+                    // Info action
+                    console.log('Info action performed');
+                @endif
+            });
+        @endif
     });
     </script>
   </body>

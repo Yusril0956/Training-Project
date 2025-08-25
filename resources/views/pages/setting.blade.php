@@ -72,7 +72,7 @@
                         <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-image">Change avatar</a>
                       </div>
                       <div class="col-auto">
-                        <a href="#" class="btn btn-ghost-danger">Delete avatar</a>
+                        <button type="button" class="btn btn-sm btn-danger btn-delete-avatar" data-bs-toggle="modal" data-bs-target="#modal-danger">Delete Avatar</button>
                       </div>
                     </div>
 
@@ -189,5 +189,54 @@
     <!-- Tabler JS -->
     <script src="./dist/js/tabler.min.js" defer></script>
     <script src="./dist/js/demo.min.js" defer></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle avatar deletion modal
+        const deleteAvatarBtn = document.querySelector('.btn-delete-avatar');
+        if (deleteAvatarBtn) {
+            deleteAvatarBtn.addEventListener('click', function() {
+                // Configure the modal for avatar deletion
+                document.querySelector('#modal-danger h3').innerText = 'Hapus Avatar';
+                document.querySelector('#modal-danger .text-secondary').innerText = 'Apakah Anda yakin ingin menghapus avatar?';
+                
+                // Set up the confirmation action for avatar deletion
+                const confirmBtn = document.getElementById('btn-confirm-delete');
+                confirmBtn.onclick = function() {
+                    // Create form to submit delete request
+                    const form = document.createElement('form');
+                    form.action = '{{ route("setting.avatar.delete") }}';
+                    form.method = 'POST';
+                    
+                    const csrf = document.createElement('input');
+                    csrf.type = 'hidden';
+                    csrf.name = '_token';
+                    csrf.value = '{{ csrf_token() }}';
+                    form.appendChild(csrf);
+                    
+                    const method = document.createElement('input');
+                    method.type = 'hidden';
+                    method.name = '_method';
+                    method.value = 'DELETE';
+                    form.appendChild(method);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                };
+            });
+        }
+
+        // Auto show configurable modal if session variables are present
+        @if(session('modal_type'))
+            const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
+            modal.show();
+            
+            // Add event listener for the configurable modal button
+            document.getElementById('btn-confirm-action').addEventListener('click', function() {
+                console.log('Modal action confirmed:', '{{ session('modal_type') }}');
+            });
+        @endif
+    });
+    </script>
   </body>
 </html>

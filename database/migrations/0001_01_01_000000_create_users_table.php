@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('password');
             // profile image
-            $table->string('profile')->default('images/default_avatar.png');
+            $table->string('profile')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ class UserFactory extends Factory
             'nik' => $this->faker->numerify('################'),
             'city' => $this->faker->city(),
             'role' => 'user', // atau random dari ['user','admin','staff','super_admin']
-            'status' => 1, // jika ada kolom status
+            'status' => 'active', // jika ada kolom status
         ];
     }
 }
