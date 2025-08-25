@@ -26,7 +26,7 @@
     <script src="{{asset('dist/js/demo-theme.min.js?1692870487')}}"></script>
     <div class="page">
       {{-- include navbar --}}
-      @include('partials._navbar')
+      @include('layouts._navbar')
        
 
 		<div class="page-wrapper">
