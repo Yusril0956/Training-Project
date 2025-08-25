@@ -246,7 +246,7 @@
                     </div>
                     <div class="card-body">
                         <p class="section-description">Jika Anda tidak dapat menemukan jawaban yang Anda cari, jangan ragu untuk menghubungi tim dukungan kami.</p>
-                        <a href="mailto:support@example.com" class="custom-btn">Email Support</a>
+                        <a href="mailto:support@example.com" class="">Email Support</a>
                     </div>
                 </div>
 

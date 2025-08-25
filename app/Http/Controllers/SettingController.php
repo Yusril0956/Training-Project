@@ -50,36 +50,20 @@ class SettingController extends Controller
             return redirect()->back()->with('error', 'File tidak ditemukan!');
         }
     }
+public function deleteAvatar(Request $request)
+{
+    $user = auth()->user();
 
-    public function deleteAvatar(Request $request)
-    {
-        $user = User::find(Auth::id());
-        
-        // Check if user has a custom avatar
-        if ($user->profile) {
-            try {
-                // Extract the filename from the profile path
-                $profilePath = $user->profile;
-                if (strpos($profilePath, 'storage/avatars/') !== false) {
-                    $filename = str_replace('storage/avatars/', '', $profilePath);
-                    $filePath = storage_path('app/public/avatars/' . $filename);
-                    
-                    // Delete the file if it exists
-                    if (file_exists($filePath)) {
-                        unlink($filePath);
-                    }
-                }
-                
-                // Reset profile to null (will use default avatar)
-                $user->profile = null;
-                $user->save();
-                
-                return redirect()->back()->with('success', 'Avatar berhasil dihapus!');
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Gagal menghapus avatar!');
-            }
-        }
-        
-        return redirect()->back()->with('error', 'Tidak ada avatar untuk dihapus!');
+    // hapus file lama jika ada
+    if ($user->profile && file_exists(public_path($user->profile))) {
+        unlink(public_path($user->profile));
     }
+
+    // reset ke null / default
+    $user->profile = null;
+    $user->save();
+
+    return back()->with('success', 'Avatar berhasil dihapus.');
+}
+
 }
