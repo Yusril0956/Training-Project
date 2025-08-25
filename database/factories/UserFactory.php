@@ -19,8 +19,8 @@ class UserFactory extends Factory
             'address' => $this->faker->address(),
             'nik' => $this->faker->numerify('################'),
             'city' => $this->faker->city(),
-            'role' => 'user', // atau random dari ['user','admin','staff','super_admin']
-            'status' => 'active', // jika ada kolom status
+            'role' => 'user',
+            'status' => 'active',
         ];
     }
 }

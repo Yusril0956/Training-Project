@@ -6,7 +6,7 @@
       </button>
       <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
         <a href=".">
-          <img src="{{asset('logo.png')}}" class="navbar-brand-image " alt="">Aerospace (IAe)
+          <img src="{{asset('logo.png')}}" class="navbar-brand-image " alt="logo">Aerospace (IAe)
         </a>
       </h1>
       <div class="navbar-nav flex-row order-md-last">
@@ -168,7 +168,7 @@ data-bs-placement="bottom">
                 <a class="dropdown-item" href="./#">
                   Profile
                 </a>
-                <a class="dropdown-item" href="./#">
+                <a class="dropdown-item" href="/help">
                   Help
                 </a>
               </div>

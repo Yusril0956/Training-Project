@@ -34,7 +34,7 @@
     <div class="page">
       <!-- Navbar -->
       
-      @include('partials._navbar')
+      @include('layouts._navbar')
 
       <div class="page-wrapper">
         <!-- Page header -->

@@ -48,7 +48,7 @@
     <script src="./dist/js/demo-theme.min.js?1692870487"></script>
     <div class="page">
 
-        @include('partials._navbar')
+        @include('layouts._sidebar')
 
         <div class="page-wrapper">
         <!-- Page header -->

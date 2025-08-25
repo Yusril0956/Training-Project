@@ -20,34 +20,30 @@
         font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
+    <script>
+    function previewAvatar(event) {
+        const input = event.target;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('avatar-preview').src = e.target.result;
+        }
+        if(input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    </script>
   </head>
   <body>
     <script src="./dist/js/demo-theme.min.js"></script>
     <div class="page">
       <!-- Navbar -->
-        @include('partials._navbar')
+        @include('layouts._sidebar')
       <div class="page-wrapper">
         <!-- Page body -->
         <div class="page-body">
           <div class="container-xl">
             <div class="card">
               <div class="row g-0">
-                <div class="col-12 col-md-3 border-end">
-                  <div class="card-body">
-                    <h4 class="subheader">Settings</h4>
-                    <div class="list-group list-group-transparent">
-                      <a href="./settings.html" class="list-group-item list-group-item-action d-flex align-items-center active">My Account</a>
-                      <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">My Notifications</a>
-                      <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Connected Apps</a>
-                      <a href="./settings-plan.html" class="list-group-item list-group-item-action d-flex align-items-center">Plans</a>
-                      <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">Billing & Invoices</a>
-                    </div>
-                    <h4 class="subheader mt-4">Experience</h4>
-                    <div class="list-group list-group-transparent">
-                      <a href="#" class="list-group-item list-group-item-action">Give Feedback</a>
-                    </div>
-                  </div>
-                </div>
                 <div class="col-12 col-md-9 d-flex flex-column">
                   <div class="card-body">
                     <h2 class="mb-4">My Account</h2>
@@ -158,24 +154,23 @@
       <!-- Modal avatar -->
       <div class="modal modal-blur fade" id="modal-image" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
+          <form class="modal-content" method="POST" action="{{ route('setting.avatar') }}" enctype="multipart/form-data">
+            @csrf
             <div class="modal-header">
               <h5 class="modal-title">Profile Picture</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3 align-items-end">
-                <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
-                  <span class="avatar-upload-text">drop or add</span>
-                </a>
+              <div class="mb-3 text-center">
+                <img id="avatar-preview" src="{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}" class="avatar avatar-xl mb-2" style="object-fit:cover;" alt="Avatar Preview">
+                <input type="file" class="form-control mt-2" name="avatar" accept="image/*" onchange="previewAvatar(event)">
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Team</button>
+              <button type="submit" class="btn btn-primary">Save</button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -183,5 +178,19 @@
     <!-- Tabler JS -->
     <script src="./dist/js/tabler.min.js" defer></script>
     <script src="./dist/js/demo.min.js" defer></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Auto show configurable modal if session variables are present
+        @if(session('modal_type'))
+            const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
+            modal.show();
+            
+            // Add event listener for the configurable modal button
+            document.getElementById('btn-confirm-action').addEventListener('click', function() {
+                console.log('Modal action confirmed:', '{{ session('modal_type') }}');
+            });
+        @endif
+    });
+    </script>
   </body>
 </html>
