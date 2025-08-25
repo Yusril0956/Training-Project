@@ -21,6 +21,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
+//tambahan profile page
+Route::get('/sertifikat', function () {
+    return view('sertifikat');
+})->middleware('auth');
+
 // Semua route berikut hanya untuk user yang sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/help', function () {
