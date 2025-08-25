@@ -28,15 +28,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
     Route::get('/training', [DashboardController::class, 'training']);
     Route::get('/music', [DashboardController::class, 'music']);
-    Route::get('/setting', [SettingController::class, 'index']);
+    Route::get('/setting', [SettingController::class, 'index'])->name('profile');
     Route::post('/setting/avatar', [SettingController::class, 'updateAvatar'])->name('setting.avatar');
     Route::delete('/setting/avatar', [SettingController::class, 'deleteAvatar'])->name('setting.avatar.delete');
 
     Route::group(['middleware' => ['check_role:admin']], function () {
-        Route::get('/admin', [DashboardController::class, 'admin']);
+        Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
         Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('admin.user.add');
         Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
         Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
