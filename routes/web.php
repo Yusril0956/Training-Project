@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingController;
+use Illuminate\Support\Facades\Auth;
 
 // Route utama hanya untuk guest
 Route::get('/', [DashboardController::class, 'test'])->middleware('guest');
@@ -23,7 +24,9 @@ Route::middleware('guest')->group(function () {
 
 //tambahan profile page
 Route::get('/sertifikat', function () {
-    return view('sertifikat');
+    return view('sertifikat', [
+        'user' => Auth::user()
+    ]);
 })->middleware('auth');
 
 // Semua route berikut hanya untuk user yang sudah login

@@ -65,16 +65,19 @@
 				<div class="profile-image-site">
 					<div class="profile-image-div">
 						<a href="#" id="profile-link">
-							<img id="Profile_images" src="logo2.jpeg">
+							<img id="Profile_images" src="{{ $user->profile_image 
+    ? asset('storage/' . $user->profile_image) 
+    : asset('profile/default.png') }}">
 						</a>
 						<span class="fas fa-camera"></span>
 					</div>
 				</div>
 				<div class="profile-name-info">
 					<h1>
-						<span class="pro-txt" id="profile_name">PT.Dirgantara</span>
-						<span id="nik-name"></span>
-					</h1>
+    <span class="pro-txt" id="profile_name">{{ $user->name }}</span>
+    <span id="nik-name"></span>
+</h1>
+<p id="bio-text">{{ $user->bio ?? $user->name }}</p>
 					<p>
 						<span class="fir-count-txt">
 							<span id="friend_count">15</span> Sertifikat
@@ -176,7 +179,7 @@
 					<div class="about-info">
 						<h4>Informasi</h4>
 
-						<p id="bio-text">PT.Dirgantara</p>
+						<p id="bio-text">{{ $user->bio ?? $user->name }}</p>
 						<div class="bio-btn-click">
 							<input class="input-box" type="text" value="PT.Dirgantara"> 
 							<p class="length-count-txt"> 
@@ -490,6 +493,15 @@
 
 			</div>
 		</section>
+
+	
+		<script>
+    let input_Profile_Name  = "{{ $user->name }}";
+    let input_Profile_Image = "{{ $user->profile_image 
+        ? asset('storage/' . $user->profile_image) 
+        : asset('profile/default.png') }}";
+    let input_Profile_Bio   = "{{ $user->bio ?? '' }}";
+</script>
 
 	<script src="{{ asset('profile/script.js') }}"></script>
 	</body>

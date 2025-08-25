@@ -1,7 +1,14 @@
 "use strict";
 
-let input_Profile_Name = "PT.Dirgantara";
-let input_Profile_Image = "logo2.jpeg";
+
+
+for (let i = 0; i < profile_images.length; i++) {
+    profile_images[i].src = input_Profile_Image;
+}
+for (let i = 0; i < profile_name.length; i++) {
+    profile_name[i].innerHTML = input_Profile_Name;
+}
+
 
 let input_profile_link = "https://www.indonesian-aerospace.com/id/"
 
@@ -968,6 +975,9 @@ for (let i = 0; i < vidio_tge.length; i++) {
 
 let bio_edit_btn = document.querySelector("#bio-edit-btn");
 let bio_text = document.querySelector("#bio-text");
+if (typeof input_Profile_Bio !== "undefined" && input_Profile_Bio !== "") {
+    bio_text.innerHTML = input_Profile_Bio;
+}
 
 let bio_btn_click = document.querySelector(".bio-btn-click");
 
