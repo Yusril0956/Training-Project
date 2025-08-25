@@ -20,18 +20,6 @@
         font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
-    <script>
-    function previewAvatar(event) {
-        const input = event.target;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('avatar-preview').src = e.target.result;
-        }
-        if(input.files && input.files[0]) {
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    </script>
   </head>
   <body>
     <script src="./dist/js/demo-theme.min.js"></script>
@@ -72,7 +60,12 @@
                         <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-image">Change avatar</a>
                       </div>
                       <div class="col-auto">
-                        <button type="button" class="btn btn-sm btn-danger btn-delete-avatar" data-bs-toggle="modal" data-bs-target="#modal-danger">Delete Avatar</button>
+                        <!-- DELETE AVATAR FORM -->
+                        <form action="{{ route('user.deleteAvatar') }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus avatar?')">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-ghost-danger">Delete avatar</button>
+                        </form>
                       </div>
                     </div>
 
@@ -165,23 +158,24 @@
       <!-- Modal avatar -->
       <div class="modal modal-blur fade" id="modal-image" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <form class="modal-content" method="POST" action="{{ route('setting.avatar') }}" enctype="multipart/form-data">
-            @csrf
+          <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Profile Picture</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3 text-center">
-                <img id="avatar-preview" src="{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}" class="avatar avatar-xl mb-2" style="object-fit:cover;" alt="Avatar Preview">
-                <input type="file" class="form-control mt-2" name="avatar" accept="image/*" onchange="previewAvatar(event)">
+              <div class="mb-3 align-items-end">
+                <a href="#" class="avatar avatar-upload rounded" width="100" height="100">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="100" height="100" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                  <span class="avatar-upload-text">drop or add</span>
+                </a>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save Avatar</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add Team</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -189,54 +183,5 @@
     <!-- Tabler JS -->
     <script src="./dist/js/tabler.min.js" defer></script>
     <script src="./dist/js/demo.min.js" defer></script>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Handle avatar deletion modal
-        const deleteAvatarBtn = document.querySelector('.btn-delete-avatar');
-        if (deleteAvatarBtn) {
-            deleteAvatarBtn.addEventListener('click', function() {
-                // Configure the modal for avatar deletion
-                document.querySelector('#modal-danger h3').innerText = 'Hapus Avatar';
-                document.querySelector('#modal-danger .text-secondary').innerText = 'Apakah Anda yakin ingin menghapus avatar?';
-                
-                // Set up the confirmation action for avatar deletion
-                const confirmBtn = document.getElementById('btn-confirm-delete');
-                confirmBtn.onclick = function() {
-                    // Create form to submit delete request
-                    const form = document.createElement('form');
-                    form.action = '{{ route("setting.avatar.delete") }}';
-                    form.method = 'POST';
-                    
-                    const csrf = document.createElement('input');
-                    csrf.type = 'hidden';
-                    csrf.name = '_token';
-                    csrf.value = '{{ csrf_token() }}';
-                    form.appendChild(csrf);
-                    
-                    const method = document.createElement('input');
-                    method.type = 'hidden';
-                    method.name = '_method';
-                    method.value = 'DELETE';
-                    form.appendChild(method);
-                    
-                    document.body.appendChild(form);
-                    form.submit();
-                };
-            });
-        }
-
-        // Auto show configurable modal if session variables are present
-        @if(session('modal_type'))
-            const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
-            modal.show();
-            
-            // Add event listener for the configurable modal button
-            document.getElementById('btn-confirm-action').addEventListener('click', function() {
-                console.log('Modal action confirmed:', '{{ session('modal_type') }}');
-            });
-        @endif
-    });
-    </script>
   </body>
 </html>

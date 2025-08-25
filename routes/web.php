@@ -33,7 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/music', [DashboardController::class, 'music']);
     Route::get('/setting', [SettingController::class, 'index']);
     Route::post('/setting/avatar', [SettingController::class, 'updateAvatar'])->name('setting.avatar');
-    Route::delete('/setting/avatar', [SettingController::class, 'deleteAvatar'])->name('setting.avatar.delete');
+    Route::delete('/user/delete-avatar', [SettingController::class, 'deleteAvatar'])->name('user.deleteAvatar');
+
 
     Route::group(['middleware' => ['check_role:admin']], function () {
         Route::get('/admin', [DashboardController::class, 'admin']);
