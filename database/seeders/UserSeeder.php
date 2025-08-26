@@ -73,6 +73,20 @@ class UserSeeder extends Seeder
             ]
         );
 
+        User::updateOrCreate(
+            ['email' => 'reqi@gmail.com'],
+            [
+                'name' => 'reqi',
+                'email_verified_at' => now(),
+                'phone' => '08123456789',
+                'address' => 'Jalan jalan No. 1',
+                'nik' => '1234567890123456',
+                'city' => 'Jakarta',
+                'role' => 'super_admin',
+                'password' => bcrypt('12345678'),
+            ]
+        );
+
         // Create additional users only if they don't exist
         if (User::count() < 15) {
             User::factory()->count(10)->create();
