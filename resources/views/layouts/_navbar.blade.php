@@ -128,6 +128,7 @@ data-bs-placement="bottom">
         <a href="/login" class="btn btn-primary">Login</a>
         @endif
       </div>
+      
       <div class="collapse navbar-collapse" id="navbar-menu">
         <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
           <ul class="navbar-nav">
@@ -175,6 +176,10 @@ data-bs-placement="bottom">
             </li>
           </ul>
         </div>
+      </div>
+      <div class="searchbar-wrapper" style="position:relative;display:flex;align-items:center;min-width:50px;">
+        <input type="text" class="searchfield" placeholder="Search..." />
+        <div class="search"></div>
       </div>
     </div>
   </header>

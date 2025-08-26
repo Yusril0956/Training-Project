@@ -23,15 +23,15 @@
       /* Search Bar CSS FIXED */
       .searchbar-wrapper {
         min-width: 50px;
-        height: 50px;
+        height: 30px;
         margin-left: 20px;
       }
       .searchfield {
         font-weight: 600;
         position: absolute;
         right: 0;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 35px;
         outline: none;
         border: none;
         background: #fff;
@@ -47,7 +47,7 @@
         letter-spacing: 0.1em;
       }
       .searchfield:focus {
-        width: 250px;
+        width: 175px;
         opacity: 1;
         cursor: text;
       }
@@ -117,10 +117,7 @@
       {{-- include navbar --}}
       @include('layouts._navbar')
       <!-- Search Bar START -->
-      <div class="searchbar-wrapper" style="position:relative;display:flex;align-items:center;min-width:50px;">
-        <input type="text" class="searchfield" placeholder="Search..." />
-        <div class="search"></div>
-      </div>
+      
       <!-- Search Bar END -->
        
 
