@@ -193,29 +193,34 @@
 										<button id="save-btn">Save</button></div>
 									</div>
 						</div>
-						<button id="bio-edit-btn" class="edit-bio btn">Edit Bio</button>
+						
 
 						<ul>
-							<li><i class="fas fa-briefcase"></i> INDONESIAN AEROSPACE 
-								<a href="#">(IAe)</a>
-							</li>
-
-							<li><i class="fas fa-graduation-cap"></i> ALAMAT
-								<a href="#">Jalan Pajajaran No. 154 Bandung 40174 West Java - Indonesial</a>
-							</li>
-
-							<li><i class="fas fa-home"></i> BEBAS MAU DI ISI AOA 
-								<a href="#">ini teks biru</a>
-							</li>
-
-							<li><i class="fas fa-map-marker-alt"></i> BEBAS MAU DI ISI ApA 
-								<a href="#">ini teks biru</a>
-							</li>
-							<li><i class="fas fa-heart"></i> BEBAS MAU DI ISI APA</li>
-							<li><i class="fas fa-globe"></i> <a href="#">
-								https://www.indonesian-aerospace.com/en/
-							</a></li>
-						</ul>
+    <li>
+        <strong>Name</strong><br>
+        {{ $user->name }}
+    </li>
+    <li>
+        <strong>Email</strong><br>
+        {{ $user->email }}
+    </li>
+    <li>
+        <strong>Telepon</strong><br>
+        {{ $user->phone ?? '-' }}
+    </li>
+    <li>
+        <strong>Alamat</strong><br>
+        {{ $user->address ?? '-' }}
+    </li>
+    <li>
+        <strong>Role</strong><br>
+        {{ $user->role ?? '-' }}
+    </li>
+    <li>
+        <strong>Status</strong><br>
+        {{ $user->status ?? 'active' }}
+    </li>
+</ul>
 
 						<button class="edit-bio btn">Edit Detail</button>
 
