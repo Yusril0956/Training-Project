@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
 // Route utama hanya untuk guest
@@ -52,4 +53,5 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
+    Route::post('/user/update-skill', [UserController::class, 'updateSkill'])->name('user.updateSkill');
 });

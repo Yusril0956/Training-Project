@@ -48,12 +48,7 @@
 				<img src="wiwit.png">
 
 				<div class="cover-image-div">
-					<div class="cover-image-edite-btn">
-						<button>
-							<i class="fas fa-camera"></i>
-							Edit foto cover
-						</button>
-					</div>
+					
 				</div>
 
 			</header>
@@ -197,32 +192,32 @@
 
 						<ul>
     <li>
-        <strong>Name</strong><br>
-        {{ $user->name }}
+        <i class="fas fa-user"></i> Name
+        <a href="#">{{ $user->name ?? '-' }}</a>
     </li>
     <li>
-        <strong>Email</strong><br>
-        {{ $user->email }}
+        <i class="fas fa-envelope"></i> Email
+        <a href="#">{{ $user->email ?? '-' }}</a>
     </li>
     <li>
-        <strong>Telepon</strong><br>
-        {{ $user->phone ?? '-' }}
+        <i class="fas fa-phone"></i> Telepon
+        <a href="#">{{ $user->phone ?? '-' }}</a>
     </li>
     <li>
-        <strong>Alamat</strong><br>
-        {{ $user->address ?? '-' }}
+        <i class="fas fa-map-marker-alt"></i> Alamat
+        <a href="#">{{ $user->address ?? '-' }}</a>
     </li>
     <li>
-        <strong>Role</strong><br>
-        {{ $user->role ?? '-' }}
+        <i class="fas fa-user-tag"></i> Role
+        <a href="#">{{ $user->role ?? '-' }}</a>
     </li>
     <li>
-        <strong>Status</strong><br>
-        {{ $user->status ?? 'active' }}
+        <i class="fas fa-check-circle"></i> Status
+        <a href="#">{{ $user->status ?? 'active' }}</a>
     </li>
 </ul>
 
-						<button class="edit-bio btn">Edit Detail</button>
+						
 
 						<div class="Hobbies-show">
 							<span><i class="fas fa-laptop-code"></i> Produksi pesawat</span>
@@ -311,7 +306,9 @@
 						<div class="post-upload-T">
 							<div class="profil-ing-div">
 								<a href="#" id="profile-link">
-									<img id="Profile_images" src="logo2.jpeg">
+									<img id="Profile_images" src="{{ $user->profile_image 
+                    ? asset('storage/' . $user->profile_image) 
+                    : asset('profile/default.png') }}">
 								</a>
 							</div>
 							<div class="text-post">
@@ -344,7 +341,7 @@
 
 						<div class="list-type">
 							<div class="fil-list activ-navbar">
-								<i class="fas fa-bars"></i> Daftar Kegiatan
+								<i class="fas fa-bars"></i> Daftar Sertifikat
 							</div>
 							<div class="fil-list">
 								<i class="fas fa-th-large"></i> Training
@@ -366,7 +363,9 @@
 							</div>
 							</div>
 							<div class="post-three-dot">
-								<h2><a href="#" id="profile_name">PT.Dirgantara</a></h2>
+								<h2>
+    <a href="#" id="profile_name">{{ $user->name }}</a>
+</h2>
 								<p>
 									<a href="%">5d</a>
 									<span>
@@ -509,5 +508,12 @@
 </script>
 
 	<script src="{{ asset('profile/script.js') }}"></script>
+<!-- Logout Button (POST) -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+<a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    Logout
+</a>
 	</body>
 </html>
