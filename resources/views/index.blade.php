@@ -15,10 +15,99 @@
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
-      	--tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+        --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
       }
       body {
-      	font-feature-settings: "cv03", "cv04", "cv11";
+        font-feature-settings: "cv03", "cv04", "cv11";
+      }
+      /* Search Bar CSS FIXED */
+      .searchbar-wrapper {
+        min-width: 50px;
+        height: 50px;
+        margin-left: 20px;
+      }
+      .searchfield {
+        font-weight: 600;
+        position: absolute;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        outline: none;
+        border: none;
+        background: #fff;
+        color: #111;
+        text-shadow: 0 0 10px #ccc;
+        padding: 0 80px 0 20px;
+        border-radius: 30px;
+        box-shadow: 0 2px 8px 0 #1111, 0 1px 8px 0 rgba(0,0,0,0.08);
+        transition: all 0.5s;
+        opacity: 0.8;
+        z-index: 5;
+        font-weight: bolder;
+        letter-spacing: 0.1em;
+      }
+      .searchfield:focus {
+        width: 250px;
+        opacity: 1;
+        cursor: text;
+      }
+      .searchfield:hover {
+        cursor: pointer;
+      }
+      .search {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border-radius: 50%;
+        z-index: 6;
+        pointer-events: none;
+      }
+      .search::before {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 7px;
+        width: 12px;
+        height: 12px;
+        border: 2px solid #111;
+        border-radius: 50%;
+        background: transparent;
+        transition: 0.3s;
+      }
+      .search::after {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 18px;
+        width: 8px;
+        height: 2px;
+        background: #111;
+        border-radius: 2px;
+        transform: rotate(45deg);
+        transition: 0.3s;
+      }
+      .searchfield:focus ~ .search::before {
+        border: none;
+        width: 18px;
+        height: 2px;
+        left: 5px;
+        top: 13px;
+        background: #111;
+        border-radius: 2px;
+        transform: rotate(45deg);
+      }
+      .searchfield:focus ~ .search::after {
+        width: 18px;
+        height: 2px;
+        left: 5px;
+        top: 13px;
+        background: #111;
+        border-radius: 2px;
+        transform: rotate(-45deg);
       }
     </style>
   </head>
@@ -27,6 +116,12 @@
     <div class="page">
       {{-- include navbar --}}
       @include('layouts._navbar')
+      <!-- Search Bar START -->
+      <div class="searchbar-wrapper" style="position:relative;display:flex;align-items:center;min-width:50px;">
+        <input type="text" class="searchfield" placeholder="Search..." />
+        <div class="search"></div>
+      </div>
+      <!-- Search Bar END -->
        
 
 		<div class="page-wrapper">
@@ -1061,7 +1156,7 @@
                         <td class="text-nowrap">
                           <a href="#" class="text-secondary">
                             <!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0  24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
                             2/9
                           </a>
                         </td>
@@ -1725,7 +1820,7 @@
       // @formatter:on
     </script>
     <script>
-      // @formatter:on
+      // @formatter:off
       document.addEventListener("DOMContentLoaded", function() {
       	const map = new jsVectorMap({
       		selector: '#map-world',

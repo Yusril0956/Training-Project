@@ -1,3 +1,10 @@
+<?php
+// filepath: routes/web.php
+// ...existing code...
+Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
+// ...existing code...
+?>
+
 <!doctype html> 
 <html lang="en">
   <head>
