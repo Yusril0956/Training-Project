@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     { 
-        return view('index');
+        return view('pages.index');
     }
 
     public function training()
@@ -22,10 +22,6 @@ class DashboardController extends Controller
     {
         $users = User::all();
         return view('pages.admin', compact('users'));
-    }
-    public function test()
-    {
-        return view('test');
     }
 
     public function userEdit()
