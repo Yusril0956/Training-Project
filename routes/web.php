@@ -60,5 +60,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/General-Knowledge', function () {
-    return view('Training.training1'); // nama file training1.blade.php
+    return view('pages.Training.training1'); // nama file training1.blade.php
 })->name('general.knowledge');
