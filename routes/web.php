@@ -62,13 +62,3 @@ Route::middleware('auth')->group(function () {
     })->name('general.knowledge');
 });
 
-// route general knowledge
-Route::get('/General-Knowledge', function (){
-    return view('pages.Training.training1'); // nama file training1.blade.php
-})->name('general.knowledge');
-
-// route mandatory
-Route::get('/Mandatory', function (){
-    return view('pages.Training.training2');
-})->name('mandatory');
-
