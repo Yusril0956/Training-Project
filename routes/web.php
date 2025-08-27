@@ -57,10 +57,21 @@ Route::middleware('auth')->group(function () {
 
     // training
     Route::get('/Training', [TrainingController::class, 'index'])->name('training.index');
+    Route::get('/General Knowledge', function () {
+        return view('pages.Training.training1');
+    })->name('general.knowledge');
+    Route::get('/Customer Requested', function () {
+        return view('pages.Training.training3');
+    })->name('customer.requested');
+    Route::get('/License', function () {
+        return view('pages.Training.training4');
+    })->name('license.training');
+    Route::get('/Mandatory', function (){
+        return view('pages.Training.training2');
+    })->name('mandatory.training');
 
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
     Route::get('/General-Knowledge', function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
 });
-
