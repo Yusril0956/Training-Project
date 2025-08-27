@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-        <a href=".">
+        <a href="#">
           <img src="{{asset('images/LOGOrl2.png')}}" class="navbar-brand-image " alt="logo">PT.Dirgantara
         </a>
       </h1>
@@ -82,20 +82,10 @@
                 <span class="nav-link-title">Home</span>
               </a>
             </li>
-            
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="trainingDropdown" role="button" 
-                data-bs-toggle="dropdown" aria-expanded="false">
+            <li class="nav-item {{ request()->is('Training') ? 'active' : '' }}">
+              <a class="nav-link" href="{{route('training.index')}}" >
                 <span class="nav-link-title">Training</span>
               </a>
-              <ul class="dropdown-menu" aria-labelledby="trainingDropdown">
-                <!-- Ganti link General Knowledge ke route -->
-                <li><a class="dropdown-item" href="{{ route('general.knowledge') }}">General Knowledge</a></li>
-                <li><a class="dropdown-item" href="/training/advanced">Mandatory</a></li>
-                <li><a class="dropdown-item" href="/training/online">Customer Requested</a></li>
-                <li><a class="dropdown-item" href="/training/certification">Lisensi</a></li>
-                <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
-              </ul>
             </li>
 
             @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
