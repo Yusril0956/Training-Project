@@ -115,7 +115,7 @@
     <script src="{{asset('dist/js/demo-theme.min.js?1692870487')}}"></script>
     <div class="page">
       {{-- include navbar --}}
-      @include('layouts._navbar')
+      @include('partials._navbar')
       <!-- Search Bar START -->
       
       <!-- Search Bar END -->
