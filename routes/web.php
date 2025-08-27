@@ -8,7 +8,9 @@ use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Auth;
 
 // Route utama hanya untuk guest
-Route::get('/', [DashboardController::class, 'test'])->middleware('guest');
+Route::get('/', function () {
+    return view('layouts.welcome');
+})->middleware('guest');
 
 // Login & Register hanya untuk guest
 Route::middleware('guest')->group(function () {
@@ -27,7 +29,7 @@ Route::middleware('guest')->group(function () {
 
 //tambahan profile page
 Route::get('/sertifikat', function () {
-    return view('sertifikat', [
+    return view('pages.sertifikat', [
         'user' => Auth::user()
     ]);
 })->middleware('auth');
@@ -35,7 +37,7 @@ Route::get('/sertifikat', function () {
 // Semua route berikut hanya untuk user yang sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/help', function () {
-        return view('help');
+        return view('pages.help');
     });
 
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
