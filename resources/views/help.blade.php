@@ -1,65 +1,86 @@
-<!-- resources/views/help.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help Center</title>
     <!-- Menambahkan Bootstrap untuk styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body {
             background-color: #f4f7fa;
             font-family: 'Arial', sans-serif;
             color: #333;
+            background-image: url('https://source.unsplash.com/random/1920x1080');
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
+
         .navbar-brand-image {
-            height: 40px; /* Ukuran logo */
+            height: 40px;
             margin-right: 10px;
         }
+
         .navbar-custom {
             display: flex;
             align-items: center;
         }
+
         .navbar-custom h1 {
             margin: 0;
             font-size: 1.5rem;
             color: #007bff;
             font-weight: bold;
         }
+
         .help-section {
             margin-top: 30px;
         }
+
         .card-header {
             background-color: #007bff;
             color: white;
             font-weight: bold;
         }
+
         .card-body {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .help-option {
             display: block;
             padding: 10px;
             border-radius: 5px;
             color: #007bff;
             text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
         }
+
         .help-option:hover {
             background-color: #f0f0f0;
             color: #0056b3;
+            transform: scale(1.05);
         }
+
         .section-title {
             font-size: 1.5rem;
             color: #333;
         }
+
         .section-description {
             font-size: 1.1rem;
             color: #555;
         }
+
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
@@ -67,12 +88,14 @@
             border-radius: 10px;
             color: white;
             font-weight: bold;
+            transition: background-color 0.3s, border-color 0.3s;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
             border-color: #0056b3;
         }
-        /* CSS untuk tombol kotak yang lebih besar dan lebih mencolok */
+
         .custom-btn {
             width: 100%;
             padding: 20px 0;
@@ -90,7 +113,6 @@
             background-color: #0056b3;
         }
 
-        /* Untuk kotak scroll ke bawah */
         #scrollToBottomBtn {
             font-size: 1.1rem;
             padding: 10px 20px;
@@ -99,13 +121,13 @@
             color: white;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         #scrollToBottomBtn:hover {
             background-color: #0056b3;
         }
 
-        /* Styling untuk tombol kembali */
         .back-btn {
             background-color: #6c757d;
             color: white;
@@ -114,13 +136,13 @@
             border-radius: 5px;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .back-btn:hover {
             background-color: #5a6268;
         }
 
-        /* Styling untuk tombol kembali ke atas */
         .scroll-to-top-btn {
             position: fixed;
             top: 20px;
@@ -133,13 +155,24 @@
             border: none;
             cursor: pointer;
             display: none;
+            transition: transform 0.3s;
         }
 
         .scroll-to-top-btn:hover {
             background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .accordion-button {
+            transition: background-color 0.3s;
+        }
+
+        .accordion-button:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar with logo and text -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -153,13 +186,9 @@
         </div>
     </nav>
 
-                
-                <!-- Tombol Scroll ke Bawah -->
-                <div class="text-center my-4">
-                    <button class="btn btn-primary" id="scrollToBottomBtn">Scroll to Bottom</button>
-                </div>
-            </div>
-        </div>
+    <!-- Tombol Scroll ke Bawah -->
+    <div class="text-center my-4">
+        <button class="btn btn-primary" id="scrollToBottomBtn">Scroll to Bottom</button>
     </div>
 
     <div class="container mt-5">
@@ -182,7 +211,7 @@
                             </div>
                             <div class="card-body">
                                 <ul>
-                                    <li><a href="#" class="help-option"> Bagaimana cara masuk?</a></li>
+                                    <li><a href="#" class="help-option">Bagaimana cara masuk?</a></li>
                                     <li><a href="#" class="help-option">Bagaimana cara mengatur ulang kata sandi?</a></li>
                                     <li><a href="#" class="help-option">Bagaimana cara memperbarui profil?</a></li>
                                 </ul>
@@ -220,7 +249,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Section 2: Advanced Guides -->
                 <div class="row help-section">
                     <div class="col-md-6 mb-3">
@@ -246,7 +275,7 @@
                     </div>
                     <div class="card-body">
                         <p class="section-description">Jika Anda tidak dapat menemukan jawaban yang Anda cari, jangan ragu untuk menghubungi tim dukungan kami.</p>
-                        <a href="mailto:support@example.com" class="">Email Support</a>
+                        <a href="mailto:support@example.com" class="help-option">Email Support</a>
                     </div>
                 </div>
 
@@ -257,18 +286,22 @@
                     </div>
                     <div class="card-body">
                         <ul>
-                            <li><a href="#">Forum Komunitas</a></li>
-                            <li><a href="#">Dokumentasi IT</a></li>
-                            <li><a href="#">Panduan Pengguna</a></li>
+                            <li><a href="#" class="help-option">Forum Komunitas</a></li>
+                            <li><a href="#" class="help-option">Dokumentasi IT</a></li>
+                            <li><a href="#" class="help-option">Panduan Pengguna</a></li>
                         </ul>
                     </div>
                 </div>
 
-    <!-- Tombol Kembali ke halaman sebelumnya -->
-    <button class="back-btn" onclick="window.history.back()">Kembali</button>
+                <!-- Tombol Kembali ke halaman sebelumnya -->
+                <button class="back-btn" onclick="window.history.back()">← Kembali</button>
 
-    <!-- Tombol Kembali ke atas -->
-    <button class="scroll-to-top-btn" id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
+                <!-- Tombol Kembali ke atas -->
+                <button class="scroll-to-top-btn" id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
+
+            </div>
+        </div>
+    </div>
 
     <!-- Optional: Adding Bootstrap JS for dropdowns and interactive elements -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -303,4 +336,5 @@
         };
     </script>
 </body>
+
 </html>
