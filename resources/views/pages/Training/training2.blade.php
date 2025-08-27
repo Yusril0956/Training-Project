@@ -15,6 +15,49 @@
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-6" aria-label="Breadcrumb">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <ol class="flex items-center space-x-2 text-sm">
+                    <li>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium transition-colors" onclick="navigateTo('home')">
+                            🏠 Home
+                        </a>
+                    </li>
+                    <li class="text-gray-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium transition-colors" onclick="navigateTo('training')">
+                            📚 Training
+                        </a>
+                    </li>
+                    <li class="text-gray-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium transition-colors" onclick="navigateTo('data')">
+                            📊 Data
+                        </a>
+                    </li>
+                    <li class="text-gray-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </li>
+                    <li>
+                        <span class="text-gray-700 font-medium">
+                            ⚠️ Mandatory
+                        </span>
+                    </li>
+                </ol>
+            </div>
+        </nav>
+
         <!-- Header -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
             <div class="flex items-center justify-between">
@@ -314,9 +357,20 @@ Sertifikat ini valid untuk keperluan audit dan compliance.
             window.URL.revokeObjectURL(url);
         });
 
+        // Navigation function for breadcrumbs
+        function navigateTo(section) {
+            const messages = {
+                'home': 'Navigasi ke halaman utama sistem...',
+                'training': 'Kembali ke daftar semua pelatihan...',
+                'data': 'Menuju halaman data pelatihan dan laporan...'
+            };
+            
+            alert(messages[section] + '\n\nBELUM BERES NJER, ini akan mengarahkan ke halaman ' + section.toUpperCase() + '.');
+        }
+
         // Initialize
         showModule(1);
         updateProgress();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9759856e67d497fb',t:'MTc1NjI3NjIzNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9759e30410a53e24',t:'MTc1NjI4MDA3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
