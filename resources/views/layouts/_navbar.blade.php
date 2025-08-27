@@ -6,24 +6,21 @@
       </button>
       <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
         <a href=".">
-          <img src="{{asset('logo.png')}}" class="navbar-brand-image " alt="logo">Aerospace (IAe)
+          <img src="{{asset('images/LOGOrl2.png')}}" class="navbar-brand-image " alt="logo">PT.Dirgantara
         </a>
       </h1>
       <div class="navbar-nav flex-row order-md-last">
         <div class="d-none d-md-flex">
           <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip"
-data-bs-placement="bottom">
-            <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
+          data-bs-placement="bottom">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
           </a>
           <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip"
-data-bs-placement="bottom">
-            <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
+          data-bs-placement="bottom">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
           </a>
           <div class="nav-item dropdown d-none d-md-flex me-3">
             <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
-              <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>
               <span class="badge bg-red"></span>
             </a>
@@ -44,63 +41,12 @@ data-bs-placement="bottom">
                       </div>
                       <div class="col-auto">
                         <a href="#" class="list-group-item-actions">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                           <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
                         </a>
                       </div>
                     </div>
                   </div>
-                  <div class="list-group-item">
-                    <div class="row align-items-center">
-                      <div class="col-auto"><span class="status-dot d-block"></span></div>
-                      <div class="col text-truncate">
-                        <a href="#" class="text-body d-block">Example 2</a>
-                        <div class="d-block text-secondary text-truncate mt-n1">
-                          justify-content:between ⇒ justify-content:space-between (#29734)
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="list-group-item-actions show">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item">
-                    <div class="row align-items-center">
-                      <div class="col-auto"><span class="status-dot d-block"></span></div>
-                      <div class="col text-truncate">
-                        <a href="#" class="text-body d-block">Example 3</a>
-                        <div class="d-block text-secondary text-truncate mt-n1">
-                          Update change-version.js (#29736)
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="list-group-item-actions">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="list-group-item">
-                    <div class="row align-items-center">
-                      <div class="col-auto"><span class="status-dot status-dot-animated bg-green d-block"></span></div>
-                      <div class="col text-truncate">
-                        <a href="#" class="text-body d-block">Example 4</a>
-                        <div class="d-block text-secondary text-truncate mt-n1">
-                          Regenerate package-lock.json (#29730)
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <a href="#" class="list-group-item-actions">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  <!-- contoh list notifikasi lain disini -->
                 </div>
               </div>
             </div>
@@ -124,7 +70,6 @@ data-bs-placement="bottom">
           </div>
         </div>
         @else
-        {{-- button login --}}
         <a href="/login" class="btn btn-primary">Login</a>
         @endif
       </div>
@@ -137,18 +82,22 @@ data-bs-placement="bottom">
                 <span class="nav-link-title">Home</span>
               </a>
             </li>
+            
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="trainingDropdown" role="button" 
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="nav-link-title">Training</span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="trainingDropdown">
-                <li><a class="dropdown-item" href="/training/basic">Basic Training</a></li>
-                <li><a class="dropdown-item" href="/training/advanced">Advanced Training</a></li>
-                <li><a class="dropdown-item" href="/training/online">Online Training</a></li>
+                <!-- Ganti link General Knowledge ke route -->
+                <li><a class="dropdown-item" href="{{ route('general.knowledge') }}">General Knowledge</a></li>
+                <li><a class="dropdown-item" href="/training/advanced">Mandatory</a></li>
+                <li><a class="dropdown-item" href="/training/online">Customer Requested</a></li>
+                <li><a class="dropdown-item" href="/training/certification">Lisensi</a></li>
                 <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
               </ul>
             </li>
+
             @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
               <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                 <a class="nav-link" href="/admin" >
@@ -156,27 +105,21 @@ data-bs-placement="bottom">
                 </a>
               </li>
             @endif
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                <span class="nav-link-title">
-                  More
-                </span>
+                <span class="nav-link-title">More</span>
               </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="/setting">
-                  Settings
-                </a>
-                <a class="dropdown-item" href="./#">
-                  Profile
-                </a>
-                <a class="dropdown-item" href="/help">
-                  Help
-                </a>
+                <a class="dropdown-item" href="/setting">Settings</a>
+                <a class="dropdown-item" href="./#">Profile</a>
+                <a class="dropdown-item" href="/help">Help</a>
               </div>
             </li>
           </ul>
         </div>
       </div>
+
       <div class="searchbar-wrapper" style="position:relative;display:flex;align-items:center;min-width:50px;">
         <input type="text" class="searchfield" placeholder="Search..." />
         <div class="search"></div>
