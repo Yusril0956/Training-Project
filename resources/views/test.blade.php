@@ -9,7 +9,7 @@
 <body>
     <div class="card">
         <div class="circle" style="--clr:#4da6ff;">
-            <img src="logo.png" alt="" class="logo">
+            <img src="images/LOGOFULL.png" alt="" class="logo">
         </div>
         <div class="content">
             <h2>PT.Dirgantara</h2>
@@ -20,7 +20,7 @@
                 <a href="/login">Login</a>
             @endif
         </div>
-        <img src="wiwit.png" alt="" class="product_img">
+        <img src="images/N219.png" alt="" class="product_img">
     </div>
 </body>
 </html>

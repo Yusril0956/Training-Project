@@ -68,21 +68,26 @@ body{
 }
 .card .product_img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%) scale(0) rotate(315deg);
-    max-width: 80%;   /* supaya tidak lebih besar dari card */
-    max-height: 80%;  /* tinggi menyesuaikan */
-    transition: 0.5s ease-in-out;
-    z-index: 1; /* tetap di belakang text */
-    object-fit: contain; /* jaga proporsi gambar */
+    top: 110%;      /* Di luar kotak bagian bawah */
+    left: 110%;     /* Di luar kotak bagian kanan */
+    transform: translate(-50%,-50%) scale(0) rotate(0deg);
+    max-width: 100%;
+    max-height: 100%;
+    transition: 
+        top 0.7s cubic-bezier(0.77,0,0.175,1),
+        left 0.7s cubic-bezier(0.77,0,0.175,1),
+        transform 0.7s cubic-bezier(0.77,0,0.175,1);
+    z-index: 1;
+    object-fit: contain;
 }
 
 .card:hover .product_img {
+    top: 50%;       /* Tengah kotak secara vertikal */
+    left: 50%;      /* Tengah kotak secara horizontal */
+    transform: translate(-50%,-50%) scale(1.2) rotate(10deg); /* Perbesar & miring ke bawah kiri */
     transition-delay: 0.75s;
-    transform: translate(-50%,-50%) scale(1) rotate(15deg);
-    max-width: 80%;  /* agar tetap pas di dalam card */
-    max-height: 80%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 
