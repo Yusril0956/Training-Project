@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 
 // Route utama hanya untuk guest
@@ -16,6 +16,8 @@ Route::middleware('guest')->group(function () {
         return view('auth.login');
     });
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/register', function () {
         return view('auth.register');
@@ -36,13 +38,13 @@ Route::middleware('auth')->group(function () {
         return view('help');
     });
 
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
     Route::get('/training', [DashboardController::class, 'training']);
-    Route::get('/music', [DashboardController::class, 'music']);
-    Route::get('/setting', [SettingController::class, 'index'])->name('profile');
-    Route::post('/setting/avatar', [SettingController::class, 'updateAvatar'])->name('setting.avatar');
-    Route::delete('/user/delete-avatar', [SettingController::class, 'deleteAvatar'])->name('user.deleteAvatar');
+    Route::post('/setting/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
+    Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
 
 
     Route::group(['middleware' => ['check_role:admin']], function () {
@@ -53,5 +55,4 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
-    Route::post('/user/update-skill', [UserController::class, 'updateSkill'])->name('user.updateSkill');
 });

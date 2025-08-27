@@ -1,10 +1,3 @@
-<?php
-// filepath: routes/web.php
-// ...existing code...
-Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
-// ...existing code...
-?>
-
 <!doctype html> 
 <html lang="en">
   <head>
@@ -13,11 +6,11 @@ Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Settings - Tabler Dashboard</title>
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css" rel="stylesheet"/>
-    <link href="./dist/css/tabler-flags.min.css" rel="stylesheet"/>
-    <link href="./dist/css/tabler-payments.min.css" rel="stylesheet"/>
-    <link href="./dist/css/tabler-vendors.min.css" rel="stylesheet"/>
-    <link href="./dist/css/demo.min.css" rel="stylesheet"/>
+    <link href="{{ asset('dist/css/tabler.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('dist/css/tabler-flags.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('dist/css/tabler-payments.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('dist/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('dist/css/demo.min.css') }}" rel="stylesheet"/>
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -41,7 +34,7 @@ Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
     </script>
   </head>
   <body>
-    <script src="./dist/js/demo-theme.min.js"></script>
+    <script src="{{ asset('dist/js/demo-theme.min.js') }}"></script>
     <div class="page">
       <!-- Navbar -->
         @include('layouts._sidebar')
@@ -183,8 +176,8 @@ Route::get('/setting', [SettingController::class, 'index'])->middleware('auth');
     </div>
 
     <!-- Tabler JS -->
-    <script src="./dist/js/tabler.min.js" defer></script>
-    <script src="./dist/js/demo.min.js" defer></script>
+    <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
+    <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Auto show configurable modal if session variables are present

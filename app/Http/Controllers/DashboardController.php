@@ -23,18 +23,6 @@ class DashboardController extends Controller
         $users = User::all();
         return view('pages.admin', compact('users'));
     }
-
-    public function music()
-    {
-        return view('pages.music');
-    }
-
-    public function setting()
-    {
-        $user = Auth::user();
-        return view('pages.setting', compact('user'));
-    }
-
     public function test()
     {
         return view('test');
@@ -108,35 +96,5 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus user!');
         }
-    }
-
-    /**
-     * Example method to demonstrate configurable modal usage
-     */
-    public function exampleModal()
-    {
-        // Example 1: Success modal
-        return redirect()->back()
-            ->with('modal_type', 'success')
-            ->with('modal_title', 'Operasi Berhasil')
-            ->with('modal_message', 'Data telah berhasil disimpan!')
-            ->with('modal_button_text', 'OK')
-            ->with('modal_button_class', 'btn-success');
-
-        // Example 2: Warning modal  
-        // return redirect()->back()
-        //     ->with('modal_type', 'warning')
-        //     ->with('modal_title', 'Peringatan')
-        //     ->with('modal_message', 'Anda yakin ingin melanjutkan?')
-        //     ->with('modal_button_text', 'Ya, Lanjutkan')
-        //     ->with('modal_button_class', 'btn-warning');
-
-        // Example 3: Info modal
-        // return redirect()->back()
-        //     ->with('modal_type', 'info')
-        //     ->with('modal_title', 'Informasi')
-        //     ->with('modal_message', 'Fitur ini akan tersedia dalam versi berikutnya.')
-        //     ->with('modal_button_text', 'Mengerti')
-        //     ->with('modal_button_class', 'btn-info');
     }
 }

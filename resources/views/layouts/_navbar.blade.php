@@ -113,11 +113,11 @@ data-bs-placement="bottom">
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
             <a href="#" class="dropdown-item">Status</a>
-            <a href="./profile.html" class="dropdown-item">Profile</a>
+            <a href="{{route('profile')}}" class="dropdown-item">Profile</a>
             <a href="#" class="dropdown-item">Feedback</a>
             <div class="dropdown-divider"></div>
-            <a href="/setting" class="dropdown-item">Settings</a>
-            <form action="{{ url('/logout') }}" method="POST" class="d-inline">
+            <a href="{{route('profile')}}" class="dropdown-item">Setting</a>
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
               @csrf
               <button type="submit" class="dropdown-item">Logout</button>
             </form>

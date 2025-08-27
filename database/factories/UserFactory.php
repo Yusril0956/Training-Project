@@ -17,7 +17,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'nik' => $this->faker->numerify('################'),
+            'nik' => $this->faker->unique()->numerify('################'),
             'city' => $this->faker->city(),
             'role' => 'user',
             'status' => 'active',

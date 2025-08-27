@@ -53,4 +53,14 @@ class User extends Authenticatable
             'skills' => 'array',
         ];
     }
+
+    public function roles()
+    {
+        return $this->hasMany(UserRole::class);
+    }
+
+    public function trainingMembers()
+    {
+        return $this->hasMany(TrainingMember::class);
+    }
 }
