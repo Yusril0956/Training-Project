@@ -75,3 +75,4 @@ Route::middleware('auth')->group(function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
 });
+
