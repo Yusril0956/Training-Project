@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');

@@ -88,7 +88,7 @@
               </a>
             </li>
 
-            @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
+            @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
               <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                 <a class="nav-link" href="/admin" >
                   <span class="nav-link-title">Admin</span>

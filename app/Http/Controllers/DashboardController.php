@@ -13,9 +13,9 @@ class DashboardController extends Controller
         return view('pages.home');
     }
 
-    public function training()
+    public function terms()
     {
-        return view('pages.users');
+        return view('pages.terms');
     }
 
     public function admin()
