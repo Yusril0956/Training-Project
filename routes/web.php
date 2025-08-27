@@ -57,8 +57,8 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
+    Route::get('/General-Knowledge', function () {
+        return view('pages.Training.training1');
+    })->name('general.knowledge');
 });
 
-Route::get('/General-Knowledge', function () {
-    return view('pages.Training.training1'); // nama file training1.blade.php
-})->name('general.knowledge');
