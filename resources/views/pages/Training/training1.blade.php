@@ -21,10 +21,10 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                        <span class="text-blue-600 font-bold text-xl">🚀</span>
+                        <img src="{{asset('images/LOGOrl2.png')}}" class="navbar-brand-image " alt="logo">
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold">DirgantaraLearn</h1>
+                        <h1 class="text-2xl font-bold">PT.Dirgantara</h1>
                         <p class="text-blue-100 text-sm">Keunggulan Pelatihan Dirgantara</p>
                     </div>
                 </div>
@@ -286,7 +286,7 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-3 gap-8">
                 <div>
-                    <h4 class="font-semibold mb-4">DirgantaraLearn PT.Dirgantara</h4>
+                    <h4 class="font-semibold mb-4">PT.Dirgantara</h4>
                     <p class="text-gray-300 text-sm">Pendidikan dirgantara komprehensif untuk profesional industri.</p>
                 </div>
                 <div>
@@ -307,7 +307,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300 text-sm">
-                <p>&copy; 2024 DirgantaraLearn PT.Dirgantara Platform Pelatihan. Hak cipta dilindungi.</p>
+                <p>&copy; 2025  ini WM by:Reqi :V</p>
             </div>
         </div>
     </footer>
