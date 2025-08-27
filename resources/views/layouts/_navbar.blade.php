@@ -91,7 +91,7 @@
               <ul class="dropdown-menu" aria-labelledby="trainingDropdown">
                 <!-- Ganti link General Knowledge ke route -->
                 <li><a class="dropdown-item" href="{{ route('general.knowledge') }}">General Knowledge</a></li>
-                <li><a class="dropdown-item" href="/training/advanced">Mandatory</a></li>
+                <li><a class="dropdown-item" href="{{ route('mandatory') }}">Mandatory</a></li>
                 <li><a class="dropdown-item" href="/training/online">Customer Requested</a></li>
                 <li><a class="dropdown-item" href="/training/certification">Lisensi</a></li>
                 <li><a class="dropdown-item" href="/training/certification">Certification</a></li>
