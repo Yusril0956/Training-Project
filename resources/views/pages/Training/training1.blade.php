@@ -38,6 +38,21 @@
         </div>
     </header>
 
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="container mx-auto px-6 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-600">
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="navigateTo('home')">🏠 Home</a>
+                <span class="text-gray-400">></span>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="navigateTo('training')">📚 Training</a>
+                <span class="text-gray-400">></span>
+                <a href="#" class="hover:text-blue-600 transition-colors" onclick="navigateTo('data')">💾 Data</a>
+                <span class="text-gray-400">></span>
+                <span class="text-gray-800 font-medium">🧠 General Knowledge</span>
+            </nav>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="container mx-auto px-6 py-8">
         <!-- Welcome Section -->
@@ -286,7 +301,7 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-3 gap-8">
                 <div>
-                    <h4 class="font-semibold mb-4">PT.Dirgantara</h4>
+                    <h4 class="font-semibold mb-4">DirgantaraLearn PT.Dirgantara</h4>
                     <p class="text-gray-300 text-sm">Pendidikan dirgantara komprehensif untuk profesional industri.</p>
                 </div>
                 <div>
@@ -307,7 +322,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300 text-sm">
-                <p>&copy; 2025  ini WM by:Reqi :V</p>
+                <p>&copy; 2025 ini WM by:Reqi :V</p>
             </div>
         </div>
     </footer>
@@ -738,6 +753,29 @@
             }
         });
 
+        // Breadcrumb navigation function
+        function navigateTo(section) {
+            const messages = {
+                'home': 'Navigasi ke halaman utama...',
+                'training': 'Membuka menu pelatihan...',
+                'data': 'Mengakses bagian data...'
+            };
+            
+            // Show a temporary message
+            const tempDiv = document.createElement('div');
+            tempDiv.className = 'fixed top-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300';
+            tempDiv.textContent = messages[section] || 'Navigasi...';
+            document.body.appendChild(tempDiv);
+            
+            // Remove the message after 2 seconds
+            setTimeout(() => {
+                tempDiv.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(tempDiv);
+                }, 300);
+            }, 2000);
+        }
+
         // Smooth scrolling for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -752,5 +790,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9758a01aa322fd39',t:'MTc1NjI2Njg0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9759ee3e76cf9e2f',t:'MTc1NjI4MDUzMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

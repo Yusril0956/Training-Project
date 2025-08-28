@@ -74,15 +74,15 @@ class UserSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'reqi@gmail.com'],
+            ['email' => 'reqi7@gmail.com'],
             [
                 'name' => 'reqi',
                 'email_verified_at' => now(),
                 'phone' => '08123456789',
                 'address' => 'Jalan jalan No. 1',
                 'nik' => '947367482905736',
-                'city' => 'Jakarta',
-                'role' => 'super_admin',
+                'city' => 'Bandoeng',
+                'role' => 'admin',
                 'password' => bcrypt('12345678'),
             ]
         );
