@@ -1,31 +1,26 @@
 @extends('layouts.app')
+@section('title', 'Training')
 
 @section('content')
-    <!-- Page header -->
-    <div class="page-header d-print-none pt-2 pb-2 mb-2">
-        <div class="container-xl">
-            <div class="col">
-            @include('partials._breadcrumb', [
-                'items' => [
-                    ['title' => 'Training', 'url' => route('training.index')]
-                ]
-            ])
-            </div>
-        </div>
-    </div>
     <!-- Page body -->
     <div class="page-body pt-2">
         <div class="container-xl">
+            
+            @include('partials._breadcrumb', [
+                'items' => [['title' => 'Training', 'url' => route('training.index')]],
+            ])
+
             <!-- Hero Section -->
             <div class="card mb-4">
                 <div class="card-body text-center py-5">
                     <h1 class="card-title">Welcome to Training Portal</h1>
-                    <p class="card-subtitle text-muted">Explore various training programs to enhance your skills and compliance.</p>
+                    <p class="card-subtitle text-muted">Explore various training programs to enhance your skills and
+                        compliance.</p>
                 </div>
             </div>
 
             <!-- Training Cards -->
-            <div class="row row-cards">
+            <div class="row row-cards mb-4">
                 <!-- General Knowledge -->
                 <div class="col-sm-6 col-lg-3">
                     <div class="card card-sm">
@@ -35,7 +30,7 @@
                             </div>
                             <h3 class="card-title">General Knowledge</h3>
                             <p class="text-muted">Broaden your understanding across various domains.</p>
-                            <a href="{{route('general.knowledge')}}" class="btn btn-primary btn-sm">Explore</a>
+                            <a href="{{ route('general.knowledge') }}" class="btn btn-primary btn-sm">Explore</a>
                         </div>
                     </div>
                 </div>
@@ -49,7 +44,7 @@
                             </div>
                             <h3 class="card-title">Mandatory</h3>
                             <p class="text-muted">Required trainings for compliance and safety.</p>
-                            <a href="{{route('mandatory.training')}}" class="btn btn-danger btn-sm">View</a>
+                            <a href="{{ route('mandatory.training') }}" class="btn btn-danger btn-sm">View</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +58,7 @@
                             </div>
                             <h3 class="card-title">Customer Requested</h3>
                             <p class="text-muted">Tailored trainings based on client needs.</p>
-                            <a href="{{route('customer.requested')}}" class="btn btn-success btn-sm">Details</a>
+                            <a href="{{ route('customer.requested') }}" class="btn btn-success btn-sm">Details</a>
                         </div>
                     </div>
                 </div>
@@ -77,11 +72,70 @@
                             </div>
                             <h3 class="card-title">License</h3>
                             <p class="text-muted">Certifications and licensed training programs.</p>
-                            <a href="{{route('license.training')}}" class="btn btn-warning btn-sm">Start</a>
+                            <a href="{{ route('license.training') }}" class="btn btn-warning btn-sm">Start</a>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="row row-cards mb-4">
+                <div class="col-sm-4">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted me-2">Total Permintaan</span>
+                                <h3 class="mb-0">24</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted me-2">Approved</span>
+                                <h3 class="mb-0 text-success">12</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <span class="text-muted me-2">Pending</span>
+                                <h3 class="mb-0 text-warning">8</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Kalender Training</h3>
+                </div>
+                <div class="card-body">
+                    <div id="calendar-placeholder"
+                        style="height: 300px; background-color: #f8f9fa; text-align: center; line-height: 300px;">
+                        [Integrasi kalender di sini – bisa pakai FullCalendar atau komponen custom]
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Rekomendasi Training</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Pelatihan Audit Internal ISO 9001</li>
+                        <li class="list-group-item">Simulasi Emergency Response</li>
+                        <li class="list-group-item">Training Sistem Avionik Dasar</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

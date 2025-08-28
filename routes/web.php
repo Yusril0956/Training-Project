@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+    Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::post('/setting/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
     Route::post('/setting/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
     Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
@@ -75,6 +75,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/Mandatory', function () {
         return view('pages.Training.training2');
     })->name('mandatory.training');
+
+    Route::get('/training/detail-training', function () {
+        return view('pages.Training.detail_training');
+    })->name('detail.training');
 
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
     Route::get('/General-Knowledge', function () {
