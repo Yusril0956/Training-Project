@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TrainingCOntroller;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Auth;
 
 // Route utama hanya untuk guest
@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
+    Route::get('/training', [DashboardController::class, 'training'])->name('training.index');
     Route::post('/setting/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
     Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
 
@@ -55,21 +56,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
         Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
     });
-
-    // training
-    Route::get('/Training', [TrainingController::class, 'index'])->name('training.index');
-    Route::get('/General Knowledge', function () {
-        return view('pages.Training.training1');
-    })->name('general.knowledge');
-    Route::get('/Customer Requested', function () {
-        return view('pages.Training.training3');
-    })->name('customer.requested');
-    Route::get('/License', function () {
-        return view('pages.Training.training4');
-    })->name('license.training');
-    Route::get('/Mandatory', function (){
-        return view('pages.Training.training2');
-    })->name('mandatory.training');
 
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
     Route::get('/General-Knowledge', function () {
