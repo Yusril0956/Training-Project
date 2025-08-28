@@ -27,6 +27,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
+Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
+
+
 //tambahan profile page
 Route::get('/sertifikat', function () {
     return view('pages.sertifikat', [
@@ -69,7 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/License', function () {
         return view('pages.Training.training4');
     })->name('license.training');
-    Route::get('/Mandatory', function (){
+    Route::get('/Mandatory', function () {
         return view('pages.Training.training2');
     })->name('mandatory.training');
 
@@ -78,4 +81,3 @@ Route::middleware('auth')->group(function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
 });
-

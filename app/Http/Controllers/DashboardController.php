@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -86,6 +87,31 @@ class DashboardController extends Controller
             return redirect()->back()->with('success', 'User berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus user!');
+        }
+    }
+
+    public function inbox()
+    {
+        $feedback = Feedback::all();
+
+        return view('pages.inbox', compact('feedback'));
+    }
+
+    public function feedback(Request $request)
+    {
+        $request->validate([
+            'nama_pengirim' => 'required|string|max:100',
+            'pesan' => 'required|string',
+        ]);
+
+        try {
+            Feedback::create([
+                'nama_pengirim' => $request->nama_pengirim,
+                'pesan' => $request->pesan,
+            ]);
+            return redirect()->back()->with('success', 'Feedback berhasil dikirim!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengirim feedback!');
         }
     }
 }

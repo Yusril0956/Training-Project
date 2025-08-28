@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TrainingSeeder::class,
             TrainingDetailSeeder::class,
             TrainingMemberSeeder::class,
+            FeedbackSeeder::class,
         ]);
     }
 }
