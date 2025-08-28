@@ -1,4 +1,5 @@
 @extends('layouts.dashboard')
+@section('title', 'Inbox')
 
 @section('content')
     <div class="page-header d-print-none">

@@ -4,12 +4,12 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-                @include('partials._breadcrumb', [
-                    'items' => [
-                        ['title' => 'Training', 'url' => route('training.index')],
-                        ['title' => 'Customer Requested', 'url' => route('customer.requested')]
-                    ]
-                ])
+            @include('partials._breadcrumb', [
+                'items' => [
+                    ['title' => 'Training', 'url' => route('training.index')],
+                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
+                ],
+            ])
             <!-- Hero Section -->
             <div class="card mb-4">
                 <div class="card-body text-center py-4">
@@ -40,76 +40,80 @@
                             </select>
                         </div>
                         <div class="col-md-4 text-end">
-                            <a href="#" class="btn btn-primary">+ Tambah Permintaan</a>
+                            <a href="#add-training-request" class="btn btn-primary">+ Tambah Permintaan</a>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Tabel Daftar Training -->
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-primary">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Judul Pelatihan</th>
-                                    <th>Kategori</th>
-                                    <th>Klien</th>
-                                    <th>Status</th>
-                                    <th>Tanggal Permintaan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Pelatihan Perawatan CN235</td>
-                                    <td>Teknis</td>
-                                    <td>PT Aviasi Nusantara</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                    <td>2025-08-20</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                        <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Audit Kepatuhan ISO 9001</td>
-                                    <td>Kepatuhan</td>
-                                    <td>PT AeroCert</td>
-                                    <td><span class="badge bg-success">Completed</span></td>
-                                    <td>2025-07-15</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                        <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Simulasi Evakuasi Darurat</td>
-                                    <td>Keselamatan</td>
-                                    <td>PT SkyShield</td>
-                                    <td><span class="badge bg-primary">Approved</span></td>
-                                    <td>2025-08-01</td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                        <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Permintaan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Judul Pelatihan</th>
+                                        <th>Kategori</th>
+                                        <th>Klien</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Permintaan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Pelatihan Perawatan CN235</td>
+                                        <td>Teknis</td>
+                                        <td>PT Aviasi Nusantara</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>2025-08-20</td>
+                                        <td>
+                                            <a href="{{ route('detail.training') }}" class="btn btn-sm btn-info">Detail</a>
+                                            <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Audit Kepatuhan ISO 9001</td>
+                                        <td>Kepatuhan</td>
+                                        <td>PT AeroCert</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                        <td>2025-07-15</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
+                                            <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Simulasi Evakuasi Darurat</td>
+                                        <td>Keselamatan</td>
+                                        <td>PT SkyShield</td>
+                                        <td><span class="badge bg-primary">Approved</span></td>
+                                        <td>2025-08-01</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
+                                            <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <!-- Optional: Form Tambah Permintaan -->
-            <div class="card mt-4">
+            <div class="card mt-4" id="add-training-request">
                 <div class="card-header">
                     <h3 class="card-title">Tambah Permintaan Pelatihan</h3>
                 </div>

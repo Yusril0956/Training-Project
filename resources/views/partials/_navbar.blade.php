@@ -60,7 +60,7 @@
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
             <a href="#" class="dropdown-item">Status</a>
             <a href="{{route('profile')}}" class="dropdown-item">Profile</a>
-            <a href="#" class="dropdown-item">Feedback</a>
+            <a href="{{route('index')}}/#feedback" class="dropdown-item">Feedback</a>
             <div class="dropdown-divider"></div>
             <a href="{{route('profile')}}" class="dropdown-item">Setting</a>
             <form action="{{ route('logout') }}" method="POST" class="d-inline">
@@ -78,7 +78,7 @@
         <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
           <ul class="navbar-nav">
             <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-              <a class="nav-link" href="/" >
+              <a class="nav-link" href="{{route('index')}}" >
                 <span class="nav-link-title">Home</span>
               </a>
             </li>
