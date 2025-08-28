@@ -2,9 +2,8 @@
 
 @section('content')
     <!-- Page header -->
-    <div class="page-header d-print-none">
+    <div class="page-header d-print-none pt-2 pb-2 mb-2">
         <div class="container-xl">
-        <div class="row g-2 align-items-center">
             <div class="col">
             @include('partials._breadcrumb', [
                 'items' => [
@@ -13,10 +12,9 @@
             ])
             </div>
         </div>
-        </div>
     </div>
     <!-- Page body -->
-    <div class="page-body">
+    <div class="page-body pt-2">
         <div class="container-xl">
             <!-- Hero Section -->
             <div class="card mb-4">
