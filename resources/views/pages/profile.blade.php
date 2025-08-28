@@ -21,6 +21,8 @@
     <!-- Page body -->
     <div class="page-body">
         <div class="container-xl">
+        @include('components._alert')
+
             <div class="card">
                 <div class="row g-0">
                     <div class="card-body">
@@ -81,7 +83,8 @@
                         <p class="card-subtitle">You can set a permanent password if you don't want to use temporary
                             login codes.</p>
                         <div>
-                            <a href="#" class="btn">Set new password</a>
+                            <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-password">Set
+                                new password</a>
                         </div>
 
                         <h3 class="card-title mt-4">Public profile</h3>
@@ -123,6 +126,33 @@
                             class="avatar avatar-xl mb-2" style="object-fit:cover;" alt="Avatar Preview">
                         <input type="file" class="form-control mt-2" name="avatar" accept="image/*"
                             onchange="previewAvatar(event)">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal new password -->
+    <div class="modal modal-blur fade" id="modal-new-password" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" method="POST" action="{{ route('setting.password') }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title">Set New Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" name="password_confirmation" required>
                     </div>
                 </div>
                 <div class="modal-footer">

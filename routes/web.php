@@ -51,10 +51,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('index');
     Route::post('/setting/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
+    Route::post('/setting/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
     Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
 
 
-    Route::group(['middleware' => ['check_role:admin']], function () {
+    Route::group(['middleware' => ['check_role:admin,super_admin']], function () {
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
         Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
         Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
@@ -66,9 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/General Knowledge', function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
-    Route::get('/Customer Requested', function () {
-        return view('pages.Training.training3');
-    })->name('customer.requested');
+    Route::get('/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer.requested');
     Route::get('/License', function () {
         return view('pages.Training.training4');
     })->name('license.training');

@@ -27,6 +27,20 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('123456'),
             ]
         );
+        User::updateOrCreate(
+            ['email' => 'ryl@gmail.com'],
+            [
+                'name' => 'Ryl',
+                'email_verified_at' => now(),
+                'phone' => '098228492w',
+                'address' => 'Jl. Moonrow',
+                'nik' => '130928479294032',
+                'city' => 'Gangnam',
+                'role' => 'super_admin',
+                'profile' => 'storage/avatars/avatar_2.jpg',
+                'password' => bcrypt('123456'),
+            ]
+        );
 
         // Create admin user
         User::updateOrCreate(

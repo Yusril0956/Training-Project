@@ -16,7 +16,21 @@ class ProfileController extends Controller
         // kirim ke view
         return view('pages.profile', compact('user'));
     }
-    
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6|same:password',
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password berhasil diubah!');
+    }
+
     public function updateAvatar(Request $request)
     {
         $request->validate([

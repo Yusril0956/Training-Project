@@ -10,4 +10,9 @@ class TrainingController extends Controller
     {
         return view('pages.Training.index');
     }
+
+    public function customerRequested()
+    {
+        return view('pages.Training.customer_requested');
+    }
 }

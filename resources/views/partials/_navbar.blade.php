@@ -82,7 +82,7 @@
                 <span class="nav-link-title">Home</span>
               </a>
             </li>
-            <li class="nav-item {{ request()->is('Training') ? 'active' : '' }}">
+            <li class="nav-item {{ request()->is('training', 'customer.requested') ? 'active' : '' }}">
               <a class="nav-link" href="{{route('training.index')}}" >
                 <span class="nav-link-title">Training</span>
               </a>
