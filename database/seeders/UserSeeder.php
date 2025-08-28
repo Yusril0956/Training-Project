@@ -74,7 +74,7 @@ class UserSeeder extends Seeder
         );
 
         User::updateOrCreate(
-            ['email' => 'reqi7@gmail.com'],
+            ['email' => 'reqi@gmail.com'],
             [
                 'name' => 'reqi',
                 'email_verified_at' => now(),
