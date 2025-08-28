@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingCOntroller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CertificateController;
 
 // Route utama hanya untuk guest
 Route::get('/', function () {
@@ -79,4 +80,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/General-Knowledge', function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/certificates', [CertificateController::class, 'index']);
+    Route::post('/certificates', [CertificateController::class, 'store']);
 });
