@@ -6,11 +6,11 @@
         <div class="container-xl">
         <div class="row g-2 align-items-center">
             <div class="col">
-            <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Training</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="#">Data</a></li>
-            </ol>
+            @include('partials._breadcrumb', [
+                'items' => [
+                    ['title' => 'Training', 'url' => route('training.index')]
+                ]
+            ])
             </div>
         </div>
         </div>

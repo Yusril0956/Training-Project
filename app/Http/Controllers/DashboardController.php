@@ -24,11 +24,6 @@ class DashboardController extends Controller
         return view('pages.admin', compact('users'));
     }
 
-    public function userEdit()
-    {
-        return view('user.edit');
-    }
-
     public function userUpdate(Request $request, $id)
     {
         try {

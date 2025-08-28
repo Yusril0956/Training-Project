@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => ['check_role:admin']], function () {
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
-        Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('admin.user.add');
+        Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
         Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
         Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
     });

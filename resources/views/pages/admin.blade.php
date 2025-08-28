@@ -28,20 +28,72 @@
   <div class="page-header d-print-none">
     <div class="container-xl">
       <div class="row g-2 align-items-center">
+       
         <div class="col">
-          <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="#">Admin</a></li>
-          </ol>
-          <h2 class="page-title">
-            Datatables
-          </h2>
-          <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
-            Add User</a>               
+          @include('partials._breadcrumb', [
+              'items' => [
+                  ['title' => 'Admin', 'url' => route('admin')]
+              ]
+          ])      
+        </div>
+        <div class="col-auto ms-auto">
+          <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
+            <i class="ti ti-user-plus me-1"></i>
+            Add User
+          </a>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="page-header d-print-none">
+    <div class="container-xl">
+      <div class="row g-2 align-items-center">
+        
+        {{-- Kolom kiri: breadcrumb --}}
+        <div class="col">
+          @include('partials._breadcrumb', [
+              'items' => [
+                  ['title' => 'Admin', 'url' => route('admin')]
+              ]
+          ])      
+        </div>
+
+        {{-- Kolom kanan: tombol aksi --}}
+        <div class="col-auto ms-auto">
+          <div class="btn-list">
+            {{-- Tombol utama (Add User) --}}
+            <a href="{{ route('users.create') }}" class="btn btn-primary">
+              <i class="ti ti-user-plus me-1"></i>
+              Add User
+            </a>
+
+            {{-- Dropdown tambahan --}}
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" type="button" aria-expanded="false">
+                More
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item" href="{{ route('users.import') }}">
+                    <i class="ti ti-upload me-1"></i> Import Users
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{{ route('users.export') }}">
+                    <i class="ti ti-download me-1"></i> Export Users
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
   
 
   @include('components._alert')
@@ -151,7 +203,7 @@
 
   <!-- Modal Add User (tidak diubah) -->
   <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
-    <form action="{{ route('admin.user.add') }}" method="POST">
+    <form action="{{ route('users.create') }}" method="POST">
       @csrf
       @if ($errors->any())
         <div class="alert alert-danger alert-fixed-top-right">
