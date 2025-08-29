@@ -30,7 +30,6 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
     <header class="bg-white shadow-sm border-b">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
@@ -42,19 +41,12 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <h1>Selamat datang kembali, {{ Auth::user()->name }}</h1>
-
-                    
                 </div>
             </div>
         </div>
     </header>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-    
-
-
-        <!-- Certificate Management Section -->
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
             <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
                 <div class="flex justify-between items-center">
@@ -65,10 +57,8 @@
                 </div>
             </div>
             
-            <!-- Certificates Grid -->
             <div class="p-6">
                 <div id="certificatesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Sample Certificate 1 -->
                     <div class="certificate-card bg-white border-2 border-gray-200 rounded-xl p-4">
                         <div class="flex items-center justify-between mb-3">
                             <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -83,7 +73,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- Certificate Photo -->
                         <div class="mb-3 rounded-lg overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 p-4">
                             <svg viewBox="0 0 400 280" class="w-full h-32">
                                 <rect width="400" height="280" fill="#1e40af" rx="8"/>
@@ -110,7 +99,6 @@
                         </button>
                     </div>
 
-                    <!-- Sample Certificate 2 -->
                     <div class="certificate-card bg-white border-2 border-gray-200 rounded-xl p-4">
                         <div class="flex items-center justify-between mb-3">
                             <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -125,7 +113,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- Certificate Photo -->
                         <div class="mb-3 rounded-lg overflow-hidden bg-gradient-to-br from-green-50 to-green-100 p-4">
                             <svg viewBox="0 0 400 280" class="w-full h-32">
                                 <rect width="400" height="280" fill="#059669" rx="8"/>
@@ -152,7 +139,6 @@
                         </button>
                     </div>
 
-                    <!-- Add Certificate Card -->
                     <div onclick="openUploadModal()" class="certificate-card bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all">
                         <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mb-3">
                             <i class="fas fa-plus text-gray-400 text-xl"></i>
@@ -164,7 +150,6 @@
         </div>
     </div>
 
-    <!-- Upload Modal -->
     <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
             <div class="flex justify-between items-center p-6 border-b">
@@ -215,7 +200,6 @@
         </div>
     </div>
 
-    <!-- Edit Modal -->
     <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
             <div class="flex justify-between items-center p-6 border-b">
@@ -260,13 +244,10 @@
 
     <script>
 
-        let certificates = [ /* ... data dummy ... */ ];
-        let currentEditId = null;
-        let uploadedFile = null; // Tambahkan variabel ini
         // Certificate data storage
-        
-
+        let certificates = [];
         let currentEditId = null;
+        let uploadedFile = null;
 
         // Modal functions
         function openUploadModal() {
@@ -311,59 +292,61 @@
         }
 
         function handleFileSelect(e) {
-    const file = e.target.files[0];
-    if (file) {
-        handleFile(file);
-    }
-}
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
 
-function handleFile(file) {
-    uploadedFile = file; // Simpan file ke variabel global
-    showNotification('File terpilih: ' + file.name, 'success');
-}
+        function handleFile(file) {
+            uploadedFile = file; // Simpan file ke variabel global
+            const fileNameDisplay = document.querySelector('.upload-area p.text-gray-600');
+            if (fileNameDisplay) {
+                fileNameDisplay.textContent = 'File terpilih: ' + file.name;
+            }
+            showNotification('File terpilih: ' + file.name, 'success');
+        }
 
         // Certificate management
-async function uploadCertificate() {
-    const name = document.getElementById('certName').value;
-    const org = document.getElementById('certOrg').value;
-    const issueDate = document.getElementById('issueDate').value;
-    const expiryDate = document.getElementById('expiryDate').value;
+        async function uploadCertificate() {
+            const name = document.getElementById('certName').value;
+            const org = document.getElementById('certOrg').value;
+            const issueDate = document.getElementById('issueDate').value;
+            const expiryDate = document.getElementById('expiryDate').value;
 
-    // Periksa apakah ada file yang diunggah
-    if (!uploadedFile || !name || !org || !issueDate) {
-        showNotification('Harap isi semua field dan unggah file.', 'error');
-        return;
-    }
+            if (!uploadedFile || !name || !org || !issueDate) {
+                showNotification('Harap isi semua field dan unggah file.', 'error');
+                return;
+            }
 
-    const formData = new FormData();
-    formData.append('file', uploadedFile); // Gunakan variabel yang disimpan
-    formData.append('name', name);
-    formData.append('organization', org);
-    formData.append('issue_date', issueDate);
-    formData.append('expiry_date', expiryDate);
-    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            const formData = new FormData();
+            formData.append('file', uploadedFile); 
+            formData.append('name', name);
+            formData.append('organization', org);
+            formData.append('issue_date', issueDate);
+            formData.append('expiry_date', expiryDate);
+            formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
-    try {
-        const response = await fetch('/certificates', {
-            method: 'POST',
-            body: formData,
-        });
+            try {
+                const response = await fetch('/certificates', {
+                    method: 'POST',
+                    body: formData,
+                });
 
-        const result = await response.json();
+                const result = await response.json();
 
-        if (response.ok) {
-            renderCertificates();
-            closeUploadModal();
-            showNotification(result.message, 'success');
-        } else {
-            // Tangani error dari server
-            showNotification('Error: ' + JSON.stringify(result.errors), 'error');
+                if (response.ok) {
+                    renderCertificates();
+                    closeUploadModal();
+                    showNotification(result.message, 'success');
+                } else {
+                    showNotification('Error: ' + JSON.stringify(result.errors), 'error');
+                }
+            } catch (error) {
+                showNotification('Terjadi kesalahan saat mengunggah sertifikat.', 'error');
+                console.error('Error:', error);
+            }
         }
-    } catch (error) {
-        showNotification('Terjadi kesalahan saat mengunggah sertifikat.', 'error');
-        console.error('Error:', error);
-    }
-}
 
         function editCertificate(id) {
             const cert = certificates.find(c => c.id === id);
@@ -414,24 +397,52 @@ async function uploadCertificate() {
         }
 
         // Render certificates
-        function renderCertificates() {
+        // Render certificates
+function renderCertificates() {
     const grid = document.getElementById('certificatesGrid');
-    const addCard = grid.querySelector('.cursor-pointer'); 
+    const addCard = grid.querySelector('.cursor-pointer');
 
+    // Kosongkan grid sebelum menambahkan data baru dari server
+    grid.innerHTML = '';
+    
+    // Panggil endpoint /certificates
     fetch('/certificates')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                // Tangani respons yang tidak berhasil
+                throw new Error('Jaringan bermasalah atau server tidak merespons.');
+            }
+            return response.json();
+        })
         .then(data => {
-            grid.innerHTML = '';
+            // Gunakan data dari server untuk membuat card sertifikat
             data.forEach(cert => {
                 const certCard = createCertificateCard(cert);
                 grid.appendChild(certCard);
             });
             grid.appendChild(addCard);
+            if (data.length === 0) {
+                showNotification('Tidak ada sertifikat yang ditemukan.', 'info');
+            }
         })
         .catch(error => {
             console.error('Error fetching certificates:', error);
-            showNotification('Gagal memuat sertifikat.', 'error');
+            showNotification('Gagal memuat sertifikat. Periksa koneksi backend.', 'error');
         });
+    }
+
+    function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+    }`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
 }
 
         function createCertificateCard(cert) {
@@ -466,7 +477,6 @@ async function uploadCertificate() {
                         </button>
                     </div>
                 </div>
-                <!-- Certificate Photo -->
                 <div class="mb-3 rounded-lg overflow-hidden bg-gradient-to-br ${bgColorClass} p-4">
                     <svg viewBox="0 0 400 280" class="w-full h-32">
                         <rect width="400" height="280" fill="${certColor}" rx="8"/>
@@ -513,7 +523,7 @@ async function uploadCertificate() {
             document.getElementById('expiryDate').value = '';
             document.getElementById('certificateFile').value = '';
             uploadedFile = null; // Reset variabel file
-}
+        }
 
         function showNotification(message, type) {
             const notification = document.createElement('div');
@@ -534,5 +544,5 @@ async function uploadCertificate() {
             renderCertificates();
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9761122a83d2fe03',t:'MTc1NjM1NTQwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
