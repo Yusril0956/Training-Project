@@ -109,6 +109,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
     Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
 
+    // Tambahkan dua rute ini
+    Route::put('/certificates/{certificate}', [CertificateController::class, 'update'])->name('certificates.update');
+    Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
+
     // ============================
     // Admin & Super Admin Routes
     // ============================

@@ -48,4 +48,30 @@ class CertificateController extends Controller
             'certificate' => $certificate,
         ], 201);
     }
+
+    public function update(Request $request, Certificate $certificate)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'organization' => 'required|string|max:255',
+            'issue_date' => 'required|date',
+            'expiry_date' => 'nullable|date|after_or_equal:issue_date',
+        ]);
+
+        $certificate->update($validated);
+
+        return response()->json(['message' => 'Sertifikat berhasil diperbarui!', 'certificate' => $certificate]);
+    }
+
+
+    public function destroy(Certificate $certificate)
+    {
+        // Hapus file dari penyimpanan (storage)
+        Storage::disk('public')->delete($certificate->file_path);
+        
+        // Hapus entri dari database
+        $certificate->delete();
+
+        return response()->json(['message' => 'Sertifikat berhasil dihapus!']);
+    }
 }
