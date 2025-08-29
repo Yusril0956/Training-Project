@@ -56,10 +56,39 @@ class AuthController extends Controller
         return redirect('/home');
     }
 
-    public function logout()
+    public function completeForm()
+    {
+        return view('auth.complete');
+    }
+
+    public function saveCompleteForm(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|numeric|digits_between:10,15',
+            'nik' => 'required|numeric|digits:16',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->update([
+            'phone' => $request->phone,
+            'nik'   => $request->nik,
+            'address' => $request->address,
+            'city' => $request->city,
+        ]);
+
+        return redirect('/home');
+    }
+
+    public function logout(Request $request)
     {
         // logout handle
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect('/');
     }
 }
