@@ -311,7 +311,15 @@
                 <div class="col-md-3">
                     <a href="#" class="card card-link">
                         <div class="card-body text-center">
-                            <span class="avatar bg-primary-lt text-primary mb-2">👤</span>
+                            <span class="avatar bg-primary-lt text-primary mb-2"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-user">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                </svg></span>
                             <div>Portal HR</div>
                         </div>
                     </a>
@@ -335,7 +343,18 @@
                 <div class="col-md-3">
                     <a href="#" class="card card-link">
                         <div class="card-body text-center">
-                            <span class="avatar bg-warning-lt text-warning mb-2">📈</span>
+                            <span class="avatar bg-warning-lt text-warning mb-2"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-google-analytics">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M10 9m0 1.105a1.105 1.105 0 0 1 1.105 -1.105h1.79a1.105 1.105 0 0 1 1.105 1.105v9.79a1.105 1.105 0 0 1 -1.105 1.105h-1.79a1.105 1.105 0 0 1 -1.105 -1.105z" />
+                                    <path
+                                        d="M17 3m0 1.105a1.105 1.105 0 0 1 1.105 -1.105h1.79a1.105 1.105 0 0 1 1.105 1.105v15.79a1.105 1.105 0 0 1 -1.105 1.105h-1.79a1.105 1.105 0 0 1 -1.105 -1.105z" />
+                                    <path d="M5 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                </svg></span>
                             <div>Laporan Bulanan</div>
                         </div>
                     </a>
@@ -343,7 +362,15 @@
                 <div class="col-md-3">
                     <a href="#" class="card card-link">
                         <div class="card-body text-center">
-                            <span class="avatar bg-info-lt text-info mb-2">📞</span>
+                            <span class="avatar bg-info-lt text-info mb-2"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-phone">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" />
+                                </svg></span>
                             <div>Kontak Divisi</div>
                         </div>
                     </a>

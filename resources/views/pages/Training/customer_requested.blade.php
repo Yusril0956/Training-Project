@@ -47,7 +47,7 @@
             </div>
 
             @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">
                         <h3 class="card-title">Daftar Permintaan</h3>
                     </div>
@@ -66,45 +66,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Pelatihan Perawatan CN235</td>
-                                        <td>Teknis</td>
-                                        <td>PT Aviasi Nusantara</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
-                                        <td>2025-08-20</td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                            <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Audit Kepatuhan ISO 9001</td>
-                                        <td>Kepatuhan</td>
-                                        <td>PT AeroCert</td>
-                                        <td><span class="badge bg-success">Completed</span></td>
-                                        <td>2025-07-15</td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                            <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Simulasi Evakuasi Darurat</td>
-                                        <td>Keselamatan</td>
-                                        <td>PT SkyShield</td>
-                                        <td><span class="badge bg-primary">Approved</span></td>
-                                        <td>2025-08-01</td>
-                                        <td>
-                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                            <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                                        </td>
-                                    </tr>
                                     @foreach ($trainings as $index => $training)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
@@ -124,10 +85,8 @@
                                             <td>
                                                 <a href="{{ route('training.detail', $training->id) }}"
                                                     class="btn btn-sm btn-info">Detail</a>
-                                                <a href="#"
-                                                    class="btn btn-sm btn-secondary">Edit</a>
-                                                <form action="#" method="POST"
-                                                    style="display:inline;">
+                                                <a href="#" class="btn btn-sm btn-secondary">Edit</a>
+                                                <form action="#" method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
@@ -142,24 +101,107 @@
                 </div>
             @endif
 
+            <div class="row row-cards">
+                <!-- Informasi Permintaan -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Detail Permintaan</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Nama Pelatihan:</strong> {{ $training->title }}</p>
+                            <p><strong>Klien:</strong> {{ $training->client_name }}</p>
+                            <p><strong>Tanggal Permintaan:</strong> 2025-03-10</p>
+                            <p><strong>Status:</strong> <span class="badge bg-warning">{{ $training->status }}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informasi Jadwal & PIC -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Jadwal & PIC</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Jadwal:</strong> {{ $training->schedule ?? 'Belum ditentukan' }}</p>
+                            <p><strong>Lokasi:</strong> {{ $training->location ?? '-' }}</p>
+                            <p><strong>PIC Internal:</strong> {{ $training->pic_internal }}</p>
+                            <p><strong>PIC Klien:</strong> {{ $training->pic_client }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dokumen Pendukung -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Dokumen Pendukung</h3>
+                        </div>
+                        <div class="card-body">
+                            @if (optional($training->documents)->count())
+                                <ul>
+                                    @foreach ($training->documents as $doc)
+                                        <li><a href="{{ $doc->url }}" target="_blank">{{ $doc->name }}</a></li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>Tidak ada dokumen diunggah.</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback & Evaluasi -->
+                @if ($training->status === 'Selesai')
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Evaluasi & Feedback</h3>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ route('feedback.form', $training->id) }}" class="btn btn-primary">Isi
+                                    Feedback</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Aksi Admin -->
+                @can('approve-training')
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body text-end">
+                                <form method="POST" action="{{ route('training.approve', $training->id) }}">
+                                    @csrf
+                                    <button class="btn btn-success">Setujui Permintaan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+            </div>
+
             <!-- Optional: Form Tambah Permintaan -->
             <div class="card mt-4" id="add-training-request">
                 <div class="card-header">
                     <h3 class="card-title">Tambah Permintaan Pelatihan</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('training.store')}}" method="POST">
+                    <form action="{{ route('training.store') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Judul Pelatihan</label>
-                            <input type="text" class="form-control" name="nama" placeholder="Contoh: Pelatihan Sistem Avionik">
+                            <input type="text" class="form-control" name="nama"
+                                placeholder="Contoh: Pelatihan Sistem Avionik">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Jenis Training</label>
                             <select class="form-select" name="jenis_training_id" required>
                                 <option value="">Pilih Jenis Training</option>
-                                @foreach($jenisTrainings as $jenis)
-                                    <option value="{{ $jenis->id }}">{{ $jenis->kode }} - {{ $jenis->nama }}</option>
+                                @foreach ($jenisTrainings as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->kode }} - {{ $jenis->nama }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -174,7 +216,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nama Klien</label>
-                            <input type="text" class="form-control" name="klien" placeholder="Contoh: PT Dirgantara Mitra">
+                            <input type="text" class="form-control" name="klien"
+                                placeholder="Contoh: PT Dirgantara Mitra">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
@@ -184,6 +227,8 @@
                     </form>
                 </div>
             </div>
+
+
 
         </div>
     </div>
