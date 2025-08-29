@@ -41,6 +41,7 @@ Route::get('/sertifikat', function () {
 })->middleware('auth');
 
 // Semua route berikut hanya untuk user yang sudah login
+// Semua route berikut hanya untuk user yang sudah login
 Route::middleware('auth')->group(function () {
     Route::get('/help', function () {
         return view('pages.help');
@@ -57,7 +58,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/setting/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
     Route::post('/setting/profile', [ProfileController::class, 'updateProfile'])->name('setting.profile');
     Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
-
 
     Route::group(['middleware' => ['check_role:admin,super_admin']], function () {
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
@@ -87,6 +87,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/General-Knowledge', function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
+
+    // Tambahkan rute sertifikat di sini
+    Route::get('/certificates', [CertificateController::class, 'index']);
+    Route::post('/certificates', [CertificateController::class, 'store']);
 });
 
 Route::get('auth/google', function () {
@@ -113,7 +117,4 @@ Route::get('auth/google/callback', function () {
 
     return redirect('/home');
 });
-Route::middleware('auth')->group(function () {
-    Route::get('/certificates', [CertificateController::class, 'index']);
-    Route::post('/certificates', [CertificateController::class, 'store']);
-});
+
