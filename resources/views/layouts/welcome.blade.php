@@ -15,7 +15,7 @@
             <h2>PT.Dirgantara</h2>
             <p>INDONESIAN AEROSPACE(IAe)</p>
             @if (Auth::check())
-                <a href="/dashboard">dashboard</a>
+                <a href="/home">dashboard</a>
             @else
                 <a href="/login">Login</a>
             @endif

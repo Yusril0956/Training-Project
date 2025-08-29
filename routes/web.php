@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingCOntroller;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 // Route utama hanya untuk guest
 Route::get('/', function () {
@@ -83,4 +85,30 @@ Route::middleware('auth')->group(function () {
     Route::get('/General-Knowledge', function () {
         return view('pages.Training.training1');
     })->name('general.knowledge');
+});
+
+
+Route::get('auth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+
+Route::get('auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    // Cari user berdasarkan email
+    $user = User::where('email', $googleUser->getEmail())->first();
+
+    if (!$user) {
+        // Kalau user belum ada → buat baru
+        $user = User::create([
+            'name'  => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'password' => bcrypt(str()->random(16)), // password random
+            'google_id' => $googleUser->getId(), // bisa tambahin kolom ini di users table
+        ]);
+    }
+
+    Auth::login($user);
+
+    return redirect('/home');
 });

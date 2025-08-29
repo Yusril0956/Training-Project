@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone');
-            $table->text('address');
-            $table->string('nik')->unique();
-            $table->string('city');
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
+            $table->string('nik')->nullable()->unique();
+            $table->string('city')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('role', ['super_admin', 'admin', 'staff', 'user'])->default('user');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('password');
-            // profile image
             $table->string('profile')->nullable();
+            $table->string('google_id')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
         });
