@@ -9,7 +9,7 @@ class Training extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'jenis_training_id'];
+    protected $fillable = ['nama', 'kategori', 'klien', 'deskripsi', 'status', 'jenis_training_id'];
 
     public function jenisTraining()
     {

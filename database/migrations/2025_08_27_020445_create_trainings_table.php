@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('kategori');
+            $table->string('klien');
+            $table->string('deskripsi');
+            $table->enum('status', ['pending', 'approved', 'completed'])->default('pending');
             $table->foreignId('jenis_training_id')->constrained('jenis_training')->onDelete('cascade');
             $table->timestamps();
         });

@@ -74,7 +74,7 @@
                                         <td><span class="badge bg-warning">Pending</span></td>
                                         <td>2025-08-20</td>
                                         <td>
-                                            <a href="{{ route('detail.training') }}" class="btn btn-sm btn-info">Detail</a>
+                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
                                             <a href="#" class="btn btn-sm btn-secondary">Edit</a>
                                             <a href="#" class="btn btn-sm btn-danger">Hapus</a>
                                         </td>
@@ -105,6 +105,36 @@
                                             <a href="#" class="btn btn-sm btn-danger">Hapus</a>
                                         </td>
                                     </tr>
+                                    @foreach ($trainings as $index => $training)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $training->nama }}</td>
+                                            <td>{{ ucfirst($training->kategori) }}</td>
+                                            <td>{{ $training->klien }}</td>
+                                            <td>
+                                                @if ($training->status === 'pending')
+                                                    <span class="badge bg-warning">Pending</span>
+                                                @elseif ($training->status === 'approved')
+                                                    <span class="badge bg-primary">Approved</span>
+                                                @elseif ($training->status === 'completed')
+                                                    <span class="badge bg-success">Completed</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $training->created_at->format('Y-m-d') }}</td>
+                                            <td>
+                                                <a href="{{ route('training.detail', $training->id) }}"
+                                                    class="btn btn-sm btn-info">Detail</a>
+                                                <a href="#"
+                                                    class="btn btn-sm btn-secondary">Edit</a>
+                                                <form action="#" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -118,14 +148,24 @@
                     <h3 class="card-title">Tambah Permintaan Pelatihan</h3>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{route('training.store')}}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label class="form-label">Judul Pelatihan</label>
-                            <input type="text" class="form-control" placeholder="Contoh: Pelatihan Sistem Avionik">
+                            <input type="text" class="form-control" name="nama" placeholder="Contoh: Pelatihan Sistem Avionik">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Jenis Training</label>
+                            <select class="form-select" name="jenis_training_id" required>
+                                <option value="">Pilih Jenis Training</option>
+                                @foreach($jenisTrainings as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->kode }} - {{ $jenis->nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Kategori</label>
-                            <select class="form-select">
+                            <select class="form-select" name="kategori">
                                 <option value="">Pilih Kategori</option>
                                 <option value="technical">Teknis</option>
                                 <option value="safety">Keselamatan</option>
@@ -134,11 +174,11 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Nama Klien</label>
-                            <input type="text" class="form-control" placeholder="Contoh: PT Dirgantara Mitra">
+                            <input type="text" class="form-control" name="klien" placeholder="Contoh: PT Dirgantara Mitra">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea class="form-control" rows="4" placeholder="Detail permintaan pelatihan..."></textarea>
+                            <textarea class="form-control" name="deskripsi" rows="4" placeholder="Detail permintaan pelatihan..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Kirim Permintaan</button>
                     </form>
