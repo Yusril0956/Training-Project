@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Manajemen Sertifikat - Dashboard Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -49,6 +50,8 @@
     </header>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    
 
 
         <!-- Certificate Management Section -->
@@ -253,29 +256,15 @@
             </div>
         </div>
     </div>
+    
 
     <script>
+
+        let certificates = [ /* ... data dummy ... */ ];
+        let currentEditId = null;
+        let uploadedFile = null; // Tambahkan variabel ini
         // Certificate data storage
-        let certificates = [
-            {
-                id: 1,
-                name: "Sertifikat Pengembangan Web",
-                organization: "Tech Academy",
-                issueDate: "2024-01-15",
-                expiryDate: "2027-01-15",
-                icon: "fas fa-award",
-                color: "blue"
-            },
-            {
-                id: 2,
-                name: "Manajemen Proyek",
-                organization: "PMI Institute",
-                issueDate: "2024-03-10",
-                expiryDate: "2027-03-10",
-                icon: "fas fa-medal",
-                color: "green"
-            }
-        ];
+        
 
         let currentEditId = null;
 
@@ -322,48 +311,59 @@
         }
 
         function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFile(file);
-            }
-        }
+    const file = e.target.files[0];
+    if (file) {
+        handleFile(file);
+    }
+}
 
-        function handleFile(file) {
-            // Simulate file processing
-            const fileName = file.name.replace(/\.[^/.]+$/, "");
-            document.getElementById('certName').value = fileName;
-            
-            // Show success message
-            showNotification('File selected: ' + file.name, 'success');
-        }
+function handleFile(file) {
+    uploadedFile = file; // Simpan file ke variabel global
+    showNotification('File terpilih: ' + file.name, 'success');
+}
 
         // Certificate management
-        function uploadCertificate() {
-            const name = document.getElementById('certName').value;
-            const org = document.getElementById('certOrg').value;
-            const issueDate = document.getElementById('issueDate').value;
-            const expiryDate = document.getElementById('expiryDate').value;
+async function uploadCertificate() {
+    const name = document.getElementById('certName').value;
+    const org = document.getElementById('certOrg').value;
+    const issueDate = document.getElementById('issueDate').value;
+    const expiryDate = document.getElementById('expiryDate').value;
 
-            if (!name || !org || !issueDate) {
-                showNotification('Harap isi semua field yang diperlukan', 'error');
-                return;
-            }
+    // Periksa apakah ada file yang diunggah
+    if (!uploadedFile || !name || !org || !issueDate) {
+        showNotification('Harap isi semua field dan unggah file.', 'error');
+        return;
+    }
 
-            const newCert = {
-                id: Date.now(),
-                name: name,
-                organization: org,
-                issueDate: issueDate,
-                expiryDate: expiryDate,
-                icon: "fas fa-certificate",
-                color: "purple"
-            };
+    const formData = new FormData();
+    formData.append('file', uploadedFile); // Gunakan variabel yang disimpan
+    formData.append('name', name);
+    formData.append('organization', org);
+    formData.append('issue_date', issueDate);
+    formData.append('expiry_date', expiryDate);
+    formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
-            certificates.push(newCert);
+    try {
+        const response = await fetch('/certificates', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
             renderCertificates();
             closeUploadModal();
-            showNotification('Sertifikat berhasil diunggah!', 'success');
+            showNotification(result.message, 'success');
+        } else {
+            // Tangani error dari server
+            showNotification('Error: ' + JSON.stringify(result.errors), 'error');
         }
+    } catch (error) {
+        showNotification('Terjadi kesalahan saat mengunggah sertifikat.', 'error');
+        console.error('Error:', error);
+    }
+}
 
         function editCertificate(id) {
             const cert = certificates.find(c => c.id === id);
@@ -415,19 +415,24 @@
 
         // Render certificates
         function renderCertificates() {
-            const grid = document.getElementById('certificatesGrid');
-            const addCard = grid.querySelector('.cursor-pointer'); // Save the add card
-            
+    const grid = document.getElementById('certificatesGrid');
+    const addCard = grid.querySelector('.cursor-pointer'); 
+
+    fetch('/certificates')
+        .then(response => response.json())
+        .then(data => {
             grid.innerHTML = '';
-            
-            certificates.forEach(cert => {
+            data.forEach(cert => {
                 const certCard = createCertificateCard(cert);
                 grid.appendChild(certCard);
             });
-            
-            // Re-add the "Add Certificate" card
             grid.appendChild(addCard);
-        }
+        })
+        .catch(error => {
+            console.error('Error fetching certificates:', error);
+            showNotification('Gagal memuat sertifikat.', 'error');
+        });
+}
 
         function createCertificateCard(cert) {
             const div = document.createElement('div');
@@ -507,7 +512,8 @@
             document.getElementById('issueDate').value = '';
             document.getElementById('expiryDate').value = '';
             document.getElementById('certificateFile').value = '';
-        }
+            uploadedFile = null; // Reset variabel file
+}
 
         function showNotification(message, type) {
             const notification = document.createElement('div');

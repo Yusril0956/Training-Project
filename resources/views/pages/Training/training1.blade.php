@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DirgantaraLearn - Pelatihan Pengetahuan Umum</title>
+    <title>Pelatihan Pengetahuan Umum</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -301,7 +301,7 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-3 gap-8">
                 <div>
-                    <h4 class="font-semibold mb-4">DirgantaraLearn PT.Dirgantara</h4>
+                    <h4 class="font-semibold mb-4">PT.Dirgantara</h4>
                     <p class="text-gray-300 text-sm">Pendidikan dirgantara komprehensif untuk profesional industri.</p>
                 </div>
                 <div>

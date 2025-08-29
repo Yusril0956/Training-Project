@@ -8,6 +8,7 @@ use App\Http\Controllers\TrainingCOntroller;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Http\Controllers\CertificateController;
 
 // Route utama hanya untuk guest
 Route::get('/', function () {
@@ -87,7 +88,6 @@ Route::middleware('auth')->group(function () {
     })->name('general.knowledge');
 });
 
-
 Route::get('auth/google', function () {
     return Socialite::driver('google')->redirect();
 })->name('google.login');
@@ -111,4 +111,8 @@ Route::get('auth/google/callback', function () {
     Auth::login($user);
 
     return redirect('/home');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/certificates', [CertificateController::class, 'index']);
+    Route::post('/certificates', [CertificateController::class, 'store']);
 });
