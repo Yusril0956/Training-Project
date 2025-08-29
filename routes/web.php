@@ -91,6 +91,14 @@ Route::middleware('auth')->group(function () {
     // Tambahkan rute sertifikat di sini
     Route::get('/certificates', [CertificateController::class, 'index']);
     Route::post('/certificates', [CertificateController::class, 'store']);
+
+    // Rute untuk mengelola sertifikat
+    Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
+    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
+    
+    // Tambahkan rute ini untuk mengupdate dan menghapus
+    Route::put('/certificates/{certificate}', [CertificateController::class, 'update'])->name('certificates.update');
+    Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
 });
 
 Route::get('auth/google', function () {

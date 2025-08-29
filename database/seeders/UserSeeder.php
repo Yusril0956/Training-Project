@@ -94,7 +94,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'phone' => '08123456789',
                 'address' => 'Jalan jalan No. 1',
-                'nik' => '947367482905736',
+                'nik' => '9473674829057364',
                 'city' => 'Bandoeng',
                 'role' => 'admin',
                 'password' => bcrypt('12345678'),

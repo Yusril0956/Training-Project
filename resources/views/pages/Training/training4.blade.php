@@ -243,276 +243,251 @@
     
 
     <script>
-        let certificates = [];
-        let currentEditId = null;
-        let uploadedFile = null;
+    let certificates = [];
+    let currentEditId = null;
+    let uploadedFile = null;
 
-        function openUploadModal() {
-            document.getElementById('uploadModal').classList.remove('hidden');
-            document.getElementById('uploadModal').classList.add('flex');
+    function openUploadModal() {
+        document.getElementById('uploadModal').classList.remove('hidden');
+        document.getElementById('uploadModal').classList.add('flex');
+    }
+
+    function closeUploadModal() {
+        document.getElementById('uploadModal').classList.add('hidden');
+        document.getElementById('uploadModal').classList.remove('flex');
+        clearUploadForm();
+    }
+
+    function openEditModal() {
+        document.getElementById('editModal').classList.remove('hidden');
+        document.getElementById('editModal').classList.add('flex');
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').classList.add('hidden');
+        document.getElementById('editModal').classList.remove('flex');
+        currentEditId = null;
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.currentTarget.classList.add('dragover');
+    }
+
+    function handleDragLeave(e) {
+        e.currentTarget.classList.remove('dragover');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        e.currentTarget.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFile(files[0]);
+        }
+    }
+
+    function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            handleFile(file);
+        }
+    }
+
+    function handleFile(file) {
+        uploadedFile = file;
+        const fileNameDisplay = document.querySelector('.upload-area p.text-gray-600');
+        if (fileNameDisplay) {
+            fileNameDisplay.textContent = 'File terpilih: ' + file.name;
+        }
+        showNotification('File terpilih: ' + file.name, 'success');
+    }
+
+    async function uploadCertificate() {
+        const name = document.getElementById('certName').value;
+        const org = document.getElementById('certOrg').value;
+        const issueDate = document.getElementById('issueDate').value;
+        const expiryDate = document.getElementById('expiryDate').value;
+
+        if (!uploadedFile || !name || !org || !issueDate) {
+            showNotification('Harap isi semua field dan unggah file.', 'error');
+            return;
         }
 
-        function closeUploadModal() {
-            document.getElementById('uploadModal').classList.add('hidden');
-            document.getElementById('uploadModal').classList.remove('flex');
-            clearUploadForm();
-        }
+        const formData = new FormData();
+        formData.append('file', uploadedFile);
+        formData.append('name', name);
+        formData.append('organization', org);
+        formData.append('issue_date', issueDate);
+        formData.append('expiry_date', expiryDate);
+        formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 
-        function openEditModal() {
-            document.getElementById('editModal').classList.remove('hidden');
-            document.getElementById('editModal').classList.add('flex');
-        }
-
-        function closeEditModal() {
-            document.getElementById('editModal').classList.add('hidden');
-            document.getElementById('editModal').classList.remove('flex');
-            currentEditId = null;
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('dragover');
-        }
-
-        function handleDragLeave(e) {
-            e.currentTarget.classList.remove('dragover');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        }
-
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFile(file);
-            }
-        }
-
-        function handleFile(file) {
-            uploadedFile = file;
-            const fileNameDisplay = document.querySelector('.upload-area p.text-gray-600');
-            if (fileNameDisplay) {
-                fileNameDisplay.textContent = 'File terpilih: ' + file.name;
-            }
-            showNotification('File terpilih: ' + file.name, 'success');
-        }
-
-        async function uploadCertificate() {
-            const name = document.getElementById('certName').value;
-            const org = document.getElementById('certOrg').value;
-            const issueDate = document.getElementById('issueDate').value;
-            const expiryDate = document.getElementById('expiryDate').value;
-
-            if (!uploadedFile || !name || !org || !issueDate) {
-                showNotification('Harap isi semua field dan unggah file.', 'error');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('file', uploadedFile);
-            formData.append('name', name);
-            formData.append('organization', org);
-            formData.append('issue_date', issueDate);
-            formData.append('expiry_date', expiryDate);
-            formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-
-            try {
-                const response = await fetch('/certificates', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    renderCertificates();
-                    closeUploadModal();
-                    showNotification(result.message, 'success');
-                } else {
-                    showNotification('Error: ' + JSON.stringify(result.errors), 'error');
-                }
-            } catch (error) {
-                showNotification('Terjadi kesalahan saat mengunggah sertifikat.', 'error');
-                console.error('Error:', error);
-            }
-        }
-
-        function editCertificate(id) {
-            const cert = certificates.find(c => c.id === id);
-            if (cert) {
-                currentEditId = id;
-                document.getElementById('editCertName').value = cert.name;
-                document.getElementById('editCertOrg').value = cert.organization;
-                document.getElementById('editIssueDate').value = cert.issueDate;
-                document.getElementById('editExpiryDate').value = cert.expiryDate;
-                openEditModal();
-            }
-        }
-
-        function saveEditedCertificate() {
-            if (!currentEditId) return;
-
-            const name = document.getElementById('editCertName').value;
-            const org = document.getElementById('editCertOrg').value;
-            const issueDate = document.getElementById('editIssueDate').value;
-            const expiryDate = document.getElementById('editExpiryDate').value;
-
-            if (!name || !org || !issueDate) {
-                showNotification('Harap isi semua field yang diperlukan', 'error');
-                return;
-            }
-
-            const certIndex = certificates.findIndex(c => c.id === currentEditId);
-            if (certIndex !== -1) {
-                certificates[certIndex] = {
-                    ...certificates[certIndex],
-                    name: name,
-                    organization: org,
-                    issueDate: issueDate,
-                    expiryDate: expiryDate
-                };
-                renderCertificates();
-                closeEditModal();
-                showNotification('Sertifikat berhasil diperbarui!', 'success');
-            }
-        }
-
-        function deleteCertificate(id) {
-            if (confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) {
-                certificates = certificates.filter(c => c.id !== id);
-                renderCertificates();
-                showNotification('Sertifikat berhasil dihapus!', 'success');
-            }
-        }
-
-        function renderCertificates() {
-            const grid = document.getElementById('certificatesGrid');
-            const addCard = grid.querySelector('.cursor-pointer');
-            grid.innerHTML = '';
-
-            fetch('/certificates')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    data.forEach(cert => {
-                        const certCard = createCertificateCard(cert);
-                        grid.appendChild(certCard);
-                    });
-                    grid.appendChild(addCard);
-                })
-                .catch(error => {
-                    console.error('Error fetching certificates:', error);
-                    showNotification('Gagal memuat sertifikat. Periksa koneksi backend.', 'error');
-                });
-        }
-
-        function createCertificateCard(cert) {
-            const div = document.createElement('div');
-            div.className = 'certificate-card bg-white border-2 border-gray-200 rounded-xl p-4';
-            
-            const colorClasses = {
-                blue: 'bg-blue-100 text-blue-600',
-                green: 'bg-green-100 text-green-600',
-                purple: 'bg-purple-100 text-purple-600'
-            };
-            
-            const colorClass = colorClasses[cert.color] || colorClasses.purple;
-            const bgColorClass = cert.color === 'blue' ? 'from-blue-50 to-blue-100' : 
-                                 cert.color === 'green' ? 'from-green-50 to-green-100' : 
-                                 'from-purple-50 to-purple-100';
-            const certColor = cert.color === 'blue' ? '#1e40af' : 
-                             cert.color === 'green' ? '#059669' : 
-                             '#7c3aed';
-            
-            div.innerHTML = `
-                <div class="flex items-center justify-between mb-3">
-                    <div class="w-12 h-12 ${colorClass} rounded-lg flex items-center justify-center">
-                        <i class="fas fa-award text-xl"></i>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="editCertificate(${cert.id})" class="text-blue-600 hover:text-blue-800">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button onclick="deleteCertificate(${cert.id})" class="text-red-600 hover:text-red-800">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="mb-3 rounded-lg overflow-hidden bg-gradient-to-br ${bgColorClass} p-4">
-                    <svg viewBox="0 0 400 280" class="w-full h-32">
-                        <rect width="400" height="280" fill="${certColor}" rx="8"/>
-                        <rect x="20" y="20" width="360" height="240" fill="white" rx="4"/>
-                        <text x="200" y="60" text-anchor="middle" fill="${certColor}" font-size="24" font-weight="bold">SERTIFIKAT</text>
-                        <text x="200" y="90" text-anchor="middle" fill="#374151" font-size="16">${cert.name}</text>
-                        <text x="200" y="130" text-anchor="middle" fill="#6b7280" font-size="12">Diberikan kepada</text>
-                        <text x="200" y="155" text-anchor="middle" fill="#1f2937" font-size="18" font-weight="bold">Admin User</text>
-                        <text x="200" y="190" text-anchor="middle" fill="#6b7280" font-size="12">Atas keberhasilan menyelesaikan program</text>
-                        <text x="200" y="210" text-anchor="middle" fill="#6b7280" font-size="12">${cert.name}</text>
-                        <circle cx="80" cy="220" r="25" fill="#fbbf24"/>
-                        <text x="80" y="225" text-anchor="middle" fill="white" font-size="10" font-weight="bold">SEAL</text>
-                        <text x="320" y="235" text-anchor="middle" fill="#6b7280" font-size="10">${cert.organization}</text>
-                    </svg>
-                </div>
-                <h3 class="font-semibold text-gray-900 mb-2">${cert.name}</h3>
-                <p class="text-sm text-gray-600 mb-3">Diterbitkan oleh ${cert.organization}</p>
-                <div class="text-xs text-gray-500 space-y-1">
-                    <div>Tanggal Terbit: ${formatDate(cert.issue_date)}</div>
-                    ${cert.expiry_date ? `<div>Berlaku Hingga: ${formatDate(cert.expiry_date)}</div>` : ''}
-                </div>
-                <button class="mt-3 w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                    Lihat Sertifikat
-                </button>
-            `;
-            
-            return div;
-        }
-
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
+        try {
+            const response = await fetch('/certificates', {
+                method: 'POST',
+                body: formData,
             });
-        }
 
-        function clearUploadForm() {
-            document.getElementById('certName').value = '';
-            document.getElementById('certOrg').value = '';
-            document.getElementById('issueDate').value = '';
-            document.getElementById('expiryDate').value = '';
-            document.getElementById('certificateFile').value = '';
-            uploadedFile = null;
-        }
+            const result = await response.json();
 
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-            }`;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+            if (response.ok) {
+                renderCertificates();
+                closeUploadModal();
+                showNotification(result.message, 'success');
+            } else {
+                showNotification('Error: ' + JSON.stringify(result.errors), 'error');
+            }
+        } catch (error) {
+            showNotification('Terjadi kesalahan saat mengunggah sertifikat.', 'error');
+            console.error('Error:', error);
         }
+    }
 
-        document.addEventListener('DOMContentLoaded', function() {
+    function editCertificate(id) {
+        const cert = certificates.find(c => c.id === id);
+        if (cert) {
+            currentEditId = id;
+            document.getElementById('editCertName').value = cert.name;
+            document.getElementById('editCertOrg').value = cert.organization;
+            document.getElementById('editIssueDate').value = cert.issue_date;
+            document.getElementById('editExpiryDate').value = cert.expiry_date;
+            openEditModal();
+        }
+    }
+
+    async function saveEditedCertificate() {
+        if (!currentEditId) return;
+
+        const name = document.getElementById('editCertName').value;
+        const org = document.getElementById('editCertOrg').value;
+        const issueDate = document.getElementById('editIssueDate').value;
+        const expiryDate = document.getElementById('editExpiryDate').value;
+
+        if (!name || !org || !issueDate) {
+            showNotification('Harap isi semua field yang diperlukan', 'error');
+            return;
+        }
+        
+        // Simulasikan pembaruan sertifikat di frontend
+        const certIndex = certificates.findIndex(c => c.id === currentEditId);
+        if (certIndex !== -1) {
+            certificates[certIndex] = {
+                ...certificates[certIndex],
+                name: name,
+                organization: org,
+                issue_date: issueDate,
+                expiry_date: expiryDate
+            };
             renderCertificates();
+            closeEditModal();
+            showNotification('Sertifikat berhasil diperbarui!', 'success');
+        }
+    }
+
+    function deleteCertificate(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) {
+            certificates = certificates.filter(c => c.id !== id);
+            renderCertificates();
+            showNotification('Sertifikat berhasil dihapus!', 'success');
+        }
+    }
+
+    function renderCertificates() {
+        const grid = document.getElementById('certificatesGrid');
+        const addCard = grid.querySelector('.cursor-pointer');
+        grid.innerHTML = '';
+
+        fetch('/certificates')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.forEach(cert => {
+                    const certCard = createCertificateCard(cert);
+                    grid.appendChild(certCard);
+                });
+                grid.appendChild(addCard);
+            })
+            .catch(error => {
+                console.error('Error fetching certificates:', error);
+                showNotification('Gagal memuat sertifikat. Periksa koneksi backend.', 'error');
+            });
+    }
+
+    function createCertificateCard(cert) {
+        const div = document.createElement('div');
+        div.className = 'certificate-card bg-white border-2 border-gray-200 rounded-xl p-4';
+        
+        div.innerHTML = `
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-award text-blue-600 text-xl"></i>
+                </div>
+                <div class="flex space-x-2">
+                    <button onclick="editCertificate(${cert.id})" class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="deleteCertificate(${cert.id})" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mb-3 rounded-lg overflow-hidden bg-gray-100 p-4 flex items-center justify-center">
+                <img src="/storage/${cert.file_path}" alt="Sertifikat" class="w-full h-auto max-h-48 object-contain">
+            </div>
+            <h3 class="font-semibold text-gray-900 mb-2">${cert.name}</h3>
+            <p class="text-sm text-gray-600 mb-3">Diterbitkan oleh ${cert.organization}</p>
+            <div class="text-xs text-gray-500 space-y-1">
+                <div>Tanggal Terbit: ${formatDate(cert.issue_date)}</div>
+                ${cert.expiry_date ? `<div>Berlaku Hingga: ${formatDate(cert.expiry_date)}</div>` : ''}
+            </div>
+            <a href="/storage/${cert.file_path}" target="_blank" class="mt-3 w-full block text-center bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
+                Lihat Sertifikat
+            </a>
+        `;
+        
+        return div;
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('id-ID', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
         });
-    </script>
+    }
+
+    function clearUploadForm() {
+        document.getElementById('certName').value = '';
+        document.getElementById('certOrg').value = '';
+        document.getElementById('issueDate').value = '';
+        document.getElementById('expiryDate').value = '';
+        document.getElementById('certificateFile').value = '';
+        uploadedFile = null;
+    }
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderCertificates();
+    });
+</script>
 </body>
 </html>
