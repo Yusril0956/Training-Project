@@ -37,19 +37,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/complete-profile', [AuthController::class, 'saveCompleteForm'])->name('profile.complete.save');
 });
 
-
-Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
-
-
-//tambahan profile page
-Route::get('/sertifikat', function () {
-    return view('pages.sertifikat', [
-        'user' => Auth::user()
-    ]);
-})->middleware('auth');
-
+// ============================
 // Semua route berikut hanya untuk user yang sudah login
-// Semua route berikut hanya untuk user yang sudah login
+// ============================
 Route::middleware('auth')->group(function () {
     // Dashboard & umum
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
@@ -88,43 +78,23 @@ Route::middleware('auth')->group(function () {
     // Update user
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
 
+    // ============================
     // Admin & Super Admin
+    // ============================
     Route::middleware(['check_role:admin,super_admin'])->group(function () {
-    Route::group(['middleware' => ['check_role:admin,super_admin']], function () {
+        // Admin dashboard
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
         Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
         Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
         Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
+
+        // Certificates
+        Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
+        Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
+
+        // Training tambahan (khusus admin jika perlu)
+        Route::get('/training/detail-training', fn() => view('pages.Training.detail_training'))->name('detail.training');
     });
-
-    // Certificates
-    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
-    Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
-    // training
-    Route::get('/training', [TrainingController::class, 'index'])->name('training.index');
-    Route::get('/General Knowledge', function () {
-        return view('pages.Training.training1');
-    })->name('general.knowledge');
-    Route::get('/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer.requested');
-    Route::get('/License', function () {
-        return view('pages.Training.training4');
-    })->name('license.training');
-    Route::get('/Mandatory', function () {
-        return view('pages.Training.training2');
-    })->name('mandatory.training');
-
-    Route::get('/training/detail-training', function () {
-        return view('pages.Training.detail_training');
-    })->name('detail.training');
-
-    Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
-    Route::get('/General-Knowledge', function () {
-        return view('pages.Training.training1');
-    })->name('general.knowledge');
-
-    // Tambahkan rute sertifikat di sini
-    Route::get('/certificates', [CertificateController::class, 'index']);
-    Route::post('/certificates', [CertificateController::class, 'store']);
 });
 
 // ============================
