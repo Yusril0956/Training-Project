@@ -243,13 +243,10 @@
     
 
     <script>
-
-        // Certificate data storage
         let certificates = [];
         let currentEditId = null;
         let uploadedFile = null;
 
-        // Modal functions
         function openUploadModal() {
             document.getElementById('uploadModal').classList.remove('hidden');
             document.getElementById('uploadModal').classList.add('flex');
@@ -272,7 +269,6 @@
             currentEditId = null;
         }
 
-        // File handling
         function handleDragOver(e) {
             e.preventDefault();
             e.currentTarget.classList.add('dragover');
@@ -299,7 +295,7 @@
         }
 
         function handleFile(file) {
-            uploadedFile = file; // Simpan file ke variabel global
+            uploadedFile = file;
             const fileNameDisplay = document.querySelector('.upload-area p.text-gray-600');
             if (fileNameDisplay) {
                 fileNameDisplay.textContent = 'File terpilih: ' + file.name;
@@ -307,7 +303,6 @@
             showNotification('File terpilih: ' + file.name, 'success');
         }
 
-        // Certificate management
         async function uploadCertificate() {
             const name = document.getElementById('certName').value;
             const org = document.getElementById('certOrg').value;
@@ -320,7 +315,7 @@
             }
 
             const formData = new FormData();
-            formData.append('file', uploadedFile); 
+            formData.append('file', uploadedFile);
             formData.append('name', name);
             formData.append('organization', org);
             formData.append('issue_date', issueDate);
@@ -396,54 +391,30 @@
             }
         }
 
-        // Render certificates
-        // Render certificates
-function renderCertificates() {
-    const grid = document.getElementById('certificatesGrid');
-    const addCard = grid.querySelector('.cursor-pointer');
+        function renderCertificates() {
+            const grid = document.getElementById('certificatesGrid');
+            const addCard = grid.querySelector('.cursor-pointer');
+            grid.innerHTML = '';
 
-    // Kosongkan grid sebelum menambahkan data baru dari server
-    grid.innerHTML = '';
-    
-    // Panggil endpoint /certificates
-    fetch('/certificates')
-        .then(response => {
-            if (!response.ok) {
-                // Tangani respons yang tidak berhasil
-                throw new Error('Jaringan bermasalah atau server tidak merespons.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Gunakan data dari server untuk membuat card sertifikat
-            data.forEach(cert => {
-                const certCard = createCertificateCard(cert);
-                grid.appendChild(certCard);
-            });
-            grid.appendChild(addCard);
-            if (data.length === 0) {
-                showNotification('Tidak ada sertifikat yang ditemukan.', 'info');
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching certificates:', error);
-            showNotification('Gagal memuat sertifikat. Periksa koneksi backend.', 'error');
-        });
-    }
-
-    function showNotification(message, type) {
-    const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
-        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-    }`;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
-}
+            fetch('/certificates')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    data.forEach(cert => {
+                        const certCard = createCertificateCard(cert);
+                        grid.appendChild(certCard);
+                    });
+                    grid.appendChild(addCard);
+                })
+                .catch(error => {
+                    console.error('Error fetching certificates:', error);
+                    showNotification('Gagal memuat sertifikat. Periksa koneksi backend.', 'error');
+                });
+        }
 
         function createCertificateCard(cert) {
             const div = document.createElement('div');
@@ -466,7 +437,7 @@ function renderCertificates() {
             div.innerHTML = `
                 <div class="flex items-center justify-between mb-3">
                     <div class="w-12 h-12 ${colorClass} rounded-lg flex items-center justify-center">
-                        <i class="${cert.icon} text-xl"></i>
+                        <i class="fas fa-award text-xl"></i>
                     </div>
                     <div class="flex space-x-2">
                         <button onclick="editCertificate(${cert.id})" class="text-blue-600 hover:text-blue-800">
@@ -495,8 +466,8 @@ function renderCertificates() {
                 <h3 class="font-semibold text-gray-900 mb-2">${cert.name}</h3>
                 <p class="text-sm text-gray-600 mb-3">Diterbitkan oleh ${cert.organization}</p>
                 <div class="text-xs text-gray-500 space-y-1">
-                    <div>Tanggal Terbit: ${formatDate(cert.issueDate)}</div>
-                    ${cert.expiryDate ? `<div>Berlaku Hingga: ${formatDate(cert.expiryDate)}</div>` : ''}
+                    <div>Tanggal Terbit: ${formatDate(cert.issue_date)}</div>
+                    ${cert.expiry_date ? `<div>Berlaku Hingga: ${formatDate(cert.expiry_date)}</div>` : ''}
                 </div>
                 <button class="mt-3 w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
                     Lihat Sertifikat
@@ -506,8 +477,8 @@ function renderCertificates() {
             return div;
         }
 
-        // Utility functions
         function formatDate(dateString) {
+            if (!dateString) return '';
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', { 
                 year: 'numeric', 
@@ -522,7 +493,7 @@ function renderCertificates() {
             document.getElementById('issueDate').value = '';
             document.getElementById('expiryDate').value = '';
             document.getElementById('certificateFile').value = '';
-            uploadedFile = null; // Reset variabel file
+            uploadedFile = null;
         }
 
         function showNotification(message, type) {
@@ -539,7 +510,6 @@ function renderCertificates() {
             }, 3000);
         }
 
-        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             renderCertificates();
         });

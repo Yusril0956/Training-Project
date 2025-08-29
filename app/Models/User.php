@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany; // Tambahkan ini
 
 class User extends Authenticatable
 {
@@ -65,5 +66,11 @@ class User extends Authenticatable
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+    
+    // Tambahkan fungsi ini di sini
+    public function certificates(): HasMany
+    {
+        return $this->hasMany(Certificate::class);
     }
 }

@@ -11,6 +11,13 @@ class CertificateController extends Controller
 {
     public function index()
     {
+        // Periksa apakah pengguna sudah login
+        if (!Auth::check()) {
+            // Jika belum, kembalikan respons error
+            return response()->json(['message' => 'Unauthenticated.'], 401);
+        }
+
+        // Jika sudah login, ambil sertifikatnya
         $certificates = Auth::user()->certificates;
         return response()->json($certificates);
     }
