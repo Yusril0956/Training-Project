@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::post('/setting/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
     Route::post('/setting/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
+    Route::post('/setting/profile', [ProfileController::class, 'updateProfile'])->name('setting.profile');
     Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
 
 
