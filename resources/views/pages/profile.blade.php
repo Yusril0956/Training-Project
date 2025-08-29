@@ -48,7 +48,11 @@
                             </div>
                         </div>
 
-                        <h3 class="card-title mt-4">Profile</h3>
+                        <h3 class="card-title mt-4">Profile
+                            <a href="#" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#modal-edit-profile">
+                                <i class="ti ti-edit me-1"></i>Edit
+                            </a>
+                        </h3>
                         <div class="row g-3">
                             <div class="col-md">
                                 <div class="form-label">Name</div>
@@ -162,6 +166,41 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal edit profile -->
+    <div class="modal modal-blur fade" id="modal-edit-profile" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" method="POST" action="{{ route('setting.profile') }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" id="edit-profile-name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="edit-profile-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telepon</label>
+                        <input type="text" class="form-control" name="phone" id="edit-profile-phone">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Alamat</label>
+                        <textarea class="form-control" name="address" id="edit-profile-address" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @push('script')
@@ -177,6 +216,17 @@
                     console.log('Modal action confirmed:', '{{ session('modal_type') }}');
                 });
             @endif
+
+            // Populate profile edit modal with current values
+            const editProfileModal = document.getElementById('modal-edit-profile');
+            if (editProfileModal) {
+                editProfileModal.addEventListener('show.bs.modal', function() {
+                    document.getElementById('edit-profile-name').value = '{{ $user->name }}';
+                    document.getElementById('edit-profile-email').value = '{{ $user->email }}';
+                    document.getElementById('edit-profile-phone').value = '{{ $user->phone ?? '' }}';
+                    document.getElementById('edit-profile-address').value = '{{ $user->address ?? '' }}';
+                });
+            }
         });
     </script>
 @endpush
