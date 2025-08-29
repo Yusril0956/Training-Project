@@ -17,28 +17,29 @@ use App\Http\Controllers\CertificateController;
 |--------------------------------------------------------------------------
 */
 
-// ROUTE YANG BELUM LOGIN SIMPAN DISINI
-Route::get('/', function () {
-    return view('layouts.welcome');
-})->middleware('guest');
-
-// Login & Register hanya untuk guest
+// ============================
+// Guest Routes (Belum Login)
+// ============================
 Route::middleware('guest')->group(function () {
-    Route::get('/login', function () {
-        return view('auth.login');
-    });
+    // Halaman Welcome
+    Route::get('/', fn() => view('layouts.welcome'))->name('welcome');
+
+    // Login
+    Route::get('/login', fn() => view('auth.login'))->name('login.form');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-    Route::get('/register', function () {
-        return view('auth.register');
-    });
+    // Register
+    Route::get('/register', fn() => view('auth.register'))->name('register.form');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 
+    // Lengkapi Profil setelah login dengan Google
     Route::get('/complete-profile', [AuthController::class, 'completeForm'])->name('profile.complete');
     Route::post('/complete-profile', [AuthController::class, 'saveCompleteForm'])->name('profile.complete.save');
 });
 
-// ROUTE UNTUK YANG SUDAH LOGIN SIMPAN DISINI
+// ============================
+// Authenticated Routes (Sudah Login)
+// ============================
 Route::middleware('auth')->group(function () {
     // Dashboard & umum
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
@@ -59,8 +60,10 @@ Route::middleware('auth')->group(function () {
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Sertifikat
-    Route::get('/sertifikat', fn() => view('pages.sertifikat', ['user' => Auth::user()]))->name('sertifikat');
+    // Sertifikat (halaman statis dengan user login)
+    Route::get('/sertifikat', fn() => view('pages.sertifikat', [
+        'user' => Auth::user(),
+    ]))->name('sertifikat');
 
     // Training
     Route::get('/training', [TrainingController::class, 'index'])->name('training.index');
@@ -68,12 +71,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/mandatory', fn() => view('pages.Training.training2'))->name('mandatory.training');
     Route::get('/license', fn() => view('pages.Training.training4'))->name('license.training');
     Route::get('/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer.requested');
-    Route::get('/training/detail-training', fn() => view('pages.Training.detail_training'))->name('detail.training');
+    Route::get('/training/{id}/detail', [TrainingController::class, 'detail'])->name('training.detail');
+    Route::get('/training/create', [TrainingController::class, 'create'])->name('training.create');
+    Route::post('/training/store', [TrainingController::class, 'store'])->name('training.store');
 
     // Update user
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
 
-    // Role khusus admin & super admin
+    // Admin & Super Admin
     Route::middleware(['check_role:admin,super_admin'])->group(function () {
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
         Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
@@ -86,31 +91,33 @@ Route::middleware('auth')->group(function () {
     Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
 });
 
-// Login dengan Google
-Route::get('auth/google', fn() => Socialite::driver('google')->redirect())->name('google.login');
+// ============================
+// Google OAuth
+// ============================
+Route::get('/auth/google', fn() => Socialite::driver('google')->redirect())->name('google.login');
 
-Route::get('auth/google/callback', function () {
+Route::get('/auth/google/callback', function () {
     $googleUser = Socialite::driver('google')->user();
 
     // Cari user berdasarkan email
     $user = User::where('email', $googleUser->getEmail())->first();
 
     if (!$user) {
-        // Buat akun baru minimal
+        // Buat akun baru dengan data minimum
         $user = User::create([
             'name'      => $googleUser->getName(),
             'email'     => $googleUser->getEmail(),
-            'password'  => bcrypt(str()->random(16)), 
+            'password'  => bcrypt(str()->random(16)), // password random
             'google_id' => $googleUser->getId(),
         ]);
     }
 
     Auth::login($user);
 
-    // cek apakah profile lengkap
+    // Jika profil belum lengkap, arahkan ke form
     if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
         return redirect()->route('profile.complete');
     }
 
-    return redirect('/home');
+    return redirect()->route('index');
 });

@@ -4,32 +4,45 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+            @include('partials._breadcrumb', [
+                'items' => [
+                    ['title' => 'Training', 'url' => route('training.index')],
+                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
+                    ['title' => 'Detail Training', 'url' => route('training.detail', $training->id)],
+                ],
+            ])
+
             <!-- Detail Training -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Detail Pelatihan: Pelatihan Perawatan CN235</h3>
+                    <h3 class="card-title">Detail Pelatihan: {{ $training->nama }}</h3>
                 </div>
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-3">Judul Pelatihan</dt>
-                        <dd class="col-sm-9">Pelatihan Perawatan CN235</dd>
+                        <dd class="col-sm-9">{{ $training->nama }}</dd>
 
                         <dt class="col-sm-3">Kategori</dt>
-                        <dd class="col-sm-9">Teknis</dd>
+                        <dd class="col-sm-9">{{ $training->kategori }}</dd>
 
                         <dt class="col-sm-3">Klien</dt>
-                        <dd class="col-sm-9">PT Aviasi Nusantara</dd>
+                        <dd class="col-sm-9">{{ $training->klien }}</dd>
 
                         <dt class="col-sm-3">Deskripsi</dt>
-                        <dd class="col-sm-9">Pelatihan ini mencakup prosedur perawatan dasar dan lanjutan untuk pesawat
-                            CN235, termasuk sistem avionik dan mesin.</dd>
+                        <dd class="col-sm-9">{{ $training->deskripsi }}</dd>
 
                         <dt class="col-sm-3">Tanggal Permintaan</dt>
-                        <dd class="col-sm-9">2025-08-20</dd>
+                        <dd class="col-sm-9">{{ $training->created_at->format('Y-m-d') }}</dd>
 
                         <dt class="col-sm-3">Status</dt>
                         <dd class="col-sm-9">
-                            <span class="badge bg-warning">Pending Approval</span>
+                            @if ($training->status == 'approved')
+                                <span class="badge bg-success">Approved</span>
+                            @elseif($training->status == 'rejected')
+                                <span class="badge bg-danger">Rejected</span>
+                            @else
+                                <span class="badge bg-warning">Pending Approval</span>
+                            @endif
                         </dd>
                     </dl>
                 </div>
@@ -46,7 +59,8 @@
                             <div class="timeline-point bg-secondary"></div>
                             <div class="timeline-event">
                                 <div class="timeline-title">Permintaan Diajukan</div>
-                                <div class="text-muted">2025-08-20 oleh PT Aviasi Nusantara</div>
+                                <div class="text-muted">{{ $training->created_at->format('Y-m-d') }} oleh
+                                    {{ $training->klien }}</div>
                             </div>
                         </li>
                         <li class="timeline-item">

@@ -13,9 +13,12 @@ class TrainingSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 20) as $i) {
+        foreach (range(1, 5) as $i) {
             Training::create([
                 'nama' => $faker->sentence(3),
+                'kategori' => fake()->word(),
+                'klien' => $faker->company(),
+                'deskripsi' => $faker->paragraph(),
                 'jenis_training_id' => JenisTraining::inRandomOrder()->first()->id,
             ]);
         }
