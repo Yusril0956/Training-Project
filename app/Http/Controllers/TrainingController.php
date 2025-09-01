@@ -23,8 +23,15 @@ class TrainingController extends Controller
     {
         $trainings = Training::all();
         $jenisTrainings = JenisTraining::all();
+        $approvedTrainings = Training::where('status', 'approved')->get();
+        $modalId = 'action-training';
+        $modalTitle = 'Action';
+        $modalDescription = 'Silahkan pilih tindakan yang diinginkan.';
+        $modalButton1 = 'Reject';
+        $modalButton2 = 'Approve';
 
-        return view('pages.Training.customer_requested', compact('trainings', 'jenisTrainings'));
+
+        return view('pages.Training.customer_requested', compact('trainings', 'jenisTrainings', 'modalId', 'modalTitle', 'modalDescription', 'modalButton1', 'modalButton2', 'approvedTrainings'));
     }
 
     /**
@@ -33,8 +40,31 @@ class TrainingController extends Controller
     public function detail($id)
     {
         $training = Training::findOrFail($id);
+        $modalId = 'reject-training'; // ID unik untuk modal
+        $modalId = 'tolak-training';
+        $modalTitle = 'Apa kamu yakin?';
+        $modalDescription = 'Tolak permintaan kelas training';
+        $modalButton = 'Tolak';
+        $formAction = route('training.reject', $training->id);
+        $formMethod = 'DELETE';
 
-        return view('pages.Training.detail_training', compact('training'));
+        return view('pages.Training.detail_training', compact('training', 'modalId', 'modalTitle', 'modalDescription', 'modalButton', 'formAction', 'formMethod'));
+    }
+
+    public function reject($id)
+    {
+        $training = Training::findOrFail($id);
+        $training->status = 'rejected';
+        $training->save();
+        return redirect()->back()->with('success', 'Training berhasil ditolak');
+    }
+
+    public function approve($id)
+    {
+        $training = Training::findOrFail($id);
+        $training->status = 'approved';
+        $training->save();
+        return redirect()->back()->with('success', 'Training berhasil disetujui');
     }
 
     /**
@@ -47,7 +77,7 @@ class TrainingController extends Controller
             'kategori'         => 'required|string',
             'klien'            => 'required|string|max:255',
             'deskripsi'        => 'nullable|string',
-            'jenis_training_id'=> 'required|exists:jenis_training,id',
+            'jenis_training_id' => 'required|exists:jenis_training,id',
         ]);
 
         Training::create([
@@ -55,7 +85,7 @@ class TrainingController extends Controller
             'kategori'         => $request->kategori,
             'klien'            => $request->klien,
             'deskripsi'        => $request->deskripsi,
-            'jenis_training_id'=> $request->jenis_training_id,
+            'jenis_training_id' => $request->jenis_training_id,
             'status'           => 'pending',
         ]);
 

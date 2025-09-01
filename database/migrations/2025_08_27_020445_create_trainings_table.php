@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('kategori');
             $table->string('klien');
             $table->string('deskripsi');
-            $table->enum('status', ['pending', 'approved', 'completed'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'completed', 'rejected'])->default('pending');
             $table->foreignId('jenis_training_id')->constrained('jenis_training')->onDelete('cascade');
             $table->timestamps();
         });

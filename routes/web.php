@@ -109,6 +109,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/{id}/detail', [TrainingController::class, 'detail'])->name('training.detail');
     Route::get('/training/create', [TrainingController::class, 'create'])->name('training.create');
     Route::post('/training/store', [TrainingController::class, 'store'])->name('training.store');
+    Route::delete('/training/{id}/reject', [TrainingController::class, 'reject'])->name('training.reject');
+    Route::put('/training/{id}/approve', [TrainingController::class, 'approve'])->name('training.approve');
 
     // Certificates
     Route::get('/sertifikat', fn() => view('pages.sertifikat', ['user' => Auth::user()]))->name('sertifikat');

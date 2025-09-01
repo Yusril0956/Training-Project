@@ -4,6 +4,12 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <a href="#" class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                </div>
+            @endif
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
@@ -87,20 +93,22 @@
                     <h3 class="card-title">Tindakan</h3>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ route('training.reject', $training->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
                         <div class="mb-3">
                             <label class="form-label">Catatan Persetujuan</label>
                             <textarea class="form-control" rows="3" placeholder="Tulis catatan atau alasan persetujuan..."></textarea>
                         </div>
                         <div class="d-flex gap-2">
+                            {{-- button approve --}}
                             <button type="submit" class="btn btn-success">
                                 <i class="ti ti-check"></i> Setujui
                             </button>
-                            <button type="button" class="btn btn-danger">
+                            {{-- button reject --}}
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#danger-{{ $modalId }}">
                                 <i class="ti ti-x"></i> Tolak
-                            </button>
-                            <button type="button" class="btn btn-secondary">
-                                <i class="ti ti-edit"></i> Edit Detail
                             </button>
                         </div>
                     </form>
@@ -109,4 +117,11 @@
 
         </div>
     </div>
+
+    @include('components._modal', [
+        'modalId' => $modalId,
+        'modalTitle' => $modalTitle,
+        'modalDescription' => $modalDescription,
+        'modalButton' => $modalButton,
+    ])
 @endsection

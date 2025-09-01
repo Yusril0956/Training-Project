@@ -4,6 +4,12 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <a href="#" class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                </div>
+            @endif
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
@@ -11,13 +17,55 @@
                 ],
             ])
             <!-- Hero Section -->
-            <div class="card mb-4">
+            <div class="card mb-3">
                 <div class="card-body text-center py-4">
                     <h2 class="card-title">Customer Requested Training</h2>
                     <p class="card-subtitle text-muted">Daftar pelatihan yang diajukan langsung oleh klien atau mitra kerja
                     </p>
                 </div>
             </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">Daftar training yang tersedia</h3>
+                </div>
+            </div>
+            {{-- <div class="card-body"> --}}
+            <div class="row row-cards mb-3">
+                @foreach ($approvedTrainings as $training)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card shadow-sm">
+                            <img src="{{ $training->image_url ?? asset('images/default-training.jpg') }}"
+                                class="card-img-top" alt="Gambar Kelas">
+                            <div class="card-body">
+                                <h4 class="card-title mb-1">{{ $training->judul }}</h4>
+                                <p class="text-muted mb-2">{{ Str::limit($training->deskripsi, 80) }}</p>
+                                <ul class="list-unstyled small mb-2">
+                                    <li><strong>Kategori:</strong> {{ ucfirst($training->kategori) }}</li>
+                                    <li><strong>Klien:</strong> {{ $training->klien }}</li>
+                                    <li><strong>Jadwal:</strong> {{ $training->jadwal ?? 'Belum dijadwalkan' }}</li>
+                                    <li><strong>Lokasi:</strong> {{ $training->lokasi ?? '-' }}</li>
+                                </ul>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-success">Approved</span>
+                                    <a href="{{ route('training.detail', $training->id) }}"
+                                        class="btn btn-sm btn-info">Detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                @if ($approvedTrainings->isEmpty())
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            Belum ada kelas training yang disetujui.
+                        </div>
+                    </div>
+                @endif
+            </div>
+            {{-- </div> --}}
+            {{-- </div> --}}
 
             <!-- Filter & Actions -->
             <div class="card mb-3">
@@ -75,6 +123,8 @@
                                             <td>
                                                 @if ($training->status === 'pending')
                                                     <span class="badge bg-warning">Pending</span>
+                                                @elseif ($training->status === 'rejected')
+                                                    <span class="badge bg-danger">Rejected</span>
                                                 @elseif ($training->status === 'approved')
                                                     <span class="badge bg-primary">Approved</span>
                                                 @elseif ($training->status === 'completed')
@@ -86,13 +136,20 @@
                                                 <a href="{{ route('training.detail', $training->id) }}"
                                                     class="btn btn-sm btn-info">Detail</a>
                                                 <a href="#" class="btn btn-sm btn-secondary">Edit</a>
-                                                <form action="#" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                                </form>
+                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#success-{{ $training->id }}">
+                                                    Action
+                                                </button>
                                             </td>
                                         </tr>
+                                        @include('components._modal', [
+                                            'modalId' => $training->id,
+                                            'modalTitle' => $modalTitle,
+                                            'modalDescription' => $modalDescription,
+                                            'modalButton1' => $modalButton1,
+                                            'modalButton2' => $modalButton2,
+                                            'trainingId' => $training->id,
+                                        ])
                                     @endforeach
                                 </tbody>
                             </table>
@@ -227,9 +284,6 @@
                     </form>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 @endsection
