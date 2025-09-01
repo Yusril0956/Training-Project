@@ -198,7 +198,7 @@
                                 </svg></span>
                             <h3 class="card-title">Layanan & Dukungan</h3>
                             <p class="text-muted">Kami menyediakan layanan MRO, pelatihan, dan dukungan teknis global.</p>
-                            <a href="#" class="btn btn-warning btn-sm">Pelajari Lebih Lanjut</a>
+                            <a href="{{ route('services') }}" class="btn btn-warning btn-sm">Pelajari Lebih Lanjut</a>
                         </div>
                     </div>
                 </div>

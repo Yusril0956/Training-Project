@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
     Route::get('/help', fn() => view('pages.help'))->name('help');
+    Route::get('/services', fn() => view('pages.services'))->name('services');
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
     Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
