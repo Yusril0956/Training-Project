@@ -136,6 +136,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="/setting">Settings</a>
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                                <a class="dropdown-item" href="{{ route('fortal.hr') }}">Fortal HR</a>
                                 <a class="dropdown-item" href="/help">Help</a>
                             </div>
                         </li>
