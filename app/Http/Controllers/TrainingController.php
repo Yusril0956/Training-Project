@@ -60,7 +60,7 @@ class TrainingController extends Controller
         ]);
 
         return redirect()
-            ->route('training.index')
+            ->route('customer.requested')
             ->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
     }
 }
