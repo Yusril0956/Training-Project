@@ -98,23 +98,58 @@
                 </div>
                 
                 <!-- Navigation Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Home</a>
-                    <a href="#" class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Training</a>
-                    <div class="relative group">
-                        <button class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 flex items-center">
-                            More
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                            <a href="#" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">Tentang Kami</a>
-                            <a href="#" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">Produk</a>
-                            <a href="#" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">Karir</a>
-                            <a href="#" class="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">Kontak</a>
-                        </div>
-                    </div>
+                <div class="hidden md:flex items-center space-x-4">
+    {{-- Home --}}
+    <a href="{{ route('index') }}"
+       class="text-gray-700 hover:text-blue-600 font-medium transition duration-300
+              {{ request()->is('home') ? 'text-blue-600' : '' }}">
+        Home
+    </a>
+
+    {{-- Training --}}
+    <a href="{{ route('training.index') }}"
+       class="text-gray-700 hover:text-blue-600 font-medium transition duration-300
+              {{ request()->is('training*') ? 'text-blue-600' : '' }}">
+        Training
+    </a>
+
+    {{-- Dropdown More --}}
+    <div class="relative group">
+        <button
+            class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 flex items-center">
+            More
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </button>
+
+        <div
+            class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800
+                   rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                   transition-all duration-300">
+
+            <a href="{{ route('index') }}"
+               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+                      hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
+                Setting
+            </a>
+
+            <a href="{{ route('profile') }}"
+               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+                      hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
+                Profile
+            </a>
+
+            <a href="{{ route('help') }}"
+               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+                      hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
+                Help
+            </a>
+        </div>
+    </div>
+</div>
+
                     
                     <!-- Notification Bell -->
                     <div class="relative">
