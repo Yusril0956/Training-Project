@@ -109,7 +109,7 @@
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                     <ul class="navbar-nav">
-                        <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->is('home') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('index') }}">
                                 <span class="nav-link-title">Home</span>
                             </a>

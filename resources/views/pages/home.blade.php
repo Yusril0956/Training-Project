@@ -155,7 +155,7 @@
                             <h3 class="card-title">Profil Perusahaan</h3>
                             <p class="text-muted">PT Dirgantara Indonesia adalah produsen pesawat terkemuka di Asia
                                 Tenggara.</p>
-                            <a href="#" class="btn btn-primary btn-sm">Lihat Detail</a>
+                            <a href="{{ route('company.detail') }}" class="btn btn-primary btn-sm">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
                             <h3 class="card-title">Statistik Produksi</h3>
                             <p class="text-muted">Lebih dari 400 pesawat telah diproduksi dan dikirim ke berbagai negara.
                             </p>
-                            <a href="#" class="btn btn-success btn-sm">Lihat Data</a>
+                            <a href="{{ route('production.statistics') }}" class="btn btn-success btn-sm">Lihat Data</a>
                         </div>
                     </div>
                 </div>
