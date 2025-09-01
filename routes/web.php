@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/company-detail', fn() => view('pages.company-detail'))->name('company.detail');
     Route::get('/production-statistics', fn() => view('pages.production-statistics'))->name('production.statistics');
     Route::get('/fortal-hr', fn() => view('pages.fortal-hr'))->name('fortal.hr');
+    Route::get('/laporan-data', fn() => view('pages.laporan-data'))->name('laporan.data');
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
     Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
