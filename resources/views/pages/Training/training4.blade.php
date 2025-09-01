@@ -242,7 +242,7 @@
     </div>
     
 
-    <script>
+<script>
     let certificates = [];
     let currentEditId = null;
     let uploadedFile = null;
@@ -344,6 +344,7 @@
     }
 
     function editCertificate(id) {
+        // Ambil data dari array lokal yang sudah disinkronkan dengan database
         const cert = certificates.find(c => c.id === id);
         if (cert) {
             currentEditId = id;
@@ -355,75 +356,73 @@
         }
     }
 
-    // Ganti fungsi saveEditedCertificate() yang sudah ada
-async function saveEditedCertificate() {
-    if (!currentEditId) return;
+    async function saveEditedCertificate() {
+        if (!currentEditId) return;
 
-    const name = document.getElementById('editCertName').value;
-    const org = document.getElementById('editCertOrg').value;
-    const issueDate = document.getElementById('editIssueDate').value;
-    const expiryDate = document.getElementById('editExpiryDate').value;
+        const name = document.getElementById('editCertName').value;
+        const org = document.getElementById('editCertOrg').value;
+        const issueDate = document.getElementById('editIssueDate').value;
+        const expiryDate = document.getElementById('editExpiryDate').value;
 
-    if (!name || !org || !issueDate) {
-        showNotification('Harap isi semua field yang diperlukan', 'error');
-        return;
-    }
-
-    try {
-        const response = await fetch(`/certificates/${currentEditId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            },
-            body: JSON.stringify({
-                name: name,
-                organization: org,
-                issue_date: issueDate,
-                expiry_date: expiryDate
-            })
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            renderCertificates();
-            closeEditModal();
-            showNotification(result.message, 'success');
-        } else {
-            showNotification('Error: ' + JSON.stringify(result.errors), 'error');
+        if (!name || !org || !issueDate) {
+            showNotification('Harap isi semua field yang diperlukan', 'error');
+            return;
         }
-    } catch (error) {
-        showNotification('Terjadi kesalahan saat menyimpan perubahan.', 'error');
-        console.error('Error:', error);
-    }
-}
 
-// Ganti fungsi deleteCertificate() yang sudah ada
-async function deleteCertificate(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) {
         try {
-            const response = await fetch(`/certificates/${id}`, {
-                method: 'DELETE',
+            const response = await fetch(`/certificates/${currentEditId}`, {
+                method: 'PUT',
                 headers: {
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                }
+                },
+                body: JSON.stringify({
+                    name: name,
+                    organization: org,
+                    issue_date: issueDate,
+                    expiry_date: expiryDate
+                })
             });
 
             const result = await response.json();
 
             if (response.ok) {
                 renderCertificates();
+                closeEditModal();
                 showNotification(result.message, 'success');
             } else {
-                showNotification('Error: ' + JSON.stringify(result.message), 'error');
+                showNotification('Error: ' + JSON.stringify(result.errors), 'error');
             }
         } catch (error) {
-            showNotification('Terjadi kesalahan saat menghapus sertifikat.', 'error');
+            showNotification('Terjadi kesalahan saat menyimpan perubahan.', 'error');
             console.error('Error:', error);
         }
     }
-}
+
+    async function deleteCertificate(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) {
+            try {
+                const response = await fetch(`/certificates/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    renderCertificates();
+                    showNotification(result.message, 'success');
+                } else {
+                    showNotification('Error: ' + JSON.stringify(result.message), 'error');
+                }
+            } catch (error) {
+                showNotification('Terjadi kesalahan saat menghapus sertifikat.', 'error');
+                console.error('Error:', error);
+            }
+        }
+    }
 
     function renderCertificates() {
         const grid = document.getElementById('certificatesGrid');
@@ -438,6 +437,9 @@ async function deleteCertificate(id) {
                 return response.json();
             })
             .then(data => {
+                // Perbarui array lokal dengan data dari server
+                certificates = data;
+
                 data.forEach(cert => {
                     const certCard = createCertificateCard(cert);
                     grid.appendChild(certCard);
