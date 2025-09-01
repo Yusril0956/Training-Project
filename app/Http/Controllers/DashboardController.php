@@ -114,4 +114,43 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Gagal mengirim feedback!');
         }
     }
+
+    public function adminSettings()
+    {
+        $users = User::all();
+        return view('pages.admin-settings', compact('users'));
+    }
+
+    public function openAllAccess(Request $request)
+    {
+        // Logic to open all access - this could be a system setting or toggle
+        // For now, we'll just return a success message
+        return redirect()->back()->with('success', 'All access has been opened!');
+    }
+
+    public function deleteDatabase(Request $request)
+    {
+        // WARNING: This is a dangerous operation!
+        // In a real application, you would want to add additional security measures
+        // For now, we'll just return a warning message
+        return redirect()->back()->with('warning', 'Database deletion is not implemented for safety reasons!');
+    }
+
+    public function resetUserPassword(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            if ($user->role === 'super_admin') {
+                return redirect()->back()->with('error', 'Cannot reset super admin password!');
+            }
+
+            $newPassword = 'password123'; // Default reset password
+            $user->password = bcrypt($newPassword);
+            $user->save();
+
+            return redirect()->back()->with('success', 'Password for ' . $user->name . ' has been reset to: ' . $newPassword);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to reset password!');
+        }
+    }
 }

@@ -134,7 +134,9 @@
                                 <span class="nav-link-title">More</span>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/setting">Settings</a>
+                                @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                                    <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
                                 <a class="dropdown-item" href="{{ route('fortal.hr') }}">Fortal HR</a>
                                 <a class="dropdown-item" href="/help">Help</a>
