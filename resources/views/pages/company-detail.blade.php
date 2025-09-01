@@ -23,54 +23,72 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <h4 class="mb-4 text-primary">Profil Singkat & Produk Unggulan PT Dirgantara Indonesia (PT DI / IAe)</h4>
+                            <p class="mb-4">
+                                PT Dirgantara Indonesia (Persero), atau Indonesian Aerospace (IAe), adalah BUMN yang bergerak di industri kedirgantaraan, khususnya dalam desain, pengembangan, produksi pesawat, komponen aerostruktur, serta layanan pemeliharaan dan rekayasa. Didirikan pada 23 Agustus 1976, pusat operasinya berada di Bandung, Jawa Barat.
+                            </p>
+
+                            <h5 class="mb-3 text-secondary">Produk Pesawat</h5>
+                            <p><strong>Pesawat sayap tetap:</strong></p>
+                            <ul class="mb-3">
+                                <li><strong>CN-235:</strong> multiguna untuk militer dan sipil (pengangkutan, patroli, kargo)</li>
+                                <li><strong>NC212 / NC212i:</strong> versi terbaru dari pesawat ringan, banyak digunakan untuk keperluan sipil dan militer</li>
+                                <li><strong>N-219:</strong> turboprop ringan untuk penerbangan jarak pendek dan wilayah terpencil; sertifikasi diterima Desember 2020</li>
+                                <li><strong>CN-295:</strong> lisensi dari Airbus Defence & Space, dirakit di Bandung</li>
+                                <li><strong>Proyek pengembangan (rencana):</strong> N-245 (50-kursi turboprop) dan IPTN N-250 (prototype)</li>
+                            </ul>
+
+                            <h5 class="mb-3 text-secondary">Helikopter & Aerostruktur</h5>
+                            <p>Lisensi dan produksi helikopter seperti NAS 330 Puma, NAS 332 Super Puma, H215, H225M/H225, AS365/565, H125M/H125, serta Bell 412EPI.</p>
+                            <p>Produksi komponen aerostruktur untuk Boeing (737, 767) dan Airbus (A320–A380, A350), termasuk tail booms dan fuselage untuk helikopter Airbus dan Bell.</p>
+
+                            <h5 class="mb-3 text-secondary">Layanan & Teknologi</h5>
+                            <p><strong>MRO (Maintenance, Repair & Overhaul):</strong> pesawat dan mesin, menyediakan perbaikan, penggantian, dan dukungan logistik untuk berbagai pesawat (CN235, NC212, Bell412, Super Puma, Boeing 737 klasik, A320, Fokker, dll.).</p>
+                            <p><strong>Aerostructure:</strong> fasilitas lengkap termasuk pemrograman CNC, sheet metal, machining, treatment permukaan, bonding komposit, dan perakitan komponen aerostruktur.</p>
+                            <p><strong>Pengembangan teknologi baru:</strong> UAV (UAV Wulung, UAV MALE), simulator penerbangan, dan sistem senjata seperti roket dan torpedo.</p>
+                            <p><strong>Produk pertahanan:</strong> roket R-Han 122 dengan jangkauan hingga 32 km; diproduksi kerja sama dengan LAPAN dan instansi terkait.</p>
+
+                            <h5 class="mb-3 text-secondary">Capaian & Kerja Sama Internasional</h5>
+                            <ul class="mb-3">
+                                <li>Telah memproduksi dan mengirim lebih dari 400–470 pesawat ke berbagai negara dan operator global.</li>
+                                <li>Ekspor dan kerjasama ke negara seperti Malaysia, Thailand, UEA, Senegal, Brunei, Pakistan, Korea Selatan, Vietnam, Filipina, Nepal, Pantai Gading, dan Australia.</li>
+                                <li>Motor penggerak industri dirgantara nasional dan andalan pada pameran pertahanan seperti Indo Defence.</li>
+                                <li>Kerjasama MRO dengan AMMROC (UAE) untuk memperluas kemampuan layanan global.</li>
+                            </ul>
+
+                            <h5 class="mb-3 text-secondary">Ringkasan Cepat</h5>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-striped">
                                     <thead>
                                         <tr>
                                             <th>Aspek</th>
-                                            <th>Detail</th>
+                                            <th>Detail Singkat</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><strong>Nama</strong></td>
-                                            <td>PT Dirgantara Indonesia (PTDI)</td>
+                                            <td><strong>Tahun berdiri</strong></td>
+                                            <td>1976 (sebagai IPTN)</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Didirikan</strong></td>
-                                            <td>Agustus 1976</td>
+                                            <td><strong>Lokasi utama</strong></td>
+                                            <td>Bandung, Jawa Barat</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Bidang Usaha</strong></td>
-                                            <td>Desain, manufaktur, MRO, aerospace sipil & militer</td>
+                                            <td><strong>Produk unggulan</strong></td>
+                                            <td>Pesawat (CN235, NC212i, N219, CN295), helikopter, UAV, roket</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Produk Unggulan</strong></td>
-                                            <td>NC212i, CN235, N219, CN295 (kerja sama Airbus)</td>
+                                            <td><strong>Layanan</strong></td>
+                                            <td>MRO, aerostruktur, pengembangan teknologi, simulator</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Visi</strong></td>
-                                            <td>Leader turboprop di Asia Pasifik</td>
+                                            <td><strong>Capaian global</strong></td>
+                                            <td>>400 unit pesawat dikirim ke berbagai negara, banyak kerja sama internasional</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Misi</strong></td>
-                                            <td>Kompetensi, aliansi global, produk/jasa kompetitif</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Direksi & Komisaris</strong></td>
-                                            <td>Gita Amperiawan dkk., dengan latar belakang kuat</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Anak Perusahaan</strong></td>
-                                            <td>IPTN NA, GENTS, GETI, Nusantara Turbin & Propulsi</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Sistem Senjata & Roket</strong></td>
-                                            <td>Produksi teknologi roket & rudal</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>PPID & Info Publik</strong></td>
-                                            <td>Portal resmi tersedia untuk publik</td>
+                                            <td><strong>Inovasi terbaru</strong></td>
+                                            <td>UAV, roket R-Han 122, N-245, N-219 dan CN-295 versi terbaru</td>
                                         </tr>
                                     </tbody>
                                 </table>

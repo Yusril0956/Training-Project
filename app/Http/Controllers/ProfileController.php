@@ -39,22 +39,18 @@ class ProfileController extends Controller
 
         $user = User::find(Auth::id());
 
-        // Pastikan folder avatars ada
-        $avatarsPath = storage_path('app/public/avatars');
-        if (!file_exists($avatarsPath)) {
-            mkdir($avatarsPath, 0777, true);
-        }
-
         if ($request->hasFile('avatar')) {
             $file = $request->file('avatar');
             $filename = 'avatar_' . $user->id . '.' . $file->getClientOriginalExtension();
 
-            // Coba upload dan cek hasilnya
-            $result = $file->storeAs('avatars', $filename);
-            if (!$result) {
+            // Store file using public disk for direct web access
+            $path = $file->storeAs('avatars', $filename, 'public');
+
+            if (!$path) {
                 return redirect()->back()->with('error', 'Gagal upload file!');
             }
 
+            // Save the public path for direct web access
             $user->profile = 'storage/avatars/' . $filename;
             $user->save();
 
@@ -65,15 +61,20 @@ class ProfileController extends Controller
     }
     public function deleteAvatar(Request $request)
     {
-        $user = auth::user();
+        $user = Auth::user();
 
         // hapus file lama jika ada
-        if ($user->profile && file_exists(public_path($user->profile))) {
-            unlink(public_path($user->profile));
+        if ($user->profile) {
+            $filePath = str_replace('storage/', 'app/public/', $user->profile);
+            $fullPath = storage_path($filePath);
+            if (file_exists($fullPath)) {
+                unlink($fullPath);
+            }
         }
 
         // reset ke null / default
         $user->profile = null;
+        $user->save();
 
         return back()->with('success', 'Avatar berhasil dihapus.');
     }

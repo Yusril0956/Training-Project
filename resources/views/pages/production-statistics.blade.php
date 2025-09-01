@@ -12,6 +12,8 @@
         }
         .production-chart {
             height: 300px;
+            position: relative;
+            z-index: 1;
         }
         .capacity-indicator {
             position: relative;
@@ -219,6 +221,151 @@
                 </div>
             </div>
 
+            <!-- Training & Development Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3 class="card-title">Training & Development</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="text-muted mb-1">Total Training Programs</div>
+                                    <div class="h2 mb-0">4</div>
+                                    <div class="text-muted small">Active programs</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="text-muted mb-1">Participants</div>
+                                    <div class="h2 mb-0">1,250</div>
+                                    <div class="text-success small">+15% from last year</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="text-muted mb-1">Completion Rate</div>
+                                    <div class="h2 mb-0">87%</div>
+                                    <div class="text-muted small">Average</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card stat-card">
+                                <div class="card-body text-center">
+                                    <div class="text-muted mb-1">Certifications</div>
+                                    <div class="h2 mb-0">950</div>
+                                    <div class="text-muted small">Issued</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-info mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info">General Knowledge</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">450</div>
+                                                <div class="text-muted small">Participants</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">92%</div>
+                                                <div class="text-muted small">Completion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-danger mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger">Mandatory Training</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">800</div>
+                                                <div class="text-muted small">Participants</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">95%</div>
+                                                <div class="text-muted small">Completion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card border-success mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">Customer Requested</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">120</div>
+                                                <div class="text-muted small">Participants</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">78%</div>
+                                                <div class="text-muted small">Completion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-warning mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-warning">License & Certification</h5>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">300</div>
+                                                <div class="text-muted small">Participants</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-center">
+                                                <div class="h4 mb-1">85%</div>
+                                                <div class="text-muted small">Completion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="training-chart" class="production-chart mb-4"></div>
+
+                    <div class="text-center">
+                        <a href="{{ route('training.index') }}" class="btn btn-primary">
+                            <i class="ti ti-school me-2"></i>Access Training Portal
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Ringkasan & Insight -->
             <div class="card mb-4">
                 <div class="card-header">
@@ -269,7 +416,8 @@
             chart: {
                 type: 'area',
                 height: 300,
-                toolbar: { show: false }
+                toolbar: { show: false },
+                animations: { enabled: false }
             },
             colors: ['#0054a6'],
             dataLabels: { enabled: false },
@@ -302,7 +450,8 @@
             chart: {
                 type: 'bar',
                 height: 300,
-                toolbar: { show: false }
+                toolbar: { show: false },
+                animations: { enabled: false }
             },
             colors: ['#28a745'],
             plotOptions: {
@@ -330,7 +479,8 @@
             chart: {
                 type: 'line',
                 height: 300,
-                toolbar: { show: false }
+                toolbar: { show: false },
+                animations: { enabled: false }
             },
             colors: ['#007bff', '#ffc107'],
             stroke: { width: 3 },
@@ -346,5 +496,31 @@
         };
         const munitionsChart = new ApexCharts(document.querySelector("#munitions-chart"), munitionsOptions);
         munitionsChart.render();
+
+        // Training Participation Chart
+        const trainingOptions = {
+            series: [{
+                name: 'Participants',
+                data: [350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850] // Sample yearly data
+            }],
+            chart: {
+                type: 'bar',
+                height: 300,
+                toolbar: { show: false },
+                animations: { enabled: false }
+            },
+            colors: ['#17a2b8'],
+            plotOptions: {
+                bar: { borderRadius: 4 }
+            },
+            xaxis: {
+                categories: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
+            },
+            yaxis: {
+                title: { text: 'Number of Participants' }
+            }
+        };
+        const trainingChart = new ApexCharts(document.querySelector("#training-chart"), trainingOptions);
+        trainingChart.render();
     </script>
 @endpush

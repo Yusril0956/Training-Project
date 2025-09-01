@@ -31,7 +31,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <span class="avatar avatar-xl"
-                                    style="background-image: url({{ $user->profile ?? asset('images/default_avatar.png') }})"></span>
+                                    style="background-image: url({{ $user->profile ? asset($user->profile) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                             </div>
                             <div class="col-auto">
                                 <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-image">Change
@@ -126,7 +126,7 @@
                 <div class="modal-body">
                     <div class="mb-3 text-center">
                         <img id="avatar-preview"
-                            src="{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}"
+                            src="{{ $user->profile ? asset($user->profile) . '?t=' . time() : asset('images/default_avatar.png') }}"
                             class="avatar avatar-xl mb-2" style="object-fit:cover;" alt="Avatar Preview">
                         <input type="file" class="form-control mt-2" name="avatar" accept="image/*"
                             onchange="previewAvatar(event)">
