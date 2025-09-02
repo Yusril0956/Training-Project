@@ -300,7 +300,10 @@
                                                         <tr data-role="{{ $user->role }}">
                                                             <td>
                                                                 <div class="d-flex align-items-center">
-                                                                    <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default_avatar.png') }}')"></div>
+                                                                    <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}')"
+                                                                         data-bs-toggle="tooltip"
+                                                                         data-bs-placement="top"
+                                                                         title="Phone: {{ $user->phone ?? 'N/A' }} | Address: {{ $user->address ?? 'N/A' }} | City: {{ $user->city ?? 'N/A' }}"></div>
                                                                     <div>
                                                                         <div class="fw-bold">{{ $user->name }}</div>
                                                                         <small class="text-muted">{{ ucfirst($user->role) }}</small>
@@ -361,7 +364,10 @@
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default_avatar.png') }}')"></div>
+                                                                <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}')"
+                                                                     data-bs-toggle="tooltip"
+                                                                     data-bs-placement="top"
+                                                                     title="Phone: {{ $user->phone ?? 'N/A' }} | Address: {{ $user->address ?? 'N/A' }} | City: {{ $user->city ?? 'N/A' }}"></div>
                                                                 <div>
                                                                     <div class="fw-bold">{{ $user->name }}</div>
                                                                     <small class="text-muted">Admin</small>
@@ -401,7 +407,10 @@
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default_avatar.png') }}')"></div>
+                                                                <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}')"
+                                                                     data-bs-toggle="tooltip"
+                                                                     data-bs-placement="top"
+                                                                     title="Phone: {{ $user->phone ?? 'N/A' }} | Address: {{ $user->address ?? 'N/A' }} | City: {{ $user->city ?? 'N/A' }}"></div>
                                                                 <div>
                                                                     <div class="fw-bold">{{ $user->name }}</div>
                                                                     <small class="text-muted">User</small>
@@ -446,7 +455,10 @@
                                                     <tr>
                                                         <td>
                                                             <div class="d-flex align-items-center">
-                                                                <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/default_avatar.png') }}')"></div>
+                                                                <div class="avatar avatar-sm me-3" style="background-image: url('{{ $user->profile ? asset($user->profile) : asset('images/default_avatar.png') }}')"
+                                                                     data-bs-toggle="tooltip"
+                                                                     data-bs-placement="top"
+                                                                     title="Phone: {{ $user->phone ?? 'N/A' }} | Address: {{ $user->address ?? 'N/A' }} | City: {{ $user->city ?? 'N/A' }}"></div>
                                                                 <div>
                                                                     <div class="fw-bold">{{ $user->name }}</div>
                                                                     <small class="text-muted">Staff</small>
@@ -618,6 +630,12 @@
 
 @push('scripts')
     <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
         document.addEventListener("DOMContentLoaded", function() {
             // Auto dismiss alert after 4 seconds
             setTimeout(function() {
