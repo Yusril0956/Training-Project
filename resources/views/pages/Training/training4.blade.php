@@ -1,3 +1,8 @@
+@extends('layouts.app')
+@section('title', 'Training')
+
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,21 +35,7 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <header class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-white-600 rounded-lg flex items-center justify-center">
-                        <img src="{{asset('images/LOGOrl2.png')}}" class="navbar-brand-image " alt="logo">
-                    </div>
-                    <h1 class="text-2xl font-bold text-gray-900">Sertifikat/Lisensi</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <h1>Selamat datang kembali, {{ Auth::user()->name }}</h1>
-                </div>
-            </div>
-        </div>
-    </header>
+    
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
@@ -526,3 +517,5 @@
 </script>
 </body>
 </html>
+
+@endsection
