@@ -85,7 +85,7 @@
         
         <!-- Additional Help Text -->
         <p class="text-gray-500 text-sm mt-6">
-            Atau gunakan navigasi di atas untuk menemukan halaman yang Anda butuhkan.
+            Klik yang di atas untuk kembali ke home :>
         </p>
     </div>
 
