@@ -141,8 +141,7 @@
                 Profile
             </a>
 
-            <a href="{{ route('help') }}"
-               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+            <a href="{{ route('help') }}" :text-gray-300
                       hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
                 Help
             </a>
