@@ -38,18 +38,15 @@
                             <img src="{{ $training->image_url ?? asset('images/default-training.jpg') }}"
                                 class="card-img-top" alt="Gambar Kelas">
                             <div class="card-body">
-                                <h4 class="card-title mb-1">{{ $training->judul }}</h4>
-                                <p class="text-muted mb-2">{{ Str::limit($training->deskripsi, 80) }}</p>
-                                <ul class="list-unstyled small mb-2">
-                                    <li><strong>Kategori:</strong> {{ ucfirst($training->kategori) }}</li>
-                                    <li><strong>Klien:</strong> {{ $training->klien }}</li>
-                                    <li><strong>Jadwal:</strong> {{ $training->jadwal ?? 'Belum dijadwalkan' }}</li>
-                                    <li><strong>Lokasi:</strong> {{ $training->lokasi ?? '-' }}</li>
-                                </ul>
+                                <h4 class="card-title">{{ $training->judul }}</h4>
+                                <p class="text-muted">{{ Str::limit($training->deskripsi, 80) }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-success">Approved</span>
-                                    <a href="{{ route('training.detail', $training->id) }}"
-                                        class="btn btn-sm btn-info">Detail</a>
+                                    @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                                        <a href="{{ route('detail.training', $training->id) }}"
+                                            class="btn btn-sm btn-secondary">Detail</a>
+                                    @endif
+                                    <a href="{{ route('cr.page', $training->id)}}"
+                                        class="btn btn-sm btn-primary">Masuk Training</a>
                                 </div>
                             </div>
                         </div>

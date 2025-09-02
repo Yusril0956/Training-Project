@@ -93,4 +93,17 @@ class TrainingController extends Controller
             ->route('customer.requested')
             ->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
     }
+
+    public function crPage ($id)
+    {
+        $training = Training::findOrFail($id);
+        $members_count = Training::count('member');
+        return view('pages.Training.pages.main', compact('training', 'members_count'));
+    }
+
+    public function members($id)
+    {
+        $training = Training::findOrFail($id);
+        return view('pages.Training.pages.members', compact('training'));
+    }
 }

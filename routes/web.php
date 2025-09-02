@@ -112,6 +112,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/training/{id}/reject', [TrainingController::class, 'reject'])->name('training.reject');
     Route::put('/training/{id}/approve', [TrainingController::class, 'approve'])->name('training.approve');
 
+    // training customer requested
+    Route::get('/training/customer-requested/{id}', [TrainingController::class, 'crPage'])->name('cr.page');
+    Route::get('/training/customer-requested/members/{id}', [TrainingController::class, 'members'])->name('training.members');
+    Route::get('/training/customer-requested/materials/{id}', [TrainingController::class, 'materials'])->name('training.materials');
+    Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
+    Route::get('/training/customer-requested/tasks/{id}', [TrainingController::class, 'tasks'])->name('training.tasks');
+    Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
+    Route::get('/training/customer-requested/settings/{id}', [TrainingController::class, 'settings'])->name('training.settings');
+
     // Certificates
     Route::get('/sertifikat', fn() => view('pages.sertifikat', ['user' => Auth::user()]))->name('sertifikat');
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
