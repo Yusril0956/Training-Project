@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'nik' => '93827463810483',
                 'city' => 'Jakarta',
                 'role' => 'super_admin',
-                'password' => bcrypt('123456'),
+                'password' => '123456',
             ]
         );
         User::updateOrCreate(
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
                 'city' => 'Gangnam',
                 'role' => 'super_admin',
                 'profile' => 'storage/avatars/avatar_2.jpg',
-                'password' => bcrypt('123456'),
+                'password' => '123456',
             ]
         );
 
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
                 'nik' => '1234567890123456',
                 'city' => 'Jakarta',
                 'role' => 'admin',
-                'password' => bcrypt('123456'),
+                'password' => '123456',
             ]
         );
 
