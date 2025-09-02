@@ -1,3 +1,7 @@
+@extends('layouts.app')
+@section('title', 'Training')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,27 +20,7 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="gradient-bg text-white shadow-lg">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                        <img src="{{asset('images/LOGOrl2.png')}}" class="navbar-brand-image " alt="logo">
-                    </div>
-                    <div>
-                        <h1 class="text-2xl font-bold">PT.Dirgantara</h1>
-                        <p class="text-blue-100 text-sm">Keunggulan Pelatihan Dirgantara</p>
-                    </div>
-                </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#dashboard" class="hover:text-blue-200 transition-colors">Dasbor</a>
-                    <a href="#courses" class="hover:text-blue-200 transition-colors">Kursus</a>
-                    <a href="#progress" class="hover:text-blue-200 transition-colors">Kemajuan</a>
-                    <a href="#resources" class="hover:text-blue-200 transition-colors">Sumber Daya</a>
-                </nav>
-            </div>
-        </div>
-    </header>
+    
 
     <!-- Breadcrumb Navigation -->
     <div class="bg-white border-b border-gray-200">
@@ -792,3 +776,4 @@
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9759ee3e76cf9e2f',t:'MTc1NjI4MDUzMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+@endsection
