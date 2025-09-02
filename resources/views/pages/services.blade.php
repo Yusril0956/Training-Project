@@ -129,7 +129,7 @@
                    rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible
                    transition-all duration-300">
 
-            <a href="{{ route('index') }}"
+            <a href="{{ route('404') }}"
                class="block px-4 py-3 text-gray-700 dark:text-gray-300
                       hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
                 Setting
