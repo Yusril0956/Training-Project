@@ -93,25 +93,28 @@
                     <h3 class="card-title">Tindakan</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('training.reject', $training->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="mb-3">
-                            <label class="form-label">Catatan Persetujuan</label>
-                            <textarea class="form-control" rows="3" placeholder="Tulis catatan atau alasan persetujuan..."></textarea>
-                        </div>
-                        <div class="d-flex gap-2">
-                            {{-- button approve --}}
+                    <div class="mb-3">
+                        <label class="form-label">Catatan Persetujuan</label>
+                        <textarea class="form-control" rows="3" placeholder="Tulis catatan atau alasan persetujuan..."></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <form action="{{ route('training.approve', $training->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('PUT')
                             <button type="submit" class="btn btn-success">
                                 <i class="ti ti-check"></i> Setujui
                             </button>
+                        </form>
+                        <form action="{{ route('training.reject', $training->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
                             {{-- button reject --}}
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#danger-{{ $modalId }}">
                                 <i class="ti ti-x"></i> Tolak
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 

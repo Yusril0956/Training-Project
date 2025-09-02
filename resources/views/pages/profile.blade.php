@@ -17,11 +17,64 @@
     </script>
 @endpush
 
+@push('styles')
+    <style>
+        /* Modal square auto-fit konten */
+        .modal-square .modal-dialog {
+            display: inline-block;
+            max-width: none;
+        }
+
+        .modal-square .modal-content {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .modal-square .modal-body {
+            padding: 0;
+            display: inline-block;
+        }
+
+        /* Dropzone styling */
+        .dropzone {
+            width: 200px;
+            aspect-ratio: 1 / 1;
+            border: 2px dashed var(--tblr-border-color);
+            border-radius: 6px;
+            background: none !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropzone .dz-message {
+            text-align: center;
+            margin: 0;
+            background: none !important;
+        }
+
+        .dropzone .dz-preview {
+            margin: 4px;
+        }
+
+        /* Center modal content */
+        #modal-avatar .modal-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+        }
+    </style>
+@endpush
+
 @section('content')
     <!-- Page body -->
     <div class="page-body">
         <div class="container-xl">
-        @include('components._alert')
+            @include('components._alert')
 
             <div class="card">
                 <div class="row g-0">
@@ -34,8 +87,8 @@
                                     style="background-image: url({{ $user->profile ? asset($user->profile) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                             </div>
                             <div class="col-auto">
-                                <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-image">Change
-                                    avatar</a>
+                                <a href="#" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#modal-avatar">Change avatar</a>
                             </div>
                             <div class="col-auto">
                                 <!-- DELETE AVATAR FORM -->
@@ -49,7 +102,8 @@
                         </div>
 
                         <h3 class="card-title mt-4">Profile
-                            <a href="#" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#modal-edit-profile">
+                            <a href="#" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal"
+                                data-bs-target="#modal-edit-profile">
                                 <i class="ti ti-edit me-1"></i>Edit
                             </a>
                         </h3>
@@ -114,32 +168,6 @@
         </div>
     </div>
 
-    <!-- Modal avatar -->
-    <div class="modal modal-blur fade" id="modal-image" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <form class="modal-content" method="POST" action="{{ route('setting.avatar') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title">Profile Picture</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3 text-center">
-                        <img id="avatar-preview"
-                            src="{{ $user->profile ? asset($user->profile) . '?t=' . time() : asset('images/default_avatar.png') }}"
-                            class="avatar avatar-xl mb-2" style="object-fit:cover;" alt="Avatar Preview">
-                        <input type="file" class="form-control mt-2" name="avatar" accept="image/*"
-                            onchange="previewAvatar(event)">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Modal new password -->
     <div class="modal modal-blur fade" id="modal-new-password" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -162,6 +190,33 @@
                 <div class="modal-footer">
                     <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal avatar (Dropzone) -->
+    <div class="modal modal-blur fade" id="modal-avatar" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" id="avatar-form" method="POST" action="{{ route('setting.avatar') }}"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload Gambar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Dropzone -->
+                    <div class="dropzone dz-clickable" id="dropzone-upload">
+                        <div class="dz-message">
+                            <h3 class="dropzone-msg-title">Drag & drop gambar di sini</h3>
+                            <span class="dropzone-msg-desc">atau klik untuk memilih file</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-link" data-bs-dismiss="modal">Batal</a>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
@@ -204,19 +259,13 @@
 @endsection
 
 @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/dropzone@5/dist/min/dropzone.min.css" rel="stylesheet" />
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Auto show configurable modal if session variables are present
-            @if (session('modal_type'))
-                const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
-                modal.show();
+        Dropzone.autoDiscover = false;
 
-                // Add event listener for the configurable modal button
-                document.getElementById('btn-confirm-action').addEventListener('click', function() {
-                    console.log('Modal action confirmed:', '{{ session('modal_type') }}');
-                });
-            @endif
-
+        document.addEventListener("DOMContentLoaded", function() {
             // Populate profile edit modal with current values
             const editProfileModal = document.getElementById('modal-edit-profile');
             if (editProfileModal) {
@@ -227,6 +276,42 @@
                     document.getElementById('edit-profile-address').value = '{{ $user->address ?? '' }}';
                 });
             }
+
+            // Dropzone init
+            var dz = new Dropzone("#dropzone-upload", {
+                url: "{{ route('setting.avatar') }}",
+                paramName: "avatar",
+                maxFiles: 1,
+                acceptedFiles: "image/*",
+                addRemoveLinks: true,
+                dictRemoveFile: "Hapus",
+                autoProcessQueue: false,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                init: function() {
+                    let myDropzone = this;
+                    this.on("maxfilesexceeded", function(file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    });
+
+                    // submit form manually
+                    document.querySelector("#avatar-form").addEventListener("submit", function(e) {
+                        e.preventDefault();
+                        if (myDropzone.getQueuedFiles().length > 0) {
+                            myDropzone.processQueue();
+                        } else {
+                            e.target.submit();
+                        }
+                    });
+
+                    // success callback
+                    this.on("success", function(file, response) {
+                        location.reload();
+                    });
+                }
+            });
         });
     </script>
 @endpush
