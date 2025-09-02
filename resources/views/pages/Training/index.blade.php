@@ -10,6 +10,8 @@
                 'items' => [['title' => 'Training', 'url' => route('training.index')]],
             ])
 
+
+
             <!-- Hero Section -->
             <div class="card mb-4">
                 <div class="card-body text-center py-5">
@@ -73,39 +75,6 @@
                             <h3 class="card-title">License</h3>
                             <p class="text-muted">Certifications and licensed training programs.</p>
                             <a href="{{ route('license.training') }}" class="btn btn-warning btn-sm">Start</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row row-cards mb-4">
-                <div class="col-sm-4">
-                    <div class="card card-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <span class="text-muted me-2">Total Permintaan</span>
-                                <h3 class="mb-0">24</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card card-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <span class="text-muted me-2">Approved</span>
-                                <h3 class="mb-0 text-success">12</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card card-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <span class="text-muted me-2">Pending</span>
-                                <h3 class="mb-0 text-warning">8</h3>
-                            </div>
                         </div>
                     </div>
                 </div>

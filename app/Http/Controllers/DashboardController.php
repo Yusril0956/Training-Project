@@ -147,17 +147,21 @@ class DashboardController extends Controller
 
     public function resetUserPassword(Request $request, $id)
     {
+        $request->validate([
+            'new_password' => 'required|string|min:6',
+        ]);
+
         try {
             $user = User::findOrFail($id);
             if ($user->role === 'super_admin') {
                 return redirect()->back()->with('error', 'Cannot reset super admin password!');
             }
 
-            $newPassword = 'password123'; // Default reset password
+            $newPassword = $request->new_password;
             $user->password = bcrypt($newPassword);
             $user->save();
 
-            return redirect()->back()->with('success', 'Password for ' . $user->name . ' has been reset to: ' . $newPassword);
+            return redirect()->back()->with('success', 'Password for ' . $user->name . ' has been reset successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to reset password!');
         }
