@@ -133,3 +133,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('admin.reset.password');
     });
 });
+
+
+Route::get('/404', function () {
+    return response()->view('pages.Training.errors.404', [], 404);
+})->name('404');
