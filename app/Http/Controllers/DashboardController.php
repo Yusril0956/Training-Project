@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index()
-    { 
+    {
         return view('pages.home');
     }
 
@@ -22,7 +22,13 @@ class DashboardController extends Controller
     public function admin()
     {
         $users = User::all();
-        return view('pages.admin', compact('users'));
+
+        $modalId = 'deleteUser';
+        $modalTitle = 'Delete User';
+        $modalDescription = 'Are you sure you want to delete this user?';
+        $modalButton = 'Delete';
+        $formMethod = 'DELETE';
+        return view('pages.admin', compact('users', 'modalId', 'modalTitle', 'modalDescription', 'modalButton', 'formMethod'));
     }
 
     public function userUpdate(Request $request, $id)
@@ -85,8 +91,11 @@ class DashboardController extends Controller
             }
             $user->delete();
             return redirect()->back()->with('success', 'User berhasil dihapus!');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'User tidak ditemukan!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menghapus user!');
+            $error = $e->getMessage();
+            return redirect()->back()->with('error', 'Gagal menghapus user! ' . $error);
         }
     }
 

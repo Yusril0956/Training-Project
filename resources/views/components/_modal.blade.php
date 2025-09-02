@@ -1,9 +1,13 @@
 @if (isset($formAction))
     <div class="modal" id="danger-{{ $modalId }}" tabindex="-1">
         <div class="modal-dialog modal-sm" role="document">
+            @if($formAction !== '#')
             <form action="{{ $formAction }}" method="POST" class="modal-content">
                 @csrf
                 @method($formMethod ?? 'POST')
+            @else
+            <div class="modal-content">
+            @endif
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-status bg-danger"></div>
                 <div class="modal-body text-center py-4">
@@ -15,8 +19,8 @@
                         <path
                             d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
                     </svg>
-                    <h3>{{ $modalTitle }}</h3>
-                    <div class="text-secondary">
+                    <h3 id="modal-title">{{ $modalTitle }}</h3>
+                    <div class="text-secondary" id="modal-description">
                         {{ $modalDescription }}
                     </div>
                 </div>
@@ -27,12 +31,20 @@
                                 <a href="#" class="btn w-100" data-bs-dismiss="modal"> Cancel </a>
                             </div>
                             <div class="col">
+                                @if($formAction !== '#')
                                 <button type="submit" class="btn btn-danger w-100"> {{ $modalButton }}</button>
+                                @else
+                                <button type="button" id="btn-confirm-delete" class="btn btn-danger w-100"> {{ $modalButton }}</button>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
+            @if($formAction !== '#')
             </form>
+            @else
+            </div>
+            @endif
         </div>
     </div>
 @endif

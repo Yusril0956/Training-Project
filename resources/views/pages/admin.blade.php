@@ -36,6 +36,18 @@
                     ])
                 </div>
 
+
+                @foreach ($users as $user)
+                    @include('components._modal', [
+                        'modalId' => $modalId,
+                        'modalTitle' => $modalTitle,
+                        'modalDescription' => $modalDescription,
+                        'modalButton' => $modalButton,
+                        'formAction' => route('admin.user.delete', $user->id),
+                        'formMethod' => $formMethod,
+                    ])
+                @endforeach
+
                 <div class="col-auto ms-auto">
                     <div class="btn-list">
                         <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
@@ -108,7 +120,8 @@
                                                 </a>
                                                 <button type="submit" class="btn btn-sm btn-danger btn-delete-user"
                                                     data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                                    data-bs-toggle="modal" data-bs-target="#modal-danger">Delete</button>
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#danger-{{ $modalId }}">Delete</button>
                                             @else
                                                 <span class="text-muted">No action available</span>
                                             @endif
@@ -250,7 +263,6 @@
         </form>
     </div>
 
-    @include('components._modal')
 @endsection
 
 @push('script')
