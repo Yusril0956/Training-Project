@@ -33,7 +33,7 @@
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-between">
-                                    <a href="#" class="btn btn-sm btn-primary">Lihat Tugas</a>
+                                    <a href="{{ route('training.task.show', [$training->id, $task->id]) }}" class="btn btn-sm btn-primary">Lihat Tugas</a>
                                     @can('manage-training')
                                         <form action="#" method="POST">
                                             @csrf

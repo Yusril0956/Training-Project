@@ -14,6 +14,7 @@ class TaskController extends Controller
         return view('training.tasks.index', compact('training'));
     }
 
+
     public function store(Request $request, $trainingId)
     {
         $request->validate([

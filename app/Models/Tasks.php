@@ -14,7 +14,9 @@ class Tasks extends Model
         'training_id',
     ];
 
-    protected $dates = ['deadline'];
+    protected $casts = [
+        'deadline' => 'datetime',
+    ];
 
     public function training()
     {
@@ -28,6 +30,6 @@ class Tasks extends Model
 
     public function submissions()
     {
-        return $this->hasMany(TaskSubmission::class);
+        return $this->hasMany(TaskSubmission::class, 'task_id');
     }
 }
