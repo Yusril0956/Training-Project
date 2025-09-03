@@ -87,7 +87,7 @@
                         </div>
                         @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
                             <div class="col-md-4">
-                                <a href="{{ route('training.settings', $training->id) }}" class="card card-link">
+                                <a href="{{ route('training.settings', $training->nama) }}" class="card card-link">
                                     <div class="card-body text-center">
                                         <span class="avatar bg-red-lt text-red mb-2">⚙️</span>
                                         <div>Pengaturan Training</div>
@@ -108,7 +108,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Total Peserta: {{ $training->members_count ?? '0' }}</li>
                         <li class="list-group-item">Materi Tersedia: {{ $training->materials_count ?? '0' }}</li>
-                        <li class="list-group-item">Tugas Aktif: {{ $training->tasks_count ?? '0' }}</li>
+                        <li class="list-group-item">Tugas Aktif: {{ $training->task_count ?? '0' }}</li>
                         <li class="list-group-item">Feedback Masuk: {{ $training->feedback_count ?? '0' }}</li>
                     </ul>
                 </div>

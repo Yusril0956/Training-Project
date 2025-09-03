@@ -38,6 +38,14 @@
                             <input type="text" name="kategori" class="form-control" value="{{ $training->kategori }}">
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Durasi</label>
+                            <input type="text" name="durasi" class="form-control" value="{{ $training->durasi }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Mulai</label>
+                            <input type="date" name="tanggal_mulai" class="form-control" value="{{ $training->tanggal_mulai }}">
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="status" class="form-select">
                                 <option value="pending" {{ $training->status === 'pending' ? 'selected' : '' }}>Pending
