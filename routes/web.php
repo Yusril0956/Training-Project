@@ -156,3 +156,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/404', function () {
     return response()->view('pages.Training.errors.404', [], 404);
 })->name('404');
+
+Route::get('/sistem-training', function () {
+    return view('pages.sistem-training');
+})->name('sistem-training');
+
