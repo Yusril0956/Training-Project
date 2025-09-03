@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             TrainingMemberSeeder::class,
             FeedbackSeeder::class,
             MateriSeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

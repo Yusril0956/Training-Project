@@ -108,6 +108,12 @@ class TrainingController extends Controller
         return view('pages.Training.pages.materi-moduls', compact('training'));
     }
 
+    public function tasks($id)
+    {
+        $training = Training::findOrFail($id);
+        return view('pages.Training.pages.tasks', compact('training'));
+    }
+
     public function members($id)
     {
         $training = Training::with('members')->findOrFail($id);
