@@ -99,21 +99,21 @@
                 
                 <!-- Navigation Menu -->
                 <div class="hidden md:flex items-center space-x-4">
-    {{-- Home --}}
+    <!-- {{-- Home --}} -->
     <a href="{{ route('index') }}"
        class="text-gray-700 hover:text-blue-600 font-medium transition duration-300
               {{ request()->is('home') ? 'text-blue-600' : '' }}">
         Home
     </a>
 
-    {{-- Training --}}
+    <!-- {{-- Training --}} -->
     <a href="{{ route('training.index') }}"
        class="text-gray-700 hover:text-blue-600 font-medium transition duration-300
               {{ request()->is('training*') ? 'text-blue-600' : '' }}">
         Training
     </a>
 
-    {{-- Dropdown More --}}
+    <!-- {{-- Dropdown More --}} -->
     <div class="relative group">
         <button
             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 flex items-center">
@@ -162,12 +162,12 @@
                     </div>
                     
                     <!-- Dark Mode Toggle -->
-                    <button onclick="toggleDarkMode()" class="text-gray-700 hover:text-blue-600 transition duration-300">
+                    <button onclick="toggleDarkMode()" class="text-gray-700 hover:text-blue-600 transition duration-300 -ml-2">
                         <svg id="darkModeIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                         </svg>
                     </button>
-                </div>
+                </div>>
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center space-x-4">
