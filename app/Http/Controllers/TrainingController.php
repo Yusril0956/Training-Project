@@ -98,9 +98,8 @@ class TrainingController extends Controller
 
     public function crPage($id)
     {
-        $training = Training::findOrFail($id);
-        $members_count = Training::count('member');
-        return view('pages.Training.pages.main', compact('training', 'members_count'));
+        $training = Training::withCount(['members', 'materials', 'tasks'])->findOrFail($id);
+        return view('pages.Training.pages.main', compact('training'));
     }
 
     public function materials($id)
