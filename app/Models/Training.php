@@ -31,4 +31,9 @@ class Training extends Model
     {
         return $this->hasMany(Materi::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Tasks::class);
+    }
 }

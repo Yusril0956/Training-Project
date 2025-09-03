@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,6 +123,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/settings/{id}', [TrainingController::class, 'settings'])->name('training.settings');
     Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
     Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
+
+    // Route::get('training/{id}/tasks', [TaskController::class, 'index'])->name('training.tasks');
+    // Route::post('training/{id}/tasks', [TaskController::class, 'store'])->name('training.task.create');
+    // Route::delete('training/{id}/tasks/{taskId}', [TaskController::class, 'destroy'])->name('training.task.delete');
 
     // Certificates
     Route::get('/sertifikat', fn() => view('pages.sertifikat', ['user' => Auth::user()]))->name('sertifikat');

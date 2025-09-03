@@ -9,7 +9,8 @@
                 <div class="card-body">
                     <h2 class="card-title">📚 Materi & Modul</h2>
                     <p class="text-muted">Berikut adalah daftar materi untuk pelatihan
-                        <strong>{{ $training->judul }}</strong>.</p>
+                        <strong>{{ $training->nama }}</strong>.
+                    </p>
                 </div>
             </div>
 
