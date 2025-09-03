@@ -26,4 +26,9 @@ class Training extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(Materi::class);
+    }
 }
