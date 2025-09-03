@@ -120,6 +120,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/tasks/{id}', [TrainingController::class, 'tasks'])->name('training.tasks');
     Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
     Route::get('/training/customer-requested/settings/{id}', [TrainingController::class, 'settings'])->name('training.settings');
+    Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
+    Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
 
     // Certificates
     Route::get('/sertifikat', fn() => view('pages.sertifikat', ['user' => Auth::user()]))->name('sertifikat');

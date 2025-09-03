@@ -9,9 +9,26 @@
                 <div class="card-body">
                     <h2 class="card-title">👥 Daftar Peserta</h2>
                     <p class="text-muted">Berikut adalah peserta yang terdaftar dalam pelatihan
-                        <strong>{{ $training->judul }}</strong>.</p>
+                        <strong>{{ $training->nama }}</strong>.
+                    </p>
                 </div>
             </div>
+
+            <div class="row g-2 align-items-center">
+
+                <div class="col">
+                    @include('partials._breadcrumb', [
+                        'items' => [['title' => 'Admin', 'url' => route('admin')]],
+                    ])
+                </div>
+                <div class="col-auto ms-auto">
+                    <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
+                        <i class="ti ti-user-plus me-1"></i>
+                        Add Member
+                    </a>
+                </div>
+            </div>
+
 
             <!-- Tabel Peserta -->
             <div class="card">
@@ -32,7 +49,7 @@
                                 @foreach ($training->members as $index => $member)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $member->nama }}</td>
+                                        <td>{{ $member->name }}</td>
                                         <td>{{ $member->instansi }}</td>
                                         <td>{{ $member->email }}</td>
                                         <td>
@@ -43,10 +60,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('training.member.detail', [$training->id, $member->id]) }}"
+                                            <a href="#"
                                                 class="btn btn-sm btn-info">Detail</a>
                                             <form
-                                                action="{{ route('training.member.remove', [$training->id, $member->id]) }}"
+                                                action="#"
                                                 method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')

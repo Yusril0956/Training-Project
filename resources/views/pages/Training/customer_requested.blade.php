@@ -38,15 +38,15 @@
                             <img src="{{ $training->image_url ?? asset('images/default-training.jpg') }}"
                                 class="card-img-top" alt="Gambar Kelas">
                             <div class="card-body">
-                                <h4 class="card-title">{{ $training->judul }}</h4>
+                                <h4 class="card-title">{{ $training->nama }}</h4>
                                 <p class="text-muted">{{ Str::limit($training->deskripsi, 80) }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
                                         <a href="{{ route('detail.training', $training->id) }}"
                                             class="btn btn-sm btn-secondary">Detail</a>
                                     @endif
-                                    <a href="{{ route('cr.page', $training->id)}}"
-                                        class="btn btn-sm btn-primary">Masuk Training</a>
+                                    <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">Masuk
+                                        Training</a>
                                 </div>
                             </div>
                         </div>

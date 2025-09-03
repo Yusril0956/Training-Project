@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Training;
 use App\Models\JenisTraining;
+use App\Models\User;
 
 class TrainingController extends Controller
 {
@@ -94,7 +95,7 @@ class TrainingController extends Controller
             ->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
     }
 
-    public function crPage ($id)
+    public function crPage($id)
     {
         $training = Training::findOrFail($id);
         $members_count = Training::count('member');
@@ -105,5 +106,25 @@ class TrainingController extends Controller
     {
         $training = Training::with('members')->findOrFail($id);
         return view('pages.Training.pages.members', compact('training'));
+    }
+
+    public function showAddMemberForm($trainingId)
+    {
+        $training = Training::findOrFail($trainingId);
+        $users = User::whereNull('training_id')->where('role', 'user')->get(); // hanya user yang belum terdaftar
+        return view('pages.Training.addMember', compact('training', 'users'));
+    }
+
+    public function addMember(Request $request, $trainingId)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+        $user->training_id = $trainingId;
+        $user->save();
+
+        return redirect()->route('training.members', $trainingId)->with('success', 'Peserta berhasil ditambahkan.');
     }
 }
