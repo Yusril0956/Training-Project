@@ -138,7 +138,7 @@
                                     <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
-                                <a class="dropdown-item" href="{{ route('fortal.hr') }}">Fortal HR</a>
+                               
                                 <a class="dropdown-item" href="/help">Help</a>
                             </div>
                         </li>
