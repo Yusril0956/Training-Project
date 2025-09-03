@@ -33,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'status',
         'password',
         'profile', // Assuming this is the column for avatar/profile picture
+        'training_id',
     ];
 
     /**
@@ -67,6 +68,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+
+    public function training()
+    {
+        return $this->belongsTo(Training::class);
     }
     
     // Tambahkan fungsi ini di sini

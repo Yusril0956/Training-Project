@@ -103,7 +103,7 @@ class TrainingController extends Controller
 
     public function members($id)
     {
-        $training = Training::findOrFail($id);
+        $training = Training::with('members')->findOrFail($id);
         return view('pages.Training.pages.members', compact('training'));
     }
 }

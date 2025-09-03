@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('password');
             $table->string('profile')->nullable();
+            $table->foreignId('training_id')->nullable()->constrained('trainings')->onDelete('set null');
             $table->string('google_id')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();

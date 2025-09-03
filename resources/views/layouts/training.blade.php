@@ -32,7 +32,6 @@
         }
     </style>
     @stack('styles')
-    @stack('avatar')
 </head>
 
 <body>

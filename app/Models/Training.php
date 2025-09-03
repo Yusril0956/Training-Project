@@ -20,4 +20,10 @@ class Training extends Model
     {
         return $this->hasMany(TrainingDetail::class);
     }
+
+    // App\Models\Training.php
+    public function members()
+    {
+        return $this->hasMany(User::class);
+    }
 }
