@@ -4,8 +4,16 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+            @include('partials._breadcrumb', [
+                'items' => [
+                    ['title' => 'Training', 'url' => route('training.index')],
+                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
+                    ['title' => $training->nama , 'url' => route('cr.page', $training->id)],
+                    ['title' => 'Members', 'url' => route('training.members', $training->id)],
+                ],
+            ])
             <!-- Header -->
-            <div class="card mb-4">
+            <div class="card mb-3x">
                 <div class="card-body">
                     <h2 class="card-title">👥 Daftar Peserta</h2>
                     <p class="text-muted">Berikut adalah peserta yang terdaftar dalam pelatihan
@@ -15,12 +23,6 @@
             </div>
 
             <div class="row g-2 align-items-center">
-
-                <div class="col">
-                    @include('partials._breadcrumb', [
-                        'items' => [['title' => 'Admin', 'url' => route('admin')]],
-                    ])
-                </div>
                 <div class="col-auto ms-auto">
                     <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
                         <i class="ti ti-user-plus me-1"></i>

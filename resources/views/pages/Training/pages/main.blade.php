@@ -2,8 +2,17 @@
 @section('title', 'Dashboard Training')
 
 @section('content')
+
     <div class="page-body">
         <div class="container-xl">
+            @include('partials._breadcrumb', [
+                'items' => [
+                    ['title' => 'Training', 'url' => route('training.index')],
+                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
+                    ['title' => $training->nama , 'url' => route('cr.page', $training->id)],
+                ],
+            ])
+            
             <!-- Header Training -->
             <div class="card mb-4">
                 <div class="card-body text-center py-4">
