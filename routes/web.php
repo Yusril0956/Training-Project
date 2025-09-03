@@ -120,11 +120,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
     Route::get('/training/customer-requested/tasks/{id}', [TrainingController::class, 'tasks'])->name('training.tasks');
     Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
-    Route::get('/training/customer-requested/settings/{id}', [TrainingController::class, 'settings'])->name('training.settings');
     Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
     Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
 
-    // Route::get('training/{id}/tasks', [TaskController::class, 'index'])->name('training.tasks');
+    Route::get('/training/customer-requested/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('training.task.show');
+    Route::get('/gj', [TrainingController::class, 'showTasks'])->name('training.task.submit');
+
+    // training setting
+    Route::get('/training/customer-requested/settings/{nama}', [TrainingController::class, 'settings'])->name('training.settings');
+    Route::post('/training/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('training.settings.update');
     // Route::post('training/{id}/tasks', [TaskController::class, 'store'])->name('training.task.create');
     // Route::delete('training/{id}/tasks/{taskId}', [TaskController::class, 'destroy'])->name('training.task.delete');
 
