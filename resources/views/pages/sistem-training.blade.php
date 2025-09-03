@@ -8,19 +8,103 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Page Header -->
-        <div class="mb-8">
-            <div class="flex items-center space-x-4 mb-2">
-                <div class="bg-blue-500 p-3 rounded-lg">
-                    <i class="fas fa-graduation-cap text-white text-xl"></i>
+
+<!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white-600 rounded-lg flex items-center justify-center">
+                       <img src="images/LOGOFULL.png" alt="" class="logo">
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">PT. Dirgantara</span>
                 </div>
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-800">PT. Dirgantara Training Center</h1>
-                    <p class="text-gray-600">Platform Pelatihan Karyawan Industri Penerbangan</p>
+                
+                <!-- Navigation Menu -->
+                <div class="hidden md:flex items-center space-x-4">
+    <!-- {{-- Home --}} -->
+    <a href="{{ route('index') }}"
+       class="text-gray-700 hover:text-blue-600 font-medium transition duration-300
+              {{ request()->is('home') ? 'text-blue-600' : '' }}">
+        Home
+    </a>
+
+    <!-- {{-- Training --}} -->
+    <a href="{{ route('training.index') }}"
+       class="text-gray-700 hover:text-blue-600 font-medium transition duration-300
+              {{ request()->is('training*') ? 'text-blue-600' : '' }}">
+        Training
+    </a>
+
+    <!-- {{-- Dropdown More --}} -->
+    <div class="relative group">
+        <button
+            class="text-gray-700 hover:text-blue-600 font-medium transition duration-300 flex items-center">
+            More
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </button>
+
+        <div
+            class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800
+                   rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                   transition-all duration-300">
+
+            <a href="{{ route('404') }}"
+               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+                      hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
+                Setting
+            </a>
+
+            <a href="{{ route('profile') }}"
+               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+                      hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
+                Profile
+            </a>
+
+            <a href="{{ route('help') }}"
+               class="block px-4 py-3 text-gray-700 dark:text-gray-300
+                      hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition duration-300">
+                Help
+            </a>
+        </div>
+    </div>
+</div>
+
+                    
+                
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden bg-white border-t">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md">Home</a>
+                    <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md">Training</a>
+                    <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md">Tentang Kami</a>
+                    <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md">Produk</a>
+                    <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md">Karir</a>
+                    <a href="#" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md">Kontak</a>
                 </div>
             </div>
         </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 py-4">
+        <div class="container mx-auto px-6">
+            <nav class="flex items-center space-x-2 text-sm">
+                <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Home</a>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                <span class="text-gray-600 font-medium">sistem training</span>
+            </nav>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-blue-500">
@@ -125,7 +209,7 @@
                                 <i class="fas fa-user-check text-blue-500 text-sm"></i>
                             </div>
                             <div class="flex-1">
-                                <p class="text-sm text-gray-800">John Doe menyelesaikan pelatihan "Digital Marketing"</p>
+                                <p class="text-sm text-gray-800">Reqi menyelesaikan pelatihan "Menerbangkan pesawat C-130"</p>
                                 <p class="text-xs text-gray-500">2 jam yang lalu</p>
                             </div>
                         </div>
