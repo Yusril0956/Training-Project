@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Tasks extends Model
 {
     protected $fillable = [
-        'judul',
-        'deskripsi',
+        'title',
+        'description',
         'deadline',
         'training_id',
     ];
+
+    protected $table = 'tasks';
 
     protected $casts = [
         'deadline' => 'datetime',
@@ -20,12 +22,7 @@ class Tasks extends Model
 
     public function training()
     {
-        return $this->belongsTo(Training::class);
-    }
-
-    public function is_completed_by(User $user)
-    {
-        return $this->completed_by === $user->id;
+        return $this->belongsTo(Training::class, 'training_id');
     }
 
     public function submissions()

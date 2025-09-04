@@ -19,8 +19,7 @@ class UserFactory extends Factory
             'address' => $this->faker->address(),
             'nik' => $this->faker->unique()->numerify('################'),
             'city' => $this->faker->city(),
-            'role' => 'user',
-            'status' => 'active',
+            'profile_image' => null,
         ];
     }
 }

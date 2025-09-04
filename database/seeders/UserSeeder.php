@@ -23,22 +23,22 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan Super Admin No. 1',
                 'nik' => '93827463810483',
                 'city' => 'Jakarta',
-                'role' => 'super_admin',
-                'password' => '123456',
+                'profile_image' => null,
+                'password' => bcrypt('123456'),
             ]
         );
+
         User::updateOrCreate(
             ['email' => 'ryl@gmail.com'],
             [
                 'name' => 'Ryl',
                 'email_verified_at' => now(),
-                'phone' => '098228492w',
+                'phone' => '08123456789', // Fixed invalid phone number
                 'address' => 'Jl. Moonrow',
                 'nik' => '130928479294032',
                 'city' => 'Gangnam',
-                'role' => 'super_admin',
-                'profile' => 'storage/avatars/avatar_2.jpg',
-                'password' => '123456',
+                'profile_image' => 'storage/avatars/avatar_2.jpg',
+                'password' => bcrypt('123456'),
             ]
         );
 
@@ -52,8 +52,8 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan Admin No. 1',
                 'nik' => '1234567890123456',
                 'city' => 'Jakarta',
-                'role' => 'admin',
-                'password' => '123456',
+                'profile_image' => null,
+                'password' => bcrypt('123456'),
             ]
         );
 
@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan Staff No. 1',
                 'nik' => '95726490294810',
                 'city' => 'Palembang',
-                'role' => 'staff',
+                'profile_image' => null,
                 'password' => bcrypt('123456'),
             ]
         );
@@ -82,7 +82,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan User No. 1',
                 'nik' => '95638298645129',
                 'city' => 'Bandung',
-                'role' => 'user',
+                'profile_image' => null,
                 'password' => bcrypt('123456'),
             ]
         );
@@ -96,7 +96,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan jalan No. 1',
                 'nik' => '9473674829057364',
                 'city' => 'Bandoeng',
-                'role' => 'admin',
+                'profile_image' => null,
                 'password' => bcrypt('12345678'),
             ]
         );

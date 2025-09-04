@@ -9,16 +9,18 @@ class Schedule extends Model
 {
     protected $fillable = [
         'training_id',
-        'judul',
-        'tanggal',
-        'jam_mulai',
-        'jam_selesai',
-        'lokasi',
-        'pengajar'
+        'title',
+        'date',
+        'start_time',
+        'end_time',
+        'location',
+        'instructor'
     ];
+
+    protected $table = 'schedules';
 
     public function training()
     {
-        return $this->belongsTo(Training::class);
+        return $this->belongsTo(Training::class, 'training_id');
     }
 }

@@ -10,11 +10,13 @@ class JenisTrainingSeeder extends Seeder
     public function run()
     {
         $data = [
-            ['kode' => 'GK', 'nama' => 'General Knowledge', 'deskripsi' => 'Pelatihan umum untuk karyawan'],
-            ['kode' => 'MD', 'nama' => 'Mandatory', 'deskripsi' => 'Pelatihan wajib perusahaan'],
-            ['kode' => 'CR', 'nama' => 'Customer Requested', 'deskripsi' => 'Pelatihan atas permintaan customer'],
-            ['kode' => 'LS', 'nama' => 'Lisensi', 'deskripsi' => 'Pelatihan resmi dengan masa berlaku'],
+            ['code' => 'GK', 'name' => 'General Knowledge', 'description' => 'Pelatihan umum untuk karyawan'],
+            ['code' => 'MD', 'name' => 'Mandatory', 'description' => 'Pelatihan wajib perusahaan'],
+            ['code' => 'CR', 'name' => 'Customer Requested', 'description' => 'Pelatihan atas permintaan customer'],
+            ['code' => 'LS', 'name' => 'Lisensi', 'description' => 'Pelatihan resmi dengan masa berlaku'],
         ];
         JenisTraining::insert($data);
     }
+
+    
 }

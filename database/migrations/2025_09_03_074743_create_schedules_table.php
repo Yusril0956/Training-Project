@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('training_id')->constrained()->onDelete('cascade');
-            $table->string('judul');
-            $table->date('tanggal');
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
-            $table->string('lokasi')->nullable();
-            $table->string('pengajar')->nullable();
+            $table->bigIncrements('id');
+            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->string('location')->nullable();
+            $table->string('instructor')->nullable();
             $table->timestamps();
         });
     }

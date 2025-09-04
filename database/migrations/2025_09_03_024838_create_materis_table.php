@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materis', function (Blueprint $table) {
-            $table->id();
-            $table->string('judul');
-            $table->text('deskripsi')->nullable();
-            $table->string('tipe'); // pdf, video, link, dll
-            $table->string('url');
-            $table->foreignId('training_id')->constrained()->onDelete('cascade');
+        Schema::create('training_materials', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('media_type');
+            $table->string('media_path');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materis');
+        Schema::dropIfExists('training_materials');
     }
 };

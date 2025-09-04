@@ -244,7 +244,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ request()->is('profile') ? 'active' : '' }}">
-                    <a class="nav-link" href="/profile">
+                    <a class="nav-link" href="{{ route('profile') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -263,7 +263,7 @@
                     </a>
                 </li>
 
-                @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
                     <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin') }}">
                             <span

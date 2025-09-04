@@ -9,36 +9,44 @@ class Training extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'kategori', 'klien', 'deskripsi', 'status', 'jenis_training_id'];
+    protected $fillable = [
+        'name',
+        'category',
+        'client',
+        'description',
+        'status',
+        'jenis_training_id',
+    ];
 
     public function jenisTraining()
     {
-        return $this->belongsTo(JenisTraining::class);
+        return $this->belongsTo(JenisTraining::class, 'jenis_training_id');
     }
+
+    protected $table = 'trainings';
 
     public function details()
     {
-        return $this->hasMany(TrainingDetail::class);
+        return $this->hasMany(TrainingDetail::class, 'training_id');
     }
 
-    // App\Models\Training.php
     public function members()
     {
-        return $this->hasMany(User::class);
+        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'session_id', 'id', 'id');
     }
 
-    public function materials()
+    public function materis()
     {
-        return $this->hasMany(Materi::class);
+        return $this->hasMany(Materi::class, 'training_id');
     }
 
     public function tasks()
     {
-        return $this->hasMany(Tasks::class);
+        return $this->hasMany(Tasks::class, 'training_id');
     }
 
     public function schedules()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class, 'training_id');
     }
 }

@@ -18,11 +18,16 @@ class CheckRole
         if (!$request->user()) {
             abort(403, 'Unauthorized');
         }
-        
-        if (!in_array($request->user()->role, $roles)) {
+
+        $user = $request->user();
+
+        // Check if user has any of the required roles
+        $hasRole = $user->roles()->whereIn('name', $roles)->exists();
+
+        if (!$hasRole) {
             abort(403, 'Insufficient permissions');
         }
-        
+
         return $next($request);
     }
 }

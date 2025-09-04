@@ -9,11 +9,17 @@ class JenisTraining extends Model
 {
     use HasFactory;
 
-    protected $table = 'jenis_training';
-    protected $fillable = ['kode', 'nama', 'deskripsi'];
+    protected $fillable = [
+        'code',
+        'name',
+        'description',
+    ];
+
+    protected $table = 'jenis_trainings';
 
     public function trainings()
     {
-        return $this->hasMany(Training::class);
+        return $this->hasMany(Training::class, 'jenis_training_id');
     }
+
 }

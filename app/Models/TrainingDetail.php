@@ -9,15 +9,15 @@ class TrainingDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['training_id', 'tanggal_awal', 'tanggal_akhir'];
+    protected $fillable = ['training_id', 'start_date', 'end_date'];
 
     public function training()
     {
-        return $this->belongsTo(Training::class);
+        return $this->belongsTo(Training::class, 'training_id');
     }
 
     public function members()
     {
-        return $this->hasMany(TrainingMember::class);
+        return $this->hasMany(TrainingMember::class, 'training_detail_id');
     }
 }

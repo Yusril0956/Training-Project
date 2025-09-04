@@ -16,8 +16,8 @@ class TrainingDetailSeeder extends Seeder
         foreach (Training::all() as $training) {
             TrainingDetail::create([
                 'training_id' => $training->id,
-                'tanggal_awal' => $faker->dateTimeBetween('-1 year', 'now'),
-                'tanggal_akhir' => $faker->dateTimeBetween('now', '+1 year'),
+                'start_date' => $faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
+                'end_date' => $faker->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             ]);
         }
     }

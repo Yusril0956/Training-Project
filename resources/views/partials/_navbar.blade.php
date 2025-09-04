@@ -114,13 +114,13 @@
                                 <span class="nav-link-title">Home</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ request()->is('training', 'customer.requested') ? 'active' : '' }}">
+                        <li class="nav-item {{ (request()->routeIs('training.index') ? 'active' : '') || (request()->routeIs('customer.requested') ? 'active' : '') }}">
                             <a class="nav-link" href="{{ route('training.index') }}">
                                 <span class="nav-link-title">Training</span>
                             </a>
                         </li>
 
-                        @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                        @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
                             <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                                 <a class="nav-link" href="/admin">
                                     <span class="nav-link-title">Admin</span>
@@ -134,11 +134,11 @@
                                 <span class="nav-link-title">More</span>
                             </a>
                             <div class="dropdown-menu">
-                                @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                                @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
                                     <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
-                               
+
                                 <a class="dropdown-item" href="/help">Help</a>
                             </div>
                         </li>

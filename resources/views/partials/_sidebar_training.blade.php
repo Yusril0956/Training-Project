@@ -223,7 +223,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('cr.page') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('cr.page', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -241,7 +241,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('training.members') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.members', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -261,7 +261,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('materi') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('training.materials') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.materials', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -280,7 +280,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('jadwal') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('training.schedule') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.schedule', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -299,7 +299,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('training.tasks') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.tasks', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
@@ -319,7 +319,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('training.feedback') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.feedback', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
@@ -338,7 +338,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ request()->routeIs('training.settings') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.settings', $training->nama) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->

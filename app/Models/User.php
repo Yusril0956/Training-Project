@@ -25,14 +25,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
-        'phone',
+        'avatar_url',
         'address',
+        'phone',
         'nik',
         'city',
-        'role',
-        'status',
         'password',
-        'profile', // Assuming this is the column for avatar/profile picture
+        'google_id',
         'training_id',
     ];
 
@@ -84,5 +83,29 @@ class User extends Authenticatable implements MustVerifyEmail
     public function taskSubmissions()
     {
         return $this->hasMany(TaskSubmission::class);
+    }
+
+    /**
+     * Get the user's primary role
+     */
+    public function getRoleAttribute()
+    {
+        return $this->roles()->first()?->name ?? null;
+    }
+
+    /**
+     * Check if user has a specific role
+     */
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    /**
+     * Check if user has any of the specified roles
+     */
+    public function hasAnyRole($roles)
+    {
+        return $this->roles()->whereIn('name', (array) $roles)->exists();
     }
 }

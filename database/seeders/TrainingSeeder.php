@@ -15,10 +15,10 @@ class TrainingSeeder extends Seeder
 
         foreach (range(1, 5) as $i) {
             Training::create([
-                'nama' => $faker->sentence(3),
-                'kategori' => fake()->word(),
-                'klien' => $faker->company(),
-                'deskripsi' => $faker->paragraph(),
+                'name' => $faker->sentence(3),
+                'category' => $faker->word(),
+                'client' => $faker->company(),
+                'description' => $faker->paragraph(),
                 'jenis_training_id' => JenisTraining::inRandomOrder()->first()->id,
             ]);
         }

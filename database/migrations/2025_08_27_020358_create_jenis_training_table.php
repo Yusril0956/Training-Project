@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jenis_training', function (Blueprint $table) {
-            $table->id();
-            $table->string('kode')->unique(); // GK, MD, CR, LS
-            $table->string('nama');
-            $table->text('deskripsi')->nullable();
+        Schema::create('jenis_trainings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('code')->unique(); // GK, MD, CR, LS
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jenis_training');
+        Schema::dropIfExists('jenis_trainings');
     }
 };

@@ -9,15 +9,21 @@ class TrainingMember extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['training_detail_id', 'user_id', 'seri'];
+    protected $fillable = [
+        'user_id',
+        'training_detail_id',
+        'series',
+    ];
 
-    public function detail()
+    protected $table = 'training_members';
+
+    public function trainingDetail()
     {
-        return $this->belongsTo(TrainingDetail::class, 'training_detail_id');
+        return $this->belongsTo(TrainingDetail::class, 'training_detail_id', 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -21,7 +21,7 @@ class TrainingMemberSeeder extends Seeder
                 TrainingMember::create([
                     'training_detail_id' => $detail->id,
                     'user_id' => $user->id,
-                    'seri' => strtoupper($faker->bothify('TRN-####-??')),
+                    'series' => strtoupper($faker->bothify('TRN-####-??')),
                 ]);
             }
         }

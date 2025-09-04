@@ -4,40 +4,32 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Tasks;
+use App\Models\Training;
+use Faker\Factory as Faker;
 
 class TaskSeeder extends Seeder
 {
     public function run()
     {
-        $trainingId = 1; // Ganti sesuai ID pelatihan yang sudah ada
+        $faker = Faker::create();
 
-        $tasks = [
-            [
-                'judul' => 'Analisis Risiko Operasional',
-                'deskripsi' => 'Identifikasi dan analisis risiko dalam proses operasional pelatihan.',
-                'deadline' => now()->addDays(3),
-                'training_id' => $trainingId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'judul' => 'Checklist Perawatan Harian',
-                'deskripsi' => 'Isi checklist perawatan harian sesuai SOP yang berlaku.',
-                'deadline' => now()->addDays(5),
-                'training_id' => $trainingId,
-                'created_at' => now()->subDay(),
-                'updated_at' => now()->subDay(),
-            ],
-            [
-                'judul' => 'Evaluasi Prosedur Evakuasi',
-                'deskripsi' => 'Tinjau ulang prosedur evakuasi dan berikan masukan.',
-                'deadline' => now()->addDays(7),
-                'training_id' => $trainingId,
-                'created_at' => now()->subDays(2),
-                'updated_at' => now()->subDays(2),
-            ],
-        ];
+        $trainings = Training::all();
 
-        Tasks::insert($tasks);
+        if ($trainings->isEmpty()) {
+            return; // Skip if no trainings exist
+        }
+
+        foreach ($trainings as $training) {
+            $taskCount = rand(2, 5); // Random number of tasks per training
+
+            for ($i = 0; $i < $taskCount; $i++) {
+                Tasks::create([
+                    'title' => $faker->sentence(4),
+                    'description' => $faker->paragraph(),
+                    'deadline' => $faker->dateTimeBetween('now', '+2 weeks'),
+                    'training_id' => $training->id,
+                ]);
+            }
+        }
     }
 }

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('training_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('training_id')->constrained('trainings')->onDelete('cascade');
-            $table->date('tanggal_awal');
-            $table->date('tanggal_akhir');
+            $table->bigIncrements('id');
+            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

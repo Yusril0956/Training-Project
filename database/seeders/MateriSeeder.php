@@ -4,43 +4,53 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Materi;
+use App\Models\Training;
+use Faker\Factory as Faker;
 
 class MateriSeeder extends Seeder
 {
     public function run()
     {
-        $trainingId = 1; // Ganti sesuai ID pelatihan yang sudah ada
+        $faker = Faker::create();
 
-        $data = [
-            [
-                'judul' => 'Panduan Perawatan CN235',
-                'deskripsi' => 'Dokumen PDF berisi prosedur teknis perawatan pesawat CN235.',
-                'tipe' => 'pdf',
-                'url' => 'storage/materi/cn235-panduan.pdf',
-                'training_id' => $trainingId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'judul' => 'Video Simulasi Evakuasi',
-                'deskripsi' => 'Video pelatihan evakuasi darurat untuk teknisi lapangan.',
-                'tipe' => 'video',
-                'url' => 'https://www.youtube.com/watch?v=example123',
-                'training_id' => $trainingId,
-                'created_at' => now()->subDays(1),
-                'updated_at' => now()->subDays(1),
-            ],
-            [
-                'judul' => 'Checklist Audit ISO 9001',
-                'deskripsi' => 'Checklist kepatuhan untuk audit internal ISO.',
-                'tipe' => 'link',
-                'url' => 'https://docs.example.com/audit-checklist',
-                'training_id' => $trainingId,
-                'created_at' => now()->subDays(2),
-                'updated_at' => now()->subDays(2),
-            ],
-        ];
+        $trainings = Training::all();
 
-        Materi::insert($data);
+        if ($trainings->isEmpty()) {
+            return; // Skip if no trainings exist
+        }
+
+        $materialTypes = ['pdf', 'video', 'link', 'document'];
+
+        foreach ($trainings as $training) {
+            $materialCount = rand(1, 4); // Random number of materials per training
+
+            for ($i = 0; $i < $materialCount; $i++) {
+                $type = $faker->randomElement($materialTypes);
+
+                // Generate appropriate URL based on type
+                switch ($type) {
+                    case 'pdf':
+                        $url = 'storage/materi/' . $faker->slug(3) . '.pdf';
+                        break;
+                    case 'video':
+                        $url = 'https://www.youtube.com/watch?v=' . $faker->regexify('[a-zA-Z0-9]{11}');
+                        break;
+                    case 'link':
+                        $url = 'https://docs.' . $faker->domainName() . '/' . $faker->slug(2);
+                        break;
+                    case 'document':
+                        $url = 'storage/materi/' . $faker->slug(3) . '.docx';
+                        break;
+                }
+
+                Materi::create([
+                    'title' => $faker->sentence(3),
+                    'description' => $faker->paragraph(),
+                    'media_type' => $type,
+                    'media_path' => $url,
+                    'training_id' => $training->id,
+                ]);
+            }
+        }
     }
 }

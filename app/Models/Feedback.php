@@ -10,7 +10,7 @@ class Feedback extends Model
 {
     use HasFactory;
 
-    protected $table = 'Feedback';
+    protected $table = 'feedback';
     protected $fillable = [
         'nama_pengirim',
         'pesan',
@@ -20,9 +20,4 @@ class Feedback extends Model
     protected $dates = [
         'tanggal_kirim',
     ];
-
-    public function feedback()
-    {
-        return $this->hasMany(Feedback::class);
-    }
 }
