@@ -41,7 +41,7 @@
                                 <h4 class="card-title">{{ $training->name }}</h4>
                                 <p class="text-muted">{{ Str::limit($training->description, 80) }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
+                                    @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
                                         <a href="{{ route('detail.training', $training->id) }}"
                                             class="btn btn-sm btn-secondary">Detail</a>
                                     @endif
@@ -90,9 +90,8 @@
                     </form>
                 </div>
             </div>
-            
 
-            @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
+            @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
                 <div class="card mb-3">
                     <div class="card-header">
                         <h3 class="card-title">Daftar Permintaan</h3>
@@ -156,6 +155,89 @@
                 </div>
             @endif
 
+            @if($approvedTrainings->isNotEmpty())
+            <div class="row row-cards">
+                <!-- Informasi Permintaan -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Detail Permintaan Terbaru</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Nama Pelatihan:</strong> {{ $approvedTrainings->first()->name }}</p>
+                            <p><strong>Klien:</strong> {{ $approvedTrainings->first()->client }}</p>
+                            <p><strong>Tanggal Permintaan:</strong> {{ $approvedTrainings->first()->created_at->format('Y-m-d') }}</p>
+                            <p><strong>Status:</strong> <span class="badge bg-success">{{ $approvedTrainings->first()->status }}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informasi Jadwal & PIC -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Jadwal & PIC</h3>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Jadwal:</strong> {{ $approvedTrainings->first()->schedule ?? 'Belum ditentukan' }}</p>
+                            <p><strong>Lokasi:</strong> {{ $approvedTrainings->first()->location ?? '-' }}</p>
+                            <p><strong>PIC Internal:</strong> {{ $approvedTrainings->first()->pic_internal ?? '-' }}</p>
+                            <p><strong>PIC Klien:</strong> {{ $approvedTrainings->first()->pic_client ?? '-' }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dokumen Pendukung -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Dokumen Pendukung</h3>
+                        </div>
+                        <div class="card-body">
+                            @if (optional($approvedTrainings->first()->documents)->count())
+                                <ul>
+                                    @foreach ($approvedTrainings->first()->documents as $doc)
+                                        <li><a href="{{ $doc->url }}" target="_blank">{{ $doc->name }}</a></li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>Tidak ada dokumen diunggah.</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback & Evaluasi -->
+                @if ($approvedTrainings->first()->status === 'completed')
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Evaluasi & Feedback</h3>
+                            </div>
+                            <div class="card-body">
+                                <a href="{{ route('feedback.form', $approvedTrainings->first()->id) }}" class="btn btn-primary">Isi
+                                    Feedback</a>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Aksi Admin -->
+                @can('approve-training')
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body text-end">
+                                <form method="POST" action="{{ route('training.approve', $approvedTrainings->first()->id) }}">
+                                    @csrf
+                                    <button class="btn btn-success">Setujui Permintaan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+            </div>
+            @endif
+
             <!-- Optional: Form Tambah Permintaan -->
             <div class="card mt-4" id="add-training-request">
                 <div class="card-header">
@@ -168,6 +250,16 @@
                             <label class="form-label">Judul Pelatihan</label>
                             <input type="text" class="form-control" name="name"
                                 placeholder="Contoh: Pelatihan Sistem Avionik">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Jenis Training</label>
+                            <select class="form-select" name="jenis_training_id" required>
+                                <option value="">Pilih Jenis Training</option>
+                                @foreach ($jenisTrainings as $jenis)
+                                    <option value="{{ $jenis->id }}">{{ $jenis->kode }} - {{ $jenis->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Kategori</label>

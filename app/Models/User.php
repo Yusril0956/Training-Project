@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
-
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany; // Tambahkan ini
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+// Import related models
+use App\Models\TrainingMember;
+use App\Models\Role;
+use App\Models\Training;
+use App\Models\Certificate;
+use App\Models\TaskSubmission;
 
 
 class User extends Authenticatable implements MustVerifyEmail

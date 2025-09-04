@@ -51,7 +51,7 @@ class ProfileController extends Controller
             }
 
             // Save the public path for direct web access
-            $user->profile = 'storage/avatars/' . $filename;
+            $user->avatar_url = 'storage/avatars/' . $filename;
             $user->save();
 
             return redirect()->back()->with('success', 'Avatar berhasil diubah!');
@@ -64,8 +64,8 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // hapus file lama jika ada
-        if ($user->profile) {
-            $filePath = str_replace('storage/', 'app/public/', $user->profile);
+        if ($user->avatar_url) {
+            $filePath = str_replace('storage/', 'app/public/', $user->avatar_url);
             $fullPath = storage_path($filePath);
             if (file_exists($fullPath)) {
                 unlink($fullPath);
@@ -73,7 +73,7 @@ class ProfileController extends Controller
         }
 
         // reset ke null / default
-        $user->profile = null;
+        $user->avatar_url = null;
         $user->save();
 
         return back()->with('success', 'Avatar berhasil dihapus.');

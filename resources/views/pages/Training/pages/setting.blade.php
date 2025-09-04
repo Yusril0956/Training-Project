@@ -10,7 +10,7 @@
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => 'Customer Requested', 'url' => route('customer.requested')],
                     ['title' => $training->name, 'url' => route('cr.page', $training->id)],
-                    ['title' => 'Setting', 'url' => route('training.settings', $training->id)],
+                    ['title' => 'Setting', 'url' => route('training.settings', $training->name)],
                 ],
             ])
 

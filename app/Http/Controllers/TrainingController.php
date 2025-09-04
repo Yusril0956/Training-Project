@@ -136,14 +136,20 @@ class TrainingController extends Controller
     public function showAddMemberForm($trainingId)
     {
         $training = Training::findOrFail($trainingId);
-        $users = User::whereDoesntHave('trainingMembers')->get(); // hanya user yang belum terdaftar
+        $users = User::whereDoesntHave('trainingMembers', function($query) use ($trainingId) {
+            $query->whereHas('trainingDetail', function($q) use ($trainingId) {
+                $q->where('training_id', $trainingId);
+            });
+        })->get(); // hanya user yang belum terdaftar di training ini
         return view('pages.Training.addMember', compact('training', 'users'));
     }
 
     public function addMember(Request $request, $trainingId)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_ids' => 'required|array|min:1',
+            'user_ids.*' => 'exists:users,id',
+            'message' => 'nullable|string|max:500',
         ]);
 
         $training = Training::findOrFail($trainingId);
@@ -151,23 +157,45 @@ class TrainingController extends Controller
         // Get or create training detail for this training
         $trainingDetail = $training->details()->firstOrCreate([]);
 
-        // Check if user is already a member
-        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
-            ->where('user_id', $request->user_id)
-            ->first();
+        $addedCount = 0;
+        $skippedCount = 0;
+        $errors = [];
 
-        if ($existingMember) {
-            return redirect()->back()->with('error', 'User sudah menjadi peserta dalam pelatihan ini.');
+        foreach ($request->user_ids as $userId) {
+            // Check if user is already a member
+            $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
+                ->where('user_id', $userId)
+                ->first();
+
+            if ($existingMember) {
+                $skippedCount++;
+                continue;
+            }
+
+            // Create new training member
+            TrainingMember::create([
+                'training_detail_id' => $trainingDetail->id,
+                'user_id' => $userId,
+                'series' => 'TRN-' . strtoupper(uniqid()),
+            ]);
+
+            $addedCount++;
         }
 
-        // Create new training member
-        TrainingMember::create([
-            'training_detail_id' => $trainingDetail->id,
-            'user_id' => $request->user_id,
-            'series' => 'TRN-' . strtoupper(uniqid()),
-        ]);
+        // Prepare success message
+        $message = '';
+        if ($addedCount > 0) {
+            $message .= "$addedCount peserta berhasil ditambahkan.";
+        }
+        if ($skippedCount > 0) {
+            $message .= " $skippedCount peserta sudah terdaftar (diabaikan).";
+        }
 
-        return redirect()->route('training.members', $trainingId)->with('success', 'Peserta berhasil ditambahkan.');
+        if ($request->message) {
+            $message .= " Pesan: " . $request->message;
+        }
+
+        return redirect()->route('training.members', $trainingId)->with('success', $message);
     }
 
     public function settings($name)

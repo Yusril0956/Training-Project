@@ -84,7 +84,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <span class="avatar avatar-xl"
-                                    style="background-image: url({{ $user->profile ? asset($user->profile) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
+                                    style="background-image: url({{ $user->avatar_url ? asset($user->avatar_url) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                             </div>
                             <div class="col-auto">
                                 <a href="#" class="btn" data-bs-toggle="modal"
