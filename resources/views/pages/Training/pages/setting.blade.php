@@ -9,7 +9,7 @@
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->nama , 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
                     ['title' => 'Setting', 'url' => route('training.settings', $training->id)],
                 ],
             ])
@@ -35,7 +35,7 @@
                         {{-- @method('PUT') --}}
                         <div class="mb-3">
                             <label class="form-label">Judul Pelatihan</label>
-                            <input type="text" name="name" class="form-control" value="{{ $training->nama }}"
+                            <input type="text" name="name" class="form-control" value="{{ $training->name }}"
                                 required>
                         </div>
                         <div class="mb-3">
@@ -52,7 +52,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Mulai</label>
-                            <input type="date" name="tanggal_mulai" class="form-control" value="{{ $training->tanggal_mulai }}">
+                            <input type="date" name="tanggal_mulai" class="form-control"
+                                value="{{ $training->tanggal_mulai }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Status</label>

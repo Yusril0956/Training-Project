@@ -8,7 +8,7 @@
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->nama , 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
                     ['title' => 'Members', 'url' => route('training.members', $training->id)],
                 ],
             ])
@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <h2 class="card-title">👥 Daftar Peserta</h2>
                     <p class="text-muted">Berikut adalah peserta yang terdaftar dalam pelatihan
-                        <strong>{{ $training->nama }}</strong>.
+                        <strong>{{ $training->name }}</strong>.
                     </p>
                 </div>
             </div>
@@ -51,15 +51,11 @@
                                 @foreach ($training->members as $index => $member)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $member->name }}</td>
-                                        <td>{{ $member->instansi }}</td>
-                                        <td>{{ $member->email }}</td>
+                                        <td>{{ $member->user->name }}</td>
+                                        <td>{{ $member->user->instansi ?? 'N/A' }}</td>
+                                        <td>{{ $member->user->email }}</td>
                                         <td>
-                                            @if ($member->hadir)
-                                                <span class="badge bg-success">Hadir</span>
-                                            @else
-                                                <span class="badge bg-secondary">Belum Hadir</span>
-                                            @endif
+                                            <span class="badge bg-secondary">Belum Hadir</span>
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-info">Detail</a>

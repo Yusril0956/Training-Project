@@ -98,7 +98,8 @@
                                         <td class="sort-date" data-date="{{ $user->created_at }}">
                                             {{ $user->created_at->format('F d, Y') }}</td>
                                         <td class="sort-action">
-                                            @if ($user->role !== 'super_admin')
+                                            @if (Auth::id() !== $user->id && !$user->hasRole('super_admin'))
+                                                {{-- Tidak bisa edit/hapus diri sendiri atau super_admin --}}
                                                 <a href="#" class="btn btn-sm btn-primary btn-edit-user"
                                                     data-bs-toggle="modal" data-bs-target="#modal-edit"
                                                     data-id="{{ $user->id }}" data-name="{{ $user->name }}"

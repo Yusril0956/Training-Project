@@ -29,4 +29,16 @@ class Tasks extends Model
     {
         return $this->hasMany(TaskSubmission::class, 'task_id');
     }
+
+    /**
+     * Check if task is completed by a specific user
+     */
+    public function is_completed_by($user)
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return $this->submissions()->where('user_id', $user->id)->exists();
+    }
 }

@@ -360,7 +360,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($users as $user)
-                                                    @if($user->role !== 'super_admin')
+                                                    @if(!$user->hasRole('super_admin'))
                                                         <tr data-role="{{ $user->role }}">
                                                             <td>
                                                                 <div class="d-flex align-items-center">

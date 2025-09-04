@@ -237,7 +237,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            {{ $training->nama }}
+                            {{ $training->name }}
                         </span>
                     </a>
                 </li>
@@ -300,7 +300,7 @@
                 </li>
 
                 <li class="nav-item {{ request()->routeIs('training.tasks') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('training.tasks', $training->id) }}">
+                    <a class="nav-link" href="{{ route('training.tasks', $training->name) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -339,7 +339,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('training.settings') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('training.settings', $training->nama) }}">
+                    <a class="nav-link" href="{{ route('training.settings', $training->name) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

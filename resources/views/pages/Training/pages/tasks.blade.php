@@ -9,8 +9,8 @@
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->nama , 'url' => route('cr.page', $training->id)],
-                    ['title' => 'Tugas', 'url' => route('training.tasks', $training->id)],
+                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
+                    ['title' => 'Tugas', 'url' => route('training.tasks', $training->name)],
                 ],
             ])
 
@@ -43,7 +43,8 @@
                                     </li>
                                 </ul>
                                 <div class="d-flex justify-content-between">
-                                    <a href="{{ route('training.task.show', [$training->id, $task->id]) }}" class="btn btn-sm btn-primary">Lihat Tugas</a>
+                                    <a href="{{ route('training.task.show', [$training->id, $task->id]) }}"
+                                        class="btn btn-sm btn-primary">Lihat Tugas</a>
                                     @can('manage-training')
                                         <form action="#" method="POST">
                                             @csrf

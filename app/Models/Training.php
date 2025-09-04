@@ -32,7 +32,7 @@ class Training extends Model
 
     public function members()
     {
-        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'session_id', 'id', 'id');
+        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id');
     }
 
     public function materis()

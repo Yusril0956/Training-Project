@@ -7,6 +7,7 @@ use App\Models\Training;
 use App\Models\JenisTraining;
 use App\Models\User;
 use App\Models\Tasks;
+use App\Models\TrainingMember;
 
 class TrainingController extends Controller
 {
@@ -75,19 +76,18 @@ class TrainingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'             => 'required|string|max:255',
-            'kategori'         => 'required|string',
-            'klien'            => 'required|string|max:255',
-            'deskripsi'        => 'nullable|string',
-            'jenis_training_id' => 'required|exists:jenis_training,id',
+            'name'             => 'required|string|max:255',
+            'category'         => 'required|string',
+            'client'           => 'required|string|max:255',
+            'description'      => 'nullable|string',
         ]);
 
         Training::create([
-            'nama'             => $request->nama,
-            'kategori'         => $request->kategori,
-            'klien'            => $request->klien,
-            'deskripsi'        => $request->deskripsi,
-            'jenis_training_id' => $request->jenis_training_id,
+            'name'             => $request->name,
+            'category'         => $request->category,
+            'client'           => $request->client,
+            'description'      => $request->description,
+            'jenis_training_id' => 3,//default ke customer request
             'status'           => 'pending',
         ]);
 
@@ -98,7 +98,8 @@ class TrainingController extends Controller
 
     public function crPage($id)
     {
-        $training = Training::withCount(['members', 'materials', 'tasks'])->findOrFail($id);
+        $training = Training::withCount(['members', 'materis', 'tasks'])->findOrFail($id);
+
         return view('pages.Training.pages.main', compact('training'));
     }
 
@@ -110,13 +111,13 @@ class TrainingController extends Controller
 
     public function materials($id)
     {
-        $training = Training::with('materials')->findOrFail($id);
+        $training = Training::with('materis')->findOrFail($id);
         return view('pages.Training.pages.materi-moduls', compact('training'));
     }
 
-    public function tasks($id)
+    public function tasks($name)
     {
-        $training = Training::findOrFail($id);
+        $training = Training::findOrFail($name);
         return view('pages.Training.pages.tasks', compact('training'));
     }
 
@@ -135,7 +136,7 @@ class TrainingController extends Controller
     public function showAddMemberForm($trainingId)
     {
         $training = Training::findOrFail($trainingId);
-        $users = User::whereNull('training_id')->where('role', 'user')->get(); // hanya user yang belum terdaftar
+        $users = User::whereDoesntHave('trainingMembers')->get(); // hanya user yang belum terdaftar
         return view('pages.Training.addMember', compact('training', 'users'));
     }
 
@@ -145,16 +146,33 @@ class TrainingController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $user = User::findOrFail($request->user_id);
-        $user->training_id = $trainingId;
-        $user->save();
+        $training = Training::findOrFail($trainingId);
+
+        // Get or create training detail for this training
+        $trainingDetail = $training->details()->firstOrCreate([]);
+
+        // Check if user is already a member
+        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
+            ->where('user_id', $request->user_id)
+            ->first();
+
+        if ($existingMember) {
+            return redirect()->back()->with('error', 'User sudah menjadi peserta dalam pelatihan ini.');
+        }
+
+        // Create new training member
+        TrainingMember::create([
+            'training_detail_id' => $trainingDetail->id,
+            'user_id' => $request->user_id,
+            'series' => 'TRN-' . strtoupper(uniqid()),
+        ]);
 
         return redirect()->route('training.members', $trainingId)->with('success', 'Peserta berhasil ditambahkan.');
     }
 
-    public function settings($nama)
+    public function settings($name)
     {
-        $training = Training::where('nama', $nama)->firstOrFail();
+        $training = Training::where('name', $name)->firstOrFail();
         return view('pages.Training.pages.setting', compact('training'));
     }
 
@@ -162,18 +180,18 @@ class TrainingController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'kategori' => 'required|string',
-            'deskripsi' => 'nullable|string',
+            'category' => 'required|string',
+            'description' => 'nullable|string',
             'status' => 'required|string',
         ]);
 
         $training = Training::findOrFail($id);
-        $training->nama = $request->name;
-        $training->kategori = $request->kategori;
-        $training->deskripsi = $request->deskripsi;
+        $training->name = $request->name;
+        $training->category = $request->category;
+        $training->description = $request->description;
         $training->status = $request->status;
         $training->save();
 
-        return redirect()->route('training.settings', $training->nama)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
+        return redirect()->route('training.settings', $training->name)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
     }
 }

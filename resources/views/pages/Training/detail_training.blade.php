@@ -21,21 +21,21 @@
             <!-- Detail Training -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">Detail Pelatihan: {{ $training->nama }}</h3>
+                    <h3 class="card-title">Detail Pelatihan: {{ $training->name }}</h3>
                 </div>
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-3">Judul Pelatihan</dt>
-                        <dd class="col-sm-9">{{ $training->nama }}</dd>
+                        <dd class="col-sm-9">{{ $training->name }}</dd>
 
                         <dt class="col-sm-3">Kategori</dt>
-                        <dd class="col-sm-9">{{ $training->kategori }}</dd>
+                        <dd class="col-sm-9">{{ $training->category }}</dd>
 
                         <dt class="col-sm-3">Klien</dt>
-                        <dd class="col-sm-9">{{ $training->klien }}</dd>
+                        <dd class="col-sm-9">{{ $training->client }}</dd>
 
                         <dt class="col-sm-3">Deskripsi</dt>
-                        <dd class="col-sm-9">{{ $training->deskripsi }}</dd>
+                        <dd class="col-sm-9">{{ $training->description }}</dd>
 
                         <dt class="col-sm-3">Tanggal Permintaan</dt>
                         <dd class="col-sm-9">{{ $training->created_at->format('Y-m-d') }}</dd>
@@ -66,7 +66,7 @@
                             <div class="timeline-event">
                                 <div class="timeline-title">Permintaan Diajukan</div>
                                 <div class="text-muted">{{ $training->created_at->format('Y-m-d') }} oleh
-                                    {{ $training->klien }}</div>
+                                    {{ $training->client }}</div>
                             </div>
                         </li>
                         <li class="timeline-item">

@@ -8,7 +8,7 @@
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->nama , 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name , 'url' => route('cr.page', $training->id)],
                     ['title' => 'Materi & Modul', 'url' => route('training.materials', $training->id)],
                 ],
             ])
@@ -18,14 +18,14 @@
                 <div class="card-body">
                     <h2 class="card-title">📚 Materi & Modul</h2>
                     <p class="text-muted">Berikut adalah daftar materi untuk pelatihan
-                        <strong>{{ $training->nama }}</strong>.
+                        <strong>{{ $training->name }}</strong>.
                     </p>
                 </div>
             </div>
 
             <!-- Daftar Materi -->
             <div class="row row-cards">
-                @forelse ($training->materials as $material)
+                @forelse ($training->materis as $material)
                     <div class="col-md-6 col-lg-4">
                         <div class="card shadow-sm">
                             <div class="card-body">
