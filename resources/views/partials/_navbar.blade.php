@@ -7,8 +7,7 @@
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                 <a href="#">
-                    <img src="{{ asset('images/LOGOrl2.png') }}" class="navbar-brand-image "
-                        alt="logo">PT.Dirgantara
+                    <img src="{{ asset('images/LOGOrl2.png') }}" class="navbar-brand-image " alt="logo">PT.Dirgantara
                 </a>
             </h1>
             <div class="navbar-nav flex-row order-md-last">
@@ -82,28 +81,39 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Bagian User Login / Logout --}}
                 @if (Auth::check())
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
-                            aria-label="Open user menu">
-                            <span class="avatar avatar-sm"
-                                style="background-image: url({{ Auth::user()->profile ? asset(Auth::user()->profile) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                            <a href="#" class="dropdown-item">Status</a>
-                            <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
-                            <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ route('profile') }}" class="dropdown-item">Setting</a>
-                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </div>
-                    </div>
-                @else
-                    <a href="/login" class="btn btn-primary">Login</a>
-                @endif
+    <div class="nav-item dropdown d-flex align-items-center">
+        <a href="#" class="nav-link d-flex align-items-center text-reset p-0" data-bs-toggle="dropdown"
+            aria-label="Open user menu">
+            
+            {{-- Avatar --}}
+            <span class="avatar avatar-sm me-2"
+                style="background-image: url({{ Auth::user()->profile ? asset(Auth::user()->profile) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
+
+            {{-- Nama & Role (sebelah kanan avatar) --}}
+            <div class="d-flex flex-column text-start">
+                <div class="fw-bold text-white" style="line-height: 1;">{{ Auth::user()->name }}</div>
+                <div class="text-muted" style="font-size: 12px; line-height: 1;">{{ ucfirst(Auth::user()->role) }}</div>
+            </div>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
+            <a href="#" class="dropdown-item">Status</a>
+            <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
+            <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
+            <div class="dropdown-divider"></div>
+            <a href="{{ route('profile') }}" class="dropdown-item">Setting</a>
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="dropdown-item">Logout</button>
+            </form>
+        </div>
+    </div>
+@else
+    <a href="/login" class="btn btn-primary">Login</a>
+@endif
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-menu">
@@ -138,7 +148,6 @@
                                     <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
-
                                 <a class="dropdown-item" href="/help">Help</a>
                             </div>
                         </li>
