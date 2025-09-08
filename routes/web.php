@@ -129,6 +129,10 @@ Route::middleware('auth')->group(function () {
     // training setting
     Route::get('/training/customer-requested/settings/{name}', [TrainingController::class, 'settings'])->name('training.settings');
     Route::post('/training/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('training.settings.update');
+
+    // Self registration for training
+    Route::post('/training/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('training.self.register');
+
     // Route::post('training/{id}/tasks', [TaskController::class, 'store'])->name('training.task.create');
     // Route::delete('training/{id}/tasks/{taskId}', [TaskController::class, 'destroy'])->name('training.task.delete');
 

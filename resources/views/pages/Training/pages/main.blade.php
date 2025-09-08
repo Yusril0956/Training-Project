@@ -55,12 +55,21 @@
                 <div class="card-body">
                     <div class="row row-cards">
                         <div class="col-md-4">
-                            <a href="{{ route('training.members', $training->id) }}" class="card card-link">
+                            <div class="card card-link">
                                 <div class="card-body text-center">
-                                    <span class="avatar bg-blue-lt text-blue mb-2">👥</span>
-                                    <div>Daftar Peserta</div>
+                                    <a href="{{ route('training.members', $training->id) }}" class="btn btn-primary btn-lg mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                            <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+                                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
+                                        </svg>
+                                        Lihat Peserta Terdaftar
+                                    </a>
+                                    <div class="text-muted small">Kelola daftar peserta training</div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <a href="{{ route('training.materials', $training->id) }}" class="card card-link">
@@ -107,6 +116,50 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Self Registration Section -->
+            @if(Auth::check())
+                @php
+                    $isMember = $training->members()->where('user_id', Auth::id())->exists();
+                @endphp
+
+                @if(!$isMember)
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-primary">🚀 Daftar Training Ini</h4>
+                            <p class="text-muted mb-3">Bergabunglah dengan training "{{ $training->name }}" untuk mendapatkan materi dan sertifikat</p>
+                            <form action="{{ route('training.self.register', $training->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M12 5l0 14"/>
+                                        <path d="M5 12l14 0"/>
+                                    </svg>
+                                    Daftar Sekarang
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <h4 class="card-title text-success">✅ Anda Sudah Terdaftar</h4>
+                            <p class="text-muted">Selamat! Anda sudah terdaftar sebagai peserta training ini</p>
+                            <a href="{{ route('training.members', $training->id) }}" class="btn btn-outline-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
+                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
+                                </svg>
+                                Lihat Daftar Peserta
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            @endif
 
             <!-- Ringkasan Statistik (Opsional) -->
             <div class="card">

@@ -8,6 +8,7 @@ use App\Models\JenisTraining;
 use App\Models\User;
 use App\Models\Tasks;
 use App\Models\TrainingMember;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingController extends Controller
 {
@@ -221,5 +222,31 @@ class TrainingController extends Controller
         $training->save();
 
         return redirect()->route('training.settings', $training->name)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
+    }
+
+    public function selfRegister(Request $request, $trainingId)
+    {
+        $training = Training::findOrFail($trainingId);
+
+        // Check if user is already registered
+        $existingMember = TrainingMember::where('training_detail_id', $training->details()->first()->id ?? null)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingMember) {
+            return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
+        }
+
+        // Get or create training detail
+        $trainingDetail = $training->details()->firstOrCreate([]);
+
+        // Create new training member
+        TrainingMember::create([
+            'training_detail_id' => $trainingDetail->id,
+            'user_id' => Auth::id(),
+            'series' => 'TRN-' . strtoupper(uniqid()),
+        ]);
+
+        return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
     }
 }
