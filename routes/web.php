@@ -148,16 +148,16 @@ Route::middleware('auth')->group(function () {
     // ============================
     // Admin & Super Admin Routes
     // ============================
-    Route::middleware(['check_role:admin,super_admin'])->group(function () {
-        Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
-        Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
-        Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
-        Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
-        Route::get('/setting', [DashboardController::class, 'adminSettings'])->name('admin.settings');
-        Route::post('/admin/settings/open-access', [DashboardController::class, 'openAllAccess'])->name('admin.open.access');
-        Route::post('/admin/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('admin.delete.database');
-        Route::post('/admin/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('admin.reset.password');
-    });                                                   
+    Route::middleware(['auth', 'check_role:admin,super_admin'])->group(function () {
+    Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
+    Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
+    Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
+    Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
+    Route::get('/setting', [DashboardController::class, 'adminSettings'])->name('admin.settings');
+    Route::post('/admin/settings/open-access', [DashboardController::class, 'openAllAccess'])->name('admin.open.access');
+    Route::post('/admin/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('admin.delete.database');
+    Route::post('/admin/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('admin.reset.password');
+});                                                 
 });
 
 

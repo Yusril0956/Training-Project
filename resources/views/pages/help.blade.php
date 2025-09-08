@@ -1,226 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.dashboard')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Center</title>
-    <!-- Menambahkan Bootstrap untuk styling -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('title', 'IT Help Center')
 
-    <style>
-        body {
-            background-color: #f4f7fa;
-            font-family: 'Arial', sans-serif;
-            color: #333;
-            background-image: url('https://source.unsplash.com/random/1920x1080');
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .navbar-brand-image {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .navbar-custom {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar-custom h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .help-section {
-            margin-top: 30px;
-        }
-
-        .card-header {
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-        }
-
-        .card-body {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .help-option {
-            display: block;
-            padding: 10px;
-            border-radius: 5px;
-            color: #007bff;
-            text-decoration: none;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .help-option:hover {
-            background-color: #f0f0f0;
-            color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .section-description {
-            font-size: 1.1rem;
-            color: #555;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .custom-btn {
-            width: 100%;
-            padding: 20px 0;
-            text-align: center;
-            background-color: #007bff;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            transition: background-color 0.3s;
-            border: none;
-        }
-
-        .custom-btn:hover {
-            background-color: #0056b3;
-        }
-
-        #scrollToBottomBtn {
-            font-size: 1.1rem;
-            padding: 10px 20px;
-            border-radius: 25px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #scrollToBottomBtn:hover {
-            background-color: #0056b3;
-        }
-
-        .back-btn {
-            background-color: #6c757d;
-            color: white;
-            font-size: 1.1rem;
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .back-btn:hover {
-            background-color: #5a6268;
-        }
-
-        .scroll-to-top-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            font-size: 1.2rem;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: none;
-            transition: transform 0.3s;
-        }
-
-        .scroll-to-top-btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.1);
-        }
-
-        .accordion-button {
-            transition: background-color 0.3s;
-        }
-
-        .accordion-button:hover {
-            background-color: #e0e0e0;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Navbar with logo and text -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand navbar-custom" href="#">
-                <!-- Logo -->
-                <img src="{{ asset('images/dirgantara.png') }}" alt="dirgantara" class="navbar-brand-image">
-                <!-- Nama -->
-                <h1>Dirgantara Indonesia Aerospace</h1>
-            </a>
-        </div>
-    </nav>
-
-    <!-- Tombol Scroll ke Bawah -->
-    <div class="text-center my-4">
-        <button class="btn btn-primary" id="scrollToBottomBtn">Scroll to Bottom</button>
-    </div>
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <h1 class="text-center mb-4 text-primary">IT Help Center</h1>
-
-                <!-- Introductory Text -->
-                <div class="mb-4">
-                    <p class="section-description">Selamat datang di pusat bantuan kami. Di sini, Anda dapat menemukan berbagai panduan dan opsi dukungan untuk memandu Anda menggunakan platform kami. Pilih bagian di bawah ini untuk memulai:</p>
+@section('content')
+<div class="page-header d-print-none">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    IT Help Center
+                </h2>
+                <div class="text-muted mt-1">Selamat datang di pusat bantuan kami. Di sini, Anda dapat menemukan berbagai panduan dan opsi dukungan untuk memandu Anda menggunakan platform kami. Pilih bagian di bawah ini untuk memulai:</div>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a href="#" class="btn btn-primary d-none d-sm-inline-block" onclick="window.history.back()">
+                        ← Kembali
+                    </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <!-- Help Sections (Using Bootstrap Cards) -->
-                <div class="row help-section">
-                    <!-- Section 1: Basic FAQs -->
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Basic FAQs</h5>
-                            </div>
-                            <div class="card-body">
-                                <ul>
-                                    <li><a href="#" class="help-option">Bagaimana cara masuk?</a></li>
-                                    <li><a href="#" class="help-option">Bagaimana cara mengatur ulang kata sandi?</a></li>
-                                    <li><a href="#" class="help-option">Bagaimana cara memperbarui profil?</a></li>
-                                </ul>
-                            </div>
-                        </div>
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row row-cards">
+            <!-- Basic FAQs -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Basic FAQs</h3>
                     </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara masuk?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mengatur ulang kata sandi?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara memperbarui profil?</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- Accordion untuk FAQ -->
-                    <div class="col-md-6 mb-3">
+            <!-- Accordion untuk FAQ -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Pertanyaan Umum</h3>
+                    </div>
+                    <div class="card-body">
                         <div class="accordion" id="faqAccordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingOne">
@@ -249,92 +77,53 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Section 2: Advanced Guides -->
-                <div class="row help-section">
-                    <div class="col-md-6 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Panduan Tingkat Lanjut</h5>
-                            </div>
-                            <div class="card-body">
-                                <ul>
-                                    <li><a href="#" class="help-option">Bagaimana cara menggunakan fitur admin?</a></li>
-                                    <li><a href="#" class="help-option">Bagaimana cara mengonfigurasi pengaturan lanjutan?</a></li>
-                                    <li><a href="#" class="help-option">Bagaimana cara mengintegrasikan dengan API eksternal?</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 3: Contact Support -->
-                <div class="card mb-3">
+        <div class="row row-cards">
+            <!-- Advanced Guides -->
+            <div class="col-md-6">
+                <div class="card">
                     <div class="card-header">
-                        <h5>Contact Support</h5>
+                        <h3 class="card-title">Panduan Tingkat Lanjut</h3>
                     </div>
                     <div class="card-body">
-                        <p class="section-description">Jika Anda tidak dapat menemukan jawaban yang Anda cari, jangan ragu untuk menghubungi tim dukungan kami.</p>
-                        <a href="mailto:support@example.com" class="help-option">Email Support</a>
-                    </div>
-                </div>
-
-                <!-- Section 4: Additional Resources -->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5>Additional Resources</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul>
-                            <li><a href="#" class="help-option">Forum Komunitas</a></li>
-                            <li><a href="#" class="help-option">Dokumentasi IT</a></li>
-                            <li><a href="#" class="help-option">Panduan Pengguna</a></li>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara menggunakan fitur admin?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mengonfigurasi pengaturan lanjutan?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mengintegrasikan dengan API eksternal?</a></li>
                         </ul>
                     </div>
                 </div>
+            </div>
 
-                <!-- Tombol Kembali ke halaman sebelumnya -->
-                <button class="back-btn" onclick="window.history.back()">← Kembali</button>
+            <!-- Contact Support -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Contact Support</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="section-description">Jika Anda tidak dapat menemukan jawaban yang Anda cari, jangan ragu untuk menghubungi tim dukungan kami.</p>
+                        <a href="mailto:support@example.com" class="text-decoration-none">Email Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <!-- Tombol Kembali ke atas -->
-                <button class="scroll-to-top-btn" id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
-
+        <!-- Additional Resources -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Additional Resources</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none">Forum Komunitas</a></li>
+                    <li><a href="#" class="text-decoration-none">Dokumentasi IT</a></li>
+                    <li><a href="#" class="text-decoration-none">Panduan Pengguna</a></li>
+                </ul>
             </div>
         </div>
     </div>
-
-    <!-- Optional: Adding Bootstrap JS for dropdowns and interactive elements -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-
-    <!-- JavaScript untuk Scroll -->
-    <script>
-        // Fungsi untuk scroll ke bawah
-        document.getElementById('scrollToBottomBtn').addEventListener('click', function() {
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
-            });
-        });
-
-        // Fungsi untuk scroll ke atas
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        // Tombol scroll ke atas muncul setelah pengguna menggulir ke bawah
-        window.onscroll = function() {
-            var btn = document.getElementById("scrollToTopBtn");
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                btn.style.display = "block";
-            } else {
-                btn.style.display = "none";
-            }
-        };
-    </script>
-</body>
-
-</html>
+</div>
+@endsection

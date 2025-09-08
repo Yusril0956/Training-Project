@@ -366,8 +366,8 @@
                         <div class="flex items-center space-x-3">
                             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23DC2626'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3EJS%3C/text%3E%3C/svg%3E" alt="Avatar" class="w-10 h-10 rounded-full">
                             <div>
-                                <p class="font-medium text-gray-800">contoh2</p>
-                                <p class="text-sm text-gray-600">contoh2@gmail.com</p>
+                                <p class="font-medium text-gray-800">raihan</p>
+                                <p class="text-sm text-gray-600">raihan@gmail.com</p>
                             </div>
                         </div>
                         <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Sedang Training</span>
@@ -377,12 +377,24 @@
                         <div class="flex items-center space-x-3">
                             <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%237C3AED'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3EMJ%3C/text%3E%3C/svg%3E" alt="Avatar" class="w-10 h-10 rounded-full">
                             <div>
-                                <p class="font-medium text-gray-800">contoh3</p>
-                                <p class="text-sm text-gray-600">contoh3@gmail.com</p>
+                                <p class="font-medium text-gray-800">yusril</p>
+                                <p class="text-sm text-gray-600">yusril@gmail.com</p>
                             </div>
                         </div>
                         <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Menunggu</span>
                     </div>
+
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23DC2626'/%3E%3Ctext x='20' y='26' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3EJS%3C/text%3E%3C/svg%3E" alt="Avatar" class="w-10 h-10 rounded-full">
+                            <div>
+                                <p class="font-medium text-gray-800">Daelingka</p>
+                                <p class="text-sm text-gray-600">dega@gmail.com</p>
+                            </div>
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Sedang Training</span>
+                    </div>
+                    
                 </div>
             </div>
         </div>
