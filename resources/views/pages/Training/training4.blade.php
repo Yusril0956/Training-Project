@@ -62,6 +62,7 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
+    
     <!-- Main Content -->
     <main class="w-full">
         <!-- Header Section - Mobile Optimized -->
@@ -79,6 +80,39 @@
             </div>
         </div>
 
+        <!-- Breadcrumb Navigation -->
+        <nav class="mb-6" aria-label="Breadcrumb">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <ol class="flex items-center space-x-2 text-sm">
+                    <li>
+                        <a href="{{route('index')}}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors" onclick="navigateTo('home')">
+                            🏠 Home
+                        </a>
+                    </li>
+                    <li class="text-gray-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="{{route('training.index')}}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors" onclick="navigateTo('training')">
+                            📚 Training
+                        </a>
+                    </li>
+                    <li class="text-gray-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="{{route('license.training')}}" class="text-blue-600 hover:text-blue-800 font-medium transition-colors" onclick="navigateTo('data')">
+                            📊 lisensi
+                        </a>
+                    </li>
+                    
+                </ol>
+            </div>
+        </nav>
         <!-- License Content -->
         <div class="max-w-6xl mx-auto px-4 py-6 sm:px-6 sm:py-12">
             <!-- License Card -->
@@ -241,7 +275,7 @@
                     <span class="font-medium" id="contact-phone">+62 821-1909-6623 contoh</span>
                 </p>
                 <p class="text-gray-500 text-xs mt-2" id="copyright">
-                    © PT>Dirgantara.<br class="sm:hidden"> Bebas mau di isi apa
+                    © PT-Dirgantara.<br class="sm:hidden"> Bebas mau di isi apa
                 </p>
             </div>
         </div>
