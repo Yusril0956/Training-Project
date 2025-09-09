@@ -222,7 +222,7 @@
                             </svg>
                             Perpanjang Lisensi
                         </button>
-                        <button onclick="verifyOnline()" class="touch-target bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white px-6 py-3 sm:px-8 rounded-lg sm:rounded-xl font-medium transition-colors duration-200 flex items-center justify-center text-sm sm:text-base">
+                        <button onclick="verifyOnline()" class="touch-target bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-green px-6 py-3 sm:px-8 rounded-lg sm:rounded-xl font-medium transition-colors duration-200 flex items-center justify-center text-sm sm:text-base">
                             <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
