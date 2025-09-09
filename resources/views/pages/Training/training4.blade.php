@@ -1,521 +1,352 @@
 @extends('layouts.app')
-@section('title', 'Training')
+@section('title', 'Lisensi')
 
 @section('content')
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Manajemen Sertifikat - Dashboard Admin</title>
+    <title>Lisensi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .certificate-card {
-            transition: all 0.3s ease;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        .certificate-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        .gradient-bg { 
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%); 
         }
-        .upload-area {
-            border: 2px dashed #e5e7eb;
-            transition: all 0.3s ease;
+        .card-shadow { 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
         }
-        .upload-area:hover {
-            border-color: #3b82f6;
-            background-color: #f8fafc;
+        .license-badge { 
+            background: linear-gradient(45deg, #10b981, #059669);
+            animation: pulse 2s infinite;
         }
-        .upload-area.dragover {
-            border-color: #3b82f6;
-            background-color: #eff6ff;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .status-active { 
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+        }
+        .aerospace-pattern {
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .mobile-stack { flex-direction: column; }
+            .mobile-full { width: 100%; }
+            .mobile-text-center { text-align: center; }
+            .mobile-mb-4 { margin-bottom: 1rem; }
+        }
+        
+        /* Touch targets for mobile */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
-            <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-semibold text-white">Manajemen Sertifikat</h2>
-                    <button onclick="openUploadModal()" class="bg-white text-green-600 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors font-medium">
-                        <i class="fas fa-plus mr-2"></i>Unggah Sertifikat
-                    </button>
+    <!-- Main Content -->
+    <main class="w-full">
+        <!-- Header Section - Mobile Optimized -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 px-4 sm:py-8 sm:px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="text-center sm:text-left">
+                        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">LISENSI PELATIHAN</h1>
+                        <p class="text-blue-100 text-sm sm:text-base">Sertifikat Kompetensi Dirgantara</p>
+                    </div>
+                    <div class="license-badge px-4 py-2 sm:px-6 sm:py-3 rounded-full">
+                        <span class="text-white font-bold text-base sm:text-lg" id="license-status">AKTIF</span>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- License Content -->
+        <div class="max-w-6xl mx-auto px-4 py-6 sm:px-6 sm:py-12">
+            <!-- License Card -->
+            <div class="bg-white rounded-xl sm:rounded-2xl card-shadow overflow-hidden aerospace-pattern">
+                <!-- License Details -->
+                <div class="p-4 sm:p-6 lg:p-8">
+                    <!-- Mobile: Single Column, Desktop: Two Columns -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                        <!-- Left Column -->
+                        <div class="space-y-4 sm:space-y-6">
+                            <!-- License Info Card -->
+                            <div class="bg-gray-50 p-4 sm:p-6 rounded-lg sm:rounded-xl">
+                                <h3 class="font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center text-sm sm:text-base">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                    </svg>
+                                    Informasi Lisensi
+                                </h3>
+                                <div class="space-y-2 sm:space-y-3">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Nomor Lisensi:</span>
+                                        <span class="font-semibold text-sm sm:text-base" id="license-number">AER-2024-001234 contoh</span>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Kategori:</span>
+                                        <span class="font-semibold text-sm sm:text-base" id="license-category">Pelatihan Dirgantara</span>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Tingkat:</span>
+                                        <span class="font-semibold text-sm sm:text-base" id="license-level">Profesional</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Institution Card -->
+                            <div class="bg-blue-50 p-4 sm:p-6 rounded-lg sm:rounded-xl border border-blue-200">
+                                <h3 class="font-semibold text-blue-800 mb-3 sm:mb-4 flex items-center text-sm sm:text-base">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                    </svg>
+                                    Lembaga Penyelenggara
+                                </h3>
+                                <p class="text-blue-700 font-medium text-sm sm:text-base" id="institution-name">PT.Dirga</p>
+                                <p class="text-blue-600 text-xs sm:text-sm mt-1" id="institution-desc">Lembaga resmi yang ditunjuk oleh Kementerian Perhubungan RI</p>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-4 sm:space-y-6">
+                            <!-- Status Card -->
+                            <div class="bg-green-50 p-4 sm:p-6 rounded-lg sm:rounded-xl border border-green-200">
+                                <h3 class="font-semibold text-green-800 mb-3 sm:mb-4 flex items-center text-sm sm:text-base">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Status & Masa Berlaku
+                                </h3>
+                                <div class="space-y-2 sm:space-y-3">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Status:</span>
+                                        <span class="status-active px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-medium w-fit" id="status-badge">AKTIF</span>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Tanggal Terbit:</span>
+                                        <span class="font-semibold text-sm sm:text-base" id="issued-date">15 Januari 2024</span>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Masa Berlaku:</span>
+                                        <span class="font-semibold text-green-600 text-sm sm:text-base" id="expiry-date">15 Januari 2027</span>
+                                    </div>
+                                    <div class="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-0">
+                                        <span class="text-gray-600 text-xs sm:text-sm">Sisa Waktu:</span>
+                                        <span class="font-semibold text-orange-600 text-sm sm:text-base" id="remaining-time">2 tahun 11 bulan</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Training Scopes Card -->
+                            <div class="bg-gray-50 p-4 sm:p-6 rounded-lg sm:rounded-xl">
+                                <h3 class="font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center text-sm sm:text-base">
+                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                                    </svg>
+                                    Cakupan Pelatihan
+                                </h3>
+                                <ul class="space-y-2 text-xs sm:text-sm" id="training-scopes">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                        <span>Sistem Navigasi Penerbangan</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                        <span>Keselamatan Operasi Dirgantara</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                        <span>Manajemen Lalu Lintas Udara</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                                        <span>Teknologi Pesawat Terbang</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Notice -->
+                    <div class="mt-6 sm:mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 sm:p-6 rounded-r-lg sm:rounded-r-xl">
+                        <div class="flex items-start">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2v-2zm0-6h2v4h-2v-4z"/>
+                            </svg>
+                            <div>
+                                <h4 class="font-semibold text-yellow-800 mb-2 text-sm sm:text-base">Penting untuk Diperhatikan</h4>
+                                <p class="text-yellow-700 text-xs sm:text-sm leading-relaxed" id="notice-text">
+                                    Lisensi ini dikeluarkan oleh lembaga resmi yang ditunjuk negara dan memiliki masa berlaku terbatas. 
+                                    Pastikan untuk melakukan perpanjangan sebelum masa berlaku habis. Lisensi ini wajib diperbaharui 
+                                    setiap 3 tahun dengan mengikuti pelatihan penyegaran yang diselenggarakan oleh lembaga bersertifikat.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons - Mobile Optimized -->
+                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:justify-center">
+                        <button onclick="downloadCertificate()" class="touch-target bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white px-6 py-3 sm:px-8 rounded-lg sm:rounded-xl font-medium transition-colors duration-200 flex items-center justify-center text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10,9 9,9 8,9"/>
+                            </svg>
+                            Unduh Sertifikat
+                        </button>
+                        <button onclick="renewLicense()" class="touch-target bg-green-600 hover:bg-green-700 active:bg-green-800 text-white px-6 py-3 sm:px-8 rounded-lg sm:rounded-xl font-medium transition-colors duration-200 flex items-center justify-center text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            Perpanjang Lisensi
+                        </button>
+                        <button onclick="verifyOnline()" class="touch-target bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white px-6 py-3 sm:px-8 rounded-lg sm:rounded-xl font-medium transition-colors duration-200 flex items-center justify-center text-sm sm:text-base">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Verifikasi Online
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Info -->
+            <div class="mt-6 sm:mt-8 text-center px-4">
+                <p class="text-gray-600 text-xs sm:text-sm mb-2">
+                    Untuk informasi lebih lanjut hubungi:<br class="sm:hidden">
+                    <span class="font-medium" id="contact-email">sekretariatptdi@indonesian-aerospace.com</span>
+                    <span class="hidden sm:inline"> | </span><br class="sm:hidden">
+                    <span class="font-medium" id="contact-phone">+62 821-1909-6623 contoh</span>
+                </p>
+                <p class="text-gray-500 text-xs mt-2" id="copyright">
+                    © PT>Dirgantara.<br class="sm:hidden"> Bebas mau di isi apa
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Fungsi untuk mengisi data lisensi dari Laravel
+        function populateLicenseData(data) {
+            // Update semua elemen dengan data dari backend
+            if (data.license_number) document.getElementById('license-number').textContent = data.license_number;
+            if (data.category) document.getElementById('license-category').textContent = data.category;
+            if (data.level) document.getElementById('license-level').textContent = data.level;
+            if (data.status) {
+                document.getElementById('license-status').textContent = data.status.toUpperCase();
+                document.getElementById('status-badge').textContent = data.status.toUpperCase();
+            }
+            if (data.institution) document.getElementById('institution-name').textContent = data.institution;
+            if (data.institution_description) document.getElementById('institution-desc').textContent = data.institution_description;
+            if (data.issued_date) document.getElementById('issued-date').textContent = data.issued_date;
+            if (data.expiry_date) document.getElementById('expiry-date').textContent = data.expiry_date;
+            if (data.remaining_time) document.getElementById('remaining-time').textContent = data.remaining_time;
+            if (data.notice) document.getElementById('notice-text').textContent = data.notice;
             
-            <div class="p-6">
-                <div id="certificatesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="certificate-card bg-white border-2 border-gray-200 rounded-xl p-4">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-award text-blue-600 text-xl"></i>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button onclick="editCertificate(1)" class="text-blue-600 hover:text-blue-800">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteCertificate(1)" class="text-red-600 hover:text-red-800">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mb-3 rounded-lg overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 p-4">
-                            <svg viewBox="0 0 400 280" class="w-full h-32">
-                                <rect width="400" height="280" fill="#1e40af" rx="8"/>
-                                <rect x="20" y="20" width="360" height="240" fill="white" rx="4"/>
-                                <text x="200" y="60" text-anchor="middle" fill="#1e40af" font-size="24" font-weight="bold">SERTIFIKAT</text>
-                                <text x="200" y="90" text-anchor="middle" fill="#374151" font-size="16">Pengembangan Web</text>
-                                <text x="200" y="130" text-anchor="middle" fill="#6b7280" font-size="12">Diberikan kepada</text>
-                                <text x="200" y="155" text-anchor="middle" fill="#1f2937" font-size="18" font-weight="bold">Admin User</text>
-                                <text x="200" y="190" text-anchor="middle" fill="#6b7280" font-size="12">Atas keberhasilan menyelesaikan program</text>
-                                <text x="200" y="210" text-anchor="middle" fill="#6b7280" font-size="12">Pengembangan Web Lanjutan</text>
-                                <circle cx="80" cy="220" r="25" fill="#fbbf24"/>
-                                <text x="80" y="225" text-anchor="middle" fill="white" font-size="10" font-weight="bold">SEAL</text>
-                                <text x="320" y="235" text-anchor="middle" fill="#6b7280" font-size="10">Tech Academy</text>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Sertifikat Pengembangan Web</h3>
-                        <p class="text-sm text-gray-600 mb-3">Diterbitkan oleh Tech Academy</p>
-                        <div class="text-xs text-gray-500 space-y-1">
-                            <div>Tanggal Terbit: 15 Jan 2024</div>
-                            <div>Berlaku Hingga: 15 Jan 2027</div>
-                        </div>
-                        <button class="mt-3 w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                            Lihat Sertifikat
-                        </button>
-                    </div>
-
-                    <div class="certificate-card bg-white border-2 border-gray-200 rounded-xl p-4">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-medal text-green-600 text-xl"></i>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button onclick="editCertificate(2)" class="text-blue-600 hover:text-blue-800">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button onclick="deleteCertificate(2)" class="text-red-600 hover:text-red-800">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mb-3 rounded-lg overflow-hidden bg-gradient-to-br from-green-50 to-green-100 p-4">
-                            <svg viewBox="0 0 400 280" class="w-full h-32">
-                                <rect width="400" height="280" fill="#059669" rx="8"/>
-                                <rect x="20" y="20" width="360" height="240" fill="white" rx="4"/>
-                                <text x="200" y="60" text-anchor="middle" fill="#059669" font-size="24" font-weight="bold">SERTIFIKAT</text>
-                                <text x="200" y="90" text-anchor="middle" fill="#374151" font-size="16">Manajemen Proyek</text>
-                                <text x="200" y="130" text-anchor="middle" fill="#6b7280" font-size="12">Diberikan kepada</text>
-                                <text x="200" y="155" text-anchor="middle" fill="#1f2937" font-size="18" font-weight="bold">Admin User</text>
-                                <text x="200" y="190" text-anchor="middle" fill="#6b7280" font-size="12">Atas keberhasilan menyelesaikan program</text>
-                                <text x="200" y="210" text-anchor="middle" fill="#6b7280" font-size="12">Manajemen Proyek Profesional</text>
-                                <circle cx="80" cy="220" r="25" fill="#f59e0b"/>
-                                <text x="80" y="225" text-anchor="middle" fill="white" font-size="10" font-weight="bold">PMI</text>
-                                <text x="320" y="235" text-anchor="middle" fill="#6b7280" font-size="10">PMI Institute</text>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Manajemen Proyek</h3>
-                        <p class="text-sm text-gray-600 mb-3">Diterbitkan oleh PMI Institute</p>
-                        <div class="text-xs text-gray-500 space-y-1">
-                            <div>Tanggal Terbit: 10 Mar 2024</div>
-                            <div>Berlaku Hingga: 10 Mar 2027</div>
-                        </div>
-                        <button class="mt-3 w-full bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                            Lihat Sertifikat
-                        </button>
-                    </div>
-
-                    <div onclick="openUploadModal()" class="certificate-card bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all">
-                        <div class="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mb-3">
-                            <i class="fas fa-plus text-gray-400 text-xl"></i>
-                        </div>
-                        <p class="text-gray-500 text-center">Klik untuk mengunggah sertifikat baru</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
-            <div class="flex justify-between items-center p-6 border-b">
-                <h3 class="text-lg font-semibold text-gray-900">Unggah Sertifikat</h3>
-                <button onclick="closeUploadModal()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-6">
-                <div class="upload-area rounded-lg p-8 text-center mb-4" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
-                    <p class="text-gray-600 mb-2">Seret dan lepas sertifikat Anda di sini</p>
-                    <p class="text-sm text-gray-500 mb-4">atau</p>
-                    <input type="file" id="certificateFile" accept=".pdf,.jpg,.jpeg,.png" class="hidden" onchange="handleFileSelect(event)">
-                    <button onclick="document.getElementById('certificateFile').click()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                        Pilih File
-                    </button>
-                </div>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Sertifikat</label>
-                        <input type="text" id="certName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan nama sertifikat">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Organisasi Penerbit</label>
-                        <input type="text" id="certOrg" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan nama organisasi">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Terbit</label>
-                            <input type="date" id="issueDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Kedaluwarsa</label>
-                            <input type="date" id="expiryDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-end space-x-3 p-6 border-t">
-                <button onclick="closeUploadModal()" class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                    Batal
-                </button>
-                <button onclick="uploadCertificate()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Unggah Sertifikat
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
-            <div class="flex justify-between items-center p-6 border-b">
-                <h3 class="text-lg font-semibold text-gray-900">Edit Sertifikat</h3>
-                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="p-6">
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Sertifikat</label>
-                        <input type="text" id="editCertName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Organisasi Penerbit</label>
-                        <input type="text" id="editCertOrg" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Terbit</label>
-                            <input type="date" id="editIssueDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Kedaluwarsa</label>
-                            <input type="date" id="editExpiryDate" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-end space-x-3 p-6 border-t">
-                <button onclick="closeEditModal()" class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
-                    Batal
-                </button>
-                <button onclick="saveEditedCertificate()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Simpan Perubahan
-                </button>
-            </div>
-        </div>
-    </div>
-    
-
-<script>
-    let certificates = [];
-    let currentEditId = null;
-    let uploadedFile = null;
-
-    function openUploadModal() {
-        document.getElementById('uploadModal').classList.remove('hidden');
-        document.getElementById('uploadModal').classList.add('flex');
-    }
-
-    function closeUploadModal() {
-        document.getElementById('uploadModal').classList.add('hidden');
-        document.getElementById('uploadModal').classList.remove('flex');
-        clearUploadForm();
-    }
-
-    function openEditModal() {
-        document.getElementById('editModal').classList.remove('hidden');
-        document.getElementById('editModal').classList.add('flex');
-    }
-
-    function closeEditModal() {
-        document.getElementById('editModal').classList.add('hidden');
-        document.getElementById('editModal').classList.remove('flex');
-        currentEditId = null;
-    }
-
-    function handleDragOver(e) {
-        e.preventDefault();
-        e.currentTarget.classList.add('dragover');
-    }
-
-    function handleDragLeave(e) {
-        e.currentTarget.classList.remove('dragover');
-    }
-
-    function handleDrop(e) {
-        e.preventDefault();
-        e.currentTarget.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-            handleFile(files[0]);
-        }
-    }
-
-    function handleFileSelect(e) {
-        const file = e.target.files[0];
-        if (file) {
-            handleFile(file);
-        }
-    }
-
-    function handleFile(file) {
-        uploadedFile = file;
-        const fileNameDisplay = document.querySelector('.upload-area p.text-gray-600');
-        if (fileNameDisplay) {
-            fileNameDisplay.textContent = 'File terpilih: ' + file.name;
-        }
-        showNotification('File terpilih: ' + file.name, 'success');
-    }
-
-    async function uploadCertificate() {
-        const name = document.getElementById('certName').value;
-        const org = document.getElementById('certOrg').value;
-        const issueDate = document.getElementById('issueDate').value;
-        const expiryDate = document.getElementById('expiryDate').value;
-
-        if (!uploadedFile || !name || !org || !issueDate) {
-            showNotification('Harap isi semua field dan unggah file.', 'error');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', uploadedFile);
-        formData.append('name', name);
-        formData.append('organization', org);
-        formData.append('issue_date', issueDate);
-        formData.append('expiry_date', expiryDate);
-        formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-
-        try {
-            const response = await fetch('/certificates', {
-                method: 'POST',
-                body: formData,
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                renderCertificates();
-                closeUploadModal();
-                showNotification(result.message, 'success');
-            } else {
-                showNotification('Error: ' + JSON.stringify(result.errors), 'error');
-            }
-        } catch (error) {
-            showNotification('Terjadi kesalahan saat mengunggah sertifikat.', 'error');
-            console.error('Error:', error);
-        }
-    }
-
-    function editCertificate(id) {
-        // Ambil data dari array lokal yang sudah disinkronkan dengan database
-        const cert = certificates.find(c => c.id === id);
-        if (cert) {
-            currentEditId = id;
-            document.getElementById('editCertName').value = cert.name;
-            document.getElementById('editCertOrg').value = cert.organization;
-            document.getElementById('editIssueDate').value = cert.issue_date;
-            document.getElementById('editExpiryDate').value = cert.expiry_date;
-            openEditModal();
-        }
-    }
-
-    async function saveEditedCertificate() {
-        if (!currentEditId) return;
-
-        const name = document.getElementById('editCertName').value;
-        const org = document.getElementById('editCertOrg').value;
-        const issueDate = document.getElementById('editIssueDate').value;
-        const expiryDate = document.getElementById('editExpiryDate').value;
-
-        if (!name || !org || !issueDate) {
-            showNotification('Harap isi semua field yang diperlukan', 'error');
-            return;
-        }
-
-        try {
-            const response = await fetch(`/certificates/${currentEditId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                },
-                body: JSON.stringify({
-                    name: name,
-                    organization: org,
-                    issue_date: issueDate,
-                    expiry_date: expiryDate
-                })
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                renderCertificates();
-                closeEditModal();
-                showNotification(result.message, 'success');
-            } else {
-                showNotification('Error: ' + JSON.stringify(result.errors), 'error');
-            }
-        } catch (error) {
-            showNotification('Terjadi kesalahan saat menyimpan perubahan.', 'error');
-            console.error('Error:', error);
-        }
-    }
-
-    async function deleteCertificate(id) {
-        if (confirm('Apakah Anda yakin ingin menghapus sertifikat ini?')) {
-            try {
-                const response = await fetch(`/certificates/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    }
+            // Update training scopes jika ada
+            if (data.training_scopes && data.training_scopes.length > 0) {
+                const scopesList = document.getElementById('training-scopes');
+                scopesList.innerHTML = '';
+                data.training_scopes.forEach(scope => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-start';
+                    li.innerHTML = `
+                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                        <span>${scope}</span>
+                    `;
+                    scopesList.appendChild(li);
                 });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    renderCertificates();
-                    showNotification(result.message, 'success');
-                } else {
-                    showNotification('Error: ' + JSON.stringify(result.message), 'error');
-                }
-            } catch (error) {
-                showNotification('Terjadi kesalahan saat menghapus sertifikat.', 'error');
-                console.error('Error:', error);
+            }
+            
+            // Update contact info
+            if (data.contact_email) document.getElementById('contact-email').textContent = data.contact_email;
+            if (data.contact_phone) document.getElementById('contact-phone').textContent = data.contact_phone;
+            if (data.company_name) {
+                document.getElementById('copyright').innerHTML = `© ${new Date().getFullYear()} ${data.company_name}.<br class="sm:hidden"> Semua hak dilindungi undang-undang.`;
             }
         }
-    }
 
-    function renderCertificates() {
-        const grid = document.getElementById('certificatesGrid');
-        const addCard = grid.querySelector('.cursor-pointer');
-        grid.innerHTML = '';
+        // Fungsi untuk tombol-tombol aksi
+        function downloadCertificate() {
+            // Redirect ke route download atau panggil API
+            window.location.href = '/license/download/' + (window.licenseId || '1');
+        }
 
-        fetch('/certificates')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Perbarui array lokal dengan data dari server
-                certificates = data;
+        function renewLicense() {
+            // Redirect ke halaman perpanjangan
+            window.location.href = '/license/renew/' + (window.licenseId || '1');
+        }
 
-                data.forEach(cert => {
-                    const certCard = createCertificateCard(cert);
-                    grid.appendChild(certCard);
-                });
-                grid.appendChild(addCard);
-            })
-            .catch(error => {
-                console.error('Error fetching certificates:', error);
-                showNotification('Gagal memuat sertifikat. Periksa koneksi backend.', 'error');
-            });
-    }
+        function verifyOnline() {
+            // Redirect ke halaman verifikasi
+            const licenseNumber = document.getElementById('license-number').textContent;
+            window.location.href = '/license/verify/' + licenseNumber;
+        }
 
-    function createCertificateCard(cert) {
-        const div = document.createElement('div');
-        div.className = 'certificate-card bg-white border-2 border-gray-200 rounded-xl p-4';
-        
-        div.innerHTML = `
-            <div class="flex items-center justify-between mb-3">
-                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-award text-blue-600 text-xl"></i>
-                </div>
-                <div class="flex space-x-2">
-                    <button onclick="editCertificate(${cert.id})" class="text-blue-600 hover:text-blue-800">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button onclick="deleteCertificate(${cert.id})" class="text-red-600 hover:text-red-800">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="mb-3 rounded-lg overflow-hidden bg-gray-100 p-4 flex items-center justify-center">
-                <img src="/storage/${cert.file_path}" alt="Sertifikat" class="w-full h-auto max-h-48 object-contain">
-            </div>
-            <h3 class="font-semibold text-gray-900 mb-2">${cert.name}</h3>
-            <p class="text-sm text-gray-600 mb-3">Diterbitkan oleh ${cert.organization}</p>
-            <div class="text-xs text-gray-500 space-y-1">
-                <div>Tanggal Terbit: ${formatDate(cert.issue_date)}</div>
-                ${cert.expiry_date ? `<div>Berlaku Hingga: ${formatDate(cert.expiry_date)}</div>` : ''}
-            </div>
-            <a href="/storage/${cert.file_path}" target="_blank" class="mt-3 w-full block text-center bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
-                Lihat Sertifikat
-            </a>
-        `;
-        
-        return div;
-    }
+        // Contoh penggunaan dengan data dari Laravel
+        // Panggil fungsi ini dari controller Laravel
+        window.setLicenseData = function(data) {
+            window.licenseId = data.id;
+            populateLicenseData(data);
+        };
 
-    function formatDate(dateString) {
-        if (!dateString) return '';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('id-ID', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        // Untuk development - contoh data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contoh data yang bisa dikirim dari Laravel Controller
+            const sampleData = {
+                id: 1,
+                license_number: 'AER-2024-001234 contoh',
+                category: 'Pelatihan Dirgantara',
+                level: 'Profesional',
+                status: 'aktif',
+                institution: 'PT.Dirga',
+                institution_description: 'Lembaga resmi yang ditunjuk oleh Kementerian Perhubungan RI',
+                issued_date: '15 Januari 2024',
+                expiry_date: '15 Januari 2027',
+                remaining_time: '2 tahun 11 bulan',
+                training_scopes: [
+                    'Sistem Navigasi Penerbangan',
+                    'Keselamatan Operasi Dirgantara',
+                    'Manajemen Lalu Lintas Udara',
+                    'Teknologi Pesawat Terbang'
+                ],
+                notice: 'Lisensi ini dikeluarkan oleh lembaga resmi yang ditunjuk negara dan memiliki masa berlaku terbatas.',
+                contact_email: 'info@dirgantara-training.go.id',
+                contact_phone: '+62-21-1234-5678',
+                company_name: 'Lembaga Sertifikasi Dirgantara Indonesia'
+            };
+            
+            // Uncomment untuk testing
+            // window.setLicenseData(sampleData);
         });
-    }
 
-    function clearUploadForm() {
-        document.getElementById('certName').value = '';
-        document.getElementById('certOrg').value = '';
-        document.getElementById('issueDate').value = '';
-        document.getElementById('expiryDate').value = '';
-        document.getElementById('certificateFile').value = '';
-        uploadedFile = null;
-    }
-
-    function showNotification(message, type) {
-        const notification = document.createElement('div');
-        notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
-            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-        }`;
-        notification.textContent = message;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        renderCertificates();
-    });
-</script>
-</body>
+        // Touch feedback untuk mobile
+        document.addEventListener('touchstart', function() {}, true);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c4a9e473319bda',t:'MTc1NzM5OTcwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 @endsection

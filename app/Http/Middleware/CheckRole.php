@@ -14,18 +14,20 @@ class CheckRole
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
-{
-    if (!$request->user()) {
-        abort(403, 'Unauthorized');
+    {
+        if (!$request->user()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $user = $request->user();
+
+        // Check if user has any of the required roles
+        $hasRole = $user->roles()->whereIn('name', $roles)->exists();
+
+        if (!$hasRole) {
+            abort(403, 'Insufficient permissions');
+        }
+
+        return $next($request);
     }
-
-    $user = $request->user();
-
-    // Periksa jika role user ada di dalam array $roles yang diizinkan
-    if (!in_array($user->role, $roles)) {
-        abort(403, 'Insufficient permissions');
-    }
-
-    return $next($request);
-}
 }
