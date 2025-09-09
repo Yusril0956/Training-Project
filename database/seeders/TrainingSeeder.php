@@ -14,9 +14,17 @@ class TrainingSeeder extends Seeder
     public function run(): void
     {
         // Clear existing data while respecting foreign key constraints
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Training::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        // Use different syntax for SQLite vs MySQL
+        $connection = config('database.default');
+        if ($connection === 'sqlite') {
+            DB::statement('PRAGMA foreign_keys = OFF;');
+            Training::truncate();
+            DB::statement('PRAGMA foreign_keys = ON;');
+        } else {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Training::truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        }
 
         Training::create([
             'name' => 'Pelatihan Sistem Avionik',

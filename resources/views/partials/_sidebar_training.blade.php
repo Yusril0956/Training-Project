@@ -237,7 +237,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            {{ $training->nama }}
+                            {{ $training->name }}
                         </span>
                     </a>
                 </li>

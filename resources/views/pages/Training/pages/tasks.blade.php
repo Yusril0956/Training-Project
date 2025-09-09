@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h2 class="card-title">📝 Tugas Pelatihan</h2>
                     <p class="text-muted">Berikut adalah daftar tugas untuk pelatihan
-                        <strong>{{ $training->nama }}</strong>.
+                        <strong>{{ $training->name }}</strong>.
                     </p>
                 </div>
             </div>
