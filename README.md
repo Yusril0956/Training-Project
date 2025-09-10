@@ -18,11 +18,37 @@ Projekan tugas PKL di PT.Dirgantara membuat aplikasi atau web Training menggunak
 
 Terima kasih kepada semua kontributor proyek ini! 🎉  
 
-| Nama | GitHub | Peran |
-|------|--------|-------|
-| Refan | [@Reqi](https://github.com/Reqi20074) | Fullstack Developer |
-| Yusril | [@Hyeon](https://github.com/Yusril0956) | Fullstack Developer |
-| Raihan | [@ehan](https://github.com/ehan4426-pixel) | Support Developer |
-| Daelingka | [@vein13046-ui](https://github.com/vein13046-ui) | Support Developer |
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Reqi20074">
+        <img src="https://github.com/Reqi20074.png?size=100" width="100px;" alt=""/>
+        <br /><sub><b>Refan</b></sub>
+      </a>
+      <br />💻 Fullstack Developer
+    </td>
+    <td align="center">
+      <a href="https://github.com/Yusril0956">
+        <img src="https://github.com/Yusril0956.png?size=100" width="100px;" alt=""/>
+        <br /><sub><b>Yusril</b></sub>
+      </a>
+      <br />💻 Fullstack Developer
+    </td>
+    <td align="center">
+      <a href="https://github.com/ehan4426-pixel">
+        <img src="https://github.com/ehan4426-pixel.png?size=100" width="100px;" alt=""/>
+        <br /><sub><b>Raihan</b></sub>
+      </a>
+      <br />🤝 Support Developer
+    </td>
+    <td align="center">
+      <a href="https://github.com/vein13046-ui">
+        <img src="https://github.com/vein13046-ui.png?size=100" width="100px;" alt=""/>
+        <br /><sub><b>Daelingka</b></sub>
+      </a>
+      <br />🤝 Support Developer
+    </td>
+  </tr>
+</table>
 
 ---
