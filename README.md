@@ -2,8 +2,9 @@
 
 Projekan tugas PKL di PT.Dirgantara membuat aplikasi atau web Training menggunakan bahasa pemerograman Laravel 12  
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/Reqi20074/Training-Project?label=Total%20Commits)
-![GitHub last commit](https://img.shields.io/github/last-commit/Reqi20074/Training-Project?label=Last%20Commit)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/Yusril0956/Training-Project?label=Total%20Commits)
+![GitHub last commit](https://img.shields.io/github/last-commit/Yusril0956/Training-Project?label=Last%20Commit)
+![GitHub contributors](https://img.shields.io/github/contributors/Yusril0956/Training-Project?label=Contributors)
 
 ---
 
