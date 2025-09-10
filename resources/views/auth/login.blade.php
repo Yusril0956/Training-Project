@@ -22,7 +22,7 @@
     <link href="{{ asset('dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
 
     {{-- icon --}}
-    <link rel="icon" href="{{ asset('static/logo.png') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('static/LogoBaru.png') }}" type="image/svg+xml">
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -42,7 +42,7 @@
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
                 <a href="." class="navbar-brand navbar-brand-autodark">
-                    <img src="{{ asset('logo.png') }}" width="110" height="32" alt="Tabler"
+                    <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
                         class="navbar-brand-image"> Aerospace
                 </a>
             </div>

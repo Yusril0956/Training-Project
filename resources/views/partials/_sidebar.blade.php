@@ -6,7 +6,7 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href=".">
-                <img src="{{ asset('logo.png') }}" width="110" height="32" alt="Tabler"
+                <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
                     class="navbar-brand-image">Aerospace (IAe)
             </a>
         </h1>
