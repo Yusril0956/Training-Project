@@ -431,7 +431,7 @@
                         <div class="lilowow-cs">
                             <div class="llw-count">
                                 <div class="icon-show top">
-                                    <img src="logo.png">
+                                    <img src="LogoBaru.png">
                                 </div>
                                 <div class="icon-show mid like-icon-bg">
                                     <i class="fas fa-thumbs-up"></i>
@@ -474,7 +474,7 @@
                     <div class="comment-site">
                         <div class="profil-ing-div">
                             <a href="#" id="profile-link">
-                                <img id="Profile_images" src="logo.png">
+                                <img id="Profile_images" src="LogoBaru.png">
                             </a>
                         </div>
                         <div class="comment-input">
