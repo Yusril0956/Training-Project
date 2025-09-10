@@ -41,7 +41,7 @@
                                 <h4 class="card-title">{{ $training->name }}</h4>
                                 <p class="text-muted">{{ Str::limit($training->description, 80) }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+                                    @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                                         <a href="{{ route('detail.training', $training->id) }}"
                                             class="btn btn-sm btn-secondary">Detail</a>
                                     @endif
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            @if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'super_admin'))
+            @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                 <div class="card mb-3">
                     <div class="card-header">
                         <h3 class="card-title">Daftar Permintaan</h3>
@@ -167,16 +167,6 @@
                             <label class="form-label">Judul Pelatihan</label>
                             <input type="text" class="form-control" name="name"
                                 placeholder="Contoh: Pelatihan Sistem Avionik">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Jenis Training</label>
-                            <select class="form-select" name="jenis_training_id" required>
-                                <option value="">Pilih Jenis Training</option>
-                                @foreach ($jenisTrainings as $jenis)
-                                    <option value="{{ $jenis->id }}">{{ $jenis->kode }} - {{ $jenis->nama }}
-                                    </option>
-                                @endforeach
-                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Kategori</label>

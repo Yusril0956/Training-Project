@@ -17,7 +17,7 @@
             </div>
 
             <!-- Form Pengumpulan Jawaban -->
-            @if (Auth::check() && Auth::user()->hasRole(['user', 'admin', 'super_admin']))
+            @if (Auth::check() && Auth::user()->hasRole(['User', 'Admin', 'Super Admin']))
                 @php
                     $submission = $task->submissions->where('user_id', auth()->id())->first();
                 @endphp

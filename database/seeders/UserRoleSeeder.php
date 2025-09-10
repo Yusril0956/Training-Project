@@ -12,9 +12,9 @@ class UserRoleSeeder extends Seeder
     public function run()
     {
         // Get roles by code
-        $superAdminRole = Role::where('code', 'ADM')->first(); // Assuming ADM is super admin
-        $adminRole = Role::where('code', 'ADM')->first();
-        $userRole = Role::where('code', 'USR')->first();
+        $superAdminRole = Role::where('code', 'SADM')->first(); // Super Admin
+        $adminRole = Role::where('code', 'ADM')->first(); // Admin
+        $userRole = Role::where('code', 'USR')->first(); // User
 
         if (!$superAdminRole || !$adminRole || !$userRole) {
             return; // Skip if roles don't exist

@@ -103,7 +103,7 @@
                                 </div>
                             </a>
                         </div>
-                        @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
+                        @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                             <div class="col-md-4">
                                 <a href="{{ route('training.settings', $training->name) }}" class="card card-link">
                                     <div class="card-body text-center">

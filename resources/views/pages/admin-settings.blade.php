@@ -380,8 +380,9 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($users as $user)
-                                                        @if (!$user->hasRole('super_admin'))
-                                                            <tr data-role="{{ $user->role }}">
+                                                        @if (!$user->hasRole('Super Admin'))
+                                                            <tr
+                                                                data-role="{{ $user->roles->pluck('name')->first() ?? 'User' }}">
                                                                 <td>
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="avatar avatar-sm me-3"
@@ -392,29 +393,29 @@
                                                                         <div>
                                                                             <div class="fw-bold">{{ $user->name }}</div>
                                                                             <small
-                                                                                class="text-muted">{{ ucfirst($user->role) }}</small>
+                                                                                class="text-muted">{{ $user->roles->pluck('name')->first() ?? 'User' }}</small>
                                                                         </div>
                                                                     </div>
                                                                 </td>
                                                                 <td>{{ $user->email }}</td>
                                                                 <td>
-                                                                    @if ($user->role === 'admin')
+                                                                    @php $userRole = $user->roles->pluck('name')->first() ?? 'User'; @endphp
+                                                                    @if ($userRole === 'Admin')
                                                                         <span
                                                                             class="badge bg-primary text-white fw-bold px-3 py-2 role-badge">
                                                                             <i
-                                                                                class="fas fa-user-shield me-1"></i>{{ ucfirst($user->role) }}
+                                                                                class="fas fa-user-shield me-1"></i>{{ $userRole }}
                                                                         </span>
-                                                                    @elseif($user->role === 'staff')
+                                                                    @elseif($userRole === 'Staff')
                                                                         <span
                                                                             class="badge bg-info text-dark fw-bold px-3 py-2 role-badge">
                                                                             <i
-                                                                                class="fas fa-user-tie me-1"></i>{{ ucfirst($user->role) }}
+                                                                                class="fas fa-user-tie me-1"></i>{{ $userRole }}
                                                                         </span>
                                                                     @else
                                                                         <span
                                                                             class="badge bg-success text-white fw-bold px-3 py-2 role-badge">
-                                                                            <i
-                                                                                class="fas fa-user me-1"></i>{{ ucfirst($user->role) }}
+                                                                            <i class="fas fa-user me-1"></i>{{ $userRole }}
                                                                         </span>
                                                                     @endif
                                                                 </td>
@@ -458,7 +459,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($users->where('role', 'admin') as $user)
+                                                    @foreach ($users->filter(function ($user) {
+                return $user->hasRole('Admin');
+            }) as $user)
                                                         <tr>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
@@ -506,7 +509,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($users->where('role', 'user') as $user)
+                                                    @foreach ($users->filter(function ($user) {
+                return $user->hasRole('User');
+            }) as $user)
                                                         <tr>
                                                             <td>
                                                                 <div class="d-flex align-items-center">

@@ -93,18 +93,18 @@
                                     <tr>
                                         <td class="sort-name">{{ $user->name }}</td>
                                         <td class="sort-email">{{ $user->email }}</td>
-                                        <td class="sort-role">{{ $user->role }}</td>
+                                        <td class="sort-role">{{ $user->roles->pluck('name')->first() ?? 'User' }}</td>
                                         {{-- <td class="sort-status">{{ $user->status }}</td> --}}
                                         <td class="sort-date" data-date="{{ $user->created_at }}">
                                             {{ $user->created_at->format('F d, Y') }}</td>
                                         <td class="sort-action">
-                                            @if (Auth::id() !== $user->id && !$user->hasRole('super_admin'))
+                                            @if (Auth::id() !== $user->id && !$user->hasRole('Super Admin'))
                                                 {{-- Tidak bisa edit/hapus diri sendiri atau super_admin --}}
                                                 <a href="#" class="btn btn-sm btn-primary btn-edit-user"
                                                     data-bs-toggle="modal" data-bs-target="#modal-edit"
                                                     data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                                    data-email="{{ $user->email }}" data-role="{{ $user->role }}"
-                                                    data-status="{{ $user->status }}">
+                                                    data-email="{{ $user->email }}" data-role="{{ $user->roles->pluck('name')->first() ?? 'User' }}"
+                                                    data-status="active">
                                                     Edit
                                                 </a>
                                                 <button type="submit" class="btn btn-sm btn-danger btn-delete-user"
@@ -186,9 +186,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Role</label>
                                 <select class="form-select" name="role" id="edit-role">
-                                    <option value="admin">Admin</option>
-                                    <option value="user">User</option>
-                                    <option value="staff">Staff</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="User">User</option>
+                                    <option value="Staff">Staff</option>
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -267,9 +267,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Role</label>
                                 <select class="form-select" name="role" id="add-role">
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="staff">Staff</option>
+                                    <option value="User">User</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Staff">Staff</option>
                                 </select>
                             </div>
                             <div class="mb-3">

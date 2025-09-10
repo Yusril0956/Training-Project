@@ -148,7 +148,7 @@ Route::middleware('auth')->group(function () {
     // ============================
     // Admin & Super Admin Routes
     // ============================
-    Route::middleware(['check_role:admin,super_admin'])->group(function () {
+    Route::middleware(['check_role:Admin,Super Admin'])->group(function () {
         Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
         Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
         Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');

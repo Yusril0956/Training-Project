@@ -129,7 +129,7 @@
                             </div>
                             <div class="col-md">
                                 <div class="form-label">Role</div>
-                                <div class="form-control-plaintext">{{ $user->role }}</div>
+                                <div class="form-control-plaintext">{{ $user->roles->pluck('name')->join(', ') }}</div>
                             </div>
                             <div class="col-md">
                                 <div class="form-label">Status</div>

@@ -120,13 +120,13 @@
                             </a>
                         </li>
 
-                        <!-- @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin'])) -->
+                        @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                             <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('admin') }}">
                                     <span class="nav-link-title">Admin</span>
                                 </a>
                             </li>
-                        <!-- @endif -->
+                        @endif
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown"
@@ -134,7 +134,7 @@
                                 <span class="nav-link-title">More</span>
                             </a>
                             <div class="dropdown-menu">
-                                @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
+                                @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                                     <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>

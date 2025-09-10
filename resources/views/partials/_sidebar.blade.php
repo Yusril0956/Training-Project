@@ -263,7 +263,7 @@
                     </a>
                 </li>
 
-                @if (Auth::check() && Auth::user()->hasAnyRole(['admin', 'super_admin']))
+                @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin') }}">
                             <span
