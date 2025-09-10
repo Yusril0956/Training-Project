@@ -12,7 +12,6 @@ class Training extends Model
     protected $fillable = [
         'name',
         'category',
-        'client',
         'description',
         'status',
         'jenis_training_id',

@@ -26,30 +26,51 @@ class TrainingSeeder extends Seeder
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
 
-        Training::create([
+        Training::updateOrCreate([
             'name' => 'Pelatihan Sistem Avionik',
             'category' => 'technical',
-            'client' => 'PT Dirgantara Mitra',
             'description' => 'Pelatihan mengenai sistem avionik terbaru untuk teknisi.',
             'jenis_training_id' => 1,
             'status' => 'approved',
         ]);
 
-        Training::create([
+        Training::updateOrCreate([
             'name' => 'Pelatihan Keselamatan Kerja',
             'category' => 'safety',
-            'client' => 'PT Safety First',
             'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
             'jenis_training_id' => 2,
             'status' => 'pending',
         ]);
 
-        Training::create([
-            'name' => 'Pelatihan Kepatuhan Regulasi',
+        Training::updateOrCreate([
+            'name' => 'Pelatihan Manajemen Proyek',
             'category' => 'compliance',
-            'client' => 'PT Compliance Corp',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
             'jenis_training_id' => 3,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Pelatihan Kepatuhan Regulasi',
+            'category' => 'compliance',
+            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'jenis_training_id' => 3,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Pelatihan pengelolaan Risiko',
+            'category' => 'compliance',
+            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'jenis_training_id' => 3,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Pelatihan Kepatuhan Regulasi',
+            'category' => 'compliance',
+            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'jenis_training_id' => 4,
             'status' => 'completed',
         ]);
     }

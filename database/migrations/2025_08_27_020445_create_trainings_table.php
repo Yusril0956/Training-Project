@@ -15,7 +15,6 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('category');
-            $table->string('client');
             $table->text('description');
             $table->enum('status', ['pending', 'approved', 'completed', 'rejected'])->default('pending');
             $table->foreignId('jenis_training_id')->constrained('jenis_trainings')->cascadeOnDelete();

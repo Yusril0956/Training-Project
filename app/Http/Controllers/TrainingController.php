@@ -25,9 +25,12 @@ class TrainingController extends Controller
      */
     public function customerRequested()
     {
-        $trainings = Training::all();
-        $jenisTrainings = JenisTraining::all();
-        $approvedTrainings = Training::where('status', 'approved')->get();
+        $jenisCR = JenisTraining::where('code', 'CR')->first();
+
+        $trainings = Training::where('jenis_training_id', $jenisCR->id)->get();
+
+        // $trainings = Training::all();
+        $approvedTrainings = Training::where('status', 'approved')->where('jenis_training_id', $jenisCR->id)->get();
         $modalId = 'action-training';
         $modalTitle = 'Action';
         $modalDescription = 'Silahkan pilih tindakan yang diinginkan.';
@@ -35,7 +38,7 @@ class TrainingController extends Controller
         $modalButton2 = 'Approve';
 
 
-        return view('pages.Training.customer_requested', compact('trainings', 'jenisTrainings', 'modalId', 'modalTitle', 'modalDescription', 'modalButton1', 'modalButton2', 'approvedTrainings'));
+        return view('pages.Training.customer_requested', compact('trainings', 'jenisCR', 'modalId', 'modalTitle', 'modalDescription', 'modalButton1', 'modalButton2', 'approvedTrainings'));
     }
 
     /**
@@ -79,14 +82,12 @@ class TrainingController extends Controller
         $request->validate([
             'name'             => 'required|string|max:255',
             'category'         => 'required|string',
-            'client'           => 'required|string|max:255',
             'description'      => 'nullable|string',
         ]);
 
         Training::create([
             'name'             => $request->name,
             'category'         => $request->category,
-            'client'           => $request->client,
             'description'      => $request->description,
             'jenis_training_id' => 3,//default ke customer request
             'status'           => 'pending',
@@ -156,7 +157,14 @@ class TrainingController extends Controller
         $training = Training::findOrFail($trainingId);
 
         // Get or create training detail for this training
-        $trainingDetail = $training->details()->firstOrCreate([]);
+        $trainingDetail = $training->details()->first();
+        if (!$trainingDetail) {
+            // Provide default start_date and end_date if creating new training detail
+            $trainingDetail = $training->details()->create([
+                'start_date' => now()->toDateString(),
+                'end_date' => now()->addMonth()->toDateString(),
+            ]);
+        }
 
         $addedCount = 0;
         $skippedCount = 0;
@@ -228,17 +236,24 @@ class TrainingController extends Controller
     {
         $training = Training::findOrFail($trainingId);
 
+        // Get or create training detail
+        $trainingDetail = $training->details()->first();
+        if (!$trainingDetail) {
+            // Provide default start_date and end_date if creating new training detail
+            $trainingDetail = $training->details()->create([
+                'start_date' => now()->toDateString(),
+                'end_date' => now()->addMonth()->toDateString(),
+            ]);
+        }
+
         // Check if user is already registered
-        $existingMember = TrainingMember::where('training_detail_id', $training->details()->first()->id ?? null)
+        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
             ->where('user_id', Auth::id())
             ->first();
 
         if ($existingMember) {
             return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
         }
-
-        // Get or create training detail
-        $trainingDetail = $training->details()->firstOrCreate([]);
 
         // Create new training member
         TrainingMember::create([

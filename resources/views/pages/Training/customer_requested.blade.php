@@ -104,7 +104,6 @@
                                         <th>#</th>
                                         <th>Judul Pelatihan</th>
                                         <th>Kategori</th>
-                                        <th>Klien</th>
                                         <th>Status</th>
                                         <th>Tanggal Permintaan</th>
                                         <th>Aksi</th>
@@ -116,7 +115,6 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $training->name }}</td>
                                             <td>{{ ucfirst($training->category) }}</td>
-                                            <td>{{ $training->client }}</td>
                                             <td>
                                                 @if ($training->status === 'pending')
                                                     <span class="badge bg-warning">Pending</span>
@@ -176,11 +174,6 @@
                                 <option value="safety">Keselamatan</option>
                                 <option value="compliance">Kepatuhan</option>
                             </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Nama Klien</label>
-                            <input type="text" class="form-control" name="client"
-                                placeholder="Contoh: PT Dirgantara Mitra">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>

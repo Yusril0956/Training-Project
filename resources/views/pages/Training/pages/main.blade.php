@@ -38,10 +38,9 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">👥 Informasi Klien</h4>
-                            <p><strong>Klien:</strong> {{ $training->client }}</p>
-                            <p><strong>PIC Klien:</strong> -</p>
+                            <h4 class="card-title">👥 Informasi Training</h4>
                             <p><strong>PIC Internal:</strong> -</p>
+                            <p><strong>Status:</strong> {{ ucfirst($training->status) }}</p>
                         </div>
                     </div>
                 </div>
@@ -55,21 +54,12 @@
                 <div class="card-body">
                     <div class="row row-cards">
                         <div class="col-md-4">
-                            <div class="card card-link">
+                            <a href="{{ route('training.members', $training->id) }}" class="card card-link">
                                 <div class="card-body text-center">
-                                    <a href="{{ route('training.members', $training->id) }}" class="btn btn-primary btn-lg mb-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                            <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/>
-                                            <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                            <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/>
-                                        </svg>
-                                        Lihat Peserta Terdaftar
-                                    </a>
-                                    <div class="text-muted small">Kelola daftar peserta training</div>
+                                    <span class="avatar bg-green-lt text-green mb-2">👥</span>
+                                    <div>Members</div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-md-4">
                             <a href="{{ route('training.materials', $training->id) }}" class="card card-link">

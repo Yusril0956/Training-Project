@@ -31,9 +31,6 @@
                         <dt class="col-sm-3">Kategori</dt>
                         <dd class="col-sm-9">{{ $training->category }}</dd>
 
-                        <dt class="col-sm-3">Klien</dt>
-                        <dd class="col-sm-9">{{ $training->client }}</dd>
-
                         <dt class="col-sm-3">Deskripsi</dt>
                         <dd class="col-sm-9">{{ $training->description }}</dd>
 
@@ -65,8 +62,7 @@
                             <div class="timeline-point bg-secondary"></div>
                             <div class="timeline-event">
                                 <div class="timeline-title">Permintaan Diajukan</div>
-                                <div class="text-muted">{{ $training->created_at->format('Y-m-d') }} oleh
-                                    {{ $training->client }}</div>
+                                <div class="text-muted">{{ $training->created_at->format('Y-m-d') }}</div>
                             </div>
                         </li>
                         <li class="timeline-item">

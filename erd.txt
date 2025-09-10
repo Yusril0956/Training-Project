@@ -1,341 +1,107 @@
-================================================================================
-TRAINING MANAGEMENT SYSTEM - DATABASE ERD (Entity Relationship Diagram)
-================================================================================
+USERS
+- id (PK)
+- name
+- email (unique)
+- avatar_url
+- phone
+- address
+- nik (unique)
+- city
+- email_verified_at
+- password
+- google_id (unique)
+- profile_image
+- role (default: 'user')
+- remember_token
+- created_at, updated_at
 
-LEGEND:
-- PK = Primary Key
-- FK = Foreign Key
-- NN = Not Null
-- UQ = Unique
-- AI = Auto Increment
-- CASCADE = Cascade on Delete
+ROLES
+- id (PK)
+- code (unique)
+- name
+- created_at, updated_at
 
-================================================================================
-CORE ENTITIES
-================================================================================
+USER_ROLES (Junction Table)
+- id (PK)
+- user_id (FK → users.id)
+- role_id (FK → roles.id)
+- created_at, updated_at
+- UNIQUE(user_id, role_id)
 
-1. USERS TABLE
-================================================================================
-users
-├── id (BIGINT, PK, AI, NN)
-├── name (VARCHAR(255), NN)
-├── email (VARCHAR(255), NN, UQ)
-├── profile_image (VARCHAR(255), NULL)
-├── avatar_url (VARCHAR(255), NULL)
-├── phone (VARCHAR(255), NULL)
-├── address (TEXT, NULL)
-├── nik (VARCHAR(255), UQ, NULL)
-├── city (VARCHAR(255), NULL)
-├── email_verified_at (TIMESTAMP, NULL)
-├── password (VARCHAR(255), NN)
-├── google_id (VARCHAR(255), UQ, NULL)
-├── remember_token (VARCHAR(100), NULL)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
+JENIS_TRAININGS
+- id (PK)
+- code (unique)
+- name
+- description
+- created_at, updated_at
 
-================================================================================
-2. ROLES TABLE
-================================================================================
-roles
-├── id (BIGINT, PK, AI, NN)
-├── code (VARCHAR(255), NN, UQ)
-├── name (VARCHAR(255), NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
+TRAININGS
+- id (PK)
+- name
+- category
+- description
+- status (enum: pending, approved, completed, rejected)
+- jenis_training_id (FK → jenis_trainings.id)
+- created_at, updated_at
 
-================================================================================
-3. USER_ROLES TABLE (Many-to-Many Junction)
-================================================================================
-user_roles
-├── id (BIGINT, PK, AI, NN)
-├── user_id (BIGINT, FK → users.id, CASCADE, NN)
-├── role_id (BIGINT, FK → roles.id, CASCADE, NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-└── UNIQUE KEY (user_id, role_id)
+TRAINING_DETAILS
+- id (PK)
+- training_id (FK → trainings.id)
+- start_date
+- end_date
+- created_at, updated_at
 
-================================================================================
-TRAINING ENTITIES
-================================================================================
+TRAINING_MEMBERS
+- id (PK)
+- training_detail_id (FK → training_details.id)
+- user_id (FK → users.id)
+- series (unique)
+- created_at, updated_at
 
-4. JENIS_TRAININGS TABLE (Training Types)
-================================================================================
-jenis_trainings
-├── id (BIGINT, PK, AI, NN)
-├── code (VARCHAR(255), NN, UQ) // GK, MD, CR, LS
-├── name (VARCHAR(255), NN)
-├── description (TEXT, NULL)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
+TRAINING_MATERIALS
+- id (PK)
+- training_id (FK → trainings.id)
+- title
+- description
+- media_type
+- media_path
+- created_at, updated_at
 
-================================================================================
-5. TRAININGS TABLE (Main Training Records)
-================================================================================
-trainings
-├── id (BIGINT, PK, AI, NN)
-├── name (VARCHAR(255), NN)
-├── category (VARCHAR(255), NN)
-├── client (VARCHAR(255), NN)
-├── description (TEXT, NN)
-├── status (ENUM: pending, approved, completed, rejected, NN, DEFAULT: pending)
-├── jenis_training_id (BIGINT, FK → jenis_trainings.id, CASCADE, NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
+TASKS
+- id (PK)
+- training_id (FK → trainings.id)
+- title
+- description
+- deadline
+- created_at, updated_at
 
-================================================================================
-6. TRAINING_DETAILS TABLE (Training Schedule Details)
-================================================================================
-training_details
-├── id (BIGINT, PK, AI, NN)
-├── training_id (BIGINT, FK → trainings.id, CASCADE, NN)
-├── start_date (DATE, NN)
-├── end_date (DATE, NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
+TASK_SUBMISSIONS
+- id (PK)
+- task_id (FK → tasks.id)
+- user_id (FK → users.id)
+- answer
+- file_path
+- submitted_at
+- created_at, updated_at
+- UNIQUE(task_id, user_id)
 
-================================================================================
-7. TRAINING_MEMBERS TABLE (Training Participants)
-================================================================================
-training_members
-├── id (BIGINT, PK, AI, NN)
-├── training_detail_id (BIGINT, FK → training_details.id, CASCADE, NN)
-├── user_id (BIGINT, FK → users.id, CASCADE, NN)
-├── series (VARCHAR(255), NN, UQ) // Unique series code per member
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
+SCHEDULES
+- id (PK)
+- training_id (FK → trainings.id)
+- title
+- date
+- start_time
+- end_time
+- location
+- instructor
+- created_at, updated_at
 
-================================================================================
-8. TRAINING_MATERIALS TABLE (Training Resources)
-================================================================================
-training_materials
-├── id (BIGINT, PK, AI, NN)
-├── training_id (BIGINT, FK → trainings.id, CASCADE, NN)
-├── title (VARCHAR(255), NN)
-├── description (TEXT, NULL)
-├── media_type (VARCHAR(255), NN) // pdf, video, link, document
-├── media_path (VARCHAR(255), NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-
-================================================================================
-9. TASKS TABLE (Training Assignments)
-================================================================================
-tasks
-├── id (BIGINT, PK, AI, NN)
-├── training_id (BIGINT, FK → trainings.id, CASCADE, NN)
-├── title (VARCHAR(255), NN)
-├── description (TEXT, NULL)
-├── deadline (DATE, NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-
-================================================================================
-10. TASK_SUBMISSIONS TABLE (Student Submissions)
-================================================================================
-task_submissions
-├── id (BIGINT, PK, AI, NN)
-├── task_id (BIGINT, FK → tasks.id, CASCADE, NN)
-├── user_id (BIGINT, FK → users.id, CASCADE, NN)
-├── answer (TEXT, NULL)
-├── file_path (VARCHAR(255), NULL)
-├── submitted_at (TIMESTAMP, NULL)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-└── UNIQUE KEY (task_id, user_id)
-
-================================================================================
-11. SCHEDULES TABLE (Training Schedule Sessions)
-================================================================================
-schedules
-├── id (BIGINT, PK, AI, NN)
-├── training_id (BIGINT, FK → trainings.id, CASCADE, NN)
-├── title (VARCHAR(255), NN)
-├── date (DATE, NN)
-├── start_time (TIME, NN)
-├── end_time (TIME, NN)
-├── location (VARCHAR(255), NULL)
-├── instructor (VARCHAR(255), NULL)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-
-================================================================================
-ADDITIONAL ENTITIES
-================================================================================
-
-12. CERTIFICATES TABLE (User Certificates)
-================================================================================
-certificates
-├── id (BIGINT, PK, AI, NN)
-├── user_id (BIGINT, FK → users.id, CASCADE, NN)
-├── name (VARCHAR(255), NN)
-├── organization (VARCHAR(255), NN)
-├── issue_date (DATE, NN)
-├── expiry_date (DATE, NULL)
-├── file_path (VARCHAR(255), NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-
-================================================================================
-13. FEEDBACK TABLE (User Feedback)
-================================================================================
-feedback
-├── id (BIGINT, PK, AI, NN)
-├── nama_pengirim (VARCHAR(100), NN)
-├── email (VARCHAR(100), NULL)
-├── pesan (TEXT, NN)
-├── tanggal_kirim (DATETIME, NN, DEFAULT: CURRENT_TIMESTAMP)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-
-================================================================================
-14. NOTIFICATIONS TABLE (System Notifications)
-================================================================================
-notifications
-├── id (BIGINT, PK, AI, NN)
-├── created_at (TIMESTAMP, NULL)
-└── updated_at (TIMESTAMP, NULL)
-
-================================================================================
-LARAVEL SYSTEM TABLES
-================================================================================
-
-15. PASSWORD_RESET_TOKENS TABLE
-================================================================================
-password_reset_tokens
-├── email (VARCHAR(255), PK, NN)
-├── token (VARCHAR(255), NN)
-└── created_at (TIMESTAMP, NULL)
-
-================================================================================
-16. SESSIONS TABLE
-================================================================================
-sessions
-├── id (VARCHAR(255), PK, NN)
-├── user_id (BIGINT, FK → users.id, NULL, INDEX)
-├── ip_address (VARCHAR(45), NULL)
-├── user_agent (TEXT, NULL)
-├── payload (LONGTEXT, NN)
-├── last_activity (INT, NN, INDEX)
-
-================================================================================
-17. CACHE TABLE
-================================================================================
-cache
-├── key (VARCHAR(255), PK, NN)
-├── value (TEXT, NN)
-├── expiration (INT, NN)
-
-================================================================================
-18. JOBS TABLE
-================================================================================
-jobs
-├── id (BIGINT, PK, AI, NN)
-├── queue (VARCHAR(255), NN)
-├── payload (LONGTEXT, NN)
-├── attempts (TINYINT UNSIGNED, NN)
-├── reserved_at (INT UNSIGNED, NULL)
-├── available_at (INT UNSIGNED, NN)
-├── created_at (INT UNSIGNED, NN)
-
-================================================================================
-RELATIONSHIP SUMMARY
-================================================================================
-
-ONE-TO-MANY RELATIONSHIPS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• users (1) ──── (M) user_roles
-• users (1) ──── (M) training_members
-• users (1) ──── (M) task_submissions
-• users (1) ──── (M) certificates
-
-• roles (1) ──── (M) user_roles
-
-• jenis_trainings (1) ──── (M) trainings
-
-• trainings (1) ──── (M) training_details
-• trainings (1) ──── (M) training_materials
-• trainings (1) ──── (M) tasks
-• trainings (1) ──── (M) schedules
-
-• training_details (1) ──── (M) training_members
-
-• tasks (1) ──── (M) task_submissions
-
-MANY-TO-MANY RELATIONSHIPS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• users (M) ──── (M) roles (via user_roles junction table)
-
-FOREIGN KEY CONSTRAINTS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• user_roles.user_id → users.id (CASCADE)
-• user_roles.role_id → roles.id (CASCADE)
-
-• trainings.jenis_training_id → jenis_trainings.id (CASCADE)
-
-• training_details.training_id → trainings.id (CASCADE)
-
-• training_members.training_detail_id → training_details.id (CASCADE)
-• training_members.user_id → users.id (CASCADE)
-
-• training_materials.training_id → trainings.id (CASCADE)
-
-• tasks.training_id → trainings.id (CASCADE)
-
-• task_submissions.task_id → tasks.id (CASCADE)
-• task_submissions.user_id → users.id (CASCADE)
-
-• schedules.training_id → trainings.id (CASCADE)
-
-• certificates.user_id → users.id (CASCADE)
-
-================================================================================
-DATA FLOW & BUSINESS LOGIC
-================================================================================
-
-1. TRAINING CREATION FLOW:
-   jenis_trainings → trainings → training_details → training_members
-
-2. MATERIAL MANAGEMENT:
-   trainings → training_materials
-
-3. TASK MANAGEMENT:
-   trainings → tasks → task_submissions
-
-4. SCHEDULE MANAGEMENT:
-   trainings → schedules
-
-5. USER MANAGEMENT:
-   users → user_roles → roles
-   users → certificates
-   users → training_members
-
-6. FEEDBACK SYSTEM:
-   Independent feedback table for general user feedback
-
-================================================================================
-INDEXES & PERFORMANCE CONSIDERATIONS
-================================================================================
-
-PRIMARY KEYS:
-• All tables have BIGINT auto-increment primary keys
-
-FOREIGN KEY INDEXES:
-• All foreign key columns are automatically indexed by Laravel
-
-UNIQUE CONSTRAINTS:
-• user_roles: (user_id, role_id)
-• task_submissions: (task_id, user_id)
-• training_members: series (unique per member)
-• users: email, google_id, nik
-• roles: code
-• jenis_trainings: code
-
-RECOMMENDED ADDITIONAL INDEXES:
-• trainings: status (for filtering)
-• training_details: start_date, end_date (for date range queries)
-• tasks: deadline (for upcoming tasks)
-• schedules: date (for calendar views)
-
-================================================================================
-END OF ERD DOCUMENTATION
-================================================================================
+CERTIFICATES
+- id (PK)
+- user_id (FK → users.id)
+- name
+- organization
+- issue_date
+- expiry_date
+- file_path
+- created_at, updated_at
