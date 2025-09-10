@@ -21,8 +21,8 @@ Terima kasih kepada semua kontributor proyek ini! 🎉
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/Reqi20074">
-        <img src="https://github.com/Reqi20074.png?size=100" width="100px;" alt=""/>
+      <a href="https://github.com/Reqi2007">
+        <img src="https://github.com/Reqi2007.png?size=100" width="100px;" alt=""/>
         <br /><sub><b>Refan</b></sub>
       </a>
       <br />💻 Fullstack Developer
