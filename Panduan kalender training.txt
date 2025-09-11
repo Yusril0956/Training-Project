@@ -1,0 +1,34 @@
+Cara menambahkan, hapus jadwal training di tinker
+
+masuk dulu ke tinker:
+php artisan tinker
+
+[Untuk menambahkan jadwal Training di kalender]
+use App\Models\Schedule;
+
+Schedule::create([
+    'training_id' => 2, // pastikan training dengan ID ini ada
+    'title'       => 'Testing Jadwal kalender',
+    'date'        => '2025-09-11',
+    'start_time'  => '09:00:00',
+    'end_time'    => '15:00:00',
+    'location'    => 'Ruang diklat',
+    'instructor'  => 'Reqi',
+]);
+
+
+
+Untuk menghapus jadwal training lewat tinker di bawah dengan variasi nya
+
+[Hapus berdasarkan ID]
+use App\Models\Schedule;
+
+Schedule::find(1)->delete();
+
+[Hapus semua jadwal training]
+use App\Models\Schedule;
+
+Schedule::truncate();
+
+[untuk mengapus jadwal training berdasarkan nama]
+Schedule::where('title', 'di sini judul nya')->delete();
