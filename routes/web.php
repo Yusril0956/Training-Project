@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -169,3 +170,4 @@ Route::get('/sistem-training', function () {
     return view('pages.sistem-training');
 })->name('sistem-training');
 
+Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');

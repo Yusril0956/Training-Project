@@ -85,12 +85,10 @@
                     <h3 class="card-title">Kalender Training</h3>
                 </div>
                 <div class="card-body">
-                    <div id="calendar-placeholder"
-                        style="height: 300px; background-color: #f8f9fa; text-align: center; line-height: 300px;">
-                        [Integrasi kalender di sini – bisa pakai FullCalendar atau komponen custom]
-                    </div>
+                    <div id="calendar"></div>
                 </div>
             </div>
+
 
             <div class="card mb-4">
                 <div class="card-header">
@@ -107,4 +105,27 @@
 
         </div>
     </div>
+
+    @push('scripts')
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: '{{ route('calendar.events') }}',
+                eventClick: function(info) {
+                    alert('Training: ' + info.event.title);
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+@endpush
+
+
 @endsection
