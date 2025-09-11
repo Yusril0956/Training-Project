@@ -119,6 +119,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/members/{id}', [TrainingController::class, 'members'])->name('training.members');
     Route::get('/training/customer-requested/materials/{id}', [TrainingController::class, 'materials'])->name('training.materials');
     Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
+    Route::post('/training/customer-requested/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
+    Route::delete('/training/customer-requested/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
     Route::get('/training/customer-requested/tasks/{name}', [TrainingController::class, 'tasks'])->name('training.tasks');
     Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
     Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');

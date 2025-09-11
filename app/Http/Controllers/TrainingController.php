@@ -101,14 +101,50 @@ class TrainingController extends Controller
     public function crPage($id)
     {
         $training = Training::withCount(['members', 'materis', 'tasks'])->findOrFail($id);
+        $schedule = $training->schedules()->orderBy('date', 'asc')->first();
 
-        return view('pages.Training.pages.main', compact('training'));
+        return view('pages.Training.pages.main', compact('training', 'schedule'));
     }
 
     public function schedule($id)
     {
         $training = Training::with('schedules')->findOrFail($id);
         return view('pages.Training.pages.schedule', compact('training'));
+    }
+
+    public function storeSchedule(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'location' => 'nullable|string|max:255',
+            'instructor' => 'nullable|string|max:255',
+        ]);
+
+        $training = Training::findOrFail($id);
+
+        $training->schedules()->create([
+            'title' => $request->title,
+            'date' => $request->date,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'location' => $request->location,
+            'instructor' => $request->instructor,
+        ]);
+
+        return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan!');
+    }
+
+    public function deleteSchedule($trainingId, $scheduleId)
+    {
+        $training = Training::findOrFail($trainingId);
+        $schedule = $training->schedules()->findOrFail($scheduleId);
+
+        $schedule->delete();
+
+        return redirect()->back()->with('success', 'Jadwal berhasil dihapus!');
     }
 
     public function materials($id)
@@ -266,8 +302,8 @@ class TrainingController extends Controller
     }
 
     public function tManage(){
-        $trainings = Training::all();
+        $trainings = Training::with('details')->paginate(10);
         $jenisTraining = JenisTraining::all();
-        return view('pages.training-manage', compact('trainings'));
+        return view('pages.training-manage', compact('trainings', 'jenisTraining'));
     }
 }

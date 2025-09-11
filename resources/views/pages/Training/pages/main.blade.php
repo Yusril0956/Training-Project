@@ -29,9 +29,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">📅 Jadwal Pelatihan</h4>
-                            <p><strong>Tanggal:</strong> Belum dijadwalkan</p>
+                            <p><strong>Tanggal:</strong> {{$schedule->date ?? 'belum ada jadwal'}}</p>
                             <p><strong>Durasi:</strong> -</p>
-                            <p><strong>Lokasi:</strong> -</p>
+                            <p><strong>Lokasi:</strong> {{$schedule->location}}</p>
                         </div>
                     </div>
                 </div>

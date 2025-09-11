@@ -1,196 +1,243 @@
 @extends('layouts.dashboard')
-@section('title', 'Training Manage')
+@section('title', 'Manajemen Pelatihan')
 
 @section('content')
-
     <div class="page-body">
         <div class="container-xl">
-            @include('partials._breadcrumb', [
-                'items' => [['title' => 'Training Manage', 'url' => route('training.index')]],
-            ])
 
-            <!-- Header Training -->
-            <div class="card mb-4">
-                <div class="card-body text-center py-4">
-                    <h2 class="card-title">Nikol</h2>
-                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, molestiae!
+            <!-- Page Header -->
+            <div class="d-flex mb-4">
+                <div class="flex-fill">
+                    <h2 class="page-title">📚 Manajemen Pelatihan</h2>
+                    <p class="text-muted">
+                        Buat, edit, dan hapus pelatihan untuk semua jenis: General Knowledge, Mandatory, Customer Requested,
+                        dan License.
                     </p>
-                    <span class="badge bg-primary">lorem</span>
-                    <span class="badge bg-success">Lorem.</span>
+                </div>
+                <div class="ms-auto">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddTraining">
+                        <i class="ti ti-plus me-1"></i> Tambah Pelatihan
+                    </button>
                 </div>
             </div>
 
-            <!-- Info Kelas -->
-            <div class="row row-cards mb-4">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">📅 Jadwal Pelatihan</h4>
-                            <p><strong>Tanggal:</strong> Belum dijadwalkan</p>
-                            <p><strong>Durasi:</strong> -</p>
-                            <p><strong>Lokasi:</strong> -</p>
-                        </div>
+            <!-- Filter & Search -->
+            <form method="GET" action="{{ route('training.manage') }}" class="card mb-4">
+                <div class="card-body row g-2 align-items-center">
+                    <div class="col-md-3">
+                        <select name="jenis" class="form-select">
+                            <option value="">🔍 Semua Jenis</option>
+                            @foreach ($jenisTraining as $jenis)
+                                <option value="{{ $jenis->id }}" {{ request('jenis') == $jenis->id ? 'selected' : '' }}>
+                                    {{ $jenis->nama }} ({{ $jenis->kode }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama pelatihan..."
+                            value="{{ request('search') }}" />
+                    </div>
+                    <div class="col-auto ms-auto">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="ti ti-search me-1"></i> Filter
+                        </button>
+                        <a href="{{ route('training.manage') }}" class="btn btn-outline-secondary ms-2">
+                            <i class="ti ti-refresh me-1"></i> Reset
+                        </a>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">👥 Informasi Training</h4>
-                            <p><strong>PIC Internal:</strong> -</p>
-                            <p><strong>Status:</strong> pending</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </form>
 
-            <!-- Navigasi Fitur -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">🔗 Navigasi Training</h3>
-                </div>
+            <!-- Table Daftar Pelatihan -->
+            <div class="card">
                 <div class="card-body">
-                    <div class="row row-cards">
-                        <div class="col-md-4">
-                            <a href="#" class="card card-link">
-                                <div class="card-body text-center">
-                                    <span class="avatar bg-green-lt text-green mb-2">👥</span>
-                                    <div>Members</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" class="card card-link">
-                                <div class="card-body text-center">
-                                    <span class="avatar bg-green-lt text-green mb-2">📚</span>
-                                    <div>Materi & Modul</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" class="card card-link">
-                                <div class="card-body text-center">
-                                    <span class="avatar bg-yellow-lt text-yellow mb-2">🗓️</span>
-                                    <div>Jadwal Pelatihan</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" class="card card-link">
-                                <div class="card-body text-center">
-                                    <span class="avatar bg-purple-lt text-purple mb-2">📝</span>
-                                    <div>Tugas & Evaluasi</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#" class="card card-link">
-                                <div class="card-body text-center">
-                                    <span class="avatar bg-cyan-lt text-cyan mb-2">💬</span>
-                                    <div>Feedback Peserta</div>
-                                </div>
-                            </a>
-                        </div>
-                        @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                            <div class="col-md-4">
-                                <a href="#" class="card card-link">
-                                    <div class="card-body text-center">
-                                        <span class="avatar bg-red-lt text-red mb-2">⚙️</span>
-                                        <div>Pengaturan Training</div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div id="table-default" class="table-responsive">
-                        <table class="table">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th><button class="table-sort" data-sort="sort-id">id</th>
-                                    <th><button class="table-sort" data-sort="sort-name">Nama Training</button></th>
-                                    <th><button class="table-sort" data-sort="sort-code">Code</button></th>
-                                    <th><button class="table-sort" data-sort="sort-status">status</button></th>
-                                    <th>Action</th>
+                                    <th class="w-1">#</th>
+                                    <th>Nama Pelatihan</th>
+                                    <th>Jenis</th>
+                                    <th>Kategori</th>
+                                    <th>Klien</th>
+                                    <th>Status</th>
+                                    <th>Periode</th>
+                                    <th class="text-end">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-tbody">
-                                @foreach ($trainings as $training)
+                            <tbody>
+                                @forelse($trainings as $i => $t)
                                     <tr>
-                                        <td class="sort-id">{{ $training->id }}</td>
-                                        <td class="sort-name">{{ $training->name }}</td>
-                                        <td class="sort-code">{{ $training->jenisTraining->code }}</td>
-                                        <td class="sort-status">{{ $training->status }}</td>
+                                        <td>{{ $trainings->firstItem() + $i }}</td>
+                                        <td>{{ $t->name }}</td>
+                                        <td>
+                                            <span class="badge bg-info">{{ $t->jenisTraining->nama }}</span>
+                                        </td>
+                                        <td>{{ $t->category }}</td>
+                                        <td>{{ $t->client }}</td>
+                                        <td>
+                                            @if ($t->status === 'approved')
+                                                <span class="badge bg-success">Approved</span>
+                                            @elseif($t->status === 'pending')
+                                                <span class="badge bg-warning">Pending</span>
+                                            @elseif($t->status === 'completed')
+                                                <span class="badge bg-primary">Completed</span>
+                                            @else
+                                                <span class="badge bg-danger">Rejected</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($t->detail)
+                                                {{ \Carbon\Carbon::parse($t->detail->start_date)->format('d M Y') }}
+                                                &ndash;
+                                                {{ \Carbon\Carbon::parse($t->detail->end_date)->format('d M Y') }}
+                                            @else
+                                                <span class="text-muted">Belum dijadwalkan</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="btn-list">
+                                                <a href="{{ route('training.index', $t->id) }}" class="btn btn-sm btn-info"
+                                                    title="Detail">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                        <path
+                                                            d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                    </svg>
+                                                </a>
+                                                <a href="{{ route('training.index', $t->id) }}"
+                                                    class="btn btn-sm btn-warning" title="Edit">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path
+                                                            d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                                        <path
+                                                            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                                        <path d="M16 5l3 3" />
+                                                    </svg>
+                                                </a>
+                                                <form action="{{ route('training.index', $t->id) }}" method="POST"
+                                                    class="d-inline"
+                                                    onsubmit="return confirm('Yakin ingin menghapus pelatihan ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path d="M4 7l16 0" />
+                                                            <path d="M10 11l0 6" />
+                                                            <path d="M14 11l0 6" />
+                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted">Tidak ada pelatihan ditemukan.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
-                            {{-- <tbody>
-                        <!-- Contoh data statis, ganti dengan loop Laravel -->
-                        <tr>
-                            <td>1</td>
-                            <td>Lorem, ipsum dolor.</td>
-                            <td>Lorem ipsum dolor sit amet consectetur.</td>
-                            <td>2025-08-27</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Lorem, ipsum dolor.</td>
-                            <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
-                            <td>2025-08-26</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Lorem, ipsum.</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
-                            <td>2025-08-25</td>
-                        </tr>
-                    </tbody> --}}
                         </table>
                     </div>
-                </div>
-            </div>
 
-            <!-- Ringkasan Statistik (Opsional) -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">📊 Ringkasan Aktivitas</h3>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Total Peserta: {{ $training->members_count ?? '0' }}</li>
-                        <li class="list-group-item">Materi Tersedia: {{ $training->materis_count ?? '0' }}</li>
-                        <li class="list-group-item">Tugas Aktif: {{ $training->task_count ?? '0' }}</li>
-                        <li class="list-group-item">Feedback Masuk: {{ $training->feedback_count ?? '0' }}</li>
-                    </ul>
+                    <!-- Pagination -->
+                    <div class="mt-3">
+                        {{ $trainings->withQueryString()->links() }}
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <!-- Modal: Tambah Pelatihan -->
+    <div class="modal modal-blur fade" id="modalAddTraining" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="{{ route('training.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">➕ Tambah Pelatihan Baru</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Nama Pelatihan</label>
+                                <input type="text" name="name" class="form-control"
+                                    placeholder="Contoh: Leadership" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Jenis Pelatihan</label>
+                                <select name="jenis_training_id" class="form-select" required>
+                                    <option value="">Pilih Jenis</option>
+                                    @foreach ($jenisTraining as $jenis)
+                                        <option value="{{ $jenis->id }}">{{ $jenis->nama }} ({{ $jenis->kode }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Kategori</label>
+                                <input type="text" name="category" class="form-control"
+                                    placeholder="Contoh: Risk Management" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Klien</label>
+                                <input type="text" name="client" class="form-control"
+                                    placeholder="Contoh: PT. Contoh Indonesia" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Deskripsi</label>
+                                <textarea name="description" class="form-control" rows="3" placeholder="Deskripsi singkat pelatihan"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Status</label>
+                                <select name="status" class="form-select">
+                                    <option value="pending" selected>Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Mulai</label>
+                                <input type="date" name="start_date" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Selesai</label>
+                                <input type="date" name="end_date" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="ti ti-check me-1"></i> Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
-
-
-@push('script')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const list = new List('table-default', {
-                sortClass: 'table-sort',
-                listClass: 'table-tbody',
-                valueNames: ['sort-id', 'sort-name', 'sort-code', 'sort-status',
-                    {
-                        attr: 'data-date',
-                        name: 'sort-date'
-                    },
-                    {
-                        attr: 'data-progress',
-                        name: 'sort-progress'
-                    },
-                    'sort-quantity'
-                ]
-            });
-        })
-    </script>
-@endpush
