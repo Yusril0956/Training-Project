@@ -133,6 +133,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/settings/{name}', [TrainingController::class, 'settings'])->name('training.settings');
     Route::post('/training/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('training.settings.update');
 
+    Route::get('/training/register/{id}', [TrainingController::class, 'registerForm'])->name('training.register.form');
+    Route::post('/training/register/{id}', [TrainingController::class, 'register'])->name('training.register');
+    
     // Self registration for training
     Route::post('/training/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('training.self.register');
 
@@ -147,6 +150,10 @@ Route::middleware('auth')->group(function () {
     // Tambahkan dua rute ini
     Route::put('/certificates/{certificate}', [CertificateController::class, 'update'])->name('certificates.update');
     Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
+
+    // Schedule routes
+    Route::post('/training/{trainingId}/schedule', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
+    Route::delete('/training/{trainingId}/schedule/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
 
     // ============================
     // Admin & Super Admin Routes

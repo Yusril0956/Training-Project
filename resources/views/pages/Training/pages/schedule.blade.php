@@ -22,7 +22,7 @@
                                 <h4 class="card-title">{{ $schedule->title }}</h4>
                                 <ul class="list-unstyled small mb-2">
                                     <li><strong>Tanggal:</strong>
-                                        {{ \Carbon\Carbon::parse($schedule->date)->format('d M Y') }}</li>
+                                        {{ \Carbon\Carbon::parse($schedule->date)->format('d M Y') ?? "Belum dijadwalkan"}}</li>
                                     <li><strong>Waktu:</strong> {{ $schedule->start_time }} - {{ $schedule->end_time }}
                                     </li>
                                     <li><strong>Lokasi:</strong> {{ $schedule->location }}</li>
