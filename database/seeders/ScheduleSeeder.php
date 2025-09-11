@@ -3,39 +3,34 @@
 namespace Database\Seeders;
 
 use App\Models\Schedule;
-use App\Models\Training;
 use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
 
 class ScheduleSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
+        // Hapus data lama biar tidak double
+        Schedule::truncate();
 
-        $trainings = Training::all();
+        // Tambah jadwal training real
+        Schedule::create([
+            'training_id' => 1,
+            'title' => 'Testing jadwal training',
+            'date' => '2025-09-11',
+            'start_time' => '09:00:00',
+            'end_time' => '12:00:00',
+            'location' => '404',
+            'instructor' => 'Reqi',
+        ]);
 
-        if ($trainings->isEmpty()) {
-            return; // Skip if no trainings exist
-        }
-
-        foreach ($trainings as $training) {
-            $scheduleCount = rand(3, 7); // Random number of schedule items per training
-
-            for ($i = 0; $i < $scheduleCount; $i++) {
-                $startTime = $faker->time('H:i');
-                $endTime = date('H:i', strtotime($startTime) + rand(1, 3) * 3600); // 1-3 hours later
-
-                Schedule::create([
-                    'title' => $faker->sentence(3),
-                    'date' => $faker->dateTimeBetween('now', '+2 weeks')->format('Y-m-d'),
-                    'start_time' => $startTime,
-                    'end_time' => $endTime,
-                    'location' => $faker->randomElement(['Ruang Zoom A', 'Ruang Zoom B', 'Ruang Meeting C', 'Online', 'Offline']),
-                    'instructor' => $faker->name(),
-                    'training_id' => $training->id,
-                ]);
-            }
-        }
+        Schedule::create([
+            'training_id' => 2,
+            'title' => 'Testing kedua',
+            'date' => '2025-09-25',
+            'start_time' => '13:00:00',
+            'end_time' => '17:00:00',
+            'location' => 'diklat',
+            'instructor' => 'reqi',
+        ]);
     }
 }
