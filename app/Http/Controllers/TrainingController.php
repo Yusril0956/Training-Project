@@ -265,7 +265,9 @@ class TrainingController extends Controller
         return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
     }
 
-    public function manage(){
-        return view('pages.training-manage');
+    public function tManage(){
+        $trainings = Training::all();
+        $jenisTraining = JenisTraining::all();
+        return view('pages.training-manage', compact('trainings'));
     }
 }

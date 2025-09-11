@@ -157,6 +157,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/settings/open-access', [DashboardController::class, 'openAllAccess'])->name('admin.open.access');
         Route::post('/admin/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('admin.delete.database');
         Route::post('/admin/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('admin.reset.password');
+
+        // training admin
+        Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
     });                                                   
 });
 
