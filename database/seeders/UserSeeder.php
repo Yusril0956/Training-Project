@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan Super Admin No. 1',
                 'nik' => '93827463810483',
                 'city' => 'Jakarta',
-                'profile_image' => null,
+                'avatar_url' => null,
                 'password' => bcrypt('123456'),
             ]
         );
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jl. Moonrow',
                 'nik' => '130928479294032',
                 'city' => 'Gangnam',
-                'profile_image' => 'storage/avatars/avatar_2.jpg',
+                'avatar_url' => 'storage/avatars/avatar_2.jpg',
                 'password' => bcrypt('123456'),
             ]
         );
@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan Admin No. 1',
                 'nik' => '1234567890123456',
                 'city' => 'Jakarta',
-                'profile_image' => null,
+                'avatar_url' => null,
                 'password' => bcrypt('123456'),
             ]
         );
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan Staff No. 1',
                 'nik' => '95726490294810',
                 'city' => 'Palembang',
-                'profile_image' => null,
+                'avatar_url' => null,
                 'password' => bcrypt('123456'),
             ]
         );
@@ -83,7 +83,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan User No. 1',
                 'nik' => '95638298645129',
                 'city' => 'Bandung',
-                'profile_image' => null,
+                'avatar_url' => null,
                 'password' => bcrypt('123456'),
             ]
         );
@@ -97,7 +97,7 @@ class UserSeeder extends Seeder
                 'address' => 'Jalan jalan No. 1',
                 'nik' => '9473674829057364',
                 'city' => 'Bandoeng',
-                'profile_image' => null,
+                'avatar_url' => null,
                 'password' => bcrypt('12345678'),
             ]
         );
