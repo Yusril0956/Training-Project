@@ -186,7 +186,7 @@
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm"
-                        style="background-image: url({{ Auth::user()->profile ?? asset('images/default_avatar.png') }})"></span>
+                        style="background-image: url({{ asset(Auth::user()->avatar_url) ?? asset('images/default_avatar.png') }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-secondary">{{ Auth::user()->role }}</div>
@@ -222,26 +222,36 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('training.index') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-book">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
+                        data-bs-auto-close="false" role="button" aria-expanded="false">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-school">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
-                                <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
-                                <path d="M3 6l0 13" />
-                                <path d="M12 6l0 13" />
-                                <path d="M21 6l0 13" />
+                                <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                                <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
                             Training
                         </span>
                     </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-menu-columns">
+                            <div class="dropdown-menu-column">
+                                <a class="dropdown-item" href="{{ route('training.index' )}}">
+                                    Training - Page
+                                </a>
+                                <a class="dropdown-item" href="{{ route('training.manage' )}}">
+                                    Training - Manage
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item {{ request()->is('profile') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('profile') }}">
@@ -566,7 +576,7 @@
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
                     <span class="avatar avatar-sm"
-                        style="background-image: url({{ Auth::user()->profile ?? asset('images/default_avatar.png') }})"></span>
+                        style="background-image: url({{ asset(Auth::user()->avatar_url) ?? asset('images/default_avatar.png') }})"></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>{{ Auth::user()->name }}</div>
                         <div class="mt-1 small text-secondary">{{ Auth::user()->role }}</div>

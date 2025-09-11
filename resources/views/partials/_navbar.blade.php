@@ -87,7 +87,7 @@
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                             aria-label="Open user menu">
                             <span class="avatar avatar-sm"
-                                style="background-image: url({{ Auth::user()->profile ? asset(Auth::user()->profile) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
+                                style="background-image: url({{ Auth::user()->avatar_url ? asset(Auth::user()->avatar_url) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
                             <a href="#" class="dropdown-item">Status</a>

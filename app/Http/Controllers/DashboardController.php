@@ -31,6 +31,10 @@ class DashboardController extends Controller
         return view('pages.admin', compact('users', 'modalId', 'modalTitle', 'modalDescription', 'modalButton', 'formMethod'));
     }
 
+    public function tManage(){
+        return view('pages.training-manage');
+    }
+
     public function userUpdate(Request $request, $id)
     {
         try {

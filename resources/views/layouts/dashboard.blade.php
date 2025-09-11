@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>@yield('title', 'app.name') | {{ config('app.name') }}</title>
     <!-- CSS files -->
-    <link href="./dist/css/tabler.min.css?1692870487" rel="stylesheet" />
-    <link href="./dist/css/tabler-flags.min.css?1692870487" rel="stylesheet" />
-    <link href="./dist/css/tabler-payments.min.css?1692870487" rel="stylesheet" />
-    <link href="./dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet" />
-    <link href="./dist/css/demo.min.css?1692870487" rel="stylesheet" />
+    <link href="{{asset('dist/css/tabler.min.css?1692870487')}}" rel="stylesheet" />
+    <link href="{{asset('dist/css/tabler-flags.min.css?1692870487')}}" rel="stylesheet" />
+    <link href="{{asset('dist/css/tabler-payments.min.css?1692870487')}}" rel="stylesheet" />
+    <link href="{{asset('dist/css/tabler-vendors.min.css?1692870487')}}" rel="stylesheet" />
+    <link href="{{asset('dist/css/demo.min.css?1692870487')}}" rel="stylesheet" />
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -36,7 +36,7 @@
 </head>
 
 <body>
-    <script src="./dist/js/demo-theme.min.js?1692870487"></script>
+    <script src="{{asset('dist/js/demo-theme.min.js?1692870487')}}"></script>
     <div class="page">
         @include('partials._sidebar')
         <div class="page-wrapper">
@@ -47,10 +47,10 @@
         </div>
     </div>
     <!-- Libs JS -->
-    <script src="./dist/libs/list.js/dist/list.min.js?1692870487" defer></script>
+    <script src="{{asset('dist/libs/list.js/dist/list.min.js?1692870487')}}" defer></script>
     <!-- Tabler Core -->
-    <script src="./dist/js/tabler.min.js?1692870487" defer></script>
-    <script src="./dist/js/demo.min.js?1692870487" defer></script>
+    <script src="{{asset('dist/js/tabler.min.js?1692870487')}}" defer></script>
+    <script src="{{asset('dist/js/demo.min.js?1692870487')}}" defer></script>
     @stack('script')
 </body>
 
