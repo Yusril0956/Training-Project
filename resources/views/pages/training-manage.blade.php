@@ -1,25 +1,22 @@
-@extends('layouts.training')
-@section('title', 'Dashboard Training')
+@extends('layouts.dashboard')
+@section('title', 'Training Manage')
 
 @section('content')
 
     <div class="page-body">
         <div class="container-xl">
             @include('partials._breadcrumb', [
-                'items' => [
-                    ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
-                ],
+                'items' => [['title' => 'Training Manage', 'url' => route('training.index')]],
             ])
 
             <!-- Header Training -->
             <div class="card mb-4">
                 <div class="card-body text-center py-4">
-                    <h2 class="card-title">{{ $training->name }}</h2>
-                    <p class="text-muted">{{ $training->description ?? 'Deskripsi belum tersedia.' }}</p>
-                    <span class="badge bg-primary">{{ ucfirst($training->category) }}</span>
-                    <span class="badge bg-success">{{ ucfirst($training->status) }}</span>
+                    <h2 class="card-title">Nikol</h2>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, molestiae!
+                    </p>
+                    <span class="badge bg-primary">lorem</span>
+                    <span class="badge bg-success">Lorem.</span>
                 </div>
             </div>
 
@@ -40,7 +37,7 @@
                         <div class="card-body">
                             <h4 class="card-title">👥 Informasi Training</h4>
                             <p><strong>PIC Internal:</strong> -</p>
-                            <p><strong>Status:</strong> {{ ucfirst($training->status) }}</p>
+                            <p><strong>Status:</strong> pending</p>
                         </div>
                     </div>
                 </div>
@@ -54,7 +51,7 @@
                 <div class="card-body">
                     <div class="row row-cards">
                         <div class="col-md-4">
-                            <a href="{{ route('training.members', $training->id) }}" class="card card-link">
+                            <a href="#" class="card card-link">
                                 <div class="card-body text-center">
                                     <span class="avatar bg-green-lt text-green mb-2">👥</span>
                                     <div>Members</div>
@@ -62,7 +59,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ route('training.materials', $training->id) }}" class="card card-link">
+                            <a href="#" class="card card-link">
                                 <div class="card-body text-center">
                                     <span class="avatar bg-green-lt text-green mb-2">📚</span>
                                     <div>Materi & Modul</div>
@@ -70,7 +67,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ route('training.schedule', $training->id) }}" class="card card-link">
+                            <a href="#" class="card card-link">
                                 <div class="card-body text-center">
                                     <span class="avatar bg-yellow-lt text-yellow mb-2">🗓️</span>
                                     <div>Jadwal Pelatihan</div>
@@ -78,7 +75,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ route('training.tasks', $training->id) }}" class="card card-link">
+                            <a href="#" class="card card-link">
                                 <div class="card-body text-center">
                                     <span class="avatar bg-purple-lt text-purple mb-2">📝</span>
                                     <div>Tugas & Evaluasi</div>
@@ -86,7 +83,7 @@
                             </a>
                         </div>
                         <div class="col-md-4">
-                            <a href="{{ route('training.feedback', $training->id) }}" class="card card-link">
+                            <a href="#" class="card card-link">
                                 <div class="card-body text-center">
                                     <span class="avatar bg-cyan-lt text-cyan mb-2">💬</span>
                                     <div>Feedback Peserta</div>
@@ -95,7 +92,7 @@
                         </div>
                         @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                             <div class="col-md-4">
-                                <a href="{{ route('training.settings', $training->name) }}" class="card card-link">
+                                <a href="#" class="card card-link">
                                     <div class="card-body text-center">
                                         <span class="avatar bg-red-lt text-red mb-2">⚙️</span>
                                         <div>Pengaturan Training</div>
@@ -107,55 +104,54 @@
                 </div>
             </div>
 
-            <!-- Self Registration Section -->
-            @if (Auth::check())
-                @php
-                    $isMember = $training->members()->where('user_id', Auth::id())->exists();
-                @endphp
-
-                @if (!$isMember)
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            <h4 class="card-title text-primary">🚀 Daftar Training Ini</h4>
-                            <p class="text-muted mb-3">Bergabunglah dengan training "{{ $training->name }}" untuk
-                                mendapatkan materi dan sertifikat</p>
-                            <form action="{{ route('training.self.register', $training->id) }}" method="POST"
-                                class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-success btn-lg">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-lg me-2" width="24"
-                                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M12 5l0 14" />
-                                        <path d="M5 12l14 0" />
-                                    </svg>
-                                    Daftar Sekarang
-                                </button>
-                            </form>
-                        </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div id="table-default" class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><button class="table-sort" data-sort="sort-id">id</th>
+                                    <th><button class="table-sort" data-sort="sort-name">Nama Training</button></th>
+                                    <th><button class="table-sort" data-sort="sort-code">Code</button></th>
+                                    <th><button class="table-sort" data-sort="sort-status">status</button></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-tbody">
+                                @foreach ($trainings as $training)
+                                    <tr>
+                                        <td class="sort-id">{{ $training->id }}</td>
+                                        <td class="sort-name">{{ $training->name }}</td>
+                                        <td class="sort-code">{{ $training->jenisTraining->code }}</td>
+                                        <td class="sort-status">{{ $training->status }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                            {{-- <tbody>
+                        <!-- Contoh data statis, ganti dengan loop Laravel -->
+                        <tr>
+                            <td>1</td>
+                            <td>Lorem, ipsum dolor.</td>
+                            <td>Lorem ipsum dolor sit amet consectetur.</td>
+                            <td>2025-08-27</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Lorem, ipsum dolor.</td>
+                            <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</td>
+                            <td>2025-08-26</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Lorem, ipsum.</td>
+                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
+                            <td>2025-08-25</td>
+                        </tr>
+                    </tbody> --}}
+                        </table>
                     </div>
-                @else
-                    <div class="card mb-4">
-                        <div class="card-body text-center">
-                            <h4 class="card-title text-success">✅ Anda Sudah Terdaftar</h4>
-                            <p class="text-muted">Selamat! Anda sudah terdaftar sebagai peserta training ini</p>
-                            <a href="{{ route('training.members', $training->id) }}" class="btn btn-outline-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                                </svg>
-                                Lihat Daftar Peserta
-                            </a>
-                        </div>
-                    </div>
-                @endif
-            @endif
+                </div>
+            </div>
 
             <!-- Ringkasan Statistik (Opsional) -->
             <div class="card">
@@ -175,3 +171,26 @@
         </div>
     </div>
 @endsection
+
+
+@push('script')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const list = new List('table-default', {
+                sortClass: 'table-sort',
+                listClass: 'table-tbody',
+                valueNames: ['sort-id', 'sort-name', 'sort-code', 'sort-status',
+                    {
+                        attr: 'data-date',
+                        name: 'sort-date'
+                    },
+                    {
+                        attr: 'data-progress',
+                        name: 'sort-progress'
+                    },
+                    'sort-quantity'
+                ]
+            });
+        })
+    </script>
+@endpush
