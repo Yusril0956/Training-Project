@@ -8,7 +8,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">🗓️ Jadwal Pelatihan</h2>
-                    <p class="text-muted">Berikut adalah jadwal sesi untuk pelatihan <strong>{{ $training->judul }}</strong>.
+                    <p class="text-muted">Berikut adalah jadwal sesi untuk pelatihan <strong>{{ $training->name }}</strong>.
                     </p>
                 </div>
             </div>
@@ -19,14 +19,14 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <h4 class="card-title">{{ $schedule->judul }}</h4>
+                                <h4 class="card-title">{{ $schedule->title }}</h4>
                                 <ul class="list-unstyled small mb-2">
                                     <li><strong>Tanggal:</strong>
-                                        {{ \Carbon\Carbon::parse($schedule->tanggal)->format('d M Y') }}</li>
-                                    <li><strong>Waktu:</strong> {{ $schedule->jam_mulai }} - {{ $schedule->jam_selesai }}
+                                        {{ \Carbon\Carbon::parse($schedule->date)->format('d M Y') ?? "Belum dijadwalkan"}}</li>
+                                    <li><strong>Waktu:</strong> {{ $schedule->start_time }} - {{ $schedule->end_time }}
                                     </li>
-                                    <li><strong>Lokasi:</strong> {{ $schedule->lokasi }}</li>
-                                    <li><strong>Pengajar:</strong> {{ $schedule->pengajar }}</li>
+                                    <li><strong>Lokasi:</strong> {{ $schedule->location }}</li>
+                                    <li><strong>Pengajar:</strong> {{ $schedule->instructor }}</li>
                                 </ul>
                                 @can('manage-training')
                                     <form action="{{ route('training.schedule.delete', [$training->id, $schedule->id]) }}"
@@ -57,29 +57,29 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="form-label">Judul Sesi</label>
-                                <input type="text" name="judul" class="form-control" required>
+                                <input type="text" name="title" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control" required>
+                                <input type="date" name="date" class="form-control" required>
                             </div>
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Jam Mulai</label>
-                                    <input type="time" name="jam_mulai" class="form-control" required>
+                                    <input type="time" name="start_time" class="form-control" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Jam Selesai</label>
-                                    <input type="time" name="jam_selesai" class="form-control" required>
+                                    <input type="time" name="end_time" class="form-control" required>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Lokasi</label>
-                                <input type="text" name="lokasi" class="form-control">
+                                <input type="text" name="location" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Pengajar</label>
-                                <input type="text" name="pengajar" class="form-control">
+                                <input type="text" name="instructor" class="form-control">
                             </div>
                             <div class="text-end">
                                 <button type="submit" class="btn btn-primary">Simpan Jadwal</button>

@@ -37,16 +37,41 @@
                         <div class="card shadow-sm">
                             <img src="{{ $training->image_url ?? asset('images/default-training.jpg') }}"
                                 class="card-img-top" alt="Gambar Kelas">
+
                             <div class="card-body">
                                 <h4 class="card-title">{{ $training->name }}</h4>
                                 <p class="text-muted">{{ Str::limit($training->description, 80) }}</p>
+
                                 <div class="d-flex justify-content-between align-items-center">
-                                    @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                                        <a href="{{ route('detail.training', $training->id) }}"
-                                            class="btn btn-sm btn-secondary">Detail</a>
-                                    @endif
-                                    <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">Masuk
-                                        Training</a>
+                                    @auth
+                                        {{-- 1) Kalau Admin / Super Admin --}}
+                                        @if (Auth::user()->hasAnyRole(['super_admin', 'admin']))
+                                            <a href="{{ route('detail.training', $training->id) }}"
+                                                class="btn btn-sm btn-secondary">
+                                                Detail
+                                            </a>
+
+                                            {{-- 2) User Biasa --}}
+                                        @else
+                                            @php
+                                                // cek apakah user sudah jadi member
+                                                $isMember = $training->members->contains('user_id', Auth::id());
+                                            @endphp
+
+                                            @if ($isMember)
+                                                <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">Lihat</a>
+                                            @else
+                                                <a href="{{ route('training.register.form', $training->id)}}" class="btn-primary">Daftar</a>
+                                            @endif
+                                        @endif
+
+                                    @endauth
+
+                                    @guest
+                                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary">
+                                            Login untuk Daftar
+                                        </a>
+                                    @endguest
                                 </div>
                             </div>
                         </div>
@@ -132,13 +157,13 @@
                                                     class="btn btn-sm btn-info">Detail</a>
                                                 <a href="#" class="btn btn-sm btn-secondary">Edit</a>
                                                 <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#success-{{ $training->id }}">
+                                                    data-bs-target="#success-action-training-{{ $training->id }}">
                                                     Action
                                                 </button>
                                             </td>
                                         </tr>
                                         @include('components._modal', [
-                                            'modalId' => $training->id,
+                                            'modalId' => 'action-training-' . $training->id,
                                             'modalTitle' => $modalTitle,
                                             'modalDescription' => $modalDescription,
                                             'modalButton1' => $modalButton1,
