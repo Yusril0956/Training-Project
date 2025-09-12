@@ -35,15 +35,20 @@
       <div class="container-tight py-4">
         <div class="empty">
           <div class="empty-header">404</div>
-          <p class="empty-title">Oops… You just found an error page</p>
+          <p class="empty-title">Oops… Halaman tidak ditemukan</p>
           <p class="empty-subtitle text-secondary">
-            We are sorry but the page you are looking for was not found
+            Halaman yang Anda cari tidak dapat ditemukan atau mungkin masih dalam pengembangan. Silakan coba lagi atau kembali ke halaman sebelumnya.
           </p>
+          <div class="gif-placeholder rounded-2xl w-64 h-45 mx-auto mb-8 flex items-center justify-center">
+            <div class="text-center">
+                <img src="{{ asset('404.gif') }}" width="350" height="220" alt="Tabler">
+                
+            </div>
           <div class="empty-action">
             <a href="{{ url()->previous()}}" class="btn btn-primary">
               <!-- Download SVG icon from http://tabler-icons.io/i/arrow-left -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>
-              Take me back
+              Kembali
             </a>
           </div>
         </div>
