@@ -117,6 +117,26 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+<!-- Banner -->
+<div class="youtube-banner">
+  <img src="{{ asset('images/Banner.png') }}" alt="Banner Training">
+</div>
+
+<style>
+.youtube-banner {
+  width: 100%;
+  height: auto; /* sesuaikan tinggi dengan desain */
+  overflow: hidden;
+  background-color: #000; /* fallback jika gambar gagal load */
+}
+.youtube-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop otomatis seperti YouTube */
+  display: block;
+}
+</style>
+
 
             <!-- Hero Section -->
             <div class="card mb-4">
