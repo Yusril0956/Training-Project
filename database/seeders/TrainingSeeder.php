@@ -43,62 +43,6 @@ class TrainingSeeder extends Seeder
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Character Building',
-            'category' => 'IT',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'Analisa & Design System',
-            'category' => 'safety',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'English - Conversation',
-            'category' => 'safety',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'English - TOEFL Preparation',
-            'category' => 'safety',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'Safety Management System',
-            'category' => 'safety',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'Training for Trainer',
-            'category' => 'safety',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'Database',
-            'category' => 'safety',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
-            'jenis_training_id' => 2,
-            'status' => 'pending',
-        ]);
-
-        Training::updateOrCreate([
             'name' => 'Pelatihan Manajemen Proyek',
             'category' => 'compliance',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
@@ -128,6 +72,126 @@ class TrainingSeeder extends Seeder
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
             'jenis_training_id' => 4,
             'status' => 'completed',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Risk Management Leadership',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Human Factors',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Software Engineering',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Program S2 (MBA/TI)',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Basic Aircraft',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Teknik Presentasi & Dokumentasi',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Human Resources BP',
+            'category' => 'general_knowledge',
+            'description' => '',
+            'jenis_training_id' => 1,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Character Building',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Analisa & Design System',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Design Database',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'English - Conversation',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'English - TOEFL Preparation',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Safety Management System',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Training for Trainer',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Database (PL/SQL, ORACLE/POSTGRES, DLL)',
+            'category' => 'management_development',
+            'description' => '',
+            'jenis_training_id' => 2,
+            'status' => 'approved',
         ]);
     }
 }
