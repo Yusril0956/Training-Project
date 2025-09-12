@@ -13,15 +13,14 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
+                    ['title' => 'Mandatory', 'url' => route('training.mandatory')],
                 ],
             ])
             <!-- Hero Section -->
             <div class="card mb-3">
                 <div class="card-body text-center py-4">
-                    <h2 class="card-title">Customer Requested Training</h2>
-                    <p class="card-subtitle text-muted">Daftar pelatihan yang diajukan langsung oleh klien atau mitra kerja
-                    </p>
+                    <h2 class="card-title">Mandatory Training</h2>
+                    <p class="card-subtitle text-muted">Pelatihan yang sifatnya diwajibkan oleh perusahaan/lembaga pelaksana Regulasi bagi seluruh karyawan pada pekerjaan tertentu</p>
                 </div>
             </div>
 
