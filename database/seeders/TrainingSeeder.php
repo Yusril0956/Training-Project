@@ -193,5 +193,13 @@ class TrainingSeeder extends Seeder
             'jenis_training_id' => 2,
             'status' => 'approved',
         ]);
+
+        // Call related seeders to populate linked data
+        $this->call([
+            TrainingDetailSeeder::class,
+            TrainingMemberSeeder::class,
+            MateriSeeder::class,
+            ScheduleSeeder::class,
+        ]);
     }
 }
