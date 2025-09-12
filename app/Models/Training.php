@@ -24,9 +24,9 @@ class Training extends Model
 
     protected $table = 'trainings';
 
-    public function details()
+    public function detail()
     {
-        return $this->hasMany(TrainingDetail::class, 'training_id');
+        return $this->hasOne(TrainingDetail::class, 'training_id');
     }
 
     public function members()

@@ -3,34 +3,35 @@
 namespace Database\Seeders;
 
 use App\Models\Schedule;
+use App\Models\Training;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class ScheduleSeeder extends Seeder
 {
     public function run()
     {
+        $faker = Faker::create();
+
         // Hapus data lama biar tidak double
         Schedule::truncate();
 
-        // Tambah jadwal training real
-        Schedule::create([
-            'training_id' => 1,
-            'title' => 'Testing jadwal training',
-            'date' => '2025-09-11',
-            'start_time' => '09:00:00',
-            'end_time' => '12:00:00',
-            'location' => '404',
-            'instructor' => 'Reqi',
-        ]);
+        $trainings = Training::all();
 
-        Schedule::create([
-            'training_id' => 2,
-            'title' => 'Testing kedua',
-            'date' => '2025-09-25',
-            'start_time' => '13:00:00',
-            'end_time' => '17:00:00',
-            'location' => 'diklat',
-            'instructor' => 'reqi',
-        ]);
+        foreach ($trainings as $training) {
+            $scheduleCount = rand(1, 3); // Random number of schedules per training
+
+            for ($i = 0; $i < $scheduleCount; $i++) {
+                Schedule::create([
+                    'training_id' => $training->id,
+                    'title' => $faker->sentence(4),
+                    'date' => $faker->dateTimeBetween('now', '+6 months')->format('Y-m-d'),
+                    'start_time' => $faker->time('H:i:s'),
+                    'end_time' => $faker->time('H:i:s'),
+                    'location' => $faker->randomElement(['Ruang 404', 'Diklat', 'Online', 'Auditorium']),
+                    'instructor' => $faker->name(),
+                ]);
+            }
+        }
     }
 }

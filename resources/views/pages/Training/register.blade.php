@@ -1,5 +1,6 @@
 {{-- resources/views/pages/training/register.blade.php --}}
 @extends('layouts.app')
+@section('title', 'Daftar Training')
 
 @section('content')
 <div class="page-body">

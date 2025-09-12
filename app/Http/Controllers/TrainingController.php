@@ -23,23 +23,28 @@ class TrainingController extends Controller
     public function generalKnowledge()
     {
         $jenisCR = JenisTraining::where('code', 'GK')->first();
-        $trainings = Training::where('jenis_training_id', $jenisCR->id)->get();
+        $trainings = Training::where('jenis_training_id', $jenisCR->id)->with('materis', 'detail', 'member');
 
         return view('pages.Training.mandatory', compact('trainings', 'jenisCR'));
     }
 
-    public function mandatory()
+    public function mandatory(Request $request)
     {
-        $jenisCR = JenisTraining::where('code', 'MD')->first();
-        $trainings = Training::where('jenis_training_id', $jenisCR->id)->get();
+        // Ambil jenis “GK”, pakai firstOrFail biar langsung 404 kalau tidak ada
+        $jenisMD = JenisTraining::where('code', 'GK')->firstOrFail();
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisCR'));
+        // Eager-load relasi yang benar dan eksekusi query-nya
+        $trainings = Training::where('jenis_training_id', $jenisMD->id)
+            ->with(['materis', 'detail', 'members'])
+            ->paginate(9);  // ganti ->get() kalau tidak perlu pagination
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisMD'));
     }
 
     /**
      * Halaman Customer Requested Training
      */
-    
+
     public function customerRequested()
     {
         $jenisCR = JenisTraining::where('code', 'CR')->first();
@@ -106,7 +111,7 @@ class TrainingController extends Controller
             'name'             => $request->name,
             'category'         => $request->category,
             'description'      => $request->description,
-            'jenis_training_id' => 3,//default ke customer request
+            'jenis_training_id' => 3, //default ke customer request
             'status'           => 'pending',
         ]);
 
@@ -182,17 +187,32 @@ class TrainingController extends Controller
         $task = Tasks::with(['training', 'submissions.user'])->findOrFail($taskId);
         return view('pages.Training.pages.taskDetail', compact('training', 'task'));
     }
+
     public function members($id)
     {
-        $training = Training::with('members')->findOrFail($id);
-        return view('pages.Training.pages.members', compact('training'));
+        /** @var User $user */
+        $user = Auth::user();
+        if ($user->roles()->whereIn('name', ['Admin', 'Super Admin'])->exists()) {
+            $training = Training::with('members')->findOrFail($id);
+            return view('pages.Training.pages.members', compact('training'));
+        } else {
+            $userId = Auth::id();
+
+            $training = Training::whereHas('members', function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })
+                ->with(['detail', 'jenisTraining', 'members'])
+                ->findOrFail($id);
+
+            return view('pages.Training.pages.userMember', compact('training'));
+        }
     }
 
     public function showAddMemberForm($trainingId)
     {
         $training = Training::findOrFail($trainingId);
-        $users = User::whereDoesntHave('trainingMembers', function($query) use ($trainingId) {
-            $query->whereHas('trainingDetail', function($q) use ($trainingId) {
+        $users = User::whereDoesntHave('trainingMembers', function ($query) use ($trainingId) {
+            $query->whereHas('trainingDetail', function ($q) use ($trainingId) {
                 $q->where('training_id', $trainingId);
             });
         })->get(); // hanya user yang belum terdaftar di training ini
@@ -318,7 +338,8 @@ class TrainingController extends Controller
         return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
     }
 
-    public function tManage(){
+    public function tManage()
+    {
         $trainings = Training::with('details')->paginate(10);
         $jenisTraining = JenisTraining::all();
         return view('pages.training-manage', compact('trainings', 'jenisTraining'));
