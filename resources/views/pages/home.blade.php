@@ -571,30 +571,70 @@ seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
                 </div>
             </div>
 
-            <div class="card mb-4" id="feedback">
-                <div class="card-header">
-                    <h3 class="card-title">Kritik & Saran</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('feedback') }}" method="POST">
-                        @csrf
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                        <div class="mb-3">
-                            <label class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="nama_pengirim" placeholder="Nama Anda">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Pesan</label>
-                            <textarea class="form-control" name="pesan" rows="4" placeholder="Tulis saran atau masukan Anda..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
-                    </form>
-                </div>
-            </div>
+            <!-- Kritik & Saran -->
+<div class="card shadow-sm border-0 mb-4" id="feedback">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 class="card-title mb-0">✉️ Kritik & Saran</h3>
+  </div>
+  <div class="card-body">
+    <form action="{{ route('feedback') }}" method="POST">
+      @csrf
+      @if (session('success'))
+        <div class="alert alert-success rounded-3 shadow-sm">
+          {{ session('success') }}
+        </div>
+      @endif
+
+      <!-- Nama -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-person-circle me-1"></i> Nama
+        </label>
+        <input 
+          type="text" 
+          class="form-control form-control-lg rounded-3" 
+          name="nama_pengirim" 
+          placeholder="Masukkan nama Anda" 
+          required>
+      </div>
+
+      <!-- Pesan -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-chat-dots me-1"></i> Pesan
+        </label>
+        <textarea 
+          class="form-control form-control-lg rounded-3" 
+          name="pesan" 
+          rows="4" 
+          placeholder="Tulis saran atau masukan Anda..." 
+          required></textarea>
+      </div>
+
+      <!-- Tombol Kirim -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg rounded-3 shadow-sm">
+          <i class="bi bi-send-fill me-1"></i> Kirim
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+#feedback .form-control {
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+#feedback .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 8px rgba(13,110,253,0.2);
+}
+#feedback textarea {
+  resize: none;
+}
+</style>
+
 
         </div>
     </div>
