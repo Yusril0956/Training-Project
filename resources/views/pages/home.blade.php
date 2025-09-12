@@ -142,11 +142,11 @@
             <div class="card mb-4">
                 <div class="card-body text-center py-5">
                     <h1 class="card-title">Selamat Datang di PT Dirgantara Indonesia</h1>
-                    <p class="card-subtitle text-muted">PT Dirgantara Indonesia (Indonesian-aircraft Industries) produces
-                        various types of aircraft to fulfill the needs of civil airlines, military operators and specific
-                        missions. Through many years in aircraft design, PTDI has become proficient in, capable of designing
-                        new aircraft and changing the aircraft's system configuration, and structure for specific mission
-                        purposes such as maritime patrol, surveillance and coast guard.</p>
+                    <p class="card-subtitle text-muted">PT Dirgantara Indonesia (Indonesian-aircraft Industries) memproduksi
+berbagai jenis pesawat untuk memenuhi kebutuhan maskapai sipil, operator militer, dan
+misi-misi tertentu. Selama bertahun-tahun berkecimpung dalam desain pesawat, PTDI telah menjadi ahli dalam merancang
+pesawat baru dan mengubah konfigurasi sistem serta struktur pesawat untuk misi-misi tertentu
+seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
                 </div>
             </div>
 
@@ -224,21 +224,84 @@
                 </div>
             </div>
 
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Apa Kata Mereka</h3>
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote">
-                        <p>“Bekerja di PTDI memberi saya kesempatan berkontribusi untuk negeri.”</p>
-                        <footer class="blockquote-footer">Rina, Engineer Senior</footer>
-                    </blockquote>
-                    <blockquote class="blockquote mt-3">
-                        <p>“Kami bangga menjadi mitra PTDI dalam pengembangan teknologi dirgantara.”</p>
-                        <footer class="blockquote-footer">Mitra Industri</footer>
-                    </blockquote>
-                </div>
-            </div>
+<!-- Apa Kata Mereka -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 class="card-title mb-0">💬 Apa Kata Mereka</h3>
+  </div>
+  <div class="card-body">
+    <div class="chat-container">
+
+      <!-- Chat 1 -->
+      <div class="chat-message left">
+        <img src="{{ asset('images/idk.png') }}" class="chat-avatar" alt="Rina">
+        <div class="chat-bubble">
+          <p>“Bekerja di PTDI memberi saya kesempatan berkontribusi untuk negeri.”</p>
+          <small class="chat-meta">Rina • Engineer Senior</small>
+        </div>
+      </div>
+
+      <!-- Chat 2 -->
+      <div class="chat-message left">
+        <img src="{{ asset('images/idk.png') }}" class="chat-avatar" alt="Mitra Industri">
+        <div class="chat-bubble">
+          <p>“Kami bangga menjadi mitra PTDI dalam pengembangan teknologi dirgantara.”</p>
+          <small class="chat-meta">Mitra Industri • Partner</small>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.chat-message {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.chat-message.left {
+  justify-content: flex-start;
+}
+.chat-message.right {
+  justify-content: flex-end;
+}
+.chat-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.8rem 1rem;
+  border-radius: 15px;
+  position: relative;
+  background: #f1f1f1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.chat-message.right .chat-bubble {
+  background: #d1e7ff;
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+.chat-meta {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+</style>
+
+
 
             <div class="row row-cards mb-4">
                 <div class="col-sm-4">

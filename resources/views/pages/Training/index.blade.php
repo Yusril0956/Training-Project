@@ -157,18 +157,29 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
 
 
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Rekomendasi Training</h3>
-                </div>
-                <div class="card-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Pelatihan Audit Internal ISO 9001</li>
-                        <li class="list-group-item">Simulasi Emergency Response</li>
-                        <li class="list-group-item">Training Sistem Avionik Dasar</li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Rekomendasi Training -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-primary text-white">
+    <h3 class="card-title mb-0">🎯 Rekomendasi Training</h3>
+  </div>
+  <div class="card-body p-0">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex align-items-center">
+        <i class="bi bi-check-circle-fill text-success me-2"></i>
+        Pelatihan Audit Internal ISO 9001
+      </li>
+      <li class="list-group-item d-flex align-items-center">
+        <i class="bi bi-check-circle-fill text-success me-2"></i>
+        Simulasi Emergency Response
+      </li>
+      <li class="list-group-item d-flex align-items-center">
+        <i class="bi bi-check-circle-fill text-success me-2"></i>
+        Training Sistem Avionik Dasar
+      </li>
+    </ul>
+  </div>
+</div>
+
 
         </div>
     </div>
