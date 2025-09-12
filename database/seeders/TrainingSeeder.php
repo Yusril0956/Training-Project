@@ -43,6 +43,62 @@ class TrainingSeeder extends Seeder
         ]);
 
         Training::updateOrCreate([
+            'name' => 'Character Building',
+            'category' => 'IT',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Analisa & Design System',
+            'category' => 'safety',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'English - Conversation',
+            'category' => 'safety',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'English - TOEFL Preparation',
+            'category' => 'safety',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Safety Management System',
+            'category' => 'safety',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Training for Trainer',
+            'category' => 'safety',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Database',
+            'category' => 'safety',
+            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'jenis_training_id' => 2,
+            'status' => 'pending',
+        ]);
+
+        Training::updateOrCreate([
             'name' => 'Pelatihan Manajemen Proyek',
             'category' => 'compliance',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
