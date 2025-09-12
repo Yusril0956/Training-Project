@@ -187,22 +187,24 @@ class TrainingController extends Controller
         $task = Tasks::with(['training', 'submissions.user'])->findOrFail($taskId);
         return view('pages.Training.pages.taskDetail', compact('training', 'task'));
     }
+
     public function members($id)
     {
-        if (Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
+        /** @var User $user */
+        $user = Auth::user();
+        if ($user->roles()->whereIn('name', ['Admin', 'Super Admin'])->exists()) {
             $training = Training::with('members')->findOrFail($id);
             return view('pages.Training.pages.members', compact('training'));
         } else {
             $userId = Auth::id();
 
-            $trainings = Training::whereHas('members', function ($q) use ($userId) {
+            $training = Training::whereHas('members', function ($q) use ($userId) {
                 $q->where('user_id', $userId);
             })
                 ->with(['detail', 'jenisTraining', 'members'])
-                ->orderByDesc('created_at')
-                ->get();
+                ->findOrFail($id);
 
-            return view('pages.Training.pages.userMember', compact('trainings'));;
+            return view('pages.Training.pages.userMember', compact('training'));
         }
     }
 
@@ -228,10 +230,10 @@ class TrainingController extends Controller
         $training = Training::findOrFail($trainingId);
 
         // Get or create training detail for this training
-        $trainingDetail = $training->detail;
+        $trainingDetail = $training->details()->first();
         if (!$trainingDetail) {
             // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->detail()->create([
+            $trainingDetail = $training->details()->create([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
@@ -308,10 +310,10 @@ class TrainingController extends Controller
         $training = Training::findOrFail($trainingId);
 
         // Get or create training detail
-        $trainingDetail = $training->detail()->first();
+        $trainingDetail = $training->details()->first();
         if (!$trainingDetail) {
             // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->detail()->create([
+            $trainingDetail = $training->details()->create([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
@@ -362,10 +364,10 @@ class TrainingController extends Controller
         $training = Training::findOrFail($id);
 
         // Get or create training detail
-        $trainingDetail = $training->detail()->first();
+        $trainingDetail = $training->details()->first();
         if (!$trainingDetail) {
             // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->detail()->create([
+            $trainingDetail = $training->details()->create([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
