@@ -20,6 +20,14 @@ class TrainingController extends Controller
         return view('pages.Training.index');
     }
 
+    public function generalKnowledge()
+    {
+        $jenisCR = JenisTraining::where('code', 'GK')->first();
+        $trainings = Training::where('jenis_training_id', $jenisCR->id)->get();
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisCR'));
+    }
+
     public function mandatory()
     {
         $jenisCR = JenisTraining::where('code', 'MD')->first();

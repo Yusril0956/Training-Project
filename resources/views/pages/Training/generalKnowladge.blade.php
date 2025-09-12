@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Mandatory')
+@section('title', 'General Knowledge')
 
 @section('content')
     <div class="page-body">
@@ -13,14 +13,14 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Mandatory', 'url' => route('mandatory.training')],
+                    ['title' => 'General Knowledge', 'url' => route('general.knowledge')],
                 ],
             ])
             <!-- Hero Section -->
             <div class="card mb-3">
                 <div class="card-body text-center py-4">
-                    <h2 class="card-title">Mandatory Training</h2>
-                    <p class="card-subtitle text-muted">Pelatihan yang sifatnya diwajibkan oleh perusahaan/lembaga pelaksana Regulasi bagi seluruh karyawan pada pekerjaan tertentu</p>
+                    <h2 class="card-title">General Knowledge Training</h2>
+                    <p class="card-subtitle text-muted">Pelatihan yang sifatnya umum  untuk menambah pengetahuan dalam menunjang pekerjaan karyawan</p>
                 </div>
             </div>
 
