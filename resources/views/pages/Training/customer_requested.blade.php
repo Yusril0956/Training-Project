@@ -44,26 +44,16 @@
 
                                 <div class="d-flex justify-content-between align-items-center">
                                     @auth
-                                        {{-- 1) Kalau Admin / Super Admin --}}
-                                        @if (Auth::user()->hasAnyRole(['super_admin', 'admin']))
-                                            <a href="{{ route('detail.training', $training->id) }}"
-                                                class="btn btn-sm btn-secondary">
-                                                Detail
-                                            </a>
-
-                                            {{-- 2) User Biasa --}}
-                                        @else
                                             @php
                                                 // cek apakah user sudah jadi member
                                                 $isMember = $training->members->contains('user_id', Auth::id());
                                             @endphp
 
-                                            @if ($isMember)
+                                            @if ($isMember || Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                                                 <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">Lihat</a>
                                             @else
                                                 <a href="{{ route('training.register.form', $training->id)}}" class="btn-primary">Daftar</a>
                                             @endif
-                                        @endif
 
                                     @endauth
 

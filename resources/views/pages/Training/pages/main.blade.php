@@ -31,7 +31,7 @@
                             <h4 class="card-title">📅 Jadwal Pelatihan</h4>
                             <p><strong>Tanggal:</strong> {{$schedule->date ?? 'belum ada jadwal'}}</p>
                             <p><strong>Durasi:</strong> -</p>
-                            <p><strong>Lokasi:</strong> {{$schedule->location}}</p>
+                            <p><strong>Lokasi:</strong> {{$schedule->location ?? 'belum ada jadwal'}}</p>
                         </div>
                     </div>
                 </div>

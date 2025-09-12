@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
     // Training
     Route::get('/training', [TrainingController::class, 'index'])->name('training.index');
     Route::get('/training/general-knowledge', fn() => view('pages.Training.training1'))->name('general.knowledge');
-    Route::get('/training/mandatory', fn() => view('pages.Training.training2'))->name('mandatory.training');
+    Route::get('/training/mandatory', [TrainingController::class, 'mandatory'])->name('mandatory.training');
     Route::get('/training/license', fn() => view('pages.Training.training4'))->name('license.training');
     Route::get('/training/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer.requested');
     Route::get('/training/detail-training', fn() => view('pages.Training.detail_training'))->name('detail.training');

@@ -20,9 +20,18 @@ class TrainingController extends Controller
         return view('pages.Training.index');
     }
 
+    public function mandatory()
+    {
+        $jenisCR = JenisTraining::where('code', 'MD')->first();
+        $trainings = Training::where('jenis_training_id', $jenisCR->id)->get();
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisCR'));
+    }
+
     /**
      * Halaman Customer Requested Training
      */
+    
     public function customerRequested()
     {
         $jenisCR = JenisTraining::where('code', 'CR')->first();
@@ -343,19 +352,6 @@ class TrainingController extends Controller
         if ($existingMember) {
             return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
         }
-
-        // Update user information if provided
-        $user = Auth::user();
-        if ($request->filled('phone')) {
-            $user->phone = $request->phone;
-        }
-        if ($request->filled('nik')) {
-            $user->nik = $request->nik;
-        }
-        if ($request->filled('address')) {
-            $user->address = $request->address;
-        }
-        $user->save();
 
         // Create new training member
         TrainingMember::create([
