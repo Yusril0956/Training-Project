@@ -48,4 +48,11 @@ class Training extends Model
     {
         return $this->hasMany(Schedule::class, 'training_id');
     }
+
+    public function getCategoryImageAttribute()
+    {
+        $categorySlug = strtolower(str_replace(' ', '-', $this->category ?? 'default'));
+        $path = 'images/category/' . $categorySlug . '.jpg';
+        return file_exists(public_path($path)) ? asset($path) : asset('images/default-training.jpg');
+    }
 }

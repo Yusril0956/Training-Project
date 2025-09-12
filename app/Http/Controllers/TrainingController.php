@@ -20,17 +20,20 @@ class TrainingController extends Controller
         return view('pages.Training.index');
     }
 
-    public function generalKnowledge()
+    public function generalKnowledge(Request $request)
     {
-        $jenisCR = JenisTraining::where('code', 'GK')->first();
-        $trainings = Training::where('jenis_training_id', $jenisCR->id)->with('materis', 'detail', 'member');
+        $jenisGK = JenisTraining::where('code', 'GK')->firstOrFail();
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisCR'));
+        // Eager-load relasi yang benar dan eksekusi query-nya
+        $trainings = Training::where('jenis_training_id', $jenisGK->id)
+            ->with(['materis', 'detail', 'members'])
+            ->paginate(9);  // ganti ->get() kalau tidak perlu pagination
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisGK'));
     }
 
     public function mandatory(Request $request)
     {
-        // Ambil jenis “GK”, pakai firstOrFail biar langsung 404 kalau tidak ada
         $jenisMD = JenisTraining::where('code', 'GK')->firstOrFail();
 
         // Eager-load relasi yang benar dan eksekusi query-nya

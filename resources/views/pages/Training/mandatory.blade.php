@@ -65,10 +65,12 @@
 
                     <div class="col-md-6 col-lg-4">
                         <div class="card shadow-sm">
-                            <img src="{{ $training->image_url ?? asset('images/default-training.jpg') }}"
-                                class="card-img-top" alt="Gambar Training" />
-                            <div class="card-body">
 
+                            {{-- Gambar Banner --}}
+                            <img src="{{ $training->category_image ?? asset('images/default-training.jpg') }}"
+                                class="card-img-top object-fit-cover" style="height: 180px;" alt="Gambar Training" />
+
+                            <div class="card-body">
                                 {{-- Judul & Deskripsi --}}
                                 <h4 class="card-title">{{ $training->name }}</h4>
 
@@ -83,6 +85,7 @@
                                     @else
                                         <span class="badge bg-warning">Belum Dijadwalkan</span>
                                     @endif
+                                    <span class="badge bg-primay">{{ $training->category ?? 'N/A' }}</span>
                                 </div>
 
                                 {{-- Participant Count --}}
@@ -105,15 +108,14 @@
                                             $isMember = $training->members->contains('user_id', Auth::id());
                                         @endphp
 
-                                        @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
+                                        @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $isMember)
                                             <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
                                                 data-bs-target="#detailCanvas-{{ $training->id }}">
                                                 Details
                                             </button>
-                                        @elseif($isMember)
-                                            <button class="btn btn-sm btn-success" disabled>
-                                                Sudah Terdaftar
-                                            </button>
+                                            <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">
+                                                Lihat
+                                            </a>
                                         @else
                                             <a href="{{ route('training.register.form', $training->id) }}"
                                                 class="btn btn-sm btn-primary">
