@@ -29,19 +29,58 @@ class TrainingController extends Controller
             ->with(['materis', 'detail', 'members'])
             ->paginate(9);  // ganti ->get() kalau tidak perlu pagination
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisGK'));
+        $pageTitle = 'General Knowledge Training';
+        $heroTitle = 'General Knowledge Training';
+        $description = 'Pelatihan umum untuk meningkatkan pengetahuan karyawan.';
+        $breadcrumbItems = [
+            ['title' => 'Training', 'url' => route('training.index')],
+            ['title' => 'General Knowledge', 'url' => route('general.knowledge')],
+        ];
+        $routeName = 'general.knowledge';
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisGK', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
     }
 
     public function mandatory(Request $request)
     {
-        $jenisMD = JenisTraining::where('code', 'GK')->firstOrFail();
+        $jenisMD = JenisTraining::where('code', 'MD')->firstOrFail();
 
         // Eager-load relasi yang benar dan eksekusi query-nya
         $trainings = Training::where('jenis_training_id', $jenisMD->id)
             ->with(['materis', 'detail', 'members'])
             ->paginate(9);  // ganti ->get() kalau tidak perlu pagination
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisMD'));
+        $pageTitle = 'Mandatory Training';
+        $heroTitle = 'Mandatory Training';
+        $description = 'Pelatihan yang diwajibkan perusahaan atau regulator untuk karyawan pada pekerjaan tertentu.';
+        $breadcrumbItems = [
+            ['title' => 'Training', 'url' => route('training.index')],
+            ['title' => 'Mandatory', 'url' => route('mandatory.training')],
+        ];
+        $routeName = 'mandatory.training';
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisMD', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
+    }
+
+    public function license(Request $request)
+    {
+        $jenisLS = JenisTraining::where('code', 'LS')->firstOrFail();
+
+        // Eager-load relasi yang benar dan eksekusi query-nya
+        $trainings = Training::where('jenis_training_id', $jenisLS->id)
+            ->with(['materis', 'detail', 'members'])
+            ->paginate(9);
+
+        $pageTitle = 'License Training';
+        $heroTitle = 'License Training';
+        $description = 'Pelatihan resmi dengan masa berlaku untuk sertifikasi dan lisensi.';
+        $breadcrumbItems = [
+            ['title' => 'Training', 'url' => route('training.index')],
+            ['title' => 'License', 'url' => route('license.training')],
+        ];
+        $routeName = 'license.training';
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisLS', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
     }
 
     /**

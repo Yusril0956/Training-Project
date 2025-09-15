@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Mandatory Training')
+@section('title', $pageTitle ?? 'Training')
 
 @section('content')
     <div class="page-body">
@@ -15,24 +15,24 @@
 
             {{-- Breadcrumb --}}
             @include('partials._breadcrumb', [
-                'items' => [
+                'items' => $breadcrumbItems ?? [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Mandatory', 'url' => route('mandatory.training')],
+                    ['title' => 'Training', 'url' => route('training.index')],
                 ],
             ])
 
             {{-- Hero --}}
             <div class="card mb-3 text-center">
                 <div class="card-body py-4">
-                    <h2 class="card-title">Mandatory Training</h2>
+                    <h2 class="card-title">{{ $heroTitle ?? 'Training' }}</h2>
                     <p class="text-muted">
-                        Pelatihan yang diwajibkan perusahaan atau regulator untuk karyawan pada pekerjaan tertentu.
+                        {{ $description ?? 'Training description.' }}
                     </p>
                 </div>
             </div>
 
             {{-- Filter & Search --}}
-            <form method="GET" action="{{ route('mandatory.training') }}" class="card mb-4">
+            <form method="GET" action="{{ route($routeName ?? 'training.index') }}" class="card mb-4">
                 <div class="card-body row g-2 align-items-center">
                     <div class="col-md-4">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama pelatihan..."
@@ -46,7 +46,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="ti ti-search me-1"></i> Filter
                         </button>
-                        <a href="{{ route('mandatory.training') }}" class="btn btn-secondary ms-2">
+                        <a href="{{ route($routeName ?? 'training.index') }}" class="btn btn-secondary ms-2">
                             <i class="ti ti-refresh me-1"></i> Reset
                         </a>
                     </div>
@@ -167,7 +167,7 @@
                 @empty
                     <div class="col-12">
                         <div class="alert alert-warning text-center">
-                            Belum ada mandatory training tersedia.
+                            Belum ada {{ strtolower($jenis->name ?? 'training') }} tersedia.
                         </div>
                     </div>
                 @endforelse

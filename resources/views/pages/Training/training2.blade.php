@@ -226,3 +226,4 @@ Berlaku hingga: ${document.getElementById('expiryDate').textContent}
 </body>
 </html>
 @endsection
+C:\walpaper\log.jpg
