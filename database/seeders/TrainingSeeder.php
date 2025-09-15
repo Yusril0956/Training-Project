@@ -194,6 +194,38 @@ class TrainingSeeder extends Seeder
             'status' => 'approved',
         ]);
 
+        Training::updateOrCreate([
+            'name' => 'Lisensi Pilot Komersial',
+            'category' => 'license',
+            'description' => 'Pelatihan untuk mendapatkan lisensi pilot komersial.',
+            'jenis_training_id' => 4,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Lisensi Maintenance Pesawat',
+            'category' => 'license',
+            'description' => 'Pelatihan untuk lisensi maintenance pesawat terbang.',
+            'jenis_training_id' => 4,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Lisensi Air Traffic Controller',
+            'category' => 'license',
+            'description' => 'Pelatihan untuk lisensi pengendali lalu lintas udara.',
+            'jenis_training_id' => 4,
+            'status' => 'approved',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'Lisensi Dispatcher Udara',
+            'category' => 'license',
+            'description' => 'Pelatihan untuk lisensi dispatcher operasi penerbangan.',
+            'jenis_training_id' => 4,
+            'status' => 'approved',
+        ]);
+
         // Call related seeders to populate linked data
         $this->call([
             TrainingDetailSeeder::class,
