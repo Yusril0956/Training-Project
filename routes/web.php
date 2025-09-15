@@ -114,17 +114,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/training/{id}/reject', [TrainingController::class, 'reject'])->name('training.reject');
     Route::put('/training/{id}/approve', [TrainingController::class, 'approve'])->name('training.approve');
 
-    // training customer requested
-    Route::get('/training/customer-requested/{id}', [TrainingController::class, 'crPage'])->name('cr.page');
-    Route::get('/training/customer-requested/members/{id}', [TrainingController::class, 'members'])->name('training.members');
-    Route::get('/training/customer-requested/materials/{id}', [TrainingController::class, 'materials'])->name('training.materials');
-    Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
-    Route::post('/training/customer-requested/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
-    Route::delete('/training/customer-requested/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
-    Route::get('/training/customer-requested/tasks/{name}', [TrainingController::class, 'tasks'])->name('training.tasks');
-    Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
-    Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
-    Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
+    // // training customer requested
+    // Route::get('/training/customer-requested/{id}', [TrainingController::class, 'crPage'])->name('cr.page');
+    // Route::get('/training/customer-requested/members/{id}', [TrainingController::class, 'members'])->name('training.members');
+    // Route::get('/training/customer-requested/materials/{id}', [TrainingController::class, 'materials'])->name('training.materials');
+    // Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
+    // Route::post('/training/customer-requested/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
+    // Route::delete('/training/customer-requested/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
+    // Route::get('/training/customer-requested/tasks/{name}', [TrainingController::class, 'tasks'])->name('training.tasks');
+    // Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
+    // Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
+    // Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
 
     Route::get('/training/customer-requested/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('training.task.show');
     Route::get('/gj', [TrainingController::class, 'showTasks'])->name('training.task.submit');
@@ -135,7 +135,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/training/register/{id}', [TrainingController::class, 'registerForm'])->name('training.register.form');
     Route::post('/training/register/{id}', [TrainingController::class, 'register'])->name('training.register');
-    
+
     // Self registration for training
     Route::post('/training/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('training.self.register');
 
@@ -155,6 +155,24 @@ Route::middleware('auth')->group(function () {
     Route::post('/training/{trainingId}/schedule', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
     Route::delete('/training/{trainingId}/schedule/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
 
+
+    // ============================
+    // Member training Routes
+    // ============================
+    Route::middleware('isMember')->group(function () {
+        Route::get('/training/customer-requested/{id}', [TrainingController::class, 'crPage'])->name('cr.page');
+
+        Route::get('/training/customer-requested/members/{id}', [TrainingController::class, 'members'])->name('training.members');
+        Route::get('/training/customer-requested/materials/{id}', [TrainingController::class, 'materials'])->name('training.materials');
+        Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
+        Route::post('/training/customer-requested/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
+        Route::delete('/training/customer-requested/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
+        Route::get('/training/customer-requested/tasks/{name}', [TrainingController::class, 'tasks'])->name('training.tasks');
+        Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
+        Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
+        Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
+    });
+
     // ============================
     // Admin & Super Admin Routes
     // ============================
@@ -170,7 +188,7 @@ Route::middleware('auth')->group(function () {
 
         // training admin
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
-    });                                                   
+    });
 });
 
 

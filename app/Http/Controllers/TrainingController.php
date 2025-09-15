@@ -272,10 +272,10 @@ class TrainingController extends Controller
         $training = Training::findOrFail($trainingId);
 
         // Get or create training detail for this training
-        $trainingDetail = $training->details()->first();
+        $trainingDetail = $training->detail;
         if (!$trainingDetail) {
             // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->details()->create([
+            $trainingDetail = $training->detail()->create([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
@@ -352,10 +352,10 @@ class TrainingController extends Controller
         $training = Training::findOrFail($trainingId);
 
         // Get or create training detail
-        $trainingDetail = $training->details()->first();
+        $trainingDetail = $training->detail;
         if (!$trainingDetail) {
             // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->details()->create([
+            $trainingDetail = $training->detail()->create([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
@@ -382,7 +382,7 @@ class TrainingController extends Controller
 
     public function tManage()
     {
-        $trainings = Training::with('details')->paginate(10);
+        $trainings = Training::with('detail')->paginate(10);
         $jenisTraining = JenisTraining::all();
         return view('pages.training-manage', compact('trainings', 'jenisTraining'));
     }
@@ -406,10 +406,10 @@ class TrainingController extends Controller
         $training = Training::findOrFail($id);
 
         // Get or create training detail
-        $trainingDetail = $training->details()->first();
+        $trainingDetail = $training->detail;
         if (!$trainingDetail) {
             // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->details()->create([
+            $trainingDetail = $training->detail()->create([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
