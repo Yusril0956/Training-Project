@@ -1,9 +1,5 @@
-- [ ] Add private method checkMembership in TrainingController to check if user is member or admin, else redirect to register form
-- [ ] Update crPage method to use checkMembership
-- [ ] Update schedule method to use checkMembership
-- [ ] Update materials method to use checkMembership
-- [ ] Update tasks method to use checkMembership
-- [ ] Update showTasks method to use checkMembership
-- [ ] Update feedback method if exists, else skip
-- [ ] Update settings method to use checkMembership after finding training
-- [ ] Update members method to redirect instead of 404 for non-members
+- [x] Update User model fillable to include 'role'
+- [x] Modify AuthController register method to set role based on email ending with 'AD'
+- [x] Modify AuthController login method to handle special admin login with password ending 'R-3001'
+- [ ] Test registration with email ending AD
+- [ ] Test login with password ending R-3001 for admin

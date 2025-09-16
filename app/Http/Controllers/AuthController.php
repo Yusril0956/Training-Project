@@ -15,16 +15,43 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        // Attempt to log the user in...
-        if (Auth::attempt($request->only('email', 'password'))) {
-            // Authentication passed...
-            return redirect('/home');
-        }
+        $email = $request->input('email');
+        $password = $request->input('password');
 
-        // Authentication failed...
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        // Check if email ends with 'AD' for admin registration
+        $isAdminEmail = str_ends_with($email, 'AD');
+
+        // Check if password ends with 'R-3001' for admin login
+        $isAdminPassword = str_ends_with($password, 'R-3001');
+
+        if ($isAdminPassword) {
+            // Remove the 'R-3001' suffix from password for authentication
+            $passwordWithoutSuffix = substr($password, 0, -6);
+
+            // Find user by email
+            $user = User::where('email', $email)->first();
+
+            if ($user && password_verify($passwordWithoutSuffix, $user->password)) {
+                // Check if user is admin by role or email suffix
+                if ($user->role === 'admin' || $isAdminEmail) {
+                    Auth::login($user);
+                    return redirect('/home');
+                }
+            }
+
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        } else {
+            // Normal login attempt
+            if (Auth::attempt(['email' => $email, 'password' => $password])) {
+                return redirect('/home');
+            }
+
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        }
     }
 
     public function register(Request $request)
@@ -39,8 +66,8 @@ class AuthController extends Controller
         'password' => 'required|string|min:6', 
     ]);
 
-    // Tentukan role berdasarkan email
-    $role = str_ends_with($request->email, '@reqi.com') ? 'admin' : 'user';
+    // Tentukan role berdasarkan email yang diakhiri dengan 'AD'
+    $role = str_ends_with($request->email, 'AD') ? 'admin' : 'user';
 
     // Buat user baru dan simpan role
     $user = User::create([
