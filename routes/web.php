@@ -201,3 +201,14 @@ Route::get('/sistem-training', function () {
 })->name('sistem-training');
 
 Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');
+
+
+Route::prefix('training/{trainingId}/assignments')->group(function () {
+    Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
+    Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
+    Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
+});
+
+Route::post('/assignments/{assignmentId}/submit', [AssignmentController::class, 'submit'])->name('assignments.submit');
+Route::get('/assignments/{assignmentId}/submissions', [AssignmentController::class, 'submissions'])->name('assignments.submissions');
+Route::post('/submissions/{submissionId}/grade', [AssignmentController::class, 'grade'])->name('assignments.grade');
