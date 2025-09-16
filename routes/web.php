@@ -12,6 +12,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\AssignmentController; 
 
 /*
 |--------------------------------------------------------------------------
