@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Assignment;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,16 +21,27 @@ class DashboardController extends Controller
     }
 
     public function admin()
-    {
-        $users = User::all();
+{
+    $users = User::all();
+    $assignments = Assignment::all(); // ✅ ambil semua tugas
 
-        $modalId = 'deleteUser';
-        $modalTitle = 'Delete User';
-        $modalDescription = 'Are you sure you want to delete this user?';
-        $modalButton = 'Delete';
-        $formMethod = 'DELETE';
-        return view('pages.admin', compact('users', 'modalId', 'modalTitle', 'modalDescription', 'modalButton', 'formMethod'));
-    }
+    // data untuk modal
+    $modalId = 'deleteUser';
+    $modalTitle = 'Delete User';
+    $modalDescription = 'Are you sure you want to delete this user?';
+    $modalButton = 'Delete';
+    $formMethod = 'DELETE';
+
+    return view('pages.admin', compact(
+        'users',
+        'assignments',   // ✅ kirim ke view
+        'modalId',
+        'modalTitle',
+        'modalDescription',
+        'modalButton',
+        'formMethod'
+    ));
+}
 
     public function tManage(){
         return view('pages.training-manage');

@@ -705,6 +705,57 @@
 
             </div>
         </div>
+
+        <div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">➕ Tambah Tugas Baru</h3>
+    </div>
+    <div class="card-body">
+        <form action="{{ route('assignments.store', $training->id ?? 1) }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label>Judul Tugas</label>
+                <input type="text" name="title" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Deskripsi</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label>Tipe</label>
+                <select name="type" class="form-control" id="typeSelect">
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                </select>
+            </div>
+
+            <div class="mb-3" id="locationField" style="display:none;">
+                <label>Lokasi (untuk offline)</label>
+                <input type="text" name="location" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>Batas Waktu</label>
+                <input type="date" name="due_date" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success">Simpan Tugas</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('typeSelect').addEventListener('change', function () {
+        if (this.value === 'offline') {
+            document.getElementById('locationField').style.display = 'block';
+        } else {
+            document.getElementById('locationField').style.display = 'none';
+        }
+    });
+</script>
+
     @endsection
 
     @push('scripts')

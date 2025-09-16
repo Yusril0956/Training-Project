@@ -291,6 +291,49 @@
         </form>
     </div>
 
+    <!-- Daftar Tugas -->
+<div class="card mt-4">
+    <div class="card-header">
+        <h3 class="card-title">📘 Daftar Tugas</h3>
+        <a href="{{ route('assignments.create', $training->id ?? 1) }}" class="btn btn-sm btn-primary float-end">
+            + Buat Tugas
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Tipe</th>
+                    <th>Batas Waktu</th>
+                    <th>Lokasi (jika offline)</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($assignments as $assignment)
+                    <tr>
+                        <td>{{ $assignment->title }}</td>
+                        <td>{{ ucfirst($assignment->type) }}</td>
+                        <td>{{ $assignment->due_date ?? '-' }}</td>
+                        <td>{{ $assignment->type === 'offline' ? $assignment->location : '-' }}</td>
+                        <td>
+                            <a href="{{ route('assignments.submissions', $assignment->id) }}" class="btn btn-sm btn-info">
+                                👨‍🎓 Lihat Submission
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5">Belum ada tugas.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
     @include('components._modal')
 @endsection
 

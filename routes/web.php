@@ -135,8 +135,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/settings/{name}', [TrainingController::class, 'settings'])->name('training.settings');
     Route::post('/training/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('training.settings.update');
 
-    Route::get('/training/register/{id}', [TrainingController::class, 'registerForm'])->name('training.register.form');
-    Route::post('/training/register/{id}', [TrainingController::class, 'register'])->name('training.register');
+    Route::get('/training/register/{id}', [TrainingController::class, 'daftarTraining'])->name('training.register');
 
     // Self registration for training
     Route::post('/training/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('training.self.register');
@@ -190,6 +189,8 @@ Route::middleware('auth')->group(function () {
 
         // training admin
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
+        Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
+        Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
     });
 });
 
@@ -203,3 +204,14 @@ Route::get('/sistem-training', function () {
 })->name('sistem-training');
 
 Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');
+
+
+Route::prefix('training/{trainingId}/assignments')->group(function () {
+    Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
+    Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
+    Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
+});
+
+Route::post('/assignments/{assignmentId}/submit', [AssignmentController::class, 'submit'])->name('assignments.submit');
+Route::get('/assignments/{assignmentId}/submissions', [AssignmentController::class, 'submissions'])->name('assignments.submissions');
+Route::post('/submissions/{submissionId}/grade', [AssignmentController::class, 'grade'])->name('assignments.grade');
