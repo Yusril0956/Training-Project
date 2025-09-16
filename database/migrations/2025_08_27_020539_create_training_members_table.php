@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignId('training_detail_id')->constrained('training_details')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->enum('status', ['accept', 'pending', 'reject'])->default('reject');
             $table->string('series')->unique();
             $table->timestamps();
         });

@@ -235,13 +235,18 @@ class TrainingController extends Controller
         /** @var User $user */
         $user = Auth::user();
         if ($user->roles()->whereIn('name', ['Admin', 'Super Admin'])->exists()) {
-            $training = Training::with('members')->findOrFail($id);
-            return view('pages.Training.pages.members', compact('training'));
+            $training = Training::with(['members' => function($q) {
+                $q->where('status', 'accept');
+            }])->findOrFail($id);
+            $pendingMembers = TrainingMember::with('user')->whereHas('trainingDetail', function($q) use ($id) {
+                $q->where('training_id', $id);
+            })->where('status', 'pending')->get();
+            return view('pages.Training.pages.members', compact('training', 'pendingMembers'));
         } else {
             $userId = Auth::id();
 
             $training = Training::whereHas('members', function ($q) use ($userId) {
-                $q->where('user_id', $userId);
+                $q->where('user_id', $userId)->where('status', 'accept');
             })
                 ->with(['detail', 'jenisTraining', 'members'])
                 ->findOrFail($id);

@@ -33,7 +33,7 @@
 
 
             <!-- Tabel Peserta -->
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
@@ -104,6 +104,50 @@
                     </div>
                 </div>
             @endcan
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2 class="card-title">👥 Daftar permintaan user</h2>
+                    <p class="text-muted">Berikut adalah peserta yang terdaftar dalam pelatihan
+                        <strong>{{ $training->name }}</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pendingMembers as $index => $pMember)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $pMember->user->name }}</td>
+                                        <td>{{ $pMember->user->email }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-sm btn-info">Accept</a>
+                                            <a href="#" class="btn btn-sm btn-info">Reject</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                @if ($pendingMembers->isEmpty())
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">Belum ada peserta terdaftar.</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
