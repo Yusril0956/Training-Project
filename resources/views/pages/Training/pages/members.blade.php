@@ -133,14 +133,22 @@
                                         <td>{{ $pMember->user->name }}</td>
                                         <td>{{ $pMember->user->email }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-info">Accept</a>
-                                            <a href="#" class="btn btn-sm btn-info">Reject</a>
+                                            <form action="{{ route('training.member.accept', [$training->id, $pMember->id]) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-sm btn-success">Terima</button>
+                                            </form>
+                                            <form action="{{ route('training.member.reject', [$training->id, $pMember->id]) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                                 @if ($pendingMembers->isEmpty())
                                     <tr>
-                                        <td colspan="6" class="text-center text-muted">Belum ada peserta terdaftar.</td>
+                                        <td colspan="4" class="text-center text-muted">Belum ada permintaan pendaftaran.</td>
                                     </tr>
                                 @endif
                             </tbody>
