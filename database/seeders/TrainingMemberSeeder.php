@@ -21,6 +21,7 @@ class TrainingMemberSeeder extends Seeder
                 TrainingMember::create([
                     'training_detail_id' => $detail->id,
                     'user_id' => $user->id,
+                    'status' => $faker->randomElement(['accept', 'pending', 'reject']),
                     'series' => strtoupper($faker->bothify('TRN-####-??')),
                 ]);
             }

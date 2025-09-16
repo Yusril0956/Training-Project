@@ -133,8 +133,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/customer-requested/settings/{name}', [TrainingController::class, 'settings'])->name('training.settings');
     Route::post('/training/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('training.settings.update');
 
-    Route::get('/training/register/{id}', [TrainingController::class, 'registerForm'])->name('training.register.form');
-    Route::post('/training/register/{id}', [TrainingController::class, 'register'])->name('training.register');
+    Route::get('/training/register/{id}', [TrainingController::class, 'daftarTraining'])->name('training.register');
 
     // Self registration for training
     Route::post('/training/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('training.self.register');
@@ -188,6 +187,8 @@ Route::middleware('auth')->group(function () {
 
         // training admin
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
+        Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
+        Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
     });
 });
 

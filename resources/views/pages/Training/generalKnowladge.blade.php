@@ -117,7 +117,7 @@
                                                 Lihat
                                             </a>
                                         @else
-                                            <a href="{{ route('training.register.form', $training->id) }}"
+                                            <a href="{{ route('training.register', $training->id) }}"
                                                 class="btn btn-sm btn-primary">
                                                 Daftar
                                             </a>

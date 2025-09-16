@@ -29,6 +29,8 @@ class TrainingController extends Controller
             ->with(['materis', 'detail', 'members'])
             ->paginate(9);  // ganti ->get() kalau tidak perlu pagination
 
+
+
         $pageTitle = 'General Knowledge Training';
         $heroTitle = 'General Knowledge Training';
         $description = 'Pelatihan umum untuk meningkatkan pengetahuan karyawan.';
@@ -50,16 +52,17 @@ class TrainingController extends Controller
             ->with(['materis', 'detail', 'members'])
             ->paginate(9);  // ganti ->get() kalau tidak perlu pagination
 
-        $pageTitle = 'Mandatory Training';
-        $heroTitle = 'Mandatory Training';
-        $description = 'Pelatihan yang diwajibkan perusahaan atau regulator untuk karyawan pada pekerjaan tertentu.';
-        $breadcrumbItems = [
-            ['title' => 'Training', 'url' => route('training.index')],
-            ['title' => 'Mandatory', 'url' => route('mandatory.training')],
-        ];
-        $routeName = 'mandatory.training';
+        $userId = Auth::id();
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisMD', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
+        // Prepare arrays to hold user statuses for each training
+        $userStatuses = [];
+
+        foreach ($trainings as $training) {
+            $member = $training->members->where('user_id', $userId)->first();
+            $userStatuses[$training->id] = $member ? $member->status : 'none';
+        }
+
+        return view('pages.Training.mandatory', compact('trainings', 'jenisMD', 'userStatuses'));
     }
 
     public function license(Request $request)
@@ -235,13 +238,18 @@ class TrainingController extends Controller
         /** @var User $user */
         $user = Auth::user();
         if ($user->roles()->whereIn('name', ['Admin', 'Super Admin'])->exists()) {
-            $training = Training::with('members')->findOrFail($id);
-            return view('pages.Training.pages.members', compact('training'));
+            $training = Training::with(['members' => function ($q) {
+                $q->where('status', 'accept');
+            }])->findOrFail($id);
+            $pendingMembers = TrainingMember::with('user')->whereHas('trainingDetail', function ($q) use ($id) {
+                $q->where('training_id', $id);
+            })->where('status', 'pending')->get();
+            return view('pages.Training.pages.members', compact('training', 'pendingMembers'));
         } else {
             $userId = Auth::id();
 
             $training = Training::whereHas('members', function ($q) use ($userId) {
-                $q->where('user_id', $userId);
+                $q->where('user_id', $userId)->where('status', 'accept');
             })
                 ->with(['detail', 'jenisTraining', 'members'])
                 ->findOrFail($id);
@@ -370,14 +378,40 @@ class TrainingController extends Controller
             return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
         }
 
-        // Create new training member
+        // Create new training member with pending status
         TrainingMember::create([
             'training_detail_id' => $trainingDetail->id,
             'user_id' => Auth::id(),
+            'status' => 'pending',
             'series' => 'TRN-' . strtoupper(uniqid()),
         ]);
 
-        return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
+        return redirect()->back()->with('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
+    }
+
+    public function acceptMember($trainingId, $memberId)
+    {
+        $member = TrainingMember::findOrFail($memberId);
+        $member->update(['status' => 'accept']);
+
+        return redirect()->back()->with('success', 'Peserta telah diterima.');
+    }
+
+    public function rejectMember($trainingId, $memberId)
+    {
+        $member = TrainingMember::findOrFail($memberId);
+        $member->update(['status' => 'reject']);
+
+        return redirect()->back()->with('success', 'Peserta telah ditolak.');
+    }
+
+    public static function getUserTrainingStatus($training, $userId)
+    {
+        $member = $training->members->where('user_id', $userId)->first();
+        if ($member) {
+            return $member->status;
+        }
+        return 'none';
     }
 
     public function tManage()
@@ -387,50 +421,17 @@ class TrainingController extends Controller
         return view('pages.training-manage', compact('trainings', 'jenisTraining'));
     }
 
-    public function registerForm($id)
+    public function register($userId, $trainingId)
     {
-        $training = Training::findOrFail($id);
-        return view('pages.Training.register', compact('training'));
-    }
+        $user = User::findOrFail($userId);
+        $training = Training::findOrFail($trainingId);
 
-    public function register(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'nik' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
-        ]);
-
-        $training = Training::findOrFail($id);
-
-        // Get or create training detail
-        $trainingDetail = $training->detail;
-        if (!$trainingDetail) {
-            // Provide default start_date and end_date if creating new training detail
-            $trainingDetail = $training->detail()->create([
-                'start_date' => now()->toDateString(),
-                'end_date' => now()->addMonth()->toDateString(),
-            ]);
-        }
-
-        // Check if user is already registered
-        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
-            ->where('user_id', Auth::id())
-            ->first();
-
-        if ($existingMember) {
-            return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
-        }
-
-        // Create new training member
-        TrainingMember::create([
-            'training_detail_id' => $trainingDetail->id,
-            'user_id' => Auth::id(),
+        $user->trainingMembers()->create([
+            'training_detail_id' => $training->detail->id,
+            'status' => 'pending',
             'series' => 'TRN-' . strtoupper(uniqid()),
         ]);
 
-        return redirect()->route('cr.page', $training->id)->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
+        return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
     }
 }

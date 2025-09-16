@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $pageTitle ?? 'Training')
+@section('title',   'Mandatory Training')
 
 @section('content')
     <div class="page-body">
@@ -15,7 +15,7 @@
 
             {{-- Breadcrumb --}}
             @include('partials._breadcrumb', [
-                'items' => $breadcrumbItems ?? [
+                'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => 'Training', 'url' => route('training.index')],
                 ],
@@ -24,15 +24,15 @@
             {{-- Hero --}}
             <div class="card mb-3 text-center">
                 <div class="card-body py-4">
-                    <h2 class="card-title">{{ $heroTitle ?? 'Training' }}</h2>
+                    <h2 class="card-title">Mandatory Training</h2>
                     <p class="text-muted">
-                        {{ $description ?? 'Training description.' }}
+                        Pelatihan yang diwajibkan perusahaan atau regulator untuk karyawan pada pekerjaan tertentu.
                     </p>
                 </div>
             </div>
 
             {{-- Filter & Search --}}
-            <form method="GET" action="{{ route($routeName ?? 'training.index') }}" class="card mb-4">
+            <form method="GET" action="#" class="card mb-4">
                 <div class="card-body row g-2 align-items-center">
                     <div class="col-md-4">
                         <input type="text" name="search" class="form-control" placeholder="Cari nama pelatihan..."
@@ -46,7 +46,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="ti ti-search me-1"></i> Filter
                         </button>
-                        <a href="{{ route($routeName ?? 'training.index') }}" class="btn btn-secondary ms-2">
+                        <a href="#" class="btn btn-secondary ms-2">
                             <i class="ti ti-refresh me-1"></i> Reset
                         </a>
                     </div>
@@ -105,10 +105,10 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     @auth
                                         @php
-                                            $isMember = $training->members->contains('user_id', Auth::id());
+                                            $status = $userStatuses[$training->id] ?? 'none';
                                         @endphp
 
-                                        @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $isMember)
+                                        @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $status === 'accept')
                                             <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
                                                 data-bs-target="#detailCanvas-{{ $training->id }}">
                                                 Details
@@ -116,11 +116,19 @@
                                             <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">
                                                 Lihat
                                             </a>
+                                        @elseif ($status === 'pending')
+                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
+                                                data-bs-target="#detailCanvas-{{ $training->id }}">
+                                                Details
+                                            </button>
+                                            <button class="btn btn-sm btn-warning" disabled>
+                                                Pending
+                                            </button>
                                         @else
-                                            <a href="{{ route('training.register.form', $training->id) }}"
-                                                class="btn btn-sm btn-primary">
-                                                Daftar
-                                            </a>
+                                            <form action="{{ route('training.self.register', $training->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-primary">Daftar</button>
+                                            </form>
                                         @endif
                                     @else
                                         <a href="{{ route('login') }}" class="btn btn-sm btn-primary">
