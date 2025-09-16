@@ -59,11 +59,11 @@
         
         <!-- Subtitle -->
         <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 mb-2">
-            Halaman Tidak Ditemukan
+            Halaman 
         </h2>
         
         <p class="text-gray-600 mb-8 text-lg">
-            Maaf, halaman yang Anda cari tidak dapat ditemukan atau mungkin masih dalam pengembangan.
+            Maaf, halaman yang Anda cari masih dalam pengembangan.
         </p>
         
         <!-- GIF Placeholder -->

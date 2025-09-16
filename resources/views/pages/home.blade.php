@@ -117,16 +117,36 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+<!-- Banner -->
+<div class="youtube-banner">
+  <img src="{{ asset('images/Banner.png') }}" alt="Banner Training">
+</div>
+
+<style>
+.youtube-banner {
+  width: 100%;
+  height: auto; /* sesuaikan tinggi dengan desain */
+  overflow: hidden;
+  background-color: #000; /* fallback jika gambar gagal load */
+}
+.youtube-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* crop otomatis seperti YouTube */
+  display: block;
+}
+</style>
+
 
             <!-- Hero Section -->
             <div class="card mb-4">
                 <div class="card-body text-center py-5">
                     <h1 class="card-title">Selamat Datang di PT Dirgantara Indonesia</h1>
-                    <p class="card-subtitle text-muted">PT Dirgantara Indonesia (Indonesian-aircraft Industries) produces
-                        various types of aircraft to fulfill the needs of civil airlines, military operators and specific
-                        missions. Through many years in aircraft design, PTDI has become proficient in, capable of designing
-                        new aircraft and changing the aircraft's system configuration, and structure for specific mission
-                        purposes such as maritime patrol, surveillance and coast guard.</p>
+                    <p class="card-subtitle text-muted">PT Dirgantara Indonesia (Indonesian-aircraft Industries) memproduksi
+berbagai jenis pesawat untuk memenuhi kebutuhan maskapai sipil, operator militer, dan
+misi-misi tertentu. Selama bertahun-tahun berkecimpung dalam desain pesawat, PTDI telah menjadi ahli dalam merancang
+pesawat baru dan mengubah konfigurasi sistem serta struktur pesawat untuk misi-misi tertentu
+seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
                 </div>
             </div>
 
@@ -204,21 +224,84 @@
                 </div>
             </div>
 
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Apa Kata Mereka</h3>
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote">
-                        <p>“Bekerja di PTDI memberi saya kesempatan berkontribusi untuk negeri.”</p>
-                        <footer class="blockquote-footer">Rina, Engineer Senior</footer>
-                    </blockquote>
-                    <blockquote class="blockquote mt-3">
-                        <p>“Kami bangga menjadi mitra PTDI dalam pengembangan teknologi dirgantara.”</p>
-                        <footer class="blockquote-footer">Mitra Industri</footer>
-                    </blockquote>
-                </div>
-            </div>
+<!-- Apa Kata Mereka -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 class="card-title mb-0">💬 Apa Kata Mereka</h3>
+  </div>
+  <div class="card-body">
+    <div class="chat-container">
+
+      <!-- Chat 1 -->
+      <div class="chat-message left">
+        <img src="{{ asset('images/idk.png') }}" class="chat-avatar" alt="Rina">
+        <div class="chat-bubble">
+          <p>“Bekerja di PTDI memberi saya kesempatan berkontribusi untuk negeri.”</p>
+          <small class="chat-meta">Rina • Engineer Senior</small>
+        </div>
+      </div>
+
+      <!-- Chat 2 -->
+      <div class="chat-message left">
+        <img src="{{ asset('images/idk.png') }}" class="chat-avatar" alt="Mitra Industri">
+        <div class="chat-bubble">
+          <p>“Kami bangga menjadi mitra PTDI dalam pengembangan teknologi dirgantara.”</p>
+          <small class="chat-meta">Mitra Industri • Partner</small>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.chat-message {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.chat-message.left {
+  justify-content: flex-start;
+}
+.chat-message.right {
+  justify-content: flex-end;
+}
+.chat-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.chat-bubble {
+  max-width: 70%;
+  padding: 0.8rem 1rem;
+  border-radius: 15px;
+  position: relative;
+  background: #f1f1f1;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.chat-message.right .chat-bubble {
+  background: #d1e7ff;
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+.chat-meta {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+</style>
+
+
 
             <div class="row row-cards mb-4">
                 <div class="col-sm-4">
@@ -377,141 +460,187 @@
                 </div>
             </div>
 
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Informasi Tambahan</h3>
-                </div>
-                <div class="card-body">
-                    <div class="accordion" id="accordion-example">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading-one">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse-one" aria-expanded="true">
-                                    Sejarah Perusahaan
-                                </button>
-                            </h2>
-                            <div id="collapse-one" class="accordion-collapse collapse show"
-                                data-bs-parent="#accordion-example">
-                                <div class="accordion-body">
-                                    PT Dirgantara Indonesia (PTDI), sebelumnya dikenal sebagai IPTN, berdiri pada 26 April
-                                    1976 atas gagasan B.J. Habibie dan diresmikan Presiden Soeharto. Akar industrinya sudah
-                                    dimulai sejak 1953 melalui lembaga penerbangan milik AURI (kemudian LIPNUR).
+            <!-- Informasi Tambahan -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 class="card-title mb-0">📌 Informasi Tambahan</h3>
+  </div>
+  <div class="card-body">
+    <div class="accordion accordion-flush" id="accordionInfo">
 
-                                    Sejak berdiri, PTDI telah mengembangkan dan memproduksi berbagai pesawat, seperti
-                                    helikopter NBO-105, NC-212, CN-235, hingga N-219 yang mendapat sertifikasi pada 2020.
+      <!-- Sejarah Perusahaan -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
+            🏛️ Sejarah Perusahaan
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionInfo">
+          <div class="accordion-body">
+            <p>
+              PT Dirgantara Indonesia (PTDI), sebelumnya dikenal sebagai IPTN, berdiri pada <strong>26 April 1976</strong> atas gagasan B.J. Habibie dan diresmikan Presiden Soeharto. 
+              Akar industrinya dimulai sejak <strong>1953</strong> melalui lembaga penerbangan milik AURI (kemudian LIPNUR).
+            </p>
+            <p>
+              Sejak berdiri, PTDI telah mengembangkan dan memproduksi berbagai pesawat: helikopter <em>NBO-105</em>, <em>NC-212</em>, <em>CN-235</em>, hingga <em>N-219</em> yang mendapat sertifikasi pada 2020.
+            </p>
+            <p>
+              Perusahaan terdampak krisis 1998 dan berganti nama menjadi PTDI pada 2000. Kini, PTDI menjadi bagian dari <strong>DEFEND ID</strong> dengan fokus pada pengembangan pesawat, helikopter, dan UAV untuk sipil maupun militer.
+            </p>
+          </div>
+        </div>
+      </div>
 
-                                    Perusahaan ini sempat terdampak krisis 1998 dan berganti nama menjadi PTDI pada tahun
-                                    2000. Kini, PTDI menjadi bagian dari DEFEND ID (holding industri pertahanan nasional)
-                                    dengan fokus pada pengembangan pesawat terbang, helikopter, dan UAV untuk kebutuhan
-                                    sipil maupun militer.
-                                </div>
-                            </div>
-                        </div>
+      <!-- Produk & Layanan -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingProducts">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false">
+            🛠️ Produk & Layanan
+          </button>
+        </h2>
+        <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#accordionInfo">
+          <div class="accordion-body">
+            <h6 class="text-primary fw-bold">✈️ Pesawat Terbang</h6>
+            <ul>
+              <li><strong>NC212i</strong> – Pesawat angkut ringan 28 kursi.</li>
+              <li><strong>CN235</strong> – Pesawat turboprop multiguna.</li>
+              <li><strong>C295</strong> – Pesawat angkut sedang hasil kolaborasi dengan Airbus.</li>
+              <li><strong>N219 "Nurtanio"</strong> – Pesawat komuter 19 penumpang untuk bandara kecil & daerah terpencil.</li>
+            </ul>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading-products">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse-products" aria-expanded="true"
-                                    aria-controls="collapse-products">
-                                    Produk & Layanan
-                                </button>
-                            </h2>
-                            <div id="collapse-products" class="accordion-collapse collapse show"
-                                aria-labelledby="heading-products" data-bs-parent="#accordion-products">
-                                <div class="accordion-body">
+            <h6 class="text-primary fw-bold">🚁 Helikopter</h6>
+            <ul>
+              <li><strong>NBO-105</strong></li>
+              <li><strong>NAS-332 Super Puma</strong></li>
+              <li><strong>NBell-412</strong></li>
+              <li>Produksi, perakitan, dan modifikasi helikopter sipil & militer.</li>
+            </ul>
 
-                                    <h6 class="text-primary">Pesawat Terbang</h6>
-                                    <ul>
-                                        <li><strong>NC212i</strong> – Pesawat angkut ringan 28 kursi, penumpang & misi
-                                            khusus.</li>
-                                        <li><strong>CN235</strong> – Pesawat turboprop multiguna (penumpang, patroli
-                                            maritim, transport militer).</li>
-                                        <li><strong>C295</strong> – Pesawat angkut sedang hasil kolaborasi dengan Airbus.
-                                        </li>
-                                        <li><strong>N219 "Nurtanio"</strong> – Pesawat komuter 19 penumpang, cocok bandara
-                                            kecil & daerah terpencil.</li>
-                                    </ul>
+            <h6 class="text-primary fw-bold">⚙️ Engineering & MRO</h6>
+            <ul>
+              <li>Maintenance, Repair & Overhaul (MRO).</li>
+              <li>Rekayasa teknik: desain, prototyping, integrasi avionik.</li>
+              <li>Penyediaan suku cadang & upgrade sistem pesawat.</li>
+            </ul>
 
-                                    <h6 class="text-primary">Helikopter</h6>
-                                    <ul>
-                                        <li><strong>NBO-105</strong></li>
-                                        <li><strong>NAS-332 Super Puma</strong></li>
-                                        <li><strong>NBell-412</strong></li>
-                                        <li>Produksi, perakitan, dan modifikasi helikopter berlisensi sipil & militer.</li>
-                                    </ul>
+            <h6 class="text-primary fw-bold">🤝 Inovasi & Kolaborasi</h6>
+            <ul>
+              <li>Kerja sama dengan <strong>Airbus Defense & Space</strong> (CN235/C295).</li>
+              <li>Proyek <strong>KF-21 Boramae</strong> bersama Korea Selatan.</li>
+              <li>Pengembangan UAV seperti <strong>Elang Hitam</strong> untuk pertahanan udara.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-                                    <h6 class="text-primary">Engineering & MRO</h6>
-                                    <ul>
-                                        <li>Maintenance, Repair & Overhaul (MRO) pesawat dan helikopter.</li>
-                                        <li>Rekayasa teknik: desain, prototyping, integrasi sistem avionik.</li>
-                                        <li>Penyediaan suku cadang & upgrade sistem pesawat.</li>
-                                    </ul>
+      <!-- Visi & Misi -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+            🎯 Visi & Misi
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionInfo">
+          <div class="accordion-body">
+            <p><strong>Visi:</strong> <br>
+              Menjadi market leader pesawat turboprop menengah & ringan, serta acuan perusahaan dirgantara Asia Pasifik dengan kompetensi terbaik.
+            </p>
+            <p><strong>Misi:</strong></p>
+            <ol>
+              <li>Menjadi pusat kompetensi industri kedirgantaraan & misi militer.</li>
+              <li>Menjadi pemain kunci global melalui aliansi strategis.</li>
+              <li>Menyediakan produk & jasa kompetitif dalam kualitas dan biaya.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
 
-                                    <h6 class="text-primary">Inovasi & Kolaborasi</h6>
-                                    <ul>
-                                        <li>Kerja sama dengan <strong>Airbus Defense & Space</strong> (CN235/C295).</li>
-                                        <li>Proyek pesawat tempur <strong>KF-21 Boramae</strong> bersama Korea Selatan.</li>
-                                        <li>Pengembangan UAV (drone) seperti <strong>Elang Hitam</strong> untuk pertahanan
-                                            udara.</li>
-                                    </ul>
+    </div>
+  </div>
+</div>
 
-                                </div>
-                            </div>
-                        </div>
+<style>
+.accordion-button {
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+.accordion-button:not(.collapsed) {
+  background: #e9f2ff;
+  color: #0d6efd;
+}
+.accordion-body p, .accordion-body ul, .accordion-body ol {
+  margin-bottom: 0.8rem;
+}
+.accordion-body ul li {
+  margin-bottom: 0.4rem;
+}
+</style>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading-three">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapse-three">
-                                    Visi & Misi
-                                </button>
-                            </h2>
-                            <div id="collapse-three" class="accordion-collapse collapse"
-                                data-bs-parent="#accordion-example">
-                                <div class="accordion-body">
-                                    <strong>Visi:</strong><br>
-                                    Menjadi market leader pesawat terbang turboprop kelas menengah dan ringan, serta menjadi
-                                    acuan dari perusahaan dirgantara di wilayah Asia Pasifik dengan mengoptimalkan
-                                    kompetensi industri dan komersial terbaik.
-                                    <br><br>
-                                    <strong>Misi:</strong><br>
-                                    1. Menjadi pusat kompetensi dalam industri kedirgantaraan dan misi militer serta untuk
-                                    aplikasi non-aerospace yang relevan.<br>
-                                    2. Menjadi pemain kunci di industri global melalui aliansi strategis dengan industri
-                                    dirgantara kelas dunia lainnya.<br>
-                                    3. Memberikan produk dan jasa yang kompetitif dalam hal kualitas dan biaya.
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Kritik & Saran -->
+<div class="card shadow-sm border-0 mb-4" id="feedback">
+  <div class="card-header bg-primary text-white text-center">
+    <h3 class="card-title mb-0">✉️ Kritik & Saran</h3>
+  </div>
+  <div class="card-body">
+    <form action="{{ route('feedback') }}" method="POST">
+      @csrf
+      @if (session('success'))
+        <div class="alert alert-success rounded-3 shadow-sm">
+          {{ session('success') }}
+        </div>
+      @endif
 
-            <div class="card mb-4" id="feedback">
-                <div class="card-header">
-                    <h3 class="card-title">Kritik & Saran</h3>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('feedback') }}" method="POST">
-                        @csrf
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                        <div class="mb-3">
-                            <label class="form-label">Nama</label>
-                            <input type="text" class="form-control" name="nama_pengirim" placeholder="Nama Anda">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Pesan</label>
-                            <textarea class="form-control" name="pesan" rows="4" placeholder="Tulis saran atau masukan Anda..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
-                    </form>
-                </div>
-            </div>
+      <!-- Nama -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-person-circle me-1"></i> Nama
+        </label>
+        <input 
+          type="text" 
+          class="form-control form-control-lg rounded-3" 
+          name="nama_pengirim" 
+          placeholder="Masukkan nama Anda" 
+          required>
+      </div>
+
+      <!-- Pesan -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-chat-dots me-1"></i> Pesan
+        </label>
+        <textarea 
+          class="form-control form-control-lg rounded-3" 
+          name="pesan" 
+          rows="4" 
+          placeholder="Tulis saran atau masukan Anda..." 
+          required></textarea>
+      </div>
+
+      <!-- Tombol Kirim -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg rounded-3 shadow-sm">
+          <i class="bi bi-send-fill me-1"></i> Kirim
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+#feedback .form-control {
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+#feedback .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 8px rgba(13,110,253,0.2);
+}
+#feedback textarea {
+  resize: none;
+}
+</style>
+
 
         </div>
     </div>
