@@ -91,6 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(TaskSubmission::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     /**
      * Get the user's primary role
      */

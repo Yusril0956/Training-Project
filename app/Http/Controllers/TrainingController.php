@@ -8,6 +8,7 @@ use App\Models\JenisTraining;
 use App\Models\User;
 use App\Models\Tasks;
 use App\Models\TrainingMember;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class TrainingController extends Controller
@@ -394,6 +395,13 @@ class TrainingController extends Controller
         $member = TrainingMember::findOrFail($memberId);
         $member->update(['status' => 'accept']);
 
+        // Create notification
+        Notification::create([
+            'user_id' => $member->user_id,
+            'title' => 'Pendaftaran Training Diterima',
+            'message' => 'Selamat! Pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah diterima.',
+        ]);
+
         return redirect()->back()->with('success', 'Peserta telah diterima.');
     }
 
@@ -401,6 +409,13 @@ class TrainingController extends Controller
     {
         $member = TrainingMember::findOrFail($memberId);
         $member->update(['status' => 'reject']);
+
+        // Create notification
+        Notification::create([
+            'user_id' => $member->user_id,
+            'title' => 'Pendaftaran Training Ditolak',
+            'message' => 'Maaf, pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah ditolak.',
+        ]);
 
         return redirect()->back()->with('success', 'Peserta telah ditolak.');
     }
