@@ -43,12 +43,12 @@ class isMember
             }
         }
 
-        $isMember = \App\Models\TrainingMember::whereHas('trainingDetail', function($q) use ($trainingId) {
+        $isMember = \App\Models\TrainingMember::whereHas('trainingDetail', function ($q) use ($trainingId) {
             $q->where('training_id', $trainingId);
         })->where('user_id', $user->id)->exists();
 
         if (!$isMember) {
-            return redirect()->route('training.register.form', $trainingId);
+            return redirect()->route('training.register', $trainingId);
         }
 
         return $next($request);

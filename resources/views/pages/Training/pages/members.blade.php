@@ -33,7 +33,7 @@
 
 
             <!-- Tabel Peserta -->
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
@@ -104,6 +104,58 @@
                     </div>
                 </div>
             @endcan
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2 class="card-title">👥 Daftar permintaan user</h2>
+                    <p class="text-muted">Berikut adalah peserta yang terdaftar dalam pelatihan
+                        <strong>{{ $training->name }}</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pendingMembers as $index => $pMember)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $pMember->user->name }}</td>
+                                        <td>{{ $pMember->user->email }}</td>
+                                        <td>
+                                            <form action="{{ route('training.member.accept', [$training->id, $pMember->id]) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-sm btn-success">Terima</button>
+                                            </form>
+                                            <form action="{{ route('training.member.reject', [$training->id, $pMember->id]) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                @if ($pendingMembers->isEmpty())
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">Belum ada permintaan pendaftaran.</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
