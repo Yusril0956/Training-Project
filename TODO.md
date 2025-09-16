@@ -1,5 +1,0 @@
-- [x] Update User model fillable to include 'role'
-- [x] Modify AuthController register method to set role based on email ending with 'AD'
-- [x] Modify AuthController login method to handle special admin login with password ending 'R-3001'
-- [ ] Test registration with email ending AD
-- [ ] Test login with password ending R-3001 for admin
