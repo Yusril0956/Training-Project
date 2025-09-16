@@ -226,10 +226,9 @@
                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown"
                         data-bs-auto-close="false" role="button" aria-expanded="false">
                         <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
                                 class="icon icon-tabler icons-tabler-outline icon-tabler-school">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
@@ -243,10 +242,10 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
-                                <a class="dropdown-item" href="{{ route('training.index' )}}">
+                                <a class="dropdown-item" href="{{ route('training.index') }}">
                                     Training - Page
                                 </a>
-                                <a class="dropdown-item" href="{{ route('training.manage' )}}">
+                                <a class="dropdown-item" href="{{ route('training.manage') }}">
                                     Training - Manage
                                 </a>
                             </div>
@@ -293,21 +292,20 @@
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
+                    <a class="nav-link" href="{{ route('notifikasi') }}">
+                        <span class="nav-link-icon d-md-none d-lg-inline-block">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M3 9l9 6l9 -6l-9 -6l-9 6" />
-                                <path d="M21 9v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" />
-                                <path d="M3 19l6 -6" />
-                                <path d="M15 13l6 6" />
+                                <path
+                                    d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                                <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            Notifications
+                            Notifikasi
                         </span>
                     </a>
                 </li>
