@@ -84,15 +84,13 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
+            'nik' => 'required|numeric|digits:6',
         ]);
 
         $user = User::find(Auth::id());
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->address = $request->address;
+        $user->nik = $request->nik;
         $user->save();
 
         return redirect()->back()->with('success', 'Profile berhasil diperbarui!');
