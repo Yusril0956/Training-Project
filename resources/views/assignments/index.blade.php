@@ -1,4 +1,4 @@
-@extends('layouts.app')
+<!-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -29,4 +29,4 @@
         <p>Tidak ada assignment untuk training ini.</p>
     @endif
 </div>
-@endsection
+@endsection -->

@@ -1,4 +1,4 @@
-@extends('layouts.app') {{-- atau layouts.admin kalau kamu pakai dashboard admin --}}
+<!-- @extends('layouts.app') {{-- atau layouts.admin kalau kamu pakai dashboard admin --}}
 
 @section('content')
 <div class="container">
@@ -38,4 +38,4 @@
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>
-@endsection
+@endsection -->

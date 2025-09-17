@@ -292,7 +292,8 @@
     </div>
 
     <!-- Daftar Tugas -->
-<div class="card mt-4">
+     <!-- SALAH BIKIN FITUR NJIRR :V -->
+<!-- <div class="card mt-4">
     <div class="card-header">
         <h3 class="card-title">📘 Daftar Tugas</h3>
         <a href="{{ route('assignments.create', $training->id ?? 1) }}" class="btn btn-sm btn-primary float-end">
@@ -331,7 +332,7 @@
             </tbody>
         </table>
     </div>
-</div>
+</div> -->
 
 
     @include('components._modal')
