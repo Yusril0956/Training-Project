@@ -14,6 +14,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AssignmentController; 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -83,6 +84,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard & General Pages
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
+    Route::get('/notifikasi', [DashboardController::class, 'notification'])->name('notifikasi');
     Route::get('/help', fn() => view('pages.help'))->name('help');
     Route::get('/services', fn() => view('pages.services'))->name('services');
     Route::get('/company-detail', fn() => view('pages.company-detail'))->name('company.detail');
@@ -114,6 +116,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/training/store', [TrainingController::class, 'store'])->name('training.store');
     Route::delete('/training/{id}/reject', [TrainingController::class, 'reject'])->name('training.reject');
     Route::put('/training/{id}/approve', [TrainingController::class, 'approve'])->name('training.approve');
+    Route::get('/training/{id}/absen', [TrainingController::class, 'absen'])->name('training.absen');
+    Route::post('/training/absen/mark/{memberId}', [TrainingController::class, 'markAttendance'])->name('training.absen.mark');
 
     // // training customer requested
     // Route::get('/training/customer-requested/{id}', [TrainingController::class, 'crPage'])->name('cr.page');

@@ -21,6 +21,33 @@ class TrainingController extends Controller
         return view('pages.Training.index');
     }
 
+    public function absen($id)
+    {
+        $training = Training::with(['detail', 'jenisTraining'])->findOrFail($id);
+
+        // Load members with attendance eager loaded
+        $members = $training->members()->with(['user', 'attendance'])->get();
+
+        return view('pages.Training.absen', compact('training', 'members'));
+    }
+
+    public function markAttendance($memberId)
+    {
+        $member = \App\Models\TrainingMember::findOrFail($memberId);
+
+        // Check if attendance already exists
+        if ($member->attendance()->count() > 0) {
+            return redirect()->back()->with('error', 'Peserta sudah melakukan absen.');
+        }
+
+        $member->attendance()->create([
+            'attended_at' => now(),
+            'status' => 'present',
+        ]);
+
+        return redirect()->back()->with('success', 'Absen berhasil dicatat.');
+    }
+
     public function generalKnowledge(Request $request)
     {
         $jenisGK = JenisTraining::where('code', 'GK')->firstOrFail();
@@ -306,10 +333,16 @@ class TrainingController extends Controller
             }
 
             // Create new training member
-            TrainingMember::create([
+            $newMember = TrainingMember::create([
                 'training_detail_id' => $trainingDetail->id,
                 'user_id' => $userId,
                 'series' => 'TRN-' . strtoupper(uniqid()),
+            ]);
+
+            // Create attendance record automatically
+            $newMember->attendance()->create([
+                'attended_at' => now(),
+                'status' => 'present',
             ]);
 
             $addedCount++;
@@ -378,6 +411,7 @@ class TrainingController extends Controller
         if ($existingMember) {
             return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
         }
+        // Create new training member
 
         // Create new training member with pending status
         TrainingMember::create([

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Assignment;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class DashboardController extends Controller
 {
@@ -21,30 +22,39 @@ class DashboardController extends Controller
     }
 
     public function admin()
-{
-    $users = User::all();
-    $assignments = Assignment::all(); // ✅ ambil semua tugas
+    {
+        $users = User::all();
+        $assignments = Assignment::all(); // ✅ ambil semua tugas
 
-    // data untuk modal
-    $modalId = 'deleteUser';
-    $modalTitle = 'Delete User';
-    $modalDescription = 'Are you sure you want to delete this user?';
-    $modalButton = 'Delete';
-    $formMethod = 'DELETE';
+        // data untuk modal
+        $modalId = 'deleteUser';
+        $modalTitle = 'Delete User';
+        $modalDescription = 'Are you sure you want to delete this user?';
+        $modalButton = 'Delete';
+        $formMethod = 'DELETE';
 
-    return view('pages.admin', compact(
-        'users',
-        'assignments',   // ✅ kirim ke view
-        'modalId',
-        'modalTitle',
-        'modalDescription',
-        'modalButton',
-        'formMethod'
-    ));
-}
+        return view('pages.admin', compact(
+            'users',
+            'assignments',   // ✅ kirim ke view
+            'modalId',
+            'modalTitle',
+            'modalDescription',
+            'modalButton',
+            'formMethod'
+        ));
+    }
 
-    public function tManage(){
+    public function tManage()
+    {
         return view('pages.training-manage');
+    }
+
+    public function notification()
+    {
+        $user = Auth::user();
+        $notifications = $user->notifications()->orderBy('created_at', 'desc')->get();
+
+        return view('pages.notifikasi', compact('notifications'));
     }
 
     public function userUpdate(Request $request, $id)
