@@ -28,7 +28,7 @@
                 <td>{{ $training->jenisTraining->name ?? '-' }}</td>
                 <td>
                     @if($member->attendance->count() > 0)
-                        Sudah Absen pada {{ $member->attendance->last()->attended_at->format('d-m-Y H:i') }}
+                        Mengikuti Pelatihan Pada {{ $member->attendance->last()->attended_at->format('d-m-Y H:i') }}
                     @else
                         Belum Absen
                     @endif
@@ -40,7 +40,7 @@
                         <button type="submit" class="btn btn-primary btn-sm">Absen Sekarang</button>
                     </form>
                     @else
-                        <button class="btn btn-secondary btn-sm" disabled>Sudah Absen</button>
+                        <button class="btn btn-secondary btn-sm" disabled>berhasil absen</button>
                     @endif
                 </td>
             </tr>
