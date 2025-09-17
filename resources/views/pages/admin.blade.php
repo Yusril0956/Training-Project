@@ -240,34 +240,18 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">NIK</label>
-                            <input type="text" maxlength="16" class="form-control" name="nik">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">No. Telepon</label>
-                            <input type="text" maxlength="16" class="form-control" name="phone">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Alamat</label>
-                            <input type="text" class="form-control" name="address">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Kota</label>
-                            <input type="text" class="form-control" name="city">
+                            <input type="text" maxlength="6" class="form-control" name="nik" placeholder="Masukkan NIK 16 digit">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="text" class="form-control" name="email" placeholder="Your report name">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Your report name">
+                            <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Role</label>
                             <select class="form-select" name="role" id="add-role">
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Staff">Staff</option>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                                <option value="staff">Staff</option>
                             </select>
                         </div>
                         <div class="mb-3">
