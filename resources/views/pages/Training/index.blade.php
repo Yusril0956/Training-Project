@@ -37,39 +37,52 @@
               <p class="text-muted">{{ Str::limit($training->description, 80) }}</p>
 
               {{-- Badges --}}
-              <div class="mb-3">
-                <span class="badge bg-info">
-                  <i class="ti ti-tag me-1"></i> {{ $training->jenisTraining->name }}
-                </span>
-                <span class="badge bg-secondary">
-                  <i class="ti ti-category me-1"></i> {{ ucfirst($training->category) }}
-                </span>
+              <div class="mb-2">
+                @if ($training->detail)
+                    <span class="badge bg-primary">
+                        {{ \Carbon\Carbon::parse($training->detail->start_date)->format('d M Y') }}
+                        &ndash;
+                        {{ \Carbon\Carbon::parse($training->detail->end_date)->format('d M Y') }}
+                    </span>
+                @else
+                    <span class="badge bg-warning">Belum Dijadwalkan</span>
+                @endif
+                <span class="badge bg-primary">{{ $training->category ?? 'N/A' }}</span>
               </div>
 
               {{-- Aksi --}}
-              <div class="d-flex justify-content-between">
-                {{-- Detail --}}
-                <a
-                  href="#"
-                  class="btn btn-sm btn-outline-info"
-                > {{-- href="{{ route('training.show', $training->id) }}" --}}
-                  <i class="ti ti-eye"></i> Detail
-                </a>
-                {{-- Daftar / Login --}}
+              <div class="d-flex justify-content-between align-items-center">
                 @auth
-                  <a
-                    href="{{ route('training.register', $training->id) }}"
-                    class="btn btn-sm btn-primary"
-                  >
-                    <i class="ti ti-book-plus"></i> Daftar
-                  </a>
+                    @php
+                        $status = $userStatuses[$training->id] ?? 'none';
+                    @endphp
+
+                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $status === 'accept')
+                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
+                            data-bs-target="#detailCanvas-{{ $training->id }}">
+                            Details
+                        </button>
+                        <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">
+                            Lihat
+                        </a>
+                    @elseif ($status === 'pending')
+                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
+                            data-bs-target="#detailCanvas-{{ $training->id }}">
+                            Details
+                        </button>
+                        <button class="btn btn-sm btn-warning" disabled>
+                            Pending
+                        </button>
+                    @else
+                        <form action="{{ route('training.self.register', $training->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-primary">Daftar</button>
+                        </form>
+                    @endif
                 @else
-                  <a
-                    href="{{ route('login') }}"
-                    class="btn btn-sm btn-primary"
-                  >
-                    <i class="ti ti-login"></i> Login
-                  </a>
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-primary">
+                        Login untuk Daftar
+                    </a>
                 @endauth
               </div>
             </div>
@@ -83,6 +96,41 @@
         </div>
       @endforelse
     </div>
+
+    {{-- Offcanvas Details --}}
+    @foreach($trainings as $training)
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="detailCanvas-{{ $training->id }}">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">{{ $training->name }} – Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p><strong>Deskripsi:</strong> {{ $training->description }}</p>
+                @if ($training->detail)
+                    <p>
+                        <strong>Periode:</strong>
+                        {{ \Carbon\Carbon::parse($training->detail->start_date)->format('d M Y') }}
+                        hingga
+                        {{ \Carbon\Carbon::parse($training->detail->end_date)->format('d M Y') }}
+                    </p>
+                @endif
+                <p><strong>Jenis:</strong> {{ $training->jenisTraining->name ?? 'N/A' }}</p>
+                <p><strong>Jumlah Peserta:</strong> {{ $training->members->count() }}</p>
+
+                <hr>
+
+                <h6>Matriks Materi</h6>
+                <ul>
+                    @foreach ($training->materis as $mat)
+                        <li>{{ $mat->title }}</li>
+                    @endforeach
+                    @if ($training->materis->isEmpty())
+                        <li class="text-muted">Belum ada materi</li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+    @endforeach
 
     <div class="mt-4 d-flex justify-content-center">
       {{ $trainings->withQueryString()->links() }}

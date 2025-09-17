@@ -18,11 +18,21 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        $trainings = Training::with('jenisTraining')
-        ->where('status', 'approved')
-        ->paginate(9);
+        $trainings = Training::with(['jenisTraining', 'detail', 'members', 'materis'])
+            ->where('status', 'approved')
+            ->paginate(9);
 
-        return view('pages.Training.index', compact('trainings'));
+        $userId = Auth::id();
+
+        // Prepare arrays to hold user statuses for each training
+        $userStatuses = [];
+
+        foreach ($trainings as $training) {
+            $member = $training->members->where('user_id', $userId)->first();
+            $userStatuses[$training->id] = $member ? $member->status : 'none';
+        }
+
+        return view('pages.Training.index', compact('trainings', 'userStatuses'));
     }
 
     public function absen($id)

@@ -30,7 +30,7 @@
                             <option value="">🔍 Semua Jenis</option>
                             @foreach ($jenisTraining as $jenis)
                                 <option value="{{ $jenis->id }}" {{ request('jenis') == $jenis->id ? 'selected' : '' }}>
-                                    {{ $jenis->nama }} ({{ $jenis->kode }})
+                                    {{ $jenis->name }} ({{ $jenis->code }})
                                 </option>
                             @endforeach
                         </select>
@@ -61,7 +61,6 @@
                                     <th>Nama Pelatihan</th>
                                     <th>Jenis</th>
                                     <th>Kategori</th>
-                                    <th>Klien</th>
                                     <th>Status</th>
                                     <th>Periode</th>
                                     <th class="text-end">Aksi</th>
@@ -73,10 +72,9 @@
                                         <td>{{ $trainings->firstItem() + $i }}</td>
                                         <td>{{ $t->name }}</td>
                                         <td>
-                                            <span class="badge bg-info">{{ $t->jenisTraining->nama }}</span>
+                                            <span class="badge bg-info">{{ $t->jenisTraining->name }}</span>
                                         </td>
                                         <td>{{ $t->category }}</td>
-                                        <td>{{ $t->client }}</td>
                                         <td>
                                             @if ($t->status === 'approved')
                                                 <span class="badge bg-success">Approved</span>
@@ -190,7 +188,7 @@
                                 <select name="jenis_training_id" class="form-select" required>
                                     <option value="">Pilih Jenis</option>
                                     @foreach ($jenisTraining as $jenis)
-                                        <option value="{{ $jenis->id }}">{{ $jenis->nama }} ({{ $jenis->kode }})
+                                        <option value="{{ $jenis->id }}">{{ $jenis->name }} ({{ $jenis->code }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -199,11 +197,6 @@
                                 <label class="form-label">Kategori</label>
                                 <input type="text" name="category" class="form-control"
                                     placeholder="Contoh: Risk Management" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Klien</label>
-                                <input type="text" name="client" class="form-control"
-                                    placeholder="Contoh: PT. Contoh Indonesia" />
                             </div>
                             <div class="col-12">
                                 <label class="form-label">Deskripsi</label>
