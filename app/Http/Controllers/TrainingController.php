@@ -311,6 +311,31 @@ class TrainingController extends Controller
         return view('pages.Training.addMember', compact('training', 'users'));
     }
 
+    public function addUserMember(Request $request, $trainingId)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nik' => 'required|numeric|digits:6',
+            'email' => 'required|email|unique:users,email',
+            'status' => 'required',
+        ]);
+
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'nik' => $request->nik,
+                'password' => $request->nik,
+                'role' => 'user',
+                'status' => $request->status,
+            ]);
+            $request->merge(['user_ids' => [\DB::getPdo()->lastInsertId()]]); // tambahkan user_id baru ke request
+            return $this->addMember($request, $trainingId);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menambahkan user!');
+        }
+    }
+
     public function addMember(Request $request, $trainingId)
     {
         $request->validate([

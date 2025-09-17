@@ -13,24 +13,25 @@
                 ],
             ])
             <!-- Header -->
-            <div class="card mb-3x">
+            <div class="card mb-3">
                 <div class="card-body">
                     <h2 class="card-title">👥 Daftar Peserta</h2>
                     <p class="text-muted">Berikut adalah peserta yang terdaftar dalam pelatihan
                         <strong>{{ $training->name }}</strong>.
                     </p>
+
+                    <div class="col-auto ms-auto">
+                        <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
+                            <i class="ti ti-user-plus me-1"></i>
+                            Add Member
+                        </a>
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
+                            <i class="ti ti-user-plus me-1"></i>
+                            Add User + member
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <div class="row g-2 align-items-center">
-                <div class="col-auto ms-auto">
-                    <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
-                        <i class="ti ti-user-plus me-1"></i>
-                        Add Member
-                    </a>
-                </div>
-            </div>
-
 
             <!-- Tabel Peserta -->
             <div class="card mb-3">
@@ -133,12 +134,16 @@
                                         <td>{{ $pMember->user->name }}</td>
                                         <td>{{ $pMember->user->email }}</td>
                                         <td>
-                                            <form action="{{ route('training.member.accept', [$training->id, $pMember->id]) }}" method="POST" style="display: inline;">
+                                            <form
+                                                action="{{ route('training.member.accept', [$training->id, $pMember->id]) }}"
+                                                method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-success">Terima</button>
                                             </form>
-                                            <form action="{{ route('training.member.reject', [$training->id, $pMember->id]) }}" method="POST" style="display: inline;">
+                                            <form
+                                                action="{{ route('training.member.reject', [$training->id, $pMember->id]) }}"
+                                                method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
@@ -148,7 +153,8 @@
                                 @endforeach
                                 @if ($pendingMembers->isEmpty())
                                     <tr>
-                                        <td colspan="4" class="text-center text-muted">Belum ada permintaan pendaftaran.</td>
+                                        <td colspan="4" class="text-center text-muted">Belum ada permintaan pendaftaran.
+                                        </td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -158,6 +164,59 @@
             </div>
 
         </div>
+    </div>
+
+    <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
+        <form action="{{ route('add.user.member', $training->id) }}" method="POST">
+            @csrf
+            @if ($errors->any())
+                <div class="alert alert-danger alert-fixed-top-right">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                </div>
+            @endif
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">NIK</label>
+                            <input type="text" maxlength="6" class="form-control" name="nik" placeholder="Masukkan NIK 6 digit">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" name="status" id="add-status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary ms-auto">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">

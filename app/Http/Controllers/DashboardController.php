@@ -91,7 +91,7 @@ class DashboardController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'nik' => $request->nik,
-                'password' => bcrypt('tr-' . substr($request->nik, -4)),
+                'password' => $request->nik,
                 'role' => $request->role,
                 'status' => $request->status,
             ]);
