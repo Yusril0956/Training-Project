@@ -363,7 +363,7 @@ class TrainingController extends Controller
         foreach ($request->user_ids as $userId) {
             // Check if user is already a member
             $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
-                ->where('user_id', $userId)
+                ->where('user_id', $userId)->where('status', 'accept')
                 ->first();
 
             if ($existingMember) {
@@ -375,6 +375,7 @@ class TrainingController extends Controller
             $newMember = TrainingMember::create([
                 'training_detail_id' => $trainingDetail->id,
                 'user_id' => $userId,
+                'status' => 'accept',
                 'series' => 'TRN-' . strtoupper(uniqid()),
             ]);
 
@@ -399,6 +400,12 @@ class TrainingController extends Controller
         if ($request->message) {
             $message .= " Pesan: " . $request->message;
         }
+
+        Notification::create([
+            'user_id' => Auth::id(),
+            'title' => 'Anda telah ditambahkan ke ' . $training->name,
+            'message' => 'Anda telah ditambahkan ke ' . $training->name . 'selamat datang',
+        ]);
 
         return redirect()->route('training.members', $trainingId)->with('success', $message);
     }
