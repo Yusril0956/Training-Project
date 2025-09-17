@@ -80,12 +80,8 @@ class DashboardController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'nik' => 'required|numeric|digits:16',
-            'phone' => 'required|numeric|digits_between:10,15',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
+            'nik' => 'required|numeric|digits:6',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
             'role' => 'required|in:admin,user,staff',
             'status' => 'required',
         ]);
@@ -95,10 +91,7 @@ class DashboardController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'nik' => $request->nik,
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'city' => $request->city,
-                'password' => bcrypt($request->password),
+                'password' => bcrypt('tr-' . substr($request->nik, -4)),
                 'role' => $request->role,
                 'status' => $request->status,
             ]);
