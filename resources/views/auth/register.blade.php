@@ -63,51 +63,12 @@
 
                     <form action="{{ url('/register') }}" method="POST" autocomplete="off" novalidate>
                         @csrf
-                        <!-- Nama -->
+                        <!-- Username -->
                         <div class="mb-3">
-                            <label class="form-label">Nama</label>
+                            <label class="form-label">Username</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                name="name" value="{{ old('name') }}" placeholder="Enter name" required>
+                                name="name" value="{{ old('name') }}" placeholder="Enter username" required>
                             @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- NIK -->
-                        <div class="mb-3">
-                            <label class="form-label">NIK</label>
-                            <input type="text" maxlength="16" class="form-control @error('nik') is-invalid @enderror"
-                                name="nik" value="{{ old('nik') }}" placeholder="Nomor Induk Kependudukan" required>
-                            @error('nik')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Nomor Telepon -->
-                        <div class="mb-3">
-                            <label class="form-label">Nomor Telepon</label>
-                            <input type="text" maxlength="15" class="form-control @error('phone') is-invalid @enderror"
-                                name="phone" value="{{ old('phone') }}" placeholder="Contoh: 081234567890" pattern="\d*" required>
-                            @error('phone')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Alamat Lengkap -->
-                        <div class="mb-3">
-                            <label class="form-label">Alamat</label>
-                            <textarea class="form-control @error('address') is-invalid @enderror" name="address" rows="3" placeholder="Alamat lengkap" required>{{ old('address') }}</textarea>
-                            @error('address')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Kota -->
-                        <div class="mb-3">
-                            <label class="form-label">Kota</label>
-                            <input type="text" class="form-control @error('city') is-invalid @enderror"
-                                name="city" value="{{ old('city') }}" placeholder="Kota tempat tinggal" required>
-                            @error('city')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -118,6 +79,16 @@
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                 name="email" value="{{ old('email') }}" placeholder="your@email.com" autocomplete="off" required>
                             @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- NIK -->
+                        <div class="mb-3">
+                            <label class="form-label">NIK</label>
+                            <input type="text" maxlength="6" class="form-control @error('nik') is-invalid @enderror"
+                                name="nik" value="{{ old('nik') }}" placeholder="Nomor Induk (6 digit)" required>
+                            @error('nik')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
