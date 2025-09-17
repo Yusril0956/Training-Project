@@ -109,7 +109,7 @@
                         </h3>
                         <div class="row g-3">
                             <div class="col-md">
-                                <div class="form-label">Name</div>
+                                <div class="form-label">Username</div>
                                 <div class="form-control-plaintext">{{ $user->name }}</div>
                             </div>
                             <div class="col-md">
@@ -117,16 +117,12 @@
                                 <div class="form-control-plaintext">{{ $user->email }}</div>
                             </div>
                             <div class="col-md">
-                                <div class="form-label">Telepon</div>
-                                <div class="form-control-plaintext">{{ $user->phone }}</div>
+                                <div class="form-label">NIK</div>
+                                <div class="form-control-plaintext">{{ $user->nik }}</div>
                             </div>
                         </div>
 
                         <div class="row g-3 mt-2">
-                            <div class="col-md">
-                                <div class="form-label">Alamat</div>
-                                <div class="form-control-plaintext">{{ $user->address }}</div>
-                            </div>
                             <div class="col-md">
                                 <div class="form-label">Role</div>
                                 <div class="form-control-plaintext">{{ $user->roles->pluck('name')->join(', ') }}</div>
@@ -233,7 +229,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Name</label>
+                        <label class="form-label">Username</label>
                         <input type="text" class="form-control" name="name" id="edit-profile-name" required>
                     </div>
                     <div class="mb-3">
@@ -241,12 +237,8 @@
                         <input type="email" class="form-control" name="email" id="edit-profile-email" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Telepon</label>
-                        <input type="text" class="form-control" name="phone" id="edit-profile-phone">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Alamat</label>
-                        <textarea class="form-control" name="address" id="edit-profile-address" rows="3"></textarea>
+                        <label class="form-label">NIK</label>
+                        <input type="text" class="form-control" name="nik" id="edit-profile-nik" maxlength="6" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -272,8 +264,7 @@
                 editProfileModal.addEventListener('show.bs.modal', function() {
                     document.getElementById('edit-profile-name').value = '{{ $user->name }}';
                     document.getElementById('edit-profile-email').value = '{{ $user->email }}';
-                    document.getElementById('edit-profile-phone').value = '{{ $user->phone ?? '' }}';
-                    document.getElementById('edit-profile-address').value = '{{ $user->address ?? '' }}';
+                    document.getElementById('edit-profile-nik').value = '{{ $user->nik ?? '' }}';
                 });
             }
 
