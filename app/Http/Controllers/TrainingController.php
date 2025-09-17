@@ -18,7 +18,11 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        return view('pages.Training.index');
+        $trainings = Training::with('jenisTraining')
+        ->where('status', 'approved')
+        ->paginate(9);
+
+        return view('pages.Training.index', compact('trainings'));
     }
 
     public function absen($id)
@@ -33,7 +37,7 @@ class TrainingController extends Controller
 
     public function markAttendance($memberId)
     {
-        $member = \App\Models\TrainingMember::findOrFail($memberId);
+        $member = TrainingMember::findOrFail($memberId);
 
         // Check if attendance already exists
         if ($member->attendance()->count() > 0) {
