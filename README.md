@@ -62,12 +62,18 @@ Terima kasih kepada semua kontributor proyek ini! 🎉
 # Toturial pasang di Vscode
 
 Login dulu ke git hub
+
 git config --global --unset user.name
+
 git config --global --unset user.email
 
+
 clone repo dengan cara
+
 Ctrl + Shift + p
+
 ketik Git:clone
+
 masukan link https://github.com/Yusril0956/Training-Project.git
 
 ---
@@ -75,8 +81,11 @@ masukan link https://github.com/Yusril0956/Training-Project.git
 ### Cara mengatasi Error vendor/autoload.php
 
 composer -v
+
 masuk ke folder laravel
+
 composer install
+
 Jika composer lock tidak ada gunakan: composer update
 
 ---
@@ -84,6 +93,7 @@ Jika composer lock tidak ada gunakan: composer update
 ### Cara mengatasi error login admin
 
 php artisan migrate
+
 php artisan db:seed
 
 ---
@@ -91,7 +101,9 @@ php artisan db:seed
 #### Untuk membuat database di sqlite atau mysql ada di .env
 
 jika ingin mysql hapus tanda #
+
 jika ingin sqlite tambah file ksong bernama database.sqlite di database
+
 setelah itu php artisan migrate
 
 ---
@@ -106,7 +118,9 @@ php artisan key:Generate
 ### clear cache laravel
 
 php artisan config:clear
+
 php artisan cache:clear
+
 php artisan config:clear
 
 ---
