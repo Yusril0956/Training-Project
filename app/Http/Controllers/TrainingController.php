@@ -456,7 +456,7 @@ class TrainingController extends Controller
     public function rejectMember($trainingId, $memberId)
     {
         $member = TrainingMember::findOrFail($memberId);
-        $member->update(['status' => 'reject']);
+        $member->delete();
 
         // Create notification
         Notification::create([
