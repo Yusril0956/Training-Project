@@ -1,4 +1,4 @@
-{{-- resources/views/assignments/submissions.blade.php --}}
+<!-- {{-- resources/views/assignments/submissions.blade.php --}}
 @extends('layouts.app') {{-- kalau kamu pakai layouts/admin ganti sesuai template utama --}}
 
 @section('content')
@@ -46,4 +46,4 @@
         </table>
     @endif
 </div>
-@endsection
+@endsection -->

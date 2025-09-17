@@ -34,27 +34,41 @@ class AssignmentController extends Controller
      * Simpan tugas baru
      */
     public function store(Request $request, $trainingId)
-    {
-        $request->validate([
-            'title'       => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'type'        => 'required|in:online,offline',
-            'location'    => 'nullable|string',
-            'due_date'    => 'nullable|date',
-        ]);
+{
+    $request->validate([
+        'title'       => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'type'        => 'required|in:online,offline',
+        'location'    => 'nullable|string',
+        'due_date'    => 'nullable|date',
+    ]);
 
-        Assignment::create([
-            'training_id' => $trainingId,
-            'title'       => $request->title,
-            'description' => $request->description,
-            'type'        => $request->type,
-            'location'    => $request->type === 'offline' ? $request->location : null,
-            'due_date'    => $request->due_date,
-        ]);
+    // ✅ Update atau buat Training otomatis
+    Training::updateOrCreate(
+        ['id' => $trainingId], // cari berdasarkan ID training
+        [
+            'name'             => 'Pelatihan Sistem Avionik',
+            'category'         => 'technical',
+            'description'      => 'Pelatihan mengenai sistem avionik terbaru untuk teknisi.',
+            'jenis_training_id'=> 1,
+            'status'           => 'approved',
+        ]
+    );
 
-        return redirect()->route('assignments.index', $trainingId)
-            ->with('success', 'Tugas berhasil dibuat.');
-    }
+    // ✅ Buat assignment
+    Assignment::create([
+        'training_id' => $trainingId,
+        'title'       => $request->title,
+        'description' => $request->description,
+        'type'        => $request->type,
+        'location'    => $request->type === 'offline' ? $request->location : null,
+        'due_date'    => $request->due_date,
+    ]);
+
+    return redirect()->route('assignments.index', $trainingId)
+        ->with('success', 'Tugas berhasil dibuat dan Training otomatis diperbarui.');
+}
+
 
     /**
      * Peserta submit tugas
