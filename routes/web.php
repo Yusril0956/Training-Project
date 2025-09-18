@@ -136,7 +136,6 @@ Route::middleware('auth')->group(function () {
     // Route::delete('training/{id}/tasks/{taskId}', [TaskController::class, 'destroy'])->name('training.task.delete');
 
     // Certificates
-    Route::get('/sertifikat', fn() => view('pages.sertifikat', ['user' => Auth::user()]))->name('sertifikat');
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
     Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
 
