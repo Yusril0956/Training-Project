@@ -31,9 +31,10 @@ class TrainingController extends Controller
         foreach ($trainings as $training) {
             $member = $training->members->where('user_id', $userId)->first();
             $userStatuses[$training->id] = $member ? $member->status : 'none';
+            $status = $userStatuses[$training->id] ?? 'none';
         }
 
-        return view('pages.Training.index', compact('trainings', 'userStatuses'));
+        return view('pages.Training.index', compact('trainings', 'userStatuses', 'status'));
     }
 
     public function absen($id)
@@ -300,10 +301,17 @@ class TrainingController extends Controller
             $training = Training::with(['members' => function ($q) {
                 $q->where('status', 'accept');
             }])->findOrFail($id);
+
             $pendingMembers = TrainingMember::with('user')->whereHas('trainingDetail', function ($q) use ($id) {
                 $q->where('training_id', $id);
             })->where('status', 'pending')->get();
-            return view('pages.Training.pages.members', compact('training', 'pendingMembers'));
+
+            $graduateMember = TrainingMember::with('user')->whereHas('trainingDetail', function ($q) use ($id) {
+                $q->where('training_id', $id);
+            })->where('status', 'graduate')->get();
+
+            
+            return view('pages.Training.pages.members', compact('training', 'pendingMembers', 'graduateMember'));
         } else {
             $userId = Auth::id();
 

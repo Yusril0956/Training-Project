@@ -48,14 +48,17 @@
                     <span class="badge bg-warning">Belum Dijadwalkan</span>
                 @endif
                 <span class="badge bg-primary">{{ $training->category ?? 'N/A' }}</span>
+                @if ($status === 'graduate')
+                    <span class="badge bg-primary">Graduated</span>
+                @endif
               </div>
 
               {{-- Aksi --}}
               <div class="d-flex justify-content-between align-items-center">
                 @auth
-                    @php
+                    {{-- @php
                         $status = $userStatuses[$training->id] ?? 'none';
-                    @endphp
+                    @endphp --}}
 
                     @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $status === 'accept')
                         <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"

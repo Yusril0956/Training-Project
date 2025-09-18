@@ -79,6 +79,47 @@
                 </div>
             </div>
 
+            <!-- Header -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2 class="card-title">👥 Daftar Peserta Graduated</h2>
+                    <p class="text-muted">Berikut adalah peserta yang sudah lulus
+                        <strong>{{ $training->name }}</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Tabel Peserta -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($graduateMember as $index => $gMember)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $gMember->user->name }}</td>
+                                        <td>{{ $gMember->user->email }}</td>
+                                    </tr>
+                                @endforeach
+                                @if ($graduateMember->isEmpty())
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">Belum ada peserta terdaftar.</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- Tambah Peserta -->
             @can('manage-training')
                 <div class="card mt-4">

@@ -8,6 +8,8 @@ use App\Models\Assignment;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
+use App\Models\TrainingDetail;
+use App\Models\Training;
 
 class DashboardController extends Controller
 {
@@ -189,15 +191,23 @@ class DashboardController extends Controller
     public function history()
     {
         $user = Auth::user();
-        $trainings = \App\Models\Training::whereHas('members', function ($q) use ($user) {
+
+        
+
+        $trainings = Training::whereHas('members', function ($q) use ($user) {
             $q->where('user_id', $user->id);
         })->with(['members' => function ($q) use ($user) {
             $q->where('user_id', $user->id);
         }, 'detail'])->paginate(9);
 
-        $tGraduated = \App\Models\Training::whereHas('members', function ($q) use ($user) {
-            $q->where('user_id', $user->id)->where('status', 'graduate');
-        })->paginate(9);
+        // training yang sudah lulus oleh user
+        $tGraduated = Training::whereHas('members', function ($q) use ($user) {
+            $q->where('user_id', $user->id)
+              ->where('status', 'graduate');
+        })->with(['members' => function ($q) use ($user) {
+            $q->where('user_id', $user->id)
+              ->where('status', 'graduate');
+        }, 'detail'])->paginate(9);
 
 
         $certificates = $user->certificates;
