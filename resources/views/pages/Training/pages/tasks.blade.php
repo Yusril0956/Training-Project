@@ -21,6 +21,15 @@
                     <p class="text-muted">Berikut adalah daftar tugas untuk pelatihan
                         <strong>{{ $training->name }}</strong>.
                     </p>
+                    
+                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
+                    <div class="col-auto ms-auto">
+                        <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
+                            <i class="ti ti-user-plus me-1"></i>
+                            Add Task
+                        </a>
+                    </div>
+                    @endif
                 </div>
             </div>
 

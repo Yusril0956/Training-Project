@@ -52,7 +52,7 @@ class DashboardController extends Controller
     public function notification()
     {
         $user = Auth::user();
-        $notifications = $user->notifications()->orderBy('created_at', 'desc')->get();
+        $notifications = Notification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
         return view('pages.notifikasi', compact('notifications'));
     }
@@ -184,5 +184,28 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to reset password!');
         }
+    }
+
+    public function history()
+    {
+        $user = Auth::user();
+        $trainings = \App\Models\Training::whereHas('members', function ($q) use ($user) {
+            $q->where('user_id', $user->id);
+        })->with(['members' => function ($q) use ($user) {
+            $q->where('user_id', $user->id);
+        }, 'detail'])->paginate(9);
+
+        $tGraduated = \App\Models\Training::whereHas('members', function ($q) use ($user) {
+            $q->where('user_id', $user->id)->where('status', 'graduate');
+        })->paginate(9);
+
+
+        $certificates = $user->certificates;
+
+        $member = $trainings->first()?->members->first();
+        $status = $member ? $member->status : 'none';
+
+
+        return view('pages.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
     }
 }

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('training_id')->constrained('trainings')->onDelete('cascade');
             $table->string('name');
-            $table->string('organization');
+            $table->string('organization')->default('PT Dirgantara Indonesia');
             $table->date('issue_date');
             $table->date('expiry_date')->nullable();
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

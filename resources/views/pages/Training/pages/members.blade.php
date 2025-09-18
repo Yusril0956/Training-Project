@@ -63,6 +63,10 @@
                                             <button type="submit" class="btn btn-sm btn-danger btn-delete-user"
                                                 data-id="{{ $member->user->id }}" data-name="{{ $member->user->name }}"
                                                 data-bs-toggle="modal" data-bs-target="#modal-danger">Delete</button>
+                                            {{-- add graduation button --}}
+                                            <a href="{{ route('training.member.graduate', [$training->id, $member->id]) }}"
+                                                class="btn btn-sm btn-success"
+                                                onclick="return confirm('Yakin ingin menandai peserta ini sebagai lulus?')">Graduate</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Tasks;
 use App\Models\TrainingMember;
 use App\Models\Notification;
+use App\Models\Certificate;
 use Illuminate\Support\Facades\Auth;
 
 class TrainingController extends Controller
@@ -329,7 +330,7 @@ class TrainingController extends Controller
                 'role' => 'user',
                 'status' => $request->status,
             ]);
-            $request->merge(['user_ids' => [\DB::getPdo()->lastInsertId()]]); // tambahkan user_id baru ke request
+            // $request->merge(['user_ids' => [\DB::getPdo()->lastInsertId()]]); // tambahkan user_id baru ke request
             return $this->addMember($request, $trainingId);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan user!');
@@ -528,5 +529,32 @@ class TrainingController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
+    }
+
+    public function graduateMember($trainingId, $memberId)
+    {
+        $member = TrainingMember::findOrFail($memberId);
+        $member->update(['status' => 'graduate']);
+
+        $training = $member->trainingDetail->training;
+
+        // Create certificate
+        Certificate::create([
+            'user_id' => $member->user_id,
+            'training_id' => $training->id,
+            'name' => 'Sertifikat ' . $training->name,
+            'organization' => 'PT Dirgantara Indonesia',
+            'issue_date' => now()->toDateString(),
+            'file_path' => 'certificates/' . $training->name . '_' . $member->user->name . '.png', // placeholder
+        ]);
+
+        // Create notification
+        Notification::create([
+            'user_id' => $member->user_id,
+            'title' => 'Selamat! Anda telah lulus dari Training',
+            'message' => 'Selamat! Anda telah lulus dari training "' . $training->name . '" dan menerima sertifikat.',
+        ]);
+
+        return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
     }
 }

@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard & General Pages
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
+    Route::get('/history', [DashboardController::class, 'history'])->name('history');
     Route::get('/notifikasi', [DashboardController::class, 'notification'])->name('notifikasi');
     Route::get('/help', fn() => view('pages.help'))->name('help');
     Route::get('/services', fn() => view('pages.services'))->name('services');
@@ -183,6 +184,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
         Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
         Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
+        Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');
     });
 });
 
