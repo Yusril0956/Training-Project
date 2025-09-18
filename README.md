@@ -128,3 +128,8 @@ php artisan config:clear
 # NOTE: jangan lupa jalankan artisan nya
 
 php artisan serve
+
+
+### Fix gambar tidak bisa di upload
+
+php artisan storage:link
