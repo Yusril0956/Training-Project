@@ -60,9 +60,7 @@
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                            <button type="submit" class="btn btn-sm btn-danger btn-delete-user"
-                                                data-id="{{ $member->user->id }}" data-name="{{ $member->user->name }}"
-                                                data-bs-toggle="modal" data-bs-target="#modal-danger">Delete</button>
+                                            <a href="{{ route("training.member.delete", [$member->id, $training->id]) }}" onclick="return confirm('Anda yakin ingin menghapus member ini?')" class="btn btn-sm btn-danger btn-delete-user">Delete</a>
                                             {{-- add graduation button --}}
                                             <a href="{{ route('training.member.graduate', [$training->id, $member->id]) }}"
                                                 class="btn btn-sm btn-success"
@@ -222,89 +220,10 @@
             </div>
         </form>
     </div>
-
-    <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-status bg-danger"></div>
-                <div class="modal-body text-center py-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
-                        height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M10.24 3.957l-8.422 14.06a1.989 1.989 0 0 0 1.7 2.983h16.845a1.989 1.989 0 0 0 1.7 -2.983l-8.423 -14.06a1.989 1.989 0 0 0 -3.4 0z" />
-                        <path d="M12 9v4" />
-                        <path d="M12 17h.01" />
-                    </svg>
-                    <h3>Konfirmasi Hapus</h3>
-                    <div class="text-secondary">Apakah Anda yakin ingin menghapus?</div>
-                </div>
-                <div class="modal-footer">
-                    <div class="w-100">
-                        <div class="row">
-                            <div class="col">
-                                <a href="#" class="btn w-100" data-bs-dismiss="modal">
-                                    Batal
-                                </a>
-                            </div>
-                            <div class="col">
-                                <button id="btn-confirm-delete" class="btn btn-danger w-100" data-bs-dismiss="modal">
-                                    Hapus
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let deleteUserId = null;
-            let deleteUserName = null;
-
-            // Saat tombol delete diklik, simpan id user
-            document.querySelectorAll('.btn-delete-user').forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    deleteUserId = this.dataset.id;
-                    deleteUserName = this.dataset.name;
-                    // Ubah pesan modal jika mau
-                    document.querySelector('#modal-danger h3').innerText = 'Hapus User?';
-                    document.querySelector('#modal-danger .text-secondary').innerText =
-                        'Yakin ingin menghapus user "' + deleteUserName + '"?';
-                });
-            });
-
-            // Saat tombol konfirmasi di modal diklik, submit form delete via JS
-            document.getElementById('btn-confirm-delete').onclick = function(e) {
-                if (deleteUserId) {
-                    // Buat form dinamis dan submit
-                    let form = document.createElement('form');
-                    form.action = '/admin/user/' + deleteUserId;
-                    form.method = 'POST';
-
-                    let csrf = document.createElement('input');
-                    csrf.type = 'hidden';
-                    csrf.name = '_token';
-                    csrf.value = '{{ csrf_token() }}';
-                    form.appendChild(csrf);
-
-                    let method = document.createElement('input');
-                    method.type = 'hidden';
-                    method.name = '_method';
-                    method.value = 'DELETE';
-                    form.appendChild(method);
-
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            }
-
             // Auto show configurable modal if session variables are present
             @if (session('modal_type'))
                 const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));

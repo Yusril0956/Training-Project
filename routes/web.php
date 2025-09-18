@@ -185,6 +185,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
         Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
         Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');
+        Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
     });
 });
 

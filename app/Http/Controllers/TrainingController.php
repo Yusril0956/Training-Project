@@ -257,6 +257,22 @@ class TrainingController extends Controller
         return redirect()->back()->with('success', 'Jadwal berhasil dihapus!');
     }
 
+    public function deleteMember($memberId, $trainingId)
+    {
+        $member = TrainingMember::findOrFail($memberId);
+        $member->delete();
+
+        $training = Training::findOrFail($trainingId);
+
+        Notification::create([
+            'user_id' => Auth::id(),
+            'title' => 'Kick Training' . $training->name,
+            'message' => 'Anda telah dikeluarkan dari training' . $training->name,
+        ]);
+
+        return redirect()->back()->with('success', 'Peserta telah dihapus.');
+    }
+
     public function materials($id)
     {
         $training = Training::with('materis')->findOrFail($id);
