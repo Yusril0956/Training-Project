@@ -79,8 +79,8 @@
             <div class="card">
                 <div class="row g-0">
                     <div class="card-body">
-                        <h2 class="mb-4">My Account</h2>
-                        <h3 class="card-title">Profile Details</h3>
+                        <h2 class="mb-4">Akun Saya</h2>
+                        <h3 class="card-title">Detail Profil</h3>
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <span class="avatar avatar-xl"
@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-auto">
                                 <a href="#" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#modal-avatar">Change avatar</a>
+                                    data-bs-target="#modal-avatar">Ganti Profile</a>
                             </div>
                             <div class="col-auto">
                                 <!-- DELETE AVATAR FORM -->
@@ -96,7 +96,7 @@
                                     onsubmit="return confirm('Yakin ingin menghapus avatar?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-ghost-danger">Delete avatar</button>
+                                    <button type="submit" class="btn btn-ghost-danger">Hapus Profile</button>
                                 </form>
                             </div>
                         </div>
@@ -134,29 +134,27 @@
                         </div>
 
                         <h3 class="card-title mt-4">Password</h3>
-                        <p class="card-subtitle">You can set a permanent password if you don't want to use temporary
-                            login codes.</p>
+                        <p class="card-subtitle">Anda dapat mengatur kata sandi permanen jika tidak ingin menggunakan kode login sementara.</p>
                         <div>
                             <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-password">Set
                                 new password</a>
                         </div>
 
                         <h3 class="card-title mt-4">Public profile</h3>
-                        <p class="card-subtitle">Making your profile public means that anyone on the Dashkit network
-                            will be able to find you.</p>
+                        <p class="card-subtitle">Menjadikan profil Anda publik berarti siapa pun di jaringan Dashkit akan dapat menemukan Anda.</p>
                         <div>
                             <label class="form-check form-switch form-switch-lg">
                                 <input class="form-check-input" type="checkbox"
                                     {{ $user->status == 'active' ? 'checked' : '' }}>
-                                <span class="form-check-label form-check-label-on">You're currently visible</span>
-                                <span class="form-check-label form-check-label-off">You're currently invisible</span>
+                                <span class="form-check-label form-check-label-on">Anda saat ini terlihat</span>
+                                <span class="form-check-label form-check-label-off">Anda saat ini tidak terlihat</span>
                             </label>
                         </div>
                     </div>
                     <div class="card-footer bg-transparent mt-auto">
                         <div class="btn-list justify-content-end">
-                            <a href="#" class="btn">Cancel</a>
-                            <a href="#" class="btn btn-primary">Submit</a>
+                            <a href="#" class="btn">Batal</a>
+                            <a href="#" class="btn btn-primary">Kirim</a>
                         </div>
                     </div>
                 </div>
@@ -170,22 +168,22 @@
             <form class="modal-content" method="POST" action="{{ route('setting.password') }}">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Set New Password</h5>
+                    <h5 class="modal-title">Kata Sandi Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">New Password</label>
+                        <label class="form-label">Password baru</label>
                         <input type="password" class="form-control" name="password" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Confirm New Password</label>
+                        <label class="form-label">Konfirmasi Password baru</label>
                         <input type="password" class="form-control" name="password_confirmation" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>
