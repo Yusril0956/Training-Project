@@ -53,11 +53,16 @@ class TrainingController extends Controller
 
         // Check if attendance already exists
         if ($member->attendance()->count() > 0) {
-            return redirect()->back()->with('error', 'Peserta sudah melakukan absen.');
+            // Update attended_at to current time to reflect actual click time
+            $attendance = $member->attendance()->latest()->first();
+            $attendance->attended_at = now()->setTimezone('Asia/Jakarta');
+            $attendance->save();
+
+            return redirect()->back()->with('success', 'Waktu absen berhasil diperbarui.');
         }
 
         $member->attendance()->create([
-            'attended_at' => now(),
+            'attended_at' => now()->setTimezone('Asia/Jakarta'),
             'status' => 'present',
         ]);
 
@@ -406,7 +411,7 @@ class TrainingController extends Controller
 
             // Create attendance record automatically
             $newMember->attendance()->create([
-                'attended_at' => now(),
+                'attended_at' => now()->setTimezone('Asia/Jakarta'),
                 'status' => 'present',
             ]);
 
