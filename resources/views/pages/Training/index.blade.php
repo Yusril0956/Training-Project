@@ -48,19 +48,22 @@
                     <span class="badge bg-warning">Belum Dijadwalkan</span>
                 @endif
                 <span class="badge bg-primary">{{ $training->category ?? 'N/A' }}</span>
-                @if ($status === 'graduate')
-                    <span class="badge bg-primary">Graduated</span>
+                @php
+                    $currentStatus = $userStatuses[$training->id] ?? 'none';
+                @endphp
+                @if ($currentStatus === 'graduate')
+                    <span class="badge bg-success">Lulus</span>
+                @elseif ($currentStatus === 'accept')
+                    <span class="badge bg-info">Terdaftar</span>
+                @elseif ($currentStatus === 'pending')
+                    <span class="badge bg-warning">Menunggu</span>
                 @endif
               </div>
 
               {{-- Aksi --}}
               <div class="d-flex justify-content-between align-items-center">
                 @auth
-                    {{-- @php
-                        $status = $userStatuses[$training->id] ?? 'none';
-                    @endphp --}}
-
-                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $status === 'accept')
+                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $currentStatus === 'accept' || $currentStatus === 'graduate')
                         <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
                             data-bs-target="#detailCanvas-{{ $training->id }}">
                             Details
@@ -68,7 +71,7 @@
                         <a href="{{ route('cr.page', $training->id) }}" class="btn btn-sm btn-primary">
                             Lihat
                         </a>
-                    @elseif ($status === 'pending')
+                    @elseif ($currentStatus === 'pending')
                         <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
                             data-bs-target="#detailCanvas-{{ $training->id }}">
                             Details

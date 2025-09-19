@@ -117,7 +117,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/training/store', [TrainingController::class, 'store'])->name('training.store');
     Route::delete('/training/{id}/reject', [TrainingController::class, 'reject'])->name('training.reject');
     Route::put('/training/{id}/approve', [TrainingController::class, 'approve'])->name('training.approve');
-    Route::get('/training/{id}/absen', [TrainingController::class, 'absen'])->name('training.absen');
+    Route::get('/training/{idabsen}/', [TrainingController::class, 'absen'])->name('training.absen');
     Route::post('/training/absen/mark/{memberId}', [TrainingController::class, 'markAttendance'])->name('training.absen.mark');
 
     Route::get('/training/customer-requested/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('training.task.show');
