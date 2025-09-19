@@ -144,8 +144,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
 
     // Schedule routes
-    Route::post('/training/{trainingId}/schedule', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
-    Route::delete('/training/{trainingId}/schedule/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
 
 
     // ============================

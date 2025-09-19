@@ -37,10 +37,16 @@
                                     @php
                                         $certificate = $certificates->where('training_id', $tG->id)->first();
                                     @endphp
-                                    <a href="{{ asset('images/Banner.png') }}" target="_blank"
-                                        class="btn btn-sm btn-success">
-                                        <i class="ti ti-download"></i> Sertifikat
-                                    </a>
+                                    @if($certificate && $certificate->file_path)
+                                        <a href="{{ asset('storage/' . $certificate->file_path) }}" target="_blank"
+                                            class="btn btn-sm btn-success">
+                                            <i class="ti ti-download"></i> Sertifikat
+                                        </a>
+                                    @else
+                                        <span class="btn btn-sm btn-secondary disabled">
+                                            <i class="ti ti-file-x"></i> Tidak Tersedia
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 use Illuminate\Http\Request;
 use App\Models\Training;
 use App\Models\JenisTraining;
@@ -315,7 +319,7 @@ class TrainingController extends Controller
                 $q->where('training_id', $id);
             })->where('status', 'graduate')->get();
 
-            
+
             return view('pages.Training.pages.members', compact('training', 'pendingMembers', 'graduateMember'));
         } else {
             $userId = Auth::id();
@@ -560,22 +564,42 @@ class TrainingController extends Controller
         return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
     }
 
-    public function graduateMember($trainingId, $memberId)
+    public function graduateMember(Request $request, $trainingId, $memberId)
     {
         $member = TrainingMember::findOrFail($memberId);
         $member->update(['status' => 'graduate']);
 
         $training = $member->trainingDetail->training;
 
-        // Create certificate
+        $user = $request->user();
+
+        // Siapkan data untuk sertifikat
+        $data = [
+            'user'             => $user,
+            'training'         => $training->load('detail'),
+            'certificateNumber' => strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd')),
+        ];
+
+        // Render Blade menjadi PDF (A4 landscape)
+        $pdf = PDF::loadView('certificate.template', $data)
+            ->setPaper('a4', 'landscape');
+
+        // Simpan ke disk public/storage/certificates
+        $filename = 'certificates/' . $data['certificateNumber'] . '.pdf';
+        Storage::disk('public')->put($filename, $pdf->output());
+
+        // Create certificate record with correct file_path
         Certificate::create([
             'user_id' => $member->user_id,
             'training_id' => $training->id,
             'name' => 'Sertifikat ' . $training->name,
             'organization' => 'PT Dirgantara Indonesia',
             'issue_date' => now()->toDateString(),
-            'file_path' => 'certificates/' . $training->name . '_' . $member->user->name . '.png', // placeholder
+            'expiry_date' => null,
+            'file_path' => $filename,
         ]);
+
+
 
         // Create notification
         Notification::create([

@@ -95,6 +95,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Notification::class);
     }
 
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class, 'user_trainings', 'user_id', 'training_id')->withPivot('completed_at', 'certificate_url');
+    }
+
     /**
      * Get the user's primary role
      */
