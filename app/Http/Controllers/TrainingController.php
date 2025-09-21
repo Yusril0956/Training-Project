@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
@@ -355,7 +356,7 @@ class TrainingController extends Controller
         ]);
 
         try {
-            User::create([
+            $newUser = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'nik' => $request->nik,
@@ -363,7 +364,7 @@ class TrainingController extends Controller
                 'role' => 'user',
                 'status' => $request->status,
             ]);
-            $request->merge(['user_ids' => [\DB::getPdo()->lastInsertId()]]); // tambahkan user_id baru ke request
+            $request->merge(['user_ids' => [$newUser->id]]); // tambahkan user_id baru ke request
             return $this->addMember($request, $trainingId);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan user!');
