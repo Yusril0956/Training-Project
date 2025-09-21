@@ -215,7 +215,7 @@ class TrainingController extends Controller
         ]);
 
         return redirect()
-            ->route('customer.requested')
+            ->route('admin.training.manage')
             ->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
     }
 
@@ -549,6 +549,39 @@ class TrainingController extends Controller
         $trainings = Training::with('detail')->paginate(10);
         $jenisTraining = JenisTraining::all();
         return view('training.manage', compact('trainings', 'jenisTraining'));
+    }
+
+    public function destroy($trainingId)
+    {
+        $training = Training::findOrFail($trainingId);
+
+        // Delete related records first
+        if ($training->detail) {
+            $training->detail->delete();
+        }
+
+        // Delete training members and their related records
+        $training->members()->delete();
+
+        // Delete schedules
+        $training->schedules()->delete();
+
+        // Delete materials
+        $training->materis()->delete();
+
+        // Delete tasks and their submissions
+        foreach ($training->tasks as $task) {
+            $task->submissions()->delete();
+            $task->delete();
+        }
+
+        // Delete certificates
+        $training->certificates()->delete();
+
+        // Finally delete the training
+        $training->delete();
+
+        return redirect()->route('admin.training.manage')->with('success', 'Pelatihan berhasil dihapus.');
     }
 
     public function register($userId, $trainingId)

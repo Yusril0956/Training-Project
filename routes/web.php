@@ -165,6 +165,7 @@ Route::middleware('auth')->group(function () {
 
         // Training Management
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
+        Route::delete('/training/{trainingId}', [TrainingController::class, 'destroy'])->name('training.destroy');
         Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
         Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
         Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');

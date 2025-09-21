@@ -97,7 +97,7 @@
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-list">
-                                                <a href="{{ route('training.index', $t->id) }}" class="btn btn-sm btn-info"
+                                                <a href="{{ route('training.detail', $t->id) }}" class="btn btn-sm btn-info"
                                                     title="Detail">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -109,7 +109,7 @@
                                                             d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                                     </svg>
                                                 </a>
-                                                <a href="{{ route('training.index', $t->id) }}"
+                                                <a href="{{ route('training.settings', $t->name) }}"
                                                     class="btn btn-sm btn-warning" title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -123,7 +123,7 @@
                                                         <path d="M16 5l3 3" />
                                                     </svg>
                                                 </a>
-                                                <form action="{{ route('training.index', $t->id) }}" method="POST"
+                                                <form action="{{ route('admin.training.destroy', $t->id) }}" method="POST"
                                                     class="d-inline"
                                                     onsubmit="return confirm('Yakin ingin menghapus pelatihan ini?')">
                                                     @csrf
