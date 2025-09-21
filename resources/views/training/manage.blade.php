@@ -23,7 +23,7 @@
             </div>
 
             <!-- Filter & Search -->
-            <form method="GET" action="{{ route('training.manage') }}" class="card mb-4">
+            <form method="GET" action="{{ route('admin.training.manage') }}" class="card mb-4">
                 <div class="card-body row g-2 align-items-center">
                     <div class="col-md-3">
                         <select name="jenis" class="form-select">
@@ -43,7 +43,7 @@
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="ti ti-search me-1"></i> Filter
                         </button>
-                        <a href="{{ route('training.manage') }}" class="btn btn-outline-secondary ms-2">
+                        <a href="{{ route('admin.training.manage') }}" class="btn btn-outline-secondary ms-2">
                             <i class="ti ti-refresh me-1"></i> Reset
                         </a>
                     </div>

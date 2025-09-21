@@ -72,10 +72,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="/profile" class="dropdown-item">Profile</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="/profile" class="dropdown-item">Settings</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Settings</a>
                     <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
                 </div>
             </div>
@@ -124,9 +124,9 @@
                                     <a class="dropdown-item" href="{{ route('training.index') }}">
                                         Training - Page
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('training.manage') }}">
-                                        Training - Manage
-                                    </a>
+                    <a class="dropdown-item" href="{{ route('admin.training.manage') }}">
+                        Training - Manage
+                    </a>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
 
                 @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin') }}">
+                        <a class="nav-link" href="{{ route('admin.index') }}">
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -321,7 +321,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">
+                    <a class="nav-link" href="{{ route('profile') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -386,10 +386,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="/profile" class="dropdown-item">Profile</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Settings</a>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="dropdown-item">Logout</button>

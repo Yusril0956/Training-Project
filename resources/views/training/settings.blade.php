@@ -8,13 +8,12 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name, 'url' => route('training.home', $training->id)],
                     ['title' => 'Setting', 'url' => route('training.settings', $training->name)],
                 ],
             ])
 
-            @include('components._alert')
+            @include('components.alert')
 
             <!-- Header -->
             <div class="card mb-4">

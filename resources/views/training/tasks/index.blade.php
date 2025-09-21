@@ -8,8 +8,7 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name, 'url' => route('training.home', $training->id)],
                     ['title' => 'Tugas', 'url' => route('training.tasks', $training->name)],
                 ],
             ])
@@ -21,14 +20,14 @@
                     <p class="text-muted">Berikut adalah daftar tugas untuk pelatihan
                         <strong>{{ $training->name }}</strong>.
                     </p>
-                    
+
                     @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                    <div class="col-auto ms-auto">
-                        <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
-                            <i class="ti ti-user-plus me-1"></i>
-                            Add Task
-                        </a>
-                    </div>
+                        <div class="col-auto ms-auto">
+                            <a href="{{ route('training.member.add.form', $training->id) }}" class="btn btn-primary">
+                                <i class="ti ti-user-plus me-1"></i>
+                                Add Task
+                            </a>
+                        </div>
                     @endif
                 </div>
             </div>

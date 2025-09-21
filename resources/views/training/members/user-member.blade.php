@@ -9,8 +9,7 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name, 'url' => route('training.home', $training->id)],
                     ['title' => 'Members', 'url' => route('training.members', $training->id)],
                 ],
             ])
@@ -40,15 +39,15 @@
                             <tbody>
                                 @forelse($training->members as $index => $member)
                                     {{-- @if ($member->is_present) --}}
-                                        <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $member->user->name }}</td>
-                                            <td>{{ $member->user->instansi ?? '-' }}</td>
-                                            <td>{{ $member->user->email }}</td>
-                                            {{-- <td>
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $member->user->name }}</td>
+                                        <td>{{ $member->user->instansi ?? '-' }}</td>
+                                        <td>{{ $member->user->email }}</td>
+                                        {{-- <td>
                                                 {{ $member->present_at ? \Carbon\Carbon::parse($member->present_at)->format('d M Y H:i') : '-' }}
                                             </td> --}}
-                                        </tr>
+                                    </tr>
                                     {{-- @endif --}}
                                 @empty
                                     <tr>

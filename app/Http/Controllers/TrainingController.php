@@ -38,7 +38,7 @@ class TrainingController extends Controller
             $status = $userStatuses[$training->id] ?? 'none';
         }
 
-        return view('pages.Training.index', compact('trainings', 'userStatuses', 'status'));
+        return view('training.index', compact('trainings', 'userStatuses', 'status'));
     }
 
     public function absen($id)
@@ -48,7 +48,7 @@ class TrainingController extends Controller
         // Load members with attendance eager loaded
         $members = $training->members()->with(['user', 'attendance'])->get();
 
-        return view('pages.Training.absen', compact('training', 'members'));
+        return view('training.absen', compact('training', 'members'));
     }
 
     public function markAttendance($memberId)
@@ -93,7 +93,7 @@ class TrainingController extends Controller
         ];
         $routeName = 'general.knowledge';
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisGK', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
+        return view('training.mandatory', compact('trainings', 'jenisGK', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
     }
 
     public function mandatory(Request $request)
@@ -115,7 +115,7 @@ class TrainingController extends Controller
             $userStatuses[$training->id] = $member ? $member->status : 'none';
         }
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisMD', 'userStatuses'));
+        return view('training.mandatory', compact('trainings', 'jenisMD', 'userStatuses'));
     }
 
     public function license(Request $request)
@@ -136,7 +136,7 @@ class TrainingController extends Controller
         ];
         $routeName = 'license.training';
 
-        return view('pages.Training.mandatory', compact('trainings', 'jenisLS', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
+        return view('training.mandatory', compact('trainings', 'jenisLS', 'pageTitle', 'heroTitle', 'description', 'breadcrumbItems', 'routeName'));
     }
 
     /**
@@ -158,7 +158,7 @@ class TrainingController extends Controller
         $modalButton2 = 'Approve';
 
 
-        return view('pages.Training.customer_requested', compact('trainings', 'jenisCR', 'modalId', 'modalTitle', 'modalDescription', 'modalButton1', 'modalButton2', 'approvedTrainings'));
+        return view('training.customer-requested', compact('trainings', 'jenisCR', 'modalId', 'modalTitle', 'modalDescription', 'modalButton1', 'modalButton2', 'approvedTrainings'));
     }
 
     /**
@@ -175,7 +175,7 @@ class TrainingController extends Controller
         $formAction = route('training.reject', $training->id);
         $formMethod = 'DELETE';
 
-        return view('pages.Training.detail_training', compact('training', 'modalId', 'modalTitle', 'modalDescription', 'modalButton', 'formAction', 'formMethod'));
+        return view('training.detail', compact('training', 'modalId', 'modalTitle', 'modalDescription', 'modalButton', 'formAction', 'formMethod'));
     }
 
     public function reject($id)
@@ -218,18 +218,18 @@ class TrainingController extends Controller
             ->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
     }
 
-    public function crPage($id)
+    public function home($id)
     {
         $training = Training::withCount(['members', 'materis', 'tasks'])->findOrFail($id);
         $schedule = $training->schedules()->orderBy('date', 'asc')->first();
 
-        return view('pages.Training.pages.main', compact('training', 'schedule'));
+        return view('training.customer-requested', compact('training', 'schedule'));
     }
 
     public function schedule($id)
     {
         $training = Training::with('schedules')->findOrFail($id);
-        return view('pages.Training.pages.schedule', compact('training'));
+        return view('training.schedule.index', compact('training'));
     }
 
     public function storeSchedule(Request $request, $id)
@@ -286,20 +286,20 @@ class TrainingController extends Controller
     public function materials($id)
     {
         $training = Training::with('materis')->findOrFail($id);
-        return view('pages.Training.pages.materi-moduls', compact('training'));
+        return view('training.materials.index', compact('training'));
     }
 
     public function tasks($name)
     {
         $training = Training::findOrFail($name);
-        return view('pages.Training.pages.tasks', compact('training'));
+        return view('training.tasks.index', compact('training'));
     }
 
     public function showTasks($trainingId, $taskId)
     {
         $training = Training::findOrFail($trainingId);
         $task = Tasks::with(['training', 'submissions.user'])->findOrFail($taskId);
-        return view('pages.Training.pages.taskDetail', compact('training', 'task'));
+        return view('training.tasks.show', compact('training', 'task'));
     }
 
     public function members($id)
@@ -320,7 +320,7 @@ class TrainingController extends Controller
             })->where('status', 'graduate')->get();
 
 
-            return view('pages.Training.pages.members', compact('training', 'pendingMembers', 'graduateMember'));
+            return view('training.members.index', compact('training', 'pendingMembers', 'graduateMember'));
         } else {
             $userId = Auth::id();
 
@@ -330,7 +330,7 @@ class TrainingController extends Controller
                 ->with(['detail', 'jenisTraining', 'members'])
                 ->findOrFail($id);
 
-            return view('pages.Training.pages.userMember', compact('training'));
+            return view('training.members.user-member', compact('training'));
         }
     }
 
@@ -342,7 +342,7 @@ class TrainingController extends Controller
                 $q->where('training_id', $trainingId);
             });
         })->get(); // hanya user yang belum terdaftar di training ini
-        return view('pages.Training.addMember', compact('training', 'users'));
+        return view('training.members.add', compact('training', 'users'));
     }
 
     public function addUserMember(Request $request, $trainingId)
@@ -363,7 +363,7 @@ class TrainingController extends Controller
                 'role' => 'user',
                 'status' => $request->status,
             ]);
-            // $request->merge(['user_ids' => [\DB::getPdo()->lastInsertId()]]); // tambahkan user_id baru ke request
+            $request->merge(['user_ids' => [\DB::getPdo()->lastInsertId()]]); // tambahkan user_id baru ke request
             return $this->addMember($request, $trainingId);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan user!');
@@ -447,7 +447,7 @@ class TrainingController extends Controller
     public function settings($name)
     {
         $training = Training::where('name', $name)->firstOrFail();
-        return view('pages.Training.pages.setting', compact('training'));
+        return view('training.settings', compact('training'));
     }
 
     public function updateSettings(Request $request, $id)
@@ -547,7 +547,7 @@ class TrainingController extends Controller
     {
         $trainings = Training::with('detail')->paginate(10);
         $jenisTraining = JenisTraining::all();
-        return view('pages.training-manage', compact('trainings', 'jenisTraining'));
+        return view('training.manage', compact('trainings', 'jenisTraining'));
     }
 
     public function register($userId, $trainingId)

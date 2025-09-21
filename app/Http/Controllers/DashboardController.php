@@ -15,12 +15,12 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('pages.home');
+        return view('dashboard.index');
     }
 
     public function terms()
     {
-        return view('pages.terms');
+        return view('dashboard.terms');
     }
 
     public function admin()
@@ -35,7 +35,7 @@ class DashboardController extends Controller
         $modalButton = 'Delete';
         $formMethod = 'DELETE';
 
-        return view('pages.admin', compact(
+        return view('admin.index', compact(
             'users',
             'assignments',   // ✅ kirim ke view
             'modalId',
@@ -56,7 +56,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $notifications = Notification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
-        return view('pages.notifikasi', compact('notifications'));
+        return view('dashboard.notifications', compact('notifications'));
     }
 
     public function userUpdate(Request $request, $id)
@@ -124,7 +124,7 @@ class DashboardController extends Controller
     {
         $feedback = Feedback::all();
 
-        return view('pages.inbox', compact('feedback'));
+        return view('dashboard.inbox', compact('feedback'));
     }
 
     public function feedback(Request $request)
@@ -148,7 +148,7 @@ class DashboardController extends Controller
     public function adminSettings()
     {
         $users = User::all();
-        return view('pages.admin-settings', compact('users'));
+        return view('admin.settings', compact('users'));
     }
 
     public function openAllAccess(Request $request)
@@ -216,6 +216,6 @@ class DashboardController extends Controller
         $status = $member ? $member->status : 'none';
 
 
-        return view('pages.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
+        return view('dashboard.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
     }
 }

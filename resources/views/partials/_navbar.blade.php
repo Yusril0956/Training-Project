@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 @else
-                    <a href="/login" class="btn btn-primary">Login</a>
+                    <a href="{{ route('login.form') }}" class="btn btn-primary">Login</a>
                 @endif
             </div>
 
@@ -115,7 +115,7 @@
                                 <span class="nav-link-title">Home</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ (request()->routeIs('training.index') ? 'active' : '') || (request()->routeIs('customer.requested') ? 'active' : '') }}">
+                        <li class="nav-item {{ (request()->routeIs('training.index') ? 'active' : '') }}">
                             <a class="nav-link" href="{{ route('training.index') }}">
                                 <span class="nav-link-title">Training</span>
                             </a>
@@ -123,7 +123,7 @@
 
                         @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                             <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin') }}">
+                                <a class="nav-link" href="{{ route('admin.index') }}">
                                     <span class="nav-link-title">Admin</span>
                                 </a>
                             </li>
@@ -140,7 +140,7 @@
                                 @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
 
-                                <a class="dropdown-item" href="/help">Help</a>
+                                <a class="dropdown-item" href="{{ route('help') }}">Help</a>
                             </div>
                         </li>
                     </ul>

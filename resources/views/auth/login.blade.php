@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="text-center text-secondary mt-3">
-                Tidak memiliki akun? <a href="/register" tabindex="-1">Sign up</a>
+                Tidak memiliki akun? <a href="{{ route('register.form') }}" tabindex="-1">Sign up</a>
             </div>
         </div>
     </div>
