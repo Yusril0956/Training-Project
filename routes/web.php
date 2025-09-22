@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/absen/mark/{memberId}', [TrainingController::class, 'markAttendance'])->name('absen.mark');
 
         // Settings
-        Route::get('/customer-requested/settings/{name}', [TrainingController::class, 'settings'])->name('settings');
+        Route::get('/settings/{name}', [TrainingController::class, 'settings'])->name('settings');
         Route::post('/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('settings.update');
 
         // Register
@@ -120,7 +120,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('self.register');
 
         // Tasks
-        Route::get('/customer-requested/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('task.show');
+        Route::get('/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('task.show');
         Route::get('/gj', [TrainingController::class, 'showTasks'])->name('task.submit');
     });
 
@@ -130,7 +130,7 @@ Route::middleware('auth')->group(function () {
     // ============================
     // Member Routes
     // ============================
-    Route::middleware('isMember')->prefix('training/customer-requested')->name('training.')->group(function () {
+    Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
         Route::get('/training/{id}', [TrainingController::class, 'home'])->name('home');
         Route::get('/members/{id}', [TrainingController::class, 'members'])->name('members');
         Route::get('/materials/{id}', [TrainingController::class, 'materials'])->name('materials');
@@ -138,6 +138,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
         Route::get('/tasks/{name}', [TrainingController::class, 'tasks'])->name('tasks');
+        Route::get('/tasks/{name}/detail/{taskid}', [TaskController::class, 'show'])->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
     });
 

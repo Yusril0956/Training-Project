@@ -14,7 +14,7 @@ class TaskController extends Controller
         return view('training.tasks.index', compact('training'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $trainingId)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -34,7 +34,13 @@ class TaskController extends Controller
             'attachment_path' => $path,
         ]);
 
-        return redirect()->back()->with('success', 'Tugas berhasil ditambahkan.');
+        return redirect()->route('training.tasks', $trainingId)->with('success', 'Tugas berhasil ditambahkan.');
+    }
+
+    public function show($trainingId, $taskId)
+    {
+        $task = Tasks::where('training_id', $trainingId)->findOrFail($taskId);
+        return view('training.tasks.detail', compact('task'));
     }
 
     public function create($trainingId)
