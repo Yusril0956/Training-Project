@@ -8,98 +8,109 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => $training->name, 'url' => route('training.home', $training->id)],
-                    ['title' => 'Tugas', 'url' => route('training.tasks', $training->name)],
+                    ['title' => Str::limit($training->name, 10), 'url' => route('training.home', $training->id)],
+                    ['title' => 'Tugas', 'url' => route('training.tasks', $training->id)],
                 ],
             ])
 
             <!-- Header -->
             <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">📝 Tugas Pelatihan</h2>
-                    <p class="text-muted">Berikut adalah daftar tugas untuk pelatihan
-                        <strong>{{ $training->name }}</strong>.
-                    </p>
-
-                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                        <div class="col-auto ms-auto">
-                            <a href="{{ route('admin.tasks.create', ['trainingId' => $training->id]) }}" class="btn btn-primary">
-                                <i class="ti ti-user-plus me-1"></i>
-                                Add Task
-                            </a>
-                        </div>
-                    @endif
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="card-title mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="currentColor"
+                                class="icon icon-tabler icons-tabler-filled icon-tabler-clipboard-text">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M17.997 4.17a3 3 0 0 1 2.003 2.83v12a3 3 0 0 1 -3 3h-10a3 3 0 0 1 -3 -3v-12a3 3 0 0 1 2.003 -2.83a4 4 0 0 0 3.997 3.83h4a4 4 0 0 0 3.98 -3.597zm-2.997 10.83h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m-1 -9a2 2 0 1 1 0 4h-4a2 2 0 1 1 0 -4z" />
+                            </svg> Tugas Pelatihan</h2>
+                        <p class="text-muted">
+                            Daftar tugas untuk pelatihan <strong>{{ $training->name }}</strong>.
+                        </p>
+                    </div>
+                    @canany(['Admin', 'Super Admin'])
+                        <a href="{{ route('admin.tasks.create', ['trainingId' => $training->id]) }}" class="btn btn-primary">
+                            <i class="ti ti-plus me-1"></i> Add Task
+                        </a>
+                    @endcanany
                 </div>
             </div>
 
-            <!-- Daftar Tugas -->
-            <div class="row row-cards">
-                @forelse ($training->tasks as $task)
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card shadow-sm">
+            <!-- Accordion Cards -->
+            <div class="accordion" id="taskAccordion">
+                @forelse($tasks as $task)
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header p-3">
+                            <button class="btn btn-transparent d-flex align-items-center w-100 text-start" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse-{{ $task->id }}"
+                                aria-expanded="false" aria-controls="collapse-{{ $task->id }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-text">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                    <path
+                                        d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                    <path d="M9 12h6" />
+                                    <path d="M9 16h6" />
+                                </svg>
+                                <div class="flex-fill d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">{{ $task->title }}</span>
+                                    <span class="badge {{ $task->deadline < now() ? 'bg-danger' : 'bg-success' }}">
+                                        {{ $task->deadline->format('d M Y H:i') }}
+                                    </span>
+                                </div>
+                                <i class="ti ti-chevron-down ms-3 accordion-chevron"></i>
+                            </button>
+                        </div>
+                        <div id="collapse-{{ $task->id }}" class="accordion-collapse collapse"
+                            data-bs-parent="#taskAccordion">
                             <div class="card-body">
-                                <h4 class="card-title">{{ $task->judul }}</h4>
-                                <p class="text-muted">{{ Str::limit($task->deskripsi, 80) }}</p>
-                                <ul class="list-unstyled small mb-2">
-                                    <li><strong>Deadline:</strong> {{ $task->deadline }}</li>
-                                    <li><strong>Status:</strong>
-                                        @if ($task->is_completed_by(auth()->user()))
-                                            <span class="badge bg-success">Sudah Dikerjakan</span>
-                                        @else
-                                            <span class="badge bg-warning">Belum Dikerjakan</span>
-                                        @endif
-                                    </li>
-                                </ul>
-                                <div class="d-flex justify-content-between">
-                                    <a href="{{ route('training.task.show', [$training->id, $task->id]) }}"
-                                        class="btn btn-sm btn-primary">Lihat Tugas</a>
-                                    @can('manage-training')
-                                        <form action="#" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-sm btn-danger">Hapus</button>
-                                        </form>
-                                    @endcan
+                                <p class="text-muted">{{ $task->description }}</p>
+
+                                @if ($task->attachment_path)
+                                    <a href="{{ asset('storage/' . $task->attachment_path) }}" target="_blank"
+                                        class="btn btn-sm btn-outline-secondary mb-3">
+                                        <i class="ti ti-paperclip"></i> Lampiran
+                                    </a>
+                                @endif
+
+                                <div class="text-end">
+                                    <a href="#" class="btn btn-sm btn-info">
+                                        <i class="ti ti-eye"></i> Detail
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-12">
-                        <div class="alert alert-warning text-center">Belum ada tugas yang tersedia.</div>
+                    <div class="alert alert-warning text-center">
+                        Belum ada tugas yang dibuat.
                     </div>
                 @endforelse
             </div>
 
-            <!-- Tambah Tugas -->
-            @can('manage-training')
-                <div class="card mt-4">
-                    <div class="card-header">
-                        <h3 class="card-title">➕ Buat Tugas Baru</h3>
-                    </div>
-                    <div class="card-body">
-                        <form action="#" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label">Judul Tugas</label>
-                                <input type="text" name="judul" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Deskripsi</label>
-                                <textarea name="deskripsi" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Deadline</label>
-                                <input type="date" name="deadline" class="form-control" required>
-                            </div>
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-primary">Buat Tugas</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            @endcan
+            <!-- Pagination -->
+            <div class="mt-4 d-flex justify-content-center">
+                {{ $tasks->withQueryString()->links() }}
+            </div>
 
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <style>
+        /* Rotate chevron when open */
+        .accordion-collapse.collapse.show+.card-header .accordion-chevron,
+        .card-header button[aria-expanded="true"] .accordion-chevron {
+            transform: rotate(180deg);
+        }
+
+        .accordion-chevron {
+            transition: transform 0.2s ease;
+        }
+    </style>
+@endpush

@@ -34,7 +34,7 @@ class TaskController extends Controller
             'attachment_path' => $path,
         ]);
 
-        return redirect()->route('training.task')->with('success', 'Tugas berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Tugas berhasil ditambahkan.');
     }
 
     public function create($trainingId)

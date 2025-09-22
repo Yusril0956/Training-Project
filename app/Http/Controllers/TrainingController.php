@@ -293,7 +293,8 @@ class TrainingController extends Controller
     public function tasks($name)
     {
         $training = Training::findOrFail($name);
-        return view('training.tasks.index', compact('training'));
+        $tasks = Tasks::where('training_id', $training->id)->paginate(10); // Use pagination for tasks
+        return view('training.tasks.index', compact('tasks', 'training'));
     }
 
     public function showTasks($trainingId, $taskId)
