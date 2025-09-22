@@ -5,7 +5,7 @@
     <div class="page-body">
         <div class="container-xl">
 
-            <form action="{{ route('admin.tasks.store', $training->id) }}" method="POST" enctype="multipart/form-data"
+            <form action="{{ route('admin.tasks.store', ['trainingId' => $training->id]) }}" method="POST" enctype="multipart/form-data"
                 class="card shadow-sm">
                 @csrf
                 <div class="card-header">
@@ -27,16 +27,8 @@
                             placeholder="Berikan instruksi atau penjelasan tugas..." required></textarea>
                     </div>
 
-                    {{-- Pelatihan --}}
-                    {{-- <div class="mb-3">
-          <label class="form-label">Pelatihan Terkait</label>
-          <select name="training_id" class="form-select" required>
-            <option value="" disabled selected>Pilih pelatihan</option>
-            @foreach ($trainings as $training)
-              <option value="{{ $training->id }}">{{ $training->name }}</option>
-            @endforeach
-          </select>
-        </div> --}}
+                    {{-- Training ID (hidden) --}}
+                    <input type="hidden" name="training_id" value="{{ $training->id }}">
 
                     {{-- Deadline --}}
                     <div class="mb-3">

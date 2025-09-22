@@ -10,11 +10,13 @@ class TaskController extends Controller
 {
     public function index($trainingId)
     {
-        $training = Training::with('tasks')->findOrFail($trainingId);
-        return view('training.tasks.index', compact('training'));
+        $training = Training::findOrFail($trainingId);
+        // latest tasks with pagination
+        $tasks = $training->tasks()->latest()->paginate(10);
+        return view('training.tasks.index', compact('training', 'tasks'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $trainingId)
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -34,7 +36,13 @@ class TaskController extends Controller
             'attachment_path' => $path,
         ]);
 
-        return redirect()->back()->with('success', 'Tugas berhasil ditambahkan.');
+        return redirect()->route('training.tasks', $trainingId)->with('success', 'Tugas berhasil ditambahkan.');
+    }
+
+    public function show($trainingId, $taskId)
+    {
+        $task = Tasks::where('training_id', $trainingId)->findOrFail($taskId);
+        return view('training.tasks.detail', compact('task'));
     }
 
     public function create($trainingId)
