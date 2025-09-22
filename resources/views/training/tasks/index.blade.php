@@ -28,8 +28,9 @@
                             Daftar tugas untuk pelatihan <strong>{{ $training->name }}</strong>.
                         </p>
                     </div>
-                    @if(Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                        <a href="{{ route('admin.tasks.create', ['trainingId' => $training->id]) }}" class="btn btn-primary">
+                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
+                        <a href="{{ route('admin.tasks.create', ['trainingId' => $training->id]) }}"
+                            class="btn btn-primary">
                             <i class="ti ti-plus me-1"></i> Add Task
                         </a>
                     @endif
@@ -78,7 +79,7 @@
                                 @endif
 
                                 <div class="text-end">
-                                    <a href="{{ route('training.task.detail', [$training->name, $task->id]) }}"
+                                    <a href="{{ route('training.task.detail', [$training->id, $task->id]) }}"
                                         class="btn btn-sm btn-info">
                                         <i class="ti ti-eye"></i> Detail
                                     </a>

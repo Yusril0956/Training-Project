@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index($trainingId)
+    public function index($id)
     {
-        $training = Training::findOrFail($trainingId);
+        $training = Training::findOrFail($id);
         // latest tasks with pagination
         $tasks = $training->tasks()->latest()->paginate(10);
         return view('training.tasks.index', compact('training', 'tasks'));
@@ -42,7 +42,8 @@ class TaskController extends Controller
     public function show($trainingId, $taskId)
     {
         $task = Tasks::where('training_id', $trainingId)->findOrFail($taskId);
-        return view('training.tasks.detail', compact('task'));
+        $training = Training::findOrFail($trainingId);
+        return view('training.tasks.show', compact('task', 'training'));
     }
 
     public function create($trainingId)

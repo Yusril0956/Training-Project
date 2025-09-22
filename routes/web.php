@@ -137,8 +137,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
-        Route::get('/tasks/{name}', [TaskController::class, 'index'])->name('tasks');
-        Route::get('/tasks/{name}/detail/{taskid}', [TaskController::class, 'show'])->name('task.detail');
+        Route::get('/tasks/{id}', [TaskController::class, 'index'])->name('tasks');
+        Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('tasks.submit');
+        Route::get('/tasks/{trainingId}/detail/{taskId}', [TaskController::class, 'show'])->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
     });
 
@@ -173,8 +174,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete.get');
         Route::delete('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
 
-        // training manage tasks
-        // Route::get('/training/{trainingId}/tasks', [TaskController::class, 'index'])->name('tasks.index');
         Route::get('/training/{trainingId}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
     });
