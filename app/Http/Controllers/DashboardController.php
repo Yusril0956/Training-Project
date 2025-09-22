@@ -218,4 +218,15 @@ class DashboardController extends Controller
 
         return view('dashboard.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
     }
+
+    public function mysertifikat()
+{
+    $user = Auth::user();
+
+    // Ambil semua sertifikat milik user
+    $certificates = $user->certificates()->with('training')->paginate(9);
+
+    return view('dashboard.mysertifikat', compact('certificates'));
+}
+
 }
