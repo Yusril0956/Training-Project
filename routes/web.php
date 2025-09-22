@@ -137,7 +137,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
-        Route::get('/tasks/{name}', [TrainingController::class, 'tasks'])->name('tasks');
+        Route::get('/tasks/{name}', [TaskController::class, 'index'])->name('tasks');
         Route::get('/tasks/{name}/detail/{taskid}', [TaskController::class, 'show'])->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
     });

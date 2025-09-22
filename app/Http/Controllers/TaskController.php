@@ -10,8 +10,10 @@ class TaskController extends Controller
 {
     public function index($trainingId)
     {
-        $training = Training::with('tasks')->findOrFail($trainingId);
-        return view('training.tasks.index', compact('training'));
+        $training = Training::findOrFail($trainingId);
+        // latest tasks with pagination
+        $tasks = $training->tasks()->latest()->paginate(10);
+        return view('training.tasks.index', compact('training', 'tasks'));
     }
 
     public function store(Request $request, $trainingId)
