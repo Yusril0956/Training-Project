@@ -171,6 +171,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');
         Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete.get');
         Route::delete('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
+
+        // training manage tasks
+        // Route::get('/training/{trainingId}/tasks', [TaskController::class, 'index'])->name('tasks.index');
+        Route::get('/training/{trainingId}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+        Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
     });
 });
 

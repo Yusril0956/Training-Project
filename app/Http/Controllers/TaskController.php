@@ -14,23 +14,33 @@ class TaskController extends Controller
         return view('training.tasks.index', compact('training'));
     }
 
-
-    public function store(Request $request, $trainingId)
+    public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'training_id' => 'required|exists:trainings,id',
             'deadline' => 'required|date',
+            'attachment' => 'nullable|file|max:5120',
         ]);
+
+        $path = $request->file('attachment')?->store('attachments', 'public');
 
         Tasks::create([
-            'training_id' => $trainingId,
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
+            'title' => $request->title,
+            'description' => $request->description,
+            'training_id' => $request->training_id,
             'deadline' => $request->deadline,
+            'attachment_path' => $path,
         ]);
 
-        return redirect()->route('training.tasks', $trainingId)->with('success', 'Tugas berhasil dibuat.');
+        return redirect()->route('training.task')->with('success', 'Tugas berhasil ditambahkan.');
+    }
+
+    public function create($trainingId)
+    {
+        $training = Training::findOrFail($trainingId);
+        return view('training.tasks.create', compact('training'));
     }
 
     public function destroy($trainingId, $taskId)
