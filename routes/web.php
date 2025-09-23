@@ -119,10 +119,6 @@ Route::middleware('auth')->group(function () {
         // Register
         Route::get('/register/{id}', [TrainingController::class, 'daftarTraining'])->name('register');
         Route::post('/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('self.register');
-
-        // Tasks
-        Route::get('/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('task.show');
-        Route::get('/gj', [TrainingController::class, 'showTasks'])->name('task.submit');
     });
 
     // Certificates
@@ -139,7 +135,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
         Route::get('/tasks/{id}', [TaskController::class, 'index'])->name('tasks');
-        Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('tasks.submit');
+        Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('task.submit');
+        Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
         Route::get('/tasks/{trainingId}/detail/{taskId}', [TaskController::class, 'show'])->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
     });
@@ -177,6 +174,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/training/{trainingId}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
+        Route::get('/training/{trainingId}/tasks/', [TaskController::class, 'index'])->name('submission.download');
     });
 });
 

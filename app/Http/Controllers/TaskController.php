@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Training;
 use App\Models\Tasks;
+use App\Models\TaskSubmission;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 class TaskController extends Controller
 {
     public function index($id)
@@ -43,6 +45,10 @@ class TaskController extends Controller
     {
         $task = Tasks::where('training_id', $trainingId)->findOrFail($taskId);
         $training = Training::findOrFail($trainingId);
+
+        // Load submissions relationship
+        $task->load('submissions.user');
+
         return view('training.tasks.show', compact('task', 'training'));
     }
 
@@ -50,6 +56,43 @@ class TaskController extends Controller
     {
         $training = Training::findOrFail($trainingId);
         return view('training.tasks.create', compact('training'));
+    }
+
+    public function submit(Request $request, $trainingName, $taskId)
+    {
+        $request->validate([
+            'submission_file' => 'required|file|max:5120',
+            'message' => 'nullable|string|max:1000',
+        ]);
+
+        $user = User::find(Auth::id());
+        $task = Tasks::findOrFail($taskId);
+
+        // Check if user already submitted this task
+        $existingSubmission = TaskSubmission::where('user_id', $user->id)
+                                          ->where('task_id', $taskId)
+                                          ->first();
+
+        if ($existingSubmission) {
+            return back()->with('error', 'Anda sudah mengumpulkan tugas ini sebelumnya.');
+        }
+
+        // Handle file upload
+        $filePath = null;
+        if ($request->hasFile('submission_file')) {
+            $filePath = $request->file('submission_file')->store('task_submissions', 'public');
+        }
+
+        // Create submission record
+        TaskSubmission::create([
+            'user_id' => $user->id,
+            'task_id' => $taskId,
+            'answer' => $request->message,
+            'file_path' => $filePath,
+            'submitted_at' => now(),
+        ]);
+
+        return back()->with('success', 'Tugas berhasil dikirim.');
     }
 
     public function destroy($trainingId, $taskId)
