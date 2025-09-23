@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 use App\Models\TrainingDetail;
 use App\Models\Training;
+use App\Models\ExternalCertificate;
 
 class DashboardController extends Controller
 {
@@ -192,7 +193,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        
+
 
         $trainings = Training::whereHas('members', function ($q) use ($user) {
             $q->where('user_id', $user->id);
@@ -203,10 +204,10 @@ class DashboardController extends Controller
         // training yang sudah lulus oleh user
         $tGraduated = Training::whereHas('members', function ($q) use ($user) {
             $q->where('user_id', $user->id)
-              ->where('status', 'graduate');
+                ->where('status', 'graduate');
         })->with(['members' => function ($q) use ($user) {
             $q->where('user_id', $user->id)
-              ->where('status', 'graduate');
+                ->where('status', 'graduate');
         }, 'detail'])->paginate(9);
 
 
@@ -220,13 +221,14 @@ class DashboardController extends Controller
     }
 
     public function mysertifikat()
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    // Ambil semua sertifikat milik user
-    $certificates = $user->certificates()->with('training')->paginate(9);
+        // Ambil semua sertifikat milik user
+        $certificates = $user->certificates()->with('training')->paginate(9);
 
-    return view('dashboard.mysertifikat', compact('certificates'));
-}
+        $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(12);
 
+        return view('dashboard.mysertifikat', compact('certificates', 'externalCertificates'));
+    }
 }

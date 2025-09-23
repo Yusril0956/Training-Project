@@ -13,6 +13,7 @@ use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\ExternalCertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +85,8 @@ Route::middleware('auth')->group(function () {
     Route::view('/fortal-hr', 'dashboard.fortal-hr')->name('fortal.hr');
     Route::view('/laporan-data', 'dashboard.laporan-data')->name('laporan.data');
     Route::view('/kontak-divisi', 'dashboard.kontak-divisi')->name('kontak.divisi');
+
+    Route::resource('manual-certificates', ExternalCertificateController::class)->only(['index', 'create', 'store', 'show']);
 
     // Profile
     Route::prefix('profile')->group(function () {
