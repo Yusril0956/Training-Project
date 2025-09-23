@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Training;
 use App\Models\Tasks;
 use App\Models\TaskSubmission;
+use App\Models\TaskReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+
 class TaskController extends Controller
 {
     public function index($id)
@@ -70,8 +72,8 @@ class TaskController extends Controller
 
         // Check if user already submitted this task
         $existingSubmission = TaskSubmission::where('user_id', $user->id)
-                                          ->where('task_id', $taskId)
-                                          ->first();
+            ->where('task_id', $taskId)
+            ->first();
 
         if ($existingSubmission) {
             return back()->with('error', 'Anda sudah mengumpulkan tugas ini sebelumnya.');
@@ -101,5 +103,30 @@ class TaskController extends Controller
         $task->delete();
 
         return back()->with('success', 'Tugas berhasil dihapus.');
+    }
+
+    public function reviewTaskSubmission($submissionId)
+    {
+        $submission = TaskSubmission::with('user', 'task.training')->findOrFail($submissionId);
+        $training = $submission->task->training;
+        return view('training.tasks.review', compact('submission', 'training'));
+    }
+
+    public function storeReview(Request $request, $submissionId)
+    {
+        $request->validate([
+            'score' => 'required|integer|min:0|max:100',
+            'comment' => 'nullable|string',
+        ]);
+
+        $submission = TaskSubmission::findOrFail($submissionId);
+
+        $submission->review()->create([
+            'score' => $request->score,
+            'comment' => $request->comment,
+            'reviewer_id' => auth::id(),
+        ]);
+
+        return redirect()->route('training.task.detail', [$submission->task->training_id, $submission->task_id])->with('success', 'Penilaian berhasil disimpan.');
     }
 }

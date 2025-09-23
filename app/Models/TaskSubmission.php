@@ -25,4 +25,9 @@ class TaskSubmission extends Model
     {
         return $this->belongsTo(Tasks::class, 'task_id');
     }
+
+    public function review()
+    {
+        return $this->hasOne(TaskReview::class, 'submission_id');
+    }
 }

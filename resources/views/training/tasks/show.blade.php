@@ -92,6 +92,18 @@
                                                         <path d="M12 4l0 12" />
                                                     </svg>
                                                 </a>
+                                                <a href="{{ route('admin.task.review', ['trainingId' => $training->id, 'taskId' => $task->id, 'submissionId' => $submission->id]) }}"
+                                                    class="btn btn-sm btn-success">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-pencil-check">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                                                        <path d="M13.5 6.5l4 4" />
+                                                        <path d="M15 19l2 2l4 -4" />
+                                                    </svg>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -113,14 +125,29 @@
                         @csrf
                         <div class="card-body">
                             <h3 class="card-title mb-3">Kumpulkan Tugas</h3>
+                            @php
+                                $userSubmission = $task->submissions->where('user_id', auth()->id())->first();
+                            @endphp
 
-                            @if (optional($task->submissions->where('user_id', auth()->id())->first())->file_path)
+                            @if ($userSubmission && $userSubmission->file_path)
                                 <p class="text-success">Kamu sudah mengumpulkan tugas ini.</p>
-                                <a href="{{ asset('storage/' . $task->submissions->firstWhere('user_id', auth()->id())->file_path) }}"
+                                <a href="{{ asset('storage/' . $userSubmission->file_path) }}"
                                     class="btn btn-sm btn-outline-secondary mb-3" target="_blank">
                                     <i class="ti ti-paperclip me-1"></i>
                                     Lihat Kiriman
                                 </a>
+                                @if ($userSubmission && $userSubmission->review)
+                                    <div class="card mt-4">
+                                        <div class="card-body">
+                                            <h4>📊 Penilaian Tugas</h4>
+                                            <p><strong>Nilai:</strong> {{ $userSubmission->review->score }}</p>
+                                            <p><strong>Komentar:</strong> {{ $userSubmission->review->comment }}</p>
+                                            <p class="text-muted">Dinilai oleh:
+                                                {{ $userSubmission->review->reviewer->name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endif
                             @else
                                 <div class="mb-3">
                                     <label class="form-label">Pilih File</label>

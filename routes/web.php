@@ -175,6 +175,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/training/{trainingId}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
         Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
         Route::get('/training/{trainingId}/tasks/', [TaskController::class, 'index'])->name('submission.download');
+        Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', [TaskController::class, 'reviewTaskSubmission'])->name('task.review');
+        Route::post('training/tasks/review/{submissionId}', [TaskController::class, 'storeReview'])->name('submission.review.store');
     });
 });
 
