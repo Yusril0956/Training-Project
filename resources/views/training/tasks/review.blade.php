@@ -4,6 +4,15 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+            @include('partials._breadcrumb', [
+                'items' => [
+                    ['title' => 'Training', 'url' => route('training.index')],
+                    ['title' => Str::limit($training->name, 20), 'url' => route('training.home', $training->id)],
+                    ['title' => 'Tugas', 'url' => route('training.tasks', $training->id)],
+                    ['title' => Str::limit($submission->task->title, 20), 'url' => '#'],
+                ],
+            ])
+            
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">🧾 Penilaian Tugas</h3>
@@ -19,7 +28,7 @@
                                 {{ basename($submission->file_path) }}
                             </a>
                         </p>
-                        <p><strong>Pesan:</strong> {{ $submission->message ?? 'Tidak ada pesan.' }}</p>
+                        <p><strong>Pesan:</strong> {{ $submission->answer ?? 'Tidak ada pesan.' }}</p>
 
                         <div class="mb-3">
                             <label class="form-label">Nilai (0–100)</label>

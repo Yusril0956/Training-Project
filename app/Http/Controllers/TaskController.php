@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Training;
 use App\Models\Tasks;
 use App\Models\TaskSubmission;
@@ -82,7 +83,19 @@ class TaskController extends Controller
         // Handle file upload
         $filePath = null;
         if ($request->hasFile('submission_file')) {
-            $filePath = $request->file('submission_file')->store('task_submissions', 'public');
+            $originalFileName = $request->file('submission_file')->getClientOriginalName();
+            $userName = str_replace(' ', '_', $user->name); // Replace spaces with underscores
+            $extension = $request->file('submission_file')->getClientOriginalExtension();
+
+            // Create new filename: original_name_userName.extension
+            $newFileName = pathinfo($originalFileName, PATHINFO_FILENAME) . '_' . $userName . '.' . $extension;
+
+            // Store file with custom path and filename
+            $filePath = $request->file('submission_file')->storeAs(
+                'task_submissions/' . $task->name,
+                $newFileName,
+                'public'
+            );
         }
 
         // Create submission record
@@ -105,11 +118,17 @@ class TaskController extends Controller
         return back()->with('success', 'Tugas berhasil dihapus.');
     }
 
-    public function reviewTaskSubmission($submissionId)
+    public function reviewTaskSubmission($trainingId, $taskId, $submissionId)
     {
-        $submission = TaskSubmission::with('user', 'task.training')->findOrFail($submissionId);
-        $training = $submission->task->training;
-        return view('training.tasks.review', compact('submission', 'training'));
+        // Ambil task berdasarkan training dan task id
+        $task = Tasks::where('training_id', $trainingId)->findOrFail($taskId);
+
+        // Ambil submission berdasarkan task_id dan id
+        $submission = TaskSubmission::where('task_id', $taskId)->findOrFail($submissionId);
+
+        $training = Training::findOrFail($trainingId);
+
+        return view('training.tasks.review', compact('training', 'task', 'submission'));
     }
 
     public function storeReview(Request $request, $submissionId)
@@ -124,9 +143,19 @@ class TaskController extends Controller
         $submission->review()->create([
             'score' => $request->score,
             'comment' => $request->comment,
-            'reviewer_id' => auth::id(),
+            'reviewer_id' => Auth::id(),
         ]);
 
-        return redirect()->route('training.task.detail', [$submission->task->training_id, $submission->task_id])->with('success', 'Penilaian berhasil disimpan.');
+        Notification::create([
+            'user_id' => $submission->user_id,
+            'title' => 'Penilaian tugas ' . $submission->task->title,
+            'message' => 'Tugas anda telah dinilai oleh ' . Auth::user()->name . ' dengan nilai ' . $request->score,
+        ]);
+
+        // Redirect ke halaman detail task yang sedang direview
+        return redirect()->route('training.task.detail', [
+            $submission->task->training_id,
+            $submission->task_id
+        ])->with('success', 'Penilaian berhasil disimpan.');
     }
 }

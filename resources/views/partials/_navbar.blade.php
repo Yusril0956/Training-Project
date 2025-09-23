@@ -34,7 +34,7 @@
                         </svg>
                     </a>
                     @php
-                        $unreadNotifications = Auth::check() ? Auth::user()->notifications()->whereNull('read_at')->get() : collect();
+                        $unreadNotifications = Auth::check() ? Auth::user()->notifications()->whereNull('read_at')->latest()->get() : collect();
                     @endphp
                     <div class="nav-item dropdown d-none d-md-flex me-3">
                         <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"

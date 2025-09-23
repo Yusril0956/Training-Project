@@ -54,7 +54,7 @@ class DashboardController extends Controller
     public function notification()
     {
         $user = Auth::user();
-        $notifications = Notification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $notifications = Notification::where('user_id', $user->id)->latest()->get();
 
         return view('dashboard.notifications', compact('notifications'));
     }

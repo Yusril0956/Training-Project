@@ -75,7 +75,7 @@
                     </a>
                     @php
                         $unreadNotifications = Auth::check()
-                            ? Auth::user()->notifications()->whereNull('read_at')->get()
+                            ? Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get()
                             : collect();
                     @endphp
                     <div class="nav-item dropdown d-none d-md-flex me-3">

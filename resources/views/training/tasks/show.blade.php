@@ -92,7 +92,7 @@
                                                         <path d="M12 4l0 12" />
                                                     </svg>
                                                 </a>
-                                                <a href="{{ route('admin.task.review', ['trainingId' => $training->id, 'taskId' => $task->id, 'submissionId' => $submission->id]) }}"
+                                                <a href="{{ route('admin.task.review', [ $training->id, $task->id, $submission->id]) }}"
                                                     class="btn btn-sm btn-success">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
