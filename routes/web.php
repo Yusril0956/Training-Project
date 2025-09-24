@@ -88,6 +88,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('manual-certificates', ExternalCertificateController::class)->only(['index', 'create', 'store', 'show']);
 
+    Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+    Route::post('/settings', [DashboardController::class, 'updateSettings'])->name('settings.update');
+
     // Profile
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'profile'])->name('profile');
@@ -113,7 +116,13 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}/reject', [TrainingController::class, 'reject'])->name('reject');
         Route::put('/{id}/approve', [TrainingController::class, 'approve'])->name('approve');
         Route::get('/{idabsen}/', [TrainingController::class, 'absen'])->name('absen');
-        Route::post('/absen/mark/{memberId}', [TrainingController::class, 'markAttendance'])->name('absen.mark');
+        Route::get('/{idabsen}/data', [TrainingController::class, 'absen'])->name('absen.data');
+
+        // User Attendance with QR Code
+        Route::get('/{id}/user-absen', [TrainingController::class, 'userAbsen'])->name('user.absen');
+        Route::get('/{id}/generate-qr', [TrainingController::class, 'generateQR'])->name('generate.qr');
+        Route::get('/{id}/download-qr', [TrainingController::class, 'downloadQR'])->name('download.qr');
+        Route::post('/{id}/process-qr', [TrainingController::class, 'processQR'])->name('process.qr');
 
         // Settings
         Route::get('/settings/{name}', [TrainingController::class, 'settings'])->name('settings');
