@@ -55,7 +55,7 @@ class DashboardController extends Controller
     public function notification()
     {
         $user = Auth::user();
-        $notifications = Notification::where('user_id', $user->id)->latest()->get();
+        $notifications = $user->notifications()->latest()->get();
 
         return view('dashboard.notifications', compact('notifications'));
     }
@@ -230,5 +230,30 @@ class DashboardController extends Controller
         $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(12);
 
         return view('dashboard.mysertifikat', compact('certificates', 'externalCertificates'));
+    }
+
+    public function settings()
+    {
+        $user = Auth::user();
+        return view('dashboard.settings', compact('user'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'email_notifications' => 'nullable|in:enabled,disabled',
+        ]);
+
+        try {
+            $user->update([
+                'email_notifications' => $request->email_notifications,
+            ]);
+
+            return redirect()->back()->with('success', 'Pengaturan berhasil disimpan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan pengaturan!');
+        }
     }
 }

@@ -106,9 +106,9 @@
                                                         class="status-dot status-dot-animated bg-blue d-block"></span>
                                                 </div>
                                                 <div class="col text-truncate">
-                                                    <div class="text-body d-block">{{ $notification->title }}</div>
+                                                    <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
                                                     <div class="d-block text-secondary text-truncate mt-n1">
-                                                        {{ $notification->message }}
+                                                        {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -210,6 +210,25 @@
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item {{ request()->routeIs('training.absen') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('training.absen', $training->id) }}">
+                            <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/clipboard-list -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                                    <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                                    <path d="M9 12l2 2l4 -4" />
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Data Absen
+                            </span>
+                        </a>
+                    </li>
+                @else
+                    <li class="nav-item {{ request()->routeIs('training.user.absen') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('training.user.absen', $training->id) }}">
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -426,10 +445,11 @@
                                                 <span class="status-dot status-dot-animated bg-blue d-block"></span>
                                             </div>
                                             <div class="col text-truncate">
-                                                <div class="text-body d-block">{{ $notification->title }}</div>
+                                                <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
                                                 <div class="d-block text-secondary text-truncate mt-n1">
-                                                    {{ $notification->message }}
+                                                    {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
                                                 </div>
+                                            </div>
                                             </div>
                                             <div class="col-auto">
                                                 <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
