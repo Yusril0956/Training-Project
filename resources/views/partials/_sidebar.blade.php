@@ -75,7 +75,7 @@
                     <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('profile') }}" class="dropdown-item">Settings</a>
+                    <a href="{{ route('settings') }}" class="dropdown-item">Settings</a>
                     <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
                 </div>
             </div>
@@ -238,7 +238,7 @@
                         </span>
                         @php
                             $unreadNotifications = Auth::check()
-                                ? Auth::user()->notifications()->whereNull('read_at')->get()
+                                ? Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get()
                                 : collect();
                         @endphp
                         @if ($unreadNotifications->count() > 0)
@@ -332,7 +332,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile') }}">
+                    <a class="nav-link" href="{{ route('settings') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -400,7 +400,7 @@
                     <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('profile') }}" class="dropdown-item">Settings</a>
+                    <a href="{{ route('settings') }}" class="dropdown-item">Settings</a>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="dropdown-item">Logout</button>

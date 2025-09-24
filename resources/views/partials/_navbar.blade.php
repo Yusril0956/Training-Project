@@ -34,7 +34,7 @@
                         </svg>
                     </a>
                     @php
-                        $unreadNotifications = Auth::check() ? Auth::user()->notifications()->whereNull('read_at')->latest()->get() : collect();
+                        $unreadNotifications = Auth::check() ? Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get() : collect();
                     @endphp
                     <div class="nav-item dropdown d-none d-md-flex me-3">
                         <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
@@ -63,9 +63,9 @@
                                                 <div class="col-auto"><span
                                                         class="status-dot status-dot-animated bg-blue d-block"></span></div>
                                                 <div class="col text-truncate">
-                                                    <div class="text-body d-block">{{ $notification->title }}</div>
+                                                    <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
                                                     <div class="d-block text-secondary text-truncate mt-n1">
-                                                        {{ $notification->message }}
+                                                        {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">

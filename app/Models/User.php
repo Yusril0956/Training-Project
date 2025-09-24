@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
@@ -38,6 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'google_id',
         'role',
+        'email_notifications',
     ];
 
     /**
@@ -90,10 +92,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(TaskSubmission::class);
     }
 
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
+    // Laravel's built-in notifications relationship is handled automatically by Notifiable trait
 
     public function trainings()
     {
