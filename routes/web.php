@@ -88,6 +88,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('manual-certificates', ExternalCertificateController::class)->only(['index', 'create', 'store', 'show']);
 
+    Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
+    Route::post('/settings', [DashboardController::class, 'updateSettings'])->name('settings.update');
+
     // Profile
     Route::prefix('profile')->group(function () {
         Route::get('/', [ProfileController::class, 'profile'])->name('profile');
