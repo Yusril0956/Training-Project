@@ -256,11 +256,8 @@ class TrainingController extends Controller
 
         $training = Training::findOrFail($trainingId);
 
-        Notification::create([
-            'user_id' => Auth::id(),
-            'title' => 'Kick Training' . $training->name,
-            'message' => 'Anda telah dikeluarkan dari training' . $training->name,
-        ]);
+        $user = User::find(Auth::id());
+        $user->notify(new \App\Notifications\TrainingRejectedNotification($training));
 
         return redirect()->back()->with('success', 'Peserta telah dihapus.');
     }
@@ -411,11 +408,8 @@ class TrainingController extends Controller
             $message .= " Pesan: " . $request->message;
         }
 
-        Notification::create([
-            'user_id' => Auth::id(),
-            'title' => 'Anda telah ditambahkan ke ' . $training->name,
-            'message' => 'Anda telah ditambahkan ke ' . $training->name . 'selamat datang',
-        ]);
+        $user = User::find(Auth::id());
+        $user->notify(new \App\Notifications\TrainingInvitationNotification($training));
 
         return redirect()->route('training.members', $trainingId)->with('success', $message);
     }
@@ -486,11 +480,8 @@ class TrainingController extends Controller
         $member->update(['status' => 'accept']);
 
         // Create notification
-        Notification::create([
-            'user_id' => $member->user_id,
-            'title' => 'Pendaftaran Training Diterima',
-            'message' => 'Selamat! Pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah diterima.',
-        ]);
+        $user = User::find($member->user_id);
+        $user->notify(new \App\Notifications\TrainingAcceptedNotification($member->trainingDetail->training));
 
         return redirect()->back()->with('success', 'Peserta telah diterima.');
     }
@@ -501,11 +492,8 @@ class TrainingController extends Controller
         $member->delete();
 
         // Create notification
-        Notification::create([
-            'user_id' => $member->user_id,
-            'title' => 'Pendaftaran Training Ditolak',
-            'message' => 'Maaf, pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah ditolak.',
-        ]);
+        $user = User::find($member->user_id);
+        $user->notify(new \App\Notifications\TrainingRejectedNotification($member->trainingDetail->training));
 
         return redirect()->back()->with('success', 'Peserta telah ditolak.');
     }
@@ -611,11 +599,8 @@ class TrainingController extends Controller
 
 
         // Create notification
-        Notification::create([
-            'user_id' => $member->user_id,
-            'title' => 'Selamat! Anda telah lulus dari Training',
-            'message' => 'Selamat! Anda telah lulus dari training "' . $training->name . '" dan menerima sertifikat.',
-        ]);
+        $user = User::find($member->user_id);
+        $user->notify(new \App\Notifications\TrainingGraduatedNotification($training));
 
         return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
     }

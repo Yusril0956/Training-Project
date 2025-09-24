@@ -11,11 +11,11 @@
                 <div class="card-body">
                     <div class="list-group list-group-flush">
                         @forelse ($notifications as $notification)
-                        <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
+                        <a href="{{ $notification->data['url'] ?? '#' }}" class="list-group-item list-group-item-action d-flex align-items-center">
                             <span class="status-dot status-dot-animated bg-green me-3"></span>
                             <div class="flex-fill">
-                                <div class="fw-bold">{{ $notification->title }}</div>
-                                <div class="text-secondary small">{{ $notification->message }}</div>
+                                <div class="fw-bold">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
+                                <div class="text-secondary small">{{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}</div>
                             </div>
                             <span class="text-secondary small ms-3">{{ $notification->created_at->diffForHumans() }}</span>
                         </a>

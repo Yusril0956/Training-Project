@@ -106,9 +106,9 @@
                                                         class="status-dot status-dot-animated bg-blue d-block"></span>
                                                 </div>
                                                 <div class="col text-truncate">
-                                                    <div class="text-body d-block">{{ $notification->title }}</div>
+                                                    <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
                                                     <div class="d-block text-secondary text-truncate mt-n1">
-                                                        {{ $notification->message }}
+                                                        {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -409,10 +409,11 @@
                                                     class="status-dot status-dot-animated bg-blue d-block"></span>
                                             </div>
                                             <div class="col text-truncate">
-                                                <div class="text-body d-block">{{ $notification->title }}</div>
+                                                <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
                                                 <div class="d-block text-secondary text-truncate mt-n1">
-                                                    {{ $notification->message }}
+                                                    {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
                                                 </div>
+                                            </div>
                                             </div>
                                             <div class="col-auto">
                                                 <small
