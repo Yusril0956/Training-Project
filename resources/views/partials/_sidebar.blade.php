@@ -407,7 +407,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div>  
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div>
                 <form action="./" method="get" autocomplete="off" novalidate>
