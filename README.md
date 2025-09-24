@@ -50,7 +50,7 @@ Terima kasih kepada semua kontributor proyek ini! 🎉
         <img src="https://github.com/vein13046-ui.png?size=100" width="100px;" alt=""/>
         <br /><sub><b>Daelingka</b></sub>
       </a>
-      <br />🤝 Support Developer
+      <br />🤝 yangpaling jago developmen
     </td>
   </tr>
 </table>
@@ -82,7 +82,7 @@ masukan link https://github.com/Yusril0956/Training-Project.git
 
 composer -v
 
-masuk ke folder laravel
+masuk ke folder laravel 
 
 composer install
 
