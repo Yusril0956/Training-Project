@@ -315,7 +315,7 @@
                     </div>
                 </div>
 
-                @include('components._alert')
+                @include('components.alert')
 
                 <!-- Settings Cards -->
                 <div class="row row-cards">

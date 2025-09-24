@@ -7,8 +7,7 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
-                    ['title' => $training->name, 'url' => route('cr.page', $training->id)],
+                    ['title' => $training->name, 'url' => route('training.home', $training->id)],
                     ['title' => 'Members', 'url' => route('training.members', $training->id)],
                 ],
             ])
@@ -60,9 +59,17 @@
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-info">Detail</a>
-                                            <a href="{{ route("training.member.delete", [$member->id, $training->id]) }}" onclick="return confirm('Anda yakin ingin menghapus member ini?')" class="btn btn-sm btn-danger btn-delete-user">Delete</a>
+                                            <form
+                                                action="{{ route('admin.training.member.delete', [$member->id, $training->id]) }}"
+                                                method="POST" style="display: inline;"
+                                                onsubmit="return confirm('Anda yakin ingin menghapus member ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="btn btn-sm btn-danger btn-delete-user">Delete</button>
+                                            </form>
                                             {{-- add graduation button --}}
-                                            <a href="{{ route('training.member.graduate', [$training->id, $member->id]) }}"
+                                            <a href="{{ route('admin.training.member.graduate', [$training->id, $member->id]) }}"
                                                 class="btn btn-sm btn-success"
                                                 onclick="return confirm('Yakin ingin menandai peserta ini sebagai lulus?')">Graduate</a>
                                         </td>
@@ -178,14 +185,14 @@
                                         <td>{{ $pMember->user->email }}</td>
                                         <td>
                                             <form
-                                                action="{{ route('training.member.accept', [$training->id, $pMember->id]) }}"
+                                                action="{{ route('admin.training.member.accept', [$training->id, $pMember->id]) }}"
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-success">Terima</button>
                                             </form>
                                             <form
-                                                action="{{ route('training.member.reject', [$training->id, $pMember->id]) }}"
+                                                action="{{ route('admin.training.member.reject', [$training->id, $pMember->id]) }}"
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
@@ -210,7 +217,7 @@
     </div>
 
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('add.user.member', $training->id) }}" method="POST">
+        <form action="{{ route('training.member.add.user', $training->id) }}" method="POST">
             @csrf
             @if ($errors->any())
                 <div class="alert alert-danger alert-fixed-top-right">
@@ -235,11 +242,13 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">NIK</label>
-                            <input type="text" maxlength="6" class="form-control" name="nik" placeholder="Masukkan NIK 6 digit">
+                            <input type="text" maxlength="6" class="form-control" name="nik"
+                                placeholder="Masukkan NIK 6 digit">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Masukkan alamat email">
+                            <input type="email" class="form-control" name="email"
+                                placeholder="Masukkan alamat email">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Status</label>
@@ -265,29 +274,29 @@
 
 @push('scripts')
     <script>
-            // Auto show configurable modal if session variables are present
-            @if (session('modal_type'))
-                const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
-                modal.show();
+        // Auto show configurable modal if session variables are present
+        @if (session('modal_type'))
+            const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
+            modal.show();
 
-                // Add event listener for the configurable modal button
-                document.getElementById('btn-confirm-action').addEventListener('click', function() {
-                    // You can add custom action here based on modal type
-                    console.log('Modal action confirmed:', '{{ session('modal_type') }}');
+            // Add event listener for the configurable modal button
+            document.getElementById('btn-confirm-action').addEventListener('click', function() {
+                // You can add custom action here based on modal type
+                console.log('Modal action confirmed:', '{{ session('modal_type') }}');
 
-                    // If you need to perform different actions based on modal type:
-                    @if (session('modal_type') == 'success')
-                        // Success action
-                        console.log('Success action performed');
-                    @elseif (session('modal_type') == 'warning')
-                        // Warning action  
-                        console.log('Warning action performed');
-                    @elseif (session('modal_type') == 'info')
-                        // Info action
-                        console.log('Info action performed');
-                    @endif
-                });
-            @endif
+                // If you need to perform different actions based on modal type:
+                @if (session('modal_type') == 'success')
+                    // Success action
+                    console.log('Success action performed');
+                @elseif (session('modal_type') == 'warning')
+                    // Warning action  
+                    console.log('Warning action performed');
+                @elseif (session('modal_type') == 'info')
+                    // Info action
+                    console.log('Info action performed');
+                @endif
+            });
+        @endif
         });
     </script>
 @endpush

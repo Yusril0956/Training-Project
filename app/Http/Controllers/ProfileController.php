@@ -14,7 +14,7 @@ class ProfileController extends Controller
         $user = User::find(Auth::id());
 
         // kirim ke view
-        return view('pages.profile', compact('user'));
+        return view('dashboard.profile', compact('user'));
     }
 
     public function updatePassword(Request $request)

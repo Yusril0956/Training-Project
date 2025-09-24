@@ -32,7 +32,7 @@
                 {{-- Kolom kiri: breadcrumb --}}
                 <div class="col">
                     @include('partials._breadcrumb', [
-                        'items' => [['title' => 'Admin', 'url' => route('admin')]],
+                        'items' => [['title' => 'Admin', 'url' => route('admin.index')]],
                     ])
                 </div>
 
@@ -69,7 +69,7 @@
 
 
 
-    @include('components._alert')
+    @include('components.alert')
 
     <!-- Page body -->
     <div class="page-body">
@@ -215,7 +215,7 @@
 
     <!-- Modal Add User (tidak diubah) -->
     <div class="modal modal-blur fade" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
-        <form action="{{ route('users.create') }}" method="POST">
+        <form action="{{ route('admin.user.add') }}" method="POST">
             @csrf
             @if ($errors->any())
                 <div class="alert alert-danger alert-fixed-top-right">
@@ -318,7 +318,7 @@
 </div> -->
 
 
-    @include('components._modal')
+    @include('components.modal')
 @endsection
 
 @push('script')

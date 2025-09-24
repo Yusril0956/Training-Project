@@ -7,7 +7,7 @@
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href=".">
                 <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">Aerospace (IAe)
+                    class="navbar-brand-image">PT.Dirgantara
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -72,10 +72,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="/profile" class="dropdown-item">Profile</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="/profile" class="dropdown-item">Settings</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Settings</a>
                     <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
                 </div>
             </div>
@@ -124,9 +124,9 @@
                                     <a class="dropdown-item" href="{{ route('training.index') }}">
                                         Training - Page
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('training.manage') }}">
-                                        Training - Manage
-                                    </a>
+                    <a class="dropdown-item" href="{{ route('admin.training.manage') }}">
+                        Training - Manage
+                    </a>
                                 </div>
                             </div>
                         </div>
@@ -189,10 +189,21 @@
                         </span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->is('mysertifikat') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('mysertifikat') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-certificate"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Sertifikat Saya
+                        </span>
+                    </a>
+                </li>
 
                 @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin') }}">
+                        <a class="nav-link" href="{{ route('admin.index') }}">
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -321,7 +332,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">
+                    <a class="nav-link" href="{{ route('profile') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -386,10 +397,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="/profile" class="dropdown-item">Profile</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="{{ route('profile') }}" class="dropdown-item">Settings</a>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="dropdown-item">Logout</button>

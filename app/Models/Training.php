@@ -49,6 +49,11 @@ class Training extends Model
         return $this->hasMany(Schedule::class, 'training_id');
     }
 
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class, 'training_id');
+    }
+
     public function getCategoryImageAttribute()
     {
         $categorySlug = strtolower(str_replace(' ', '-', $this->category ?? 'default'));

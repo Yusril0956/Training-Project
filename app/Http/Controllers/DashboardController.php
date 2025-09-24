@@ -10,17 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 use App\Models\TrainingDetail;
 use App\Models\Training;
+use App\Models\ExternalCertificate;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('pages.home');
+        return view('dashboard.index');
     }
 
     public function terms()
     {
-        return view('pages.terms');
+        return view('dashboard.terms');
     }
 
     public function admin()
@@ -35,7 +36,7 @@ class DashboardController extends Controller
         $modalButton = 'Delete';
         $formMethod = 'DELETE';
 
-        return view('pages.admin', compact(
+        return view('admin.index', compact(
             'users',
             'assignments',   // ✅ kirim ke view
             'modalId',
@@ -54,9 +55,9 @@ class DashboardController extends Controller
     public function notification()
     {
         $user = Auth::user();
-        $notifications = Notification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $notifications = Notification::where('user_id', $user->id)->latest()->get();
 
-        return view('pages.notifikasi', compact('notifications'));
+        return view('dashboard.notifications', compact('notifications'));
     }
 
     public function userUpdate(Request $request, $id)
@@ -124,7 +125,7 @@ class DashboardController extends Controller
     {
         $feedback = Feedback::all();
 
-        return view('pages.inbox', compact('feedback'));
+        return view('dashboard.inbox', compact('feedback'));
     }
 
     public function feedback(Request $request)
@@ -148,7 +149,7 @@ class DashboardController extends Controller
     public function adminSettings()
     {
         $users = User::all();
-        return view('pages.admin-settings', compact('users'));
+        return view('admin.settings', compact('users'));
     }
 
     public function openAllAccess(Request $request)
@@ -192,7 +193,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        
+
 
         $trainings = Training::whereHas('members', function ($q) use ($user) {
             $q->where('user_id', $user->id);
@@ -203,10 +204,10 @@ class DashboardController extends Controller
         // training yang sudah lulus oleh user
         $tGraduated = Training::whereHas('members', function ($q) use ($user) {
             $q->where('user_id', $user->id)
-              ->where('status', 'graduate');
+                ->where('status', 'graduate');
         })->with(['members' => function ($q) use ($user) {
             $q->where('user_id', $user->id)
-              ->where('status', 'graduate');
+                ->where('status', 'graduate');
         }, 'detail'])->paginate(9);
 
 
@@ -216,6 +217,18 @@ class DashboardController extends Controller
         $status = $member ? $member->status : 'none';
 
 
-        return view('pages.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
+        return view('dashboard.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
+    }
+
+    public function mysertifikat()
+    {
+        $user = Auth::user();
+
+        // Ambil semua sertifikat milik user
+        $certificates = $user->certificates()->with('training')->paginate(9);
+
+        $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(12);
+
+        return view('dashboard.mysertifikat', compact('certificates', 'externalCertificates'));
     }
 }

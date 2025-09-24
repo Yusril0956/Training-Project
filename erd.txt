@@ -105,3 +105,90 @@ CERTIFICATES
 - expiry_date
 - file_path
 - created_at, updated_at
+
+
+resources/
+├── css/
+│   └── app.css
+├── js/
+│   ├── app.js
+│   └── bootstrap.js
+└── views/
+    ├── layouts/
+    │   ├── app.blade.php
+    │   ├── dashboard.blade.php
+    │   ├── training.blade.php
+    │   └── welcome.blade.php
+    ├── components/
+    │   ├── alert.blade.php
+    │   ├── modal.blade.php
+    │   └── new-alert.blade.php
+    ├── auth/
+    │   ├── login.blade.php
+    │   ├── register.blade.php
+    │   └── complete.blade.php
+    ├── admin/
+    │   ├── index.blade.php
+    │   ├── settings.blade.php
+    │   └── users.blade.php
+    ├── training/
+    │   ├── index.blade.php
+    │   ├── manage.blade.php
+    │   ├── general-knowledge.blade.php
+    │   ├── mandatory.blade.php
+    │   ├── license.blade.php
+    │   ├── customer-requested.blade.php
+    │   ├── detail.blade.php
+    │   ├── create.blade.php
+    │   ├── absen.blade.php
+    │   ├── settings.blade.php
+    │   ├── members/
+    │   │   ├── index.blade.php
+    │   │   ├── add.blade.php
+    │   │   └── user-member.blade.php
+    │   ├── materials/
+    │   │   └── index.blade.php
+    │   ├── schedule/
+    │   │   ├── index.blade.php
+    │   │   └── create.blade.php
+    │   ├── tasks/
+    │   │   ├── index.blade.php
+    │   │   └── show.blade.php
+    │   └── feedback/
+    │       └── index.blade.php
+    ├── dashboard/
+    │   ├── index.blade.php
+    │   ├── inbox.blade.php
+    │   ├── history.blade.php
+    │   ├── notifications.blade.php
+    │   └── profile.blade.php
+    ├── pages/
+    │   ├── home.blade.php
+    │   ├── help.blade.php
+    │   ├── services.blade.php
+    │   ├── company-detail.blade.php
+    │   ├── production-statistics.blade.php
+    │   ├── fortal-hr.blade.php
+    │   ├── laporan-data.blade.php
+    │   ├── kontak-divisi.blade.php
+    │   ├── terms.blade.php
+    │   ├── sistem-training.blade.php
+    │   └── sertifikat.blade.php
+    ├── assignments/
+    │   ├── index.blade.php
+    │   ├── create.blade.php
+    │   └── submissions.blade.php
+    ├── certificates/
+    │   ├── index.blade.php
+    │   └── template.blade.php
+    ├── errors/
+    │   ├── 403.blade.php
+    │   ├── 404.blade.php
+    │   └── training-404.blade.php
+    └── partials/
+        ├── breadcrumb.blade.php
+        ├── footer.blade.php
+        ├── navbar.blade.php
+        ├── sidebar.blade.php
+        ├── sidebar-training.blade.php
+        └── header.blade.php

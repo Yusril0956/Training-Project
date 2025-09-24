@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->text('description');
+            $table->string('attachment_path')->nullable();
+            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
             $table->date('deadline');
             $table->timestamps();
         });

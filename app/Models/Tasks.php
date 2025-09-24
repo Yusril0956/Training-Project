@@ -12,6 +12,7 @@ class Tasks extends Model
         'description',
         'deadline',
         'training_id',
+        'attachment_path',
     ];
 
     protected $table = 'tasks';

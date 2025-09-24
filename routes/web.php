@@ -12,198 +12,190 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\AssignmentController; 
-
+use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\ExternalCertificateController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 // ============================
-// Guest Routes (User Belum Login)
+// Guest Routes (Belum Login)
 // ============================
 Route::middleware('guest')->group(function () {
-    // Welcome Page
-    Route::get('/', fn() => view('layouts.welcome'))->name('welcome');
+    Route::view('/', 'layouts.welcome')->name('welcome');
 
-    // Login
-    Route::get('/login', fn() => view('auth.login'))->name('login.form');
+    // Auth
+    Route::view('/login', 'auth.login')->name('login.form');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-    // Register
-    Route::get('/register', fn() => view('auth.register'))->name('register.form');
+    Route::view('/register', 'auth.register')->name('register.form');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-    // Complete Profile after Google login
+    // Complete Profile setelah login Google
     Route::get('/complete-profile', [AuthController::class, 'completeForm'])->name('profile.complete');
     Route::post('/complete-profile', [AuthController::class, 'saveCompleteForm'])->name('profile.complete.save');
+
+    // Google Login
+    Route::get('auth/google', fn() => Socialite::driver('google')->redirect())->name('google.login');
+    Route::get('/auth/google/callback', function () {
+        $googleUser = Socialite::driver('google')->user();
+
+        $user = User::firstOrCreate(
+            ['email' => $googleUser->getEmail()],
+            [
+                'name'      => $googleUser->getName(),
+                'password'  => bcrypt(str()->random(16)),
+                'google_id' => $googleUser->getId(),
+            ]
+        );
+
+        Auth::login($user);
+
+        if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
+            return redirect()->route('profile.complete');
+        }
+
+        return redirect()->route('index');
+    });
 });
 
 // ============================
-// Socialite (Google Login)
-// ============================
-Route::get('auth/google', function () {
-    return Socialite::driver('google')->redirect();
-})->name('google.login');
-
-Route::get('/auth/google/callback', function () {
-    $googleUser = Socialite::driver('google')->user();
-
-    // Find or create user
-    $user = User::firstOrCreate(
-        ['email' => $googleUser->getEmail()],
-        [
-            'name'      => $googleUser->getName(),
-            'password'  => bcrypt(str()->random(16)), // random password
-            'google_id' => $googleUser->getId(),
-        ]
-    );
-
-    Auth::login($user);
-
-    // Redirect to complete profile if necessary
-    if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
-        return redirect()->route('profile.complete');
-    }
-
-    return redirect()->route('index');
-});
-
-
-// ============================
-// Authenticated Routes (User Sudah Login)
+// Authenticated Routes (Sudah Login)
 // ============================
 Route::middleware('auth')->group(function () {
-    // Dashboard & General Pages
+    // Dashboard
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
     Route::get('/history', [DashboardController::class, 'history'])->name('history');
+    Route::get('/sertifikat', [DashboardController::class, 'mysertifikat'])->name('mysertifikat');
     Route::get('/notifikasi', [DashboardController::class, 'notification'])->name('notifikasi');
-    Route::get('/help', fn() => view('pages.help'))->name('help');
-    Route::get('/services', fn() => view('pages.services'))->name('services');
-    Route::get('/company-detail', fn() => view('pages.company-detail'))->name('company.detail');
-    Route::get('/production-statistics', fn() => view('pages.production-statistics'))->name('production.statistics');
-    Route::get('/fortal-hr', fn() => view('pages.fortal-hr'))->name('fortal.hr');
-    Route::get('/laporan-data', fn() => view('pages.laporan-data'))->name('laporan.data');
-    Route::get('/kontak-divisi', fn() => view('pages.kontak-divisi'))->name('kontak.divisi');
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
     Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
 
+    // Static Pages
+    Route::view('/help', 'dashboard.help')->name('help');
+    Route::view('/services', 'dashboard.services')->name('services');
+    Route::view('/company-detail', 'dashboard.company-detail')->name('company.detail');
+    Route::view('/production-statistics', 'dashboard.production-statistics')->name('production.statistics');
+    Route::view('/fortal-hr', 'dashboard.fortal-hr')->name('fortal.hr');
+    Route::view('/laporan-data', 'dashboard.laporan-data')->name('laporan.data');
+    Route::view('/kontak-divisi', 'dashboard.kontak-divisi')->name('kontak.divisi');
+
+    Route::resource('manual-certificates', ExternalCertificateController::class)->only(['index', 'create', 'store', 'show']);
+
     // Profile
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
-    Route::post('/setting/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
-    Route::post('/setting/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
-    Route::post('/setting/profile', [ProfileController::class, 'updateProfile'])->name('setting.profile');
-    Route::delete('/user/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'profile'])->name('profile');
+        Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
+        Route::post('/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
+        Route::post('/update', [ProfileController::class, 'updateProfile'])->name('setting.profile');
+        Route::delete('/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
+    });
 
     // Training
-    Route::get('/training', [TrainingController::class, 'index'])->name('training.index');
-    Route::get('/training/general-knowledge', [TrainingController::class, 'generalKnowledge'])->name('general.knowledge');
-    Route::get('/training/mandatory', [TrainingController::class, 'mandatory'])->name('mandatory.training');
-    Route::get('/training/license', [TrainingController::class, 'license'])->name('license.training');
-    Route::get('/training/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer.requested');
-    Route::get('/training/detail-training', fn() => view('pages.Training.detail_training'))->name('detail.training');
-    Route::get('/training/{id}/detail', [TrainingController::class, 'detail'])->name('training.detail');
-    Route::get('/training/create', [TrainingController::class, 'create'])->name('training.create');
-    Route::post('/training/store', [TrainingController::class, 'store'])->name('training.store');
-    Route::delete('/training/{id}/reject', [TrainingController::class, 'reject'])->name('training.reject');
-    Route::put('/training/{id}/approve', [TrainingController::class, 'approve'])->name('training.approve');
-    Route::get('/training/{idabsen}/', [TrainingController::class, 'absen'])->name('training.absen');
-    Route::post('/training/absen/mark/{memberId}', [TrainingController::class, 'markAttendance'])->name('training.absen.mark');
+    Route::prefix('training')->name('training.')->group(function () {
+        Route::get('/', [TrainingController::class, 'index'])->name('index');
+        Route::get('/general-knowledge', [TrainingController::class, 'generalKnowledge'])->name('general');
+        Route::get('/mandatory', [TrainingController::class, 'mandatory'])->name('mandatory');
+        Route::get('/license', [TrainingController::class, 'license'])->name('license');
+        Route::get('/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer');
+        Route::get('/detail-training', fn() => view('training.detail'))->name('detail.view');
+        Route::get('/{id}/detail', [TrainingController::class, 'detail'])->name('detail');
 
-    Route::get('/training/customer-requested/tasks/{taskId}/{trainingId}', [TrainingController::class, 'showTasks'])->name('training.task.show');
-    Route::get('/gj', [TrainingController::class, 'showTasks'])->name('training.task.submit');
+        Route::get('/create', [TrainingController::class, 'create'])->name('create');
+        Route::post('/store', [TrainingController::class, 'store'])->name('store');
 
-    // training setting
-    Route::get('/training/customer-requested/settings/{name}', [TrainingController::class, 'settings'])->name('training.settings');
-    Route::post('/training/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('training.settings.update');
+        Route::delete('/{id}/reject', [TrainingController::class, 'reject'])->name('reject');
+        Route::put('/{id}/approve', [TrainingController::class, 'approve'])->name('approve');
+        Route::get('/{idabsen}/', [TrainingController::class, 'absen'])->name('absen');
+        Route::post('/absen/mark/{memberId}', [TrainingController::class, 'markAttendance'])->name('absen.mark');
 
-    Route::get('/training/register/{id}', [TrainingController::class, 'daftarTraining'])->name('training.register');
+        // Settings
+        Route::get('/settings/{name}', [TrainingController::class, 'settings'])->name('settings');
+        Route::post('/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('settings.update');
 
-    // Self registration for training
-    Route::post('/training/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('training.self.register');
-
-    // Route::post('training/{id}/tasks', [TaskController::class, 'store'])->name('training.task.create');
-    // Route::delete('training/{id}/tasks/{taskId}', [TaskController::class, 'destroy'])->name('training.task.delete');
+        // Register
+        Route::get('/register/{id}', [TrainingController::class, 'daftarTraining'])->name('register');
+        Route::post('/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('self.register');
+    });
 
     // Certificates
-    Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates.index');
-    Route::post('/certificates', [CertificateController::class, 'store'])->name('certificates.store');
-
-    // Tambahkan dua rute ini
-    Route::put('/certificates/{certificate}', [CertificateController::class, 'update'])->name('certificates.update');
-    Route::delete('/certificates/{certificate}', [CertificateController::class, 'destroy'])->name('certificates.destroy');
-
-    // Schedule routes
-    Route::post('/training/{trainingId}/schedule', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
-    Route::delete('/training/{trainingId}/schedule/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
-
+    Route::resource('certificates', CertificateController::class)->only(['index', 'store', 'update', 'destroy']);
 
     // ============================
-    // Member training Routes
+    // Member Routes
     // ============================
-    Route::middleware('isMember')->group(function () {
-        Route::get('/training/customer-requested/{id}', [TrainingController::class, 'crPage'])->name('cr.page');
+    Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
+        Route::get('/training/{id}', [TrainingController::class, 'home'])->name('home');
+        Route::get('/members/{id}', [TrainingController::class, 'members'])->name('members');
+        Route::get('/materials/{id}', [TrainingController::class, 'materials'])->name('materials');
+        Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
+        Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
+        Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
+        Route::get('/tasks/{id}', [TaskController::class, 'index'])->name('tasks');
+        Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('task.submit');
+        Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
+        Route::get('/tasks/{trainingId}/detail/{taskId}', [TaskController::class, 'show'])->name('task.detail');
+        Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
+        Route::post('/training/{id}/feedback', [TrainingController::class, 'submitFeedback'])->name('feedback.submit');
+    });
 
-        Route::get('/training/customer-requested/members/{id}', [TrainingController::class, 'members'])->name('training.members');
-        Route::get('/training/customer-requested/materials/{id}', [TrainingController::class, 'materials'])->name('training.materials');
-        Route::get('/training/customer-requested/schedule/{id}', [TrainingController::class, 'schedule'])->name('training.schedule');
-        Route::post('/training/customer-requested/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('training.schedule.store');
-        Route::delete('/training/customer-requested/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('training.schedule.delete');
-        Route::get('/training/customer-requested/tasks/{name}', [TrainingController::class, 'tasks'])->name('training.tasks');
-        Route::get('/training/customer-requested/feedback/{id}', [TrainingController::class, 'feedback'])->name('training.feedback');
-        Route::get('training/{id}/add-member', [TrainingController::class, 'showAddMemberForm'])->name('training.member.add.form');
-        Route::post('training/{id}/add-member', [TrainingController::class, 'addMember'])->name('training.member.add');
-        Route::post('training/{id}/add-member-user', [TrainingController::class, 'addUserMember'])->name('add.user.member');
+
+    // Member Management
+    Route::prefix('training/{id}')->name('training.')->middleware('isMember')->group(function () {
+        Route::get('/add-member', [TrainingController::class, 'showAddMemberForm'])->name('member.add.form');
+        Route::post('/add-member', [TrainingController::class, 'addMember'])->name('member.add');
+        Route::post('/add-member-user', [TrainingController::class, 'addUserMember'])->name('member.add.user');
     });
 
     // ============================
-    // Admin & Super Admin Routes
+    // Admin Routes
     // ============================
-    Route::middleware(['check_role:Admin,Super Admin'])->group(function () {
-        Route::get('/admin', [DashboardController::class, 'admin'])->name('admin');
-        Route::post('/admin/user/add', [DashboardController::class, 'addUser'])->name('users.create');
-        Route::delete('/admin/user/{id}', [DashboardController::class, 'deleteUser'])->name('admin.user.delete');
-        Route::get('/admin/example-modal', [DashboardController::class, 'exampleModal'])->name('admin.example.modal');
-        Route::get('/setting', [DashboardController::class, 'adminSettings'])->name('admin.settings');
-        Route::post('/admin/settings/open-access', [DashboardController::class, 'openAllAccess'])->name('admin.open.access');
-        Route::post('/admin/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('admin.delete.database');
-        Route::post('/admin/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('admin.reset.password');
+    Route::middleware(['check_role:Admin,Super Admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [DashboardController::class, 'admin'])->name('index');
+        Route::post('/user/add', [DashboardController::class, 'addUser'])->name('user.add');
+        Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
+        Route::get('/example-modal', [DashboardController::class, 'exampleModal'])->name('example.modal');
 
-        // training admin
+        Route::get('/setting', [DashboardController::class, 'adminSettings'])->name('settings');
+        Route::post('/settings/open-access', [DashboardController::class, 'openAllAccess'])->name('open.access');
+        Route::post('/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('delete.database');
+        Route::post('/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('reset.password');
+
+        // Training Management
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
+        Route::delete('/training/{trainingId}', [TrainingController::class, 'destroy'])->name('training.destroy');
         Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
         Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
         Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');
-        Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
+        Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete.get');
+        Route::delete('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
+
+        Route::get('/training/{trainingId}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+        Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
+        Route::get('/training/{trainingId}/tasks/', [TaskController::class, 'index'])->name('submission.download');
+        Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', [TaskController::class, 'reviewTaskSubmission'])->name('task.review');
+        Route::post('training/tasks/review/{submissionId}', [TaskController::class, 'storeReview'])->name('submission.review.store');
     });
 });
 
-
-Route::get('/404', function () {
-    return response()->view('pages.Training.errors.404', [], 404);
-})->name('404');
-
-Route::get('/sistem-training', function () {
-    return view('pages.sistem-training');
-})->name('sistem-training');
-
+// ============================
+// Public Routes
+// ============================
+Route::view('/sistem-training', 'training.system')->name('sistem-training');
+Route::view('/404', 'errors.training-404')->name('404');
 Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');
 
-
-Route::prefix('training/{trainingId}/assignments')->group(function () {
-    Route::get('/', [AssignmentController::class, 'index'])->name('assignments.index');
-    Route::get('/create', [AssignmentController::class, 'create'])->name('assignments.create');
-    Route::post('/', [AssignmentController::class, 'store'])->name('assignments.store');
+// Assignments
+Route::prefix('training/{trainingId}/assignments')->name('assignments.')->group(function () {
+    Route::get('/', [AssignmentController::class, 'index'])->name('index');
+    Route::get('/create', [AssignmentController::class, 'create'])->name('create');
+    Route::post('/', [AssignmentController::class, 'store'])->name('store');
 });
 
 Route::post('/assignments/{assignmentId}/submit', [AssignmentController::class, 'submit'])->name('assignments.submit');

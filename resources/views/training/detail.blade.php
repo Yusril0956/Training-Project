@@ -13,7 +13,6 @@
             @include('partials._breadcrumb', [
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
-                    ['title' => 'Customer Requested', 'url' => route('customer.requested')],
                     ['title' => 'Detail Training', 'url' => route('training.detail', $training->id)],
                 ],
             ])
@@ -117,7 +116,7 @@
         </div>
     </div>
 
-    @include('components._modal', [
+    @include('components.modal', [
         'modalId' => $modalId,
         'modalTitle' => $modalTitle,
         'modalDescription' => $modalDescription,

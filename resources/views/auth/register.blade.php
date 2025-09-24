@@ -158,7 +158,7 @@
         </div>
 
         <div class="text-center text-secondary mt-3">
-            Sudah memiliki akun? <a href="/login" tabindex="-1">Sign in</a>
+            Sudah memiliki akun? <a href="{{ route('login.form') }}" tabindex="-1">Sign in</a>
         </div>
     </div>
     <!-- Libs JS -->

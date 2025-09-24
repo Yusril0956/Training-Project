@@ -15,9 +15,9 @@
             <h2>PT.Dirgantara</h2>
             <p>INDONESIAN AEROSPACE(IAe)</p>
             @if (Auth::check())
-                <a href="/home">dashboard</a>
+                <a href="{{ route('index') }}">dashboard</a>
             @else
-                <a href="/login">Login</a>
+                <a href="{{ route('login.form') }}">Login</a>
             @endif
         </div>
         <img src="images/N219.png" alt="" class="product_img">
