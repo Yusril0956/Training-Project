@@ -636,7 +636,7 @@ class TrainingController extends Controller
             return redirect()->back()->with('error', 'Gagal mengirim feedback!')->withInput();
         }
     }
-=======
+
     public function userAbsen($id)
     {
         $training = Training::with(['detail', 'jenisTraining'])->findOrFail($id);
