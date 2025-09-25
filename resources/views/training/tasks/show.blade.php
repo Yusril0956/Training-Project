@@ -25,7 +25,7 @@
                             <small class="text-muted">
                                 Pelatihan: <strong>{{ $training->name }}</strong> |
                                 Deadline:
-                                <span class="badge {{ $task->deadline < now() ? 'bg-danger' : 'bg-success' }}">
+                                <span class="badge {{ $task->deadline < now() ? 'badge bg-red-lt' : 'badge bg-green-lt' }}">
                                     {{ $task->deadline->format('d M Y H:i') }}
                                 </span>
                             </small>

@@ -59,7 +59,7 @@
                                 </svg>
                                 <div class="flex-fill d-flex justify-content-between align-items-center">
                                     <span class="fw-bold">{{ $task->title }}</span>
-                                    <span class="badge {{ $task->deadline < now() ? 'bg-danger' : 'bg-success' }}">
+                                    <span class="badge {{ $task->deadline < now() ? 'bg-red-lt' : 'bg-azure-lt' }}">
                                         {{ $task->deadline->format('d M Y H:i') }}
                                     </span>
                                 </div>
