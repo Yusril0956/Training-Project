@@ -46,6 +46,13 @@
                             <i class="ti ti-paperclip me-1"></i>
                             {{ basename($task->attachment_path) }}
                         </a>
+                        {{-- Jika lampiran berupa gambar, tampilkan pratinjau --}}
+                        @if (in_array(pathinfo($task->attachment_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                            <div class="mt-3">
+                                <img src="{{ asset('storage/' . $task->attachment_path) }}" alt="Lampiran Gambar"
+                                    class="img-fluid rounded">
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -65,6 +72,7 @@
                                         <th>Peserta</th>
                                         <th>File</th>
                                         <th>Waktu Kirim</th>
+                                        <th>Nilai</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -79,6 +87,7 @@
                                                 </a>
                                             </td>
                                             <td>{{ $submission->created_at->format('d M Y H:i') }}</td>
+                                            <td>{{ $submission->review->score ?? 'belum dinilai'}}</td>
                                             <td>
                                                 <a href="{{ route('admin.submission.download', $submission->id) }}"
                                                     class="btn btn-sm btn-primary">
