@@ -151,6 +151,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
         Route::get('/tasks/{trainingId}/detail/{taskId}', [TaskController::class, 'show'])->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
+        Route::post('/training/{id}/feedback', [TrainingController::class, 'submitFeedback'])->name('feedback.submit');
     });
 
 

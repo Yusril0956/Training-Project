@@ -154,8 +154,11 @@ class TaskController extends Controller
             'reviewer_id' => Auth::id(),
         ]);
 
-        $user = User::find($submission->user_id);
-        $user->notify(new \App\Notifications\TaskSubmissionNotification($submission->task, $submission));
+        Notification::create([
+            'user_id' => $submission->user_id,
+            'title' => 'Penilaian tugas ' . $submission->task->title,
+            'message' => 'Tugas anda telah dinilai oleh ' . Auth::user()->name . ' dengan nilai ' . $request->score,
+        ]);
 
         // Redirect ke halaman detail task yang sedang direview
         return redirect()->route('training.task.detail', [

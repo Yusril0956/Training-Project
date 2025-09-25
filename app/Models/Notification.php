@@ -3,46 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Database\Eloquent\Model;
 
-class Notification extends DatabaseNotification
+class Notification extends Model
 {
     use HasFactory;
 
-    protected $table = 'notifications';
-
     protected $fillable = [
-        'id',
-        'type',
-        'notifiable_type',
-        'notifiable_id',
-        'data',
-        'created_at',
-        'updated_at',
-        'read_at'
-    ];
-
-    protected $casts = [
-        'data' => 'array',
-        'read_at' => 'datetime',
+        'user_id',
+        'title',
+        'message',
+        'read_at',
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'notifiable_id')->where('notifiable_type', User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function markAsRead()
     {
-        if (is_null($this->read_at)) {
-            $this->forceFill(['read_at' => $this->freshTimestamp()])->save();
-        }
-    }
-
-    public function markAsUnread()
-    {
-        if (!is_null($this->read_at)) {
-            $this->forceFill(['read_at' => null])->save();
-        }
+        $this->update(['read_at' => now()]);
     }
 }

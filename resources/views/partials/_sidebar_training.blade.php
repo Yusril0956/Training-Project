@@ -59,7 +59,7 @@
                             d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
                     </svg>
                 </a>
-                {{-- <div class="nav-item dropdown d-none d-md-flex me-3">
+                <div class="nav-item dropdown d-none d-md-flex me-3">
                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                         aria-label="Show notifications">
                         <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
@@ -106,9 +106,9 @@
                                                         class="status-dot status-dot-animated bg-blue d-block"></span>
                                                 </div>
                                                 <div class="col text-truncate">
-                                                    <div class="text-body d-block">{{ strip_tags($notification->data['title'] ?? 'Notifikasi') }}</div>
+                                                    <div class="text-body d-block">{{ $notification->title }}</div>
                                                     <div class="d-block text-secondary text-truncate mt-n1">
-                                                        {{ strip_tags($notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi') }}
+                                                        {{ $notification->message }}
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
@@ -211,25 +211,6 @@
                     <li class="nav-item {{ request()->routeIs('training.absen') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('training.absen', $training->id) }}">
                             <span
-                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/clipboard-list -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
-                                    <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
-                                    <path d="M9 12l2 2l4 -4" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Data Absen
-                            </span>
-                        </a>
-                    </li>
-                @else
-                    <li class="nav-item {{ request()->routeIs('training.user.absen') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('training.user.absen', $training->id) }}">
-                            <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -299,6 +280,35 @@
                         </span>
                         <span class="nav-link-title">
                             Tugas
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('history') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('history') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-history">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 8l0 4l2 2" />
+                                <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
+                            </svg>
+                        </span>
+                        <span class="nav-link-title">
+                            History
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->is('mysertifikat') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('mysertifikat') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-certificate"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg>
+                        </span>
+                        <span class="nav-link-title">
+                            Sertifikat Saya
                         </span>
                     </a>
                 </li>
@@ -416,9 +426,9 @@
                                                 <span class="status-dot status-dot-animated bg-blue d-block"></span>
                                             </div>
                                             <div class="col text-truncate">
-                                                <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
+                                                <div class="text-body d-block">{{ $notification->title }}</div>
                                                 <div class="d-block text-secondary text-truncate mt-n1">
-                                                    {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
+                                                    {{ $notification->message }}
                                                 </div>
                                             </div>
                                             <div class="col-auto">

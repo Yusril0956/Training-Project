@@ -109,7 +109,11 @@ Training Project adalah aplikasi web yang dikembangkan sebagai bagian dari tugas
         <br/>
         <sub><b>Daelingka</b></sub>
       </a>
+<<<<<<< HEAD
+      <br />🤝 yangpaling jago developmen
+=======
       <br/>🤝 Support Developer
+>>>>>>> ae0cf380ef33e68dc8a8c89045a3bbc09b5e2df6
     </td>
   </tr>
 </table>
@@ -132,10 +136,14 @@ Sebelum menjalankan aplikasi, pastikan sistem Anda memenuhi persyaratan berikut:
 
 ### Clone Repository
 
+<<<<<<< HEAD
+masuk ke folder laravel 
+=======
 ```bash
 git clone https://github.com/Yusril0956/Training-Project.git
 cd Training-Project
 ```
+>>>>>>> ae0cf380ef33e68dc8a8c89045a3bbc09b5e2df6
 
 ### Persiapan Database
 
