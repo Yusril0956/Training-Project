@@ -33,7 +33,7 @@ class TaskController extends Controller
 
         $path = $request->file('attachment')?->store('attachments', 'public');
 
-        Tasks::create([
+        $task = Tasks::create([
             'title' => $request->title,
             'description' => $request->description,
             'training_id' => $request->training_id,
@@ -41,7 +41,15 @@ class TaskController extends Controller
             'attachment_path' => $path,
         ]);
 
-        return redirect()->route('training.tasks', $trainingId)->with('success', 'Tugas berhasil ditambahkan.');
+        // Send notifications to all accepted training members
+        $training = Training::findOrFail($trainingId);
+        $acceptedMembers = $training->members()->where('status', 'accept')->with('user')->get();
+
+        foreach ($acceptedMembers as $member) {
+            $member->user->notify(new \App\Notifications\TaskNotification($task));
+        }
+
+        return redirect()->route('training.tasks', $trainingId)->with('success', 'Tugas berhasil ditambahkan dan notifikasi telah dikirim ke semua peserta.');
     }
 
     public function show($trainingId, $taskId)

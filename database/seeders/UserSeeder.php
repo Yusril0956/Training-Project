@@ -60,9 +60,9 @@ class UserSeeder extends Seeder
 
         // Create staff user
         User::updateOrCreate(
-            ['email' => 'staff@gmail.com'],
+            ['email' => 'miftahulyusril3@gmail.com'],
             [
-                'name' => 'Staff Member',
+                'name' => 'Zen User',
                 'email_verified_at' => now(),
                 'phone' => '08123456789',
                 'address' => 'Jalan Staff No. 1',
