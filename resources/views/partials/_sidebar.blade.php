@@ -287,16 +287,16 @@
                         </span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
-                            Documentation
+                        <a class="dropdown-item" href="https://github.com/Yusril0956/Training-Project" target="_blank" rel="noopener">
+                            Dokumentasi
                         </a>
                         <a class="dropdown-item" href="#">
                             Changelog
                         </a>
-                        <a class="dropdown-item" href="#" target="_blank" rel="noopener">
+                        <a class="dropdown-item" href="https://github.com/Yusril0956/Training-Project" target="_blank" rel="noopener">
                             Source code
                         </a>
-                        <a class="dropdown-item text-pink" href="https://github.com/sponsors/codecalm"
+                        <a class="dropdown-item text-pink" href="https://github.com/Yusril0956/Training-Project"
                             target="_blank" rel="noopener">
                             <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-1" width="24"
