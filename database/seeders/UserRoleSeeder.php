@@ -27,6 +27,7 @@ class UserRoleSeeder extends Seeder
             'admin@gmail.com' => $adminRole->id,
             'reqi@gmail.com' => $adminRole->id,
             'user@gmail.com' => $userRole->id,
+            'miftahulyusril3@gmail.com' => $userRole->id,
         ];
 
         foreach ($users as $email => $roleId) {

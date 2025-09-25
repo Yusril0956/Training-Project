@@ -450,7 +450,6 @@
                                                     {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
                                                 </div>
                                             </div>
-                                            </div>
                                             <div class="col-auto">
                                                 <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                                             </div>
