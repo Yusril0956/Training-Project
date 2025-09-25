@@ -36,7 +36,7 @@
                                 {{-- Badges --}}
                                 <div class="mb-2">
                                     @if ($training->detail)
-                                        <span class="badge bg-primary">
+                                        <span class="badge bg-blue text-blue-fg">
                                             {{ \Carbon\Carbon::parse($training->detail->start_date)->format('d M Y') }}
                                             &ndash;
                                             {{ \Carbon\Carbon::parse($training->detail->end_date)->format('d M Y') }}
@@ -44,16 +44,16 @@
                                     @else
                                         <span class="badge bg-warning">Belum Dijadwalkan</span>
                                     @endif
-                                    <span class="badge bg-primary">{{ $training->category ?? 'N/A' }}</span>
+                                    <span class="badge bg-blue-lt">{{ $training->category ?? 'N/A' }}</span>
                                     @php
                                         $currentStatus = $userStatuses[$training->id] ?? 'none';
                                     @endphp
                                     @if ($currentStatus === 'graduate')
-                                        <span class="badge bg-success">Lulus</span>
+                                        <span class="badge badge bg-green text-green-fg">Lulus</span>
                                     @elseif ($currentStatus === 'accept')
-                                        <span class="badge bg-info">Terdaftar</span>
+                                        <span class="badge bg-azure text-azure-fg">Diikuti</span>
                                     @elseif ($currentStatus === 'pending')
-                                        <span class="badge bg-warning">Menunggu</span>
+                                        <span class="badge bg-orange text-orange-fg">Menunggu</span>
                                     @endif
                                 </div>
 
@@ -61,31 +61,31 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     @auth
                                         @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']) || $currentStatus === 'accept' || $currentStatus === 'graduate')
-                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
+                                            <button class="btn btn-sm btn-outline-info btn-pill" data-bs-toggle="offcanvas"
                                                 data-bs-target="#detailCanvas-{{ $training->id }}">
                                                 Details
                                             </button>
                                             <a href="{{ route('training.home', $training->id) }}"
-                                                class="btn btn-sm btn-primary">
+                                                class="btn btn-sm btn-primary btn-pill">
                                                 Lihat
                                             </a>
                                         @elseif ($currentStatus === 'pending')
-                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
+                                            <button class="btn btn-sm btn-outline-info btn-pill" data-bs-toggle="offcanvas"
                                                 data-bs-target="#detailCanvas-{{ $training->id }}">
                                                 Details
                                             </button>
-                                            <button class="btn btn-sm btn-warning" disabled>
+                                            <button class="btn btn-sm btn-warning btn-pill" disabled>
                                                 Pending
                                             </button>
                                         @else
                                             <form action="{{ route('training.self.register', $training->id) }}" method="POST"
                                                 style="display:inline;">
                                                 @csrf
-                                                <button type="submit" class="btn btn-sm btn-primary">Daftar</button>
+                                                <button type="submit" class="btn btn-sm btn-primary btn-pill">Daftar</button>
                                             </form>
                                         @endif
                                     @else
-                                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary btn-pill">
                                             Login untuk Daftar
                                         </a>
                                     @endauth

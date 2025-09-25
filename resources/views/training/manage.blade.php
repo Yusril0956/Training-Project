@@ -72,18 +72,18 @@
                                         <td>{{ $trainings->firstItem() + $i }}</td>
                                         <td>{{ $t->name }}</td>
                                         <td>
-                                            <span class="badge bg-info">{{ $t->jenisTraining->name }}</span>
+                                            <span class="badge bg-azure-lt">{{ $t->jenisTraining->name }}</span>
                                         </td>
                                         <td>{{ $t->category }}</td>
                                         <td>
                                             @if ($t->status === 'approved')
-                                                <span class="badge bg-success">Approved</span>
+                                                <span class="badge bg-green-lt">Approved</span>
                                             @elseif($t->status === 'pending')
-                                                <span class="badge bg-warning">Pending</span>
+                                                <span class="badge bg-orange-lt">Pending</span>
                                             @elseif($t->status === 'completed')
-                                                <span class="badge bg-primary">Completed</span>
+                                                <span class="badge bg-blue-lt">Completed</span>
                                             @else
-                                                <span class="badge bg-danger">Rejected</span>
+                                                <span class="badge bg-red-lt">Rejected</span>
                                             @endif
                                         </td>
                                         <td>
@@ -97,7 +97,7 @@
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-list">
-                                                <a href="{{ route('training.detail', $t->id) }}" class="btn btn-sm btn-info"
+                                                <a href="{{ route('training.detail', $t->id) }}" class="btn btn-sm btn-info btn-pill"
                                                     title="Detail">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -110,7 +110,7 @@
                                                     </svg>
                                                 </a>
                                                 <a href="{{ route('training.settings', $t->name) }}"
-                                                    class="btn btn-sm btn-warning" title="Edit">
+                                                    class="btn btn-sm btn-warning btn-pill" title="Edit">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -128,7 +128,7 @@
                                                     onsubmit="return confirm('Yakin ingin menghapus pelatihan ini?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                                    <button type="submit" class="btn btn-sm btn-danger btn-pill" title="Hapus">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"

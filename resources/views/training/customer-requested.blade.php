@@ -17,8 +17,8 @@
                 <div class="card-body text-center py-4">
                     <h2 class="card-title">{{ $training->name }}</h2>
                     <p class="text-muted">{{ $training->description ?? 'Deskripsi belum tersedia.' }}</p>
-                    <span class="badge bg-primary">{{ ucfirst($training->category) }}</span>
-                    <span class="badge bg-success">{{ ucfirst($training->status) }}</span>
+                    <span class="badge bg-blue-lt">{{ ucfirst($training->category) }}</span>
+                    <span class="badge bg-green-lt">{{ ucfirst($training->status) }}</span>
                 </div>
             </div>
 

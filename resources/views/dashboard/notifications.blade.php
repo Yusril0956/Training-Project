@@ -18,6 +18,7 @@
                                 <div class="text-secondary small">{{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}</div>
                             </div>
                             <span class="text-secondary small ms-3">{{ $notification->created_at->diffForHumans() }}</span>
+                            <a href="{{ $notification->data['url'] ?? '#' }}" class="btn btn-sm btn-outline-secondary">Lihat</a>
                         </a>
                         @empty
                         <div class="list-group-item text-center text-muted">
