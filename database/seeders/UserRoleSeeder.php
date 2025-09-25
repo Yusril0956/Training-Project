@@ -26,7 +26,6 @@ class UserRoleSeeder extends Seeder
             'ryl@gmail.com' => $superAdminRole->id,
             'admin@gmail.com' => $adminRole->id,
             'reqi@gmail.com' => $adminRole->id,
-            'staff@gmail.com' => $userRole->id,
             'user@gmail.com' => $userRole->id,
         ];
 
