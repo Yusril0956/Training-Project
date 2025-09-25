@@ -3,6 +3,7 @@
 @section('title', 'Home')
 
 @push('styles')
+    
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -111,6 +112,38 @@
             border-radius: 2px;
             transform: rotate(-45deg);
         }
+
+        #logo-animasi.animating {
+            opacity: 1 !important;
+            transform: scale(2) rotate(360deg);
+            transition: opacity 0.3s, transform 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        #btn-mulai-training[disabled] {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        /* Entrance animation for training page */
+        #training-entrance-logo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            z-index: 9999;
+            width: 120px;
+            height: 120px;
+            transform: translate(-50%, -50%) scale(0.7);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        #training-entrance-logo.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
+        }
+        #training-entrance-logo.hide {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
+            transition: opacity 0.3s, transform 0.5s;
+        }
     </style>
 @endpush
 
@@ -149,6 +182,14 @@ pesawat baru dan mengubah konfigurasi sistem serta struktur pesawat untuk misi-m
 seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
                 </div>
             </div>
+
+            <!-- Tambahkan tombol Mulai Training di bawah Hero Section -->
+<div class="text-center mb-4">
+    <button id="btn-mulai-training" class="btn btn-lg btn-primary rounded-3 shadow-sm" style="position:relative;overflow:hidden;">
+        <img src="{{ asset('logoputih.png') }}" alt="Logo PTDI" id="logo-animasi" style="height:32px;width:32px;vertical-align:middle;margin-right:8px;opacity:0;transition:opacity 0.3s, transform 0.6s;" />
+        <span id="text-mulai-training">Mulai Training</span>
+    </button>
+</div>
 
             <!-- Informasi Utama -->
             <div class="row row-cards mb-4">
@@ -647,6 +688,7 @@ seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
 @endsection
 
 @push('scripts')
+    @parent
     <script>
         // @formatter:off
         document.addEventListener("DOMContentLoaded", function() {
@@ -1462,5 +1504,50 @@ seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
             })).render();
         });
         // @formatter:on
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const btn = document.getElementById('btn-mulai-training');
+            const logo = document.getElementById('logo-animasi');
+            const text = document.getElementById('text-mulai-training');
+            if(btn && logo && text) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    btn.disabled = true;
+                    text.style.opacity = '0.5';
+                    logo.style.opacity = '1';
+                    logo.classList.add('animating');
+                    setTimeout(function() {
+                        window.location.href = '/training';
+                    }, 900); // waktu animasi
+                });
+            }
+        });
+    </script>
+
+    <!-- Tambahkan di paling atas pada halaman training (resources/views/training/index.blade.php atau sejenisnya) -->
+    @if(session('show_training_entrance'))
+        <div id="training-entrance-logo">
+            <img src="{{ asset('LogoBaru.png') }}" alt="Logo PTDI" style="width:100%;height:100%;">
+        </div>
+    @endif
+
+    <script>
+        // Entrance animation for training page
+        document.addEventListener("DOMContentLoaded", function() {
+            var entranceLogo = document.getElementById('training-entrance-logo');
+            if (entranceLogo) {
+                setTimeout(function() {
+                    entranceLogo.classList.add('show');
+                }, 100); // delay for effect
+                setTimeout(function() {
+                    entranceLogo.classList.remove('show');
+                    entranceLogo.classList.add('hide');
+                }, 1300); // show duration
+                setTimeout(function() {
+                    entranceLogo.style.display = 'none';
+                }, 1800); // hide after animation
+            }
+        });
     </script>
 @endpush

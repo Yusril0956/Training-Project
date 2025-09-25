@@ -211,6 +211,8 @@
                     <li class="nav-item {{ request()->routeIs('training.absen') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('training.absen', $training->id) }}">
                             <span
+                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -218,8 +220,7 @@
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M15 19l2 2l4 -4" /></svg>
-                                Data Absen Training
+                                Absen
                             </span>
                         </a>
                     </li>
@@ -282,35 +283,6 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('history') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('history') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-history">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 8l0 4l2 2" />
-                                <path d="M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            History
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->is('mysertifikat') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('mysertifikat') }}">
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-certificate"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Sertifikat Saya
-                        </span>
-                    </a>
-                </li>
                 <li class="nav-item {{ request()->routeIs('training.feedback') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('training.feedback', $training->id) }}">
                         <span
@@ -361,28 +333,21 @@
             aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="navbar-nav flex-row order-md-last">
-            @php
-                $unreadNotifications = Auth::check()
-                    ? Auth::user()->notifications()->whereNull('read_at')->get()
-                    : collect();
-            @endphp
-
             <div class="d-none d-md-flex">
-                <!-- Dark mode toggle -->
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode"
                     data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
                     </svg>
                 </a>
                 <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode"
                     data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -392,25 +357,25 @@
                             d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
                     </svg>
                 </a>
-
-                <!-- Notifications -->
+                @php
+                    $unreadNotifications = Auth::check()
+                        ? Auth::user()->notifications()->whereNull('read_at')->get()
+                        : collect();
+                @endphp
                 <div class="nav-item dropdown d-none d-md-flex me-3">
                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
                         aria-label="Show notifications">
-                        <div class="position-relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path
-                                    d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                                <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                            </svg>
-                            @if ($unreadNotifications->count() > 0)
-                                <span
-                                    class="badge bg-red position-absolute top-0 start-100 translate-middle">{{ $unreadNotifications->count() }}</span>
-                            @endif
-                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                        </svg>
+                        @if ($unreadNotifications->count() > 0)
+                            <span class="badge bg-red">{{ $unreadNotifications->count() }}</span>
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card">
                         <div class="card">
@@ -421,8 +386,8 @@
                                 @forelse($unreadNotifications as $notification)
                                     <div class="list-group-item">
                                         <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <span class="status-dot status-dot-animated bg-blue d-block"></span>
+                                            <div class="col-auto"><span
+                                                    class="status-dot status-dot-animated bg-blue d-block"></span>
                                             </div>
                                             <div class="col text-truncate">
                                                 <div class="text-body d-block">{{ $notification->title }}</div>
@@ -431,7 +396,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-auto">
-                                                <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                                <small
+                                                    class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -445,8 +411,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- User menu -->
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
@@ -470,13 +434,12 @@
                 </div>
             </div>
         </div>
-
-        <!-- Search -->
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div>
                 <form action="./" method="get" autocomplete="off" novalidate>
                     <div class="input-icon">
                         <span class="input-icon-addon">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/search -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
