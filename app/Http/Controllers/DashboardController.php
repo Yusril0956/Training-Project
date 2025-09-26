@@ -39,7 +39,9 @@ class DashboardController extends Controller
 
         // Role filter
         if ($request->filled('role')) {
-            $query->where('role', $request->role);
+            $query->whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->role);
+            });
         }
 
         $users = $query->paginate(10);
@@ -271,5 +273,72 @@ class DashboardController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menyimpan pengaturan!');
         }
+    }
+
+    public function exportUsers(Request $request)
+    {
+        $query = User::query();
+
+        // Apply same filters as admin method
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('role')) {
+            $query->whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->role);
+            });
+        }
+
+        $users = $query->get();
+
+        // Create CSV content
+        $filename = 'users_export_' . date('Y-m-d_H-i-s') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0'
+        ];
+
+        $callback = function() use ($users) {
+            $file = fopen('php://output', 'w');
+
+            // CSV headers
+            fputcsv($file, [
+                'ID',
+                'Name',
+                'Email',
+                'NIK',
+                'Role',
+                'Status',
+                'Created At',
+                'Updated At'
+            ]);
+
+            // CSV data
+            foreach ($users as $user) {
+                fputcsv($file, [
+                    $user->id,
+                    $user->name,
+                    $user->email,
+                    $user->nik ?? '',
+                    $user->role,
+                    $user->status,
+                    $user->created_at->format('Y-m-d H:i:s'),
+                    $user->updated_at->format('Y-m-d H:i:s')
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

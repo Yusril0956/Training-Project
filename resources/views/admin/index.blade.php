@@ -61,7 +61,9 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item"
+                                                href="{{ route('admin.export.users', request()->query()) }}"
+                                                target="_blank">
                                                 <i class="ti ti-download me-1"></i> Export Users
                                             </a>
                                         </li>
@@ -98,9 +100,10 @@
                             <label for="role" class="form-label">Filter Role</label>
                             <select class="form-select" id="role" name="role">
                                 <option value="">Semua Role</option>
-                                <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="user" {{ request('role') == 'user' ? 'selected' : '' }}>User</option>
-                                <option value="staff" {{ request('role') == 'staff' ? 'selected' : '' }}>Staff</option>
+                                <option value="Super Admin" {{ request('role') == 'Super Admin' ? 'selected' : '' }}>Super
+                                    Admin</option>
+                                <option value="Admin" {{ request('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                <option value="User" {{ request('role') == 'User' ? 'selected' : '' }}>User</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -117,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <div id="table-default" class="table-responsive">
                         <table class="table">
@@ -327,205 +330,163 @@
                     </div>
                 </form>
             </div>
-
-            <!-- Daftar Tugas -->
-            <!-- <div class="card mt-4">
-                    <div class="card-header">
-                        <h3 class="card-title">📘 Daftar Tugas</h3>
-                        <a href="{{ route('assignments.create', $training->id ?? 1) }}" class="btn btn-sm btn-primary float-end">
-                            + Buat Tugas
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Judul</th>
-                                    <th>Tipe</th>
-                                    <th>Batas Waktu</th>
-                                    <th>Lokasi (jika offline)</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($assignments as $assignment)
-    <tr>
-                                        <td>{{ $assignment->title }}</td>
-                                        <td>{{ ucfirst($assignment->type) }}</td>
-                                        <td>{{ $assignment->due_date ?? '-' }}</td>
-                                        <td>{{ $assignment->type === 'offline' ? $assignment->location : '-' }}</td>
-                                        <td>
-                                            <a href="{{ route('assignments.submissions', $assignment->id) }}" class="btn btn-sm btn-info">
-                                                👨‍🎓 Lihat Submission
-                                            </a>
-                                        </td>
-                                    </tr>
-                @empty
-                                    <tr>
-                                        <td colspan="5">Belum ada tugas.</td>
-                                    </tr>
-    @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div> -->
-
-
             @include('components.modal')
-        @endsection
+        </div>
+    </div>
+@endsection
 
-        @push('script')
-            <script>
-                function applyFilters() {
-                    const search = document.getElementById('search').value;
-                    const role = document.getElementById('role').value;
+@push('script')
+    <script>
+        function applyFilters() {
+            const search = document.getElementById('search').value;
+            const role = document.getElementById('role').value;
 
-                    let url = '{{ route('admin.index') }}';
-                    const params = new URLSearchParams();
+            let url = '{{ route('admin.index') }}';
+            const params = new URLSearchParams();
 
-                    if (search) params.append('search', search);
-                    if (role) params.append('role', role);
+            if (search) params.append('search', search);
+            if (role) params.append('role', role);
 
-                    if (params.toString()) {
-                        url += '?' + params.toString();
-                    }
+            if (params.toString()) {
+                url += '?' + params.toString();
+            }
 
-                    window.location.href = url;
-                }
+            window.location.href = url;
+        }
 
-                // Allow search on Enter key
-                document.getElementById('search').addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        applyFilters();
-                    }
+        // Allow search on Enter key
+        document.getElementById('search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                applyFilters();
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const list = new List('table-default', {
+                sortClass: 'table-sort',
+                listClass: 'table-tbody',
+                valueNames: ['sort-name', 'sort-email', 'sort-role', 'sort-date',
+                    {
+                        attr: 'data-date',
+                        name: 'sort-date'
+                    },
+                    {
+                        attr: 'data-progress',
+                        name: 'sort-progress'
+                    },
+                    'sort-quantity'
+                ]
+            });
+        })
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-edit-user').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    // Isi value input modal
+                    document.getElementById('edit-name').value = this.dataset.name;
+                    document.getElementById('edit-email').value = this.dataset.email;
+                    document.getElementById('edit-role').value = this.dataset.role;
+                    document.getElementById('edit-status').value = this.dataset.status;
+                    // Set action form
+                    document.getElementById('form-edit-user').action = '/useredit/' + this.dataset
+                        .id;
                 });
-
-                document.addEventListener("DOMContentLoaded", function() {
-                    const list = new List('table-default', {
-                        sortClass: 'table-sort',
-                        listClass: 'table-tbody',
-                        valueNames: ['sort-name', 'sort-email', 'sort-role', 'sort-date',
-                            {
-                                attr: 'data-date',
-                                name: 'sort-date'
-                            },
-                            {
-                                attr: 'data-progress',
-                                name: 'sort-progress'
-                            },
-                            'sort-quantity'
-                        ]
-                    });
-                })
-            </script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.querySelectorAll('.btn-edit-user').forEach(function(btn) {
-                        btn.addEventListener('click', function() {
-                            // Isi value input modal
-                            document.getElementById('edit-name').value = this.dataset.name;
-                            document.getElementById('edit-email').value = this.dataset.email;
-                            document.getElementById('edit-role').value = this.dataset.role;
-                            document.getElementById('edit-status').value = this.dataset.status;
-                            // Set action form
-                            document.getElementById('form-edit-user').action = '/useredit/' + this.dataset
-                                .id;
-                        });
-                    });
-                });
-            </script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Auto dismiss alert after 4 seconds
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto dismiss alert after 4 seconds
+            setTimeout(function() {
+                document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
+                    if (alert) alert.classList.add('fade');
                     setTimeout(function() {
-                        document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
-                            if (alert) alert.classList.add('fade');
-                            setTimeout(function() {
-                                if (alert) alert.remove();
-                            }, 500); // waktu fade out
-                        });
-                    }, 4000);
-
-                    // Dismiss alert on scroll
-                    let alertDismissed = false;
-                    window.addEventListener('scroll', function() {
-                        if (!alertDismissed) {
-                            document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
-                                if (alert) alert.classList.add('fade');
-                                setTimeout(function() {
-                                    if (alert) alert.remove();
-                                }, 500);
-                            });
-                            alertDismissed = true;
-                        }
-                    });
+                        if (alert) alert.remove();
+                    }, 500); // waktu fade out
                 });
-            </script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    let deleteUserId = null;
-                    let deleteUserName = null;
+            }, 4000);
 
-                    // Saat tombol delete diklik, simpan id user
-                    document.querySelectorAll('.btn-delete-user').forEach(function(btn) {
-                        btn.addEventListener('click', function() {
-                            deleteUserId = this.dataset.id;
-                            deleteUserName = this.dataset.name;
-                            // Ubah pesan modal jika mau
-                            document.querySelector('#modal-danger h3').innerText = 'Hapus User?';
-                            document.querySelector('#modal-danger .text-secondary').innerText =
-                                'Yakin ingin menghapus user "' + deleteUserName + '"?';
-                        });
+            // Dismiss alert on scroll
+            let alertDismissed = false;
+            window.addEventListener('scroll', function() {
+                if (!alertDismissed) {
+                    document.querySelectorAll('.alert-fixed-top-right').forEach(function(alert) {
+                        if (alert) alert.classList.add('fade');
+                        setTimeout(function() {
+                            if (alert) alert.remove();
+                        }, 500);
                     });
+                    alertDismissed = true;
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let deleteUserId = null;
+            let deleteUserName = null;
 
-                    // Saat tombol konfirmasi di modal diklik, submit form delete via JS
-                    document.getElementById('btn-confirm-delete').onclick = function(e) {
-                        if (deleteUserId) {
-                            // Buat form dinamis dan submit
-                            let form = document.createElement('form');
-                            form.action = '/admin/user/' + deleteUserId;
-                            form.method = 'POST';
+            // Saat tombol delete diklik, simpan id user
+            document.querySelectorAll('.btn-delete-user').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    deleteUserId = this.dataset.id;
+                    deleteUserName = this.dataset.name;
+                    // Ubah pesan modal jika mau
+                    document.querySelector('#modal-danger h3').innerText = 'Hapus User?';
+                    document.querySelector('#modal-danger .text-secondary').innerText =
+                        'Yakin ingin menghapus user "' + deleteUserName + '"?';
+                });
+            });
 
-                            let csrf = document.createElement('input');
-                            csrf.type = 'hidden';
-                            csrf.name = '_token';
-                            csrf.value = '{{ csrf_token() }}';
-                            form.appendChild(csrf);
+            // Saat tombol konfirmasi di modal diklik, submit form delete via JS
+            document.getElementById('btn-confirm-delete').onclick = function(e) {
+                if (deleteUserId) {
+                    // Buat form dinamis dan submit
+                    let form = document.createElement('form');
+                    form.action = '/admin/user/' + deleteUserId;
+                    form.method = 'POST';
 
-                            let method = document.createElement('input');
-                            method.type = 'hidden';
-                            method.name = '_method';
-                            method.value = 'DELETE';
-                            form.appendChild(method);
+                    let csrf = document.createElement('input');
+                    csrf.type = 'hidden';
+                    csrf.name = '_token';
+                    csrf.value = '{{ csrf_token() }}';
+                    form.appendChild(csrf);
 
-                            document.body.appendChild(form);
-                            form.submit();
-                        }
-                    }
+                    let method = document.createElement('input');
+                    method.type = 'hidden';
+                    method.name = '_method';
+                    method.value = 'DELETE';
+                    form.appendChild(method);
 
-                    // Auto show configurable modal if session variables are present
-                    @if (session('modal_type'))
-                        const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
-                        modal.show();
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            }
 
-                        // Add event listener for the configurable modal button
-                        document.getElementById('btn-confirm-action').addEventListener('click', function() {
-                            // You can add custom action here based on modal type
-                            console.log('Modal action confirmed:', '{{ session('modal_type') }}');
+            // Auto show configurable modal if session variables are present
+            @if (session('modal_type'))
+                const modal = new bootstrap.Modal(document.getElementById('modal-configurable'));
+                modal.show();
 
-                            // If you need to perform different actions based on modal type:
-                            @if (session('modal_type') == 'success')
-                                // Success action
-                                console.log('Success action performed');
-                            @elseif (session('modal_type') == 'warning')
-                                // Warning action  
-                                console.log('Warning action performed');
-                            @elseif (session('modal_type') == 'info')
-                                // Info action
-                                console.log('Info action performed');
-                            @endif
-                        });
+                // Add event listener for the configurable modal button
+                document.getElementById('btn-confirm-action').addEventListener('click', function() {
+                    // You can add custom action here based on modal type
+                    console.log('Modal action confirmed:', '{{ session('modal_type') }}');
+
+                    // If you need to perform different actions based on modal type:
+                    @if (session('modal_type') == 'success')
+                        // Success action
+                        console.log('Success action performed');
+                    @elseif (session('modal_type') == 'warning')
+                        // Warning action  
+                        console.log('Warning action performed');
+                    @elseif (session('modal_type') == 'info')
+                        // Info action
+                        console.log('Info action performed');
                     @endif
                 });
-            </script>
-        @endpush
+            @endif
+        });
+    </script>
+@endpush
