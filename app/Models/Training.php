@@ -11,7 +11,6 @@ class Training extends Model
 
     protected $fillable = [
         'name',
-        'category',
         'description',
         'status',
         'jenis_training_id',
@@ -52,12 +51,5 @@ class Training extends Model
     public function certificates()
     {
         return $this->hasMany(Certificate::class, 'training_id');
-    }
-
-    public function getCategoryImageAttribute()
-    {
-        $categorySlug = strtolower(str_replace(' ', '-', $this->category ?? 'default'));
-        $path = 'images/category/' . $categorySlug . '.jpg';
-        return file_exists(public_path($path)) ? asset($path) : asset('images/default-training.jpg');
     }
 }

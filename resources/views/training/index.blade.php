@@ -16,6 +16,31 @@
                 </div>
             </div>
 
+            {{-- Search --}}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" action="{{ route('training.index') }}" class="row g-3 align-items-end">
+                        <div class="col-md-8">
+                            <label for="search" class="form-label">Cari Pelatihan</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="ti ti-search"></i></span>
+                                <input type="text" class="form-control" id="search" name="search" placeholder="Cari berdasarkan nama atau deskripsi..." value="{{ $request->search }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary flex-fill">
+                                    <i class="ti ti-search me-1"></i>Cari
+                                </button>
+                                <a href="{{ route('training.index') }}" class="btn btn-outline-secondary flex-fill">
+                                    <i class="ti ti-x me-1"></i>Reset
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             {{-- Grid Card --}}
             <div class="row row-cards">
                 @forelse($trainings as $training)
@@ -44,7 +69,7 @@
                                     @else
                                         <span class="badge bg-warning">Belum Dijadwalkan</span>
                                     @endif
-                                    <span class="badge bg-blue-lt">{{ $training->category ?? 'N/A' }}</span>
+
                                     @php
                                         $currentStatus = $userStatuses[$training->id] ?? 'none';
                                     @endphp

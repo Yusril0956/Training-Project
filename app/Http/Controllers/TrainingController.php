@@ -23,11 +23,22 @@ class TrainingController extends Controller
     /**
      * Halaman utama Training
      */
-    public function index()
+    public function index(Request $request)
     {
-        $trainings = Training::with(['jenisTraining', 'detail', 'members', 'materis'])
-            ->where('status', 'approved')
-            ->paginate(9);
+        $query = Training::with(['jenisTraining', 'detail', 'members', 'materis'])
+            ->where('status', 'approved');
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+
+        $trainings = $query->paginate(9);
 
         $userId = Auth::id();
 
@@ -37,10 +48,9 @@ class TrainingController extends Controller
         foreach ($trainings as $training) {
             $member = $training->members->where('user_id', $userId)->first();
             $userStatuses[$training->id] = $member ? $member->status : 'none';
-            $status = $userStatuses[$training->id] ?? 'none';
         }
 
-        return view('training.index', compact('trainings', 'userStatuses', 'status'));
+        return view('training.index', compact('trainings', 'userStatuses', 'request'));
     }
 
     public function absen($id)
@@ -183,13 +193,11 @@ class TrainingController extends Controller
     {
         $request->validate([
             'name'             => 'required|string|max:255',
-            'category'         => 'required|string',
             'description'      => 'nullable|string',
         ]);
 
         Training::create([
             'name'             => $request->name,
-            'category'         => $request->category,
             'description'      => $request->description,
             'jenis_training_id' => 3, //default ke customer request
             'status'           => 'pending',
@@ -424,14 +432,12 @@ class TrainingController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|string',
             'description' => 'nullable|string',
             'status' => 'required|string',
         ]);
 
         $training = Training::findOrFail($id);
         $training->name = $request->name;
-        $training->category = $request->category;
         $training->description = $request->description;
         $training->status = $request->status;
         $training->save();
