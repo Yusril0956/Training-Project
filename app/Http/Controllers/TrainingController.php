@@ -25,8 +25,7 @@ class TrainingController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Training::with(['jenisTraining', 'detail', 'members', 'materis'])
-            ->where('status', 'open');
+        $query = Training::with(['jenisTraining', 'detail', 'members', 'materis']);
 
         // Search functionality
         if ($request->filled('search')) {
@@ -433,7 +432,7 @@ class TrainingController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'required|string',
+            'status' => 'required|in:open,close',
         ]);
 
         $training = Training::findOrFail($id);
@@ -448,6 +447,11 @@ class TrainingController extends Controller
     public function selfRegister(Request $request, $trainingId)
     {
         $training = Training::findOrFail($trainingId);
+
+        // Check if training is closed
+        if ($training->status === 'close') {
+            return redirect()->back()->with('error', 'Pendaftaran untuk training ini sudah ditutup.');
+        }
 
         // Get or create training detail
         $trainingDetail = $training->detail;

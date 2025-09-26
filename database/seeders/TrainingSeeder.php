@@ -191,14 +191,14 @@ class TrainingSeeder extends Seeder
             'name' => 'Lisensi Air Traffic Controller',
             'description' => 'Pelatihan untuk lisensi pengendali lalu lintas udara.',
             'jenis_training_id' => 4,
-            'status' => 'open',
+            'status' => 'close',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Lisensi Dispatcher Udara',
             'description' => 'Pelatihan untuk lisensi dispatcher operasi penerbangan.',
             'jenis_training_id' => 4,
-            'status' => 'open',
+            'status' => 'close',
         ]);
 
         // Call related seeders to populate linked data
