@@ -44,7 +44,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card card-hover">
                         <div class="card-body text-center">
-                            <img src="{{ asset('images/LogoBaru.png') }}" alt="Logo" class="mb-3" style="height: 50px;">
+                            <img src="{{ asset('LogoBaru.png') }}" alt="Logo" class="mb-3" style="height: 50px;">
                             <h3 class="card-title">Siaran Pers & Berita</h3>
                             <p class="text-muted">Target pendapatan 2024, rencana bisnis 2025, dan sinergi anak perusahaan.</p>
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalBerita">Lihat Detail</button>

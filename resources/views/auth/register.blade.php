@@ -15,7 +15,7 @@
     <link href="{{ asset('dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
 
     {{-- icon --}}
-    <link rel="icon" href="{{ asset('static/LogoBaru.png') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('LogoBaru.png') }}" type="image/svg+xml">
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
