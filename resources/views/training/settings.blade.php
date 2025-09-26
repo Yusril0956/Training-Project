@@ -13,8 +13,6 @@
                 ],
             ])
 
-            @include('components.alert')
-
             <!-- Header -->
             <div class="card mb-4">
                 <div class="card-body">
