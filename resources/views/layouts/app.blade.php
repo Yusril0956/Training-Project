@@ -34,6 +34,8 @@
       @include('partials._navbar')
         <div class="page-wrapper">
 
+            @include('components.alerts')
+
             @yield('content')
 
             @include('partials._footer')

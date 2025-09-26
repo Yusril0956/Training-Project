@@ -2,28 +2,6 @@
 
 @section('title', 'Admin')
 
-@push('style')
-    <style>
-        .alert-fixed-top-right {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            min-width: 300px;
-            margin-top: 33px;
-            background: #fff !important;
-            z-index: 1055;
-            /* lebih tinggi dari modal backdrop */
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-            transition: opacity 0.5s ease-in-out;
-            opacity: 1;
-        }
-
-        .alert-fixed-top-right.fade {
-            opacity: 0;
-        }
-    </style>
-@endpush
-
 @section('content')
     <div class="page-header d-print-none">
         <div class="container-xl">
@@ -78,7 +56,6 @@
         </div>
     </div>
 
-    @include('components.alert')
 
     <!-- Page body -->
     <div class="page-body">

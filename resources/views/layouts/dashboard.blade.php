@@ -40,6 +40,7 @@
     <div class="page">
         @include('partials._sidebar')
         <div class="page-wrapper">
+            @include('components.alerts')
 
             @yield('content')
 
