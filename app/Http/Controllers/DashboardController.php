@@ -24,9 +24,25 @@ class DashboardController extends Controller
         return view('dashboard.terms');
     }
 
-    public function admin()
+    public function admin(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Role filter
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+
+        $users = $query->paginate(10);
         $assignments = Assignment::all(); // ✅ ambil semua tugas
 
         // data untuk modal
