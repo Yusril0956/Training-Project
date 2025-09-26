@@ -39,11 +39,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control" rows="4">{{ $training->deskripsi }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Kategori</label>
-                            <input type="text" name="kategori" class="form-control" value="{{ $training->kategori }}">
+                            <textarea name="description" class="form-control" rows="4">{{ $training->description }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Durasi</label>

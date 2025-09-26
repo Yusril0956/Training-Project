@@ -2,6 +2,18 @@
 @extends('layouts.app')
 @section('title', 'Daftar Training')
 
+@push('style')
+<style>
+    .grayscale {
+        filter: grayscale(100%);
+        opacity: 0.6;
+    }
+    .opacity-50 {
+        opacity: 0.5;
+    }
+</style>
+@endpush
+
 @section('content')
     <div class="page-body">
         <div class="container-xl">
@@ -45,11 +57,11 @@
             <div class="row row-cards">
                 @forelse($trainings as $training)
                     <div class="col-md-6 col-lg-4">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm {{ $training->status === 'close' ? 'opacity-50 border-secondary' : '' }}">
 
                             {{-- Gambar Banner --}}
                             <img src="{{ $training->image_url ?? asset('images/default-training.jpg') }}"
-                                class="card-img-top object-fit-cover" style="height: 160px;"
+                                class="card-img-top object-fit-cover {{ $training->status === 'close' ? 'grayscale' : '' }}" style="height: 160px;"
                                 alt="Banner {{ $training->name }}" />
 
                             <div class="card-body">
@@ -68,6 +80,10 @@
                                         </span>
                                     @else
                                         <span class="badge bg-warning">Belum Dijadwalkan</span>
+                                    @endif
+
+                                    @if ($training->status === 'close')
+                                        <span class="badge bg-danger text-danger-fg">Ditutup</span>
                                     @endif
 
                                     @php
@@ -102,6 +118,14 @@
                                             <button class="btn btn-sm btn-warning btn-pill" disabled>
                                                 Pending
                                             </button>
+                                        @elseif ($training->status === 'close')
+                                            <button class="btn btn-sm btn-outline-info btn-pill" data-bs-toggle="offcanvas"
+                                                data-bs-target="#detailCanvas-{{ $training->id }}">
+                                                Details
+                                            </button>
+                                            <button class="btn btn-sm btn-secondary btn-pill" disabled>
+                                                Ditutup
+                                            </button>
                                         @else
                                             <form action="{{ route('training.self.register', $training->id) }}" method="POST"
                                                 style="display:inline;">
@@ -110,9 +134,15 @@
                                             </form>
                                         @endif
                                     @else
-                                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary btn-pill">
-                                            Login untuk Daftar
-                                        </a>
+                                        @if ($training->status === 'close')
+                                            <button class="btn btn-sm btn-secondary btn-pill" disabled>
+                                                Ditutup
+                                            </button>
+                                        @else
+                                            <a href="{{ route('login') }}" class="btn btn-sm btn-primary btn-pill">
+                                                Login untuk Daftar
+                                            </a>
+                                        @endif
                                     @endauth
                                 </div>
                             </div>
