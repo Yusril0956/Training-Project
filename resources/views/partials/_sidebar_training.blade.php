@@ -183,7 +183,7 @@
                             </svg>
                         </span>
                         <span class="nav-link-title">
-                            {{ $training->name }}
+                            {{ Str::limit($training->name, 20) }}
                         </span>
                     </a>
                 </li>

@@ -305,7 +305,7 @@ class TrainingController extends Controller
             $userId = Auth::id();
 
             $training = Training::whereHas('members', function ($q) use ($userId) {
-                $q->where('user_id', $userId)->where('status', 'accept');
+                $q->where('user_id', $userId)->whereIn('status', ['accept', 'graduate']);
             })
                 ->with(['detail', 'jenisTraining', 'members'])
                 ->findOrFail($id);
