@@ -28,15 +28,27 @@
       <div class="container-tight py-4">
         <div class="empty">
           <div class="empty-header">403</div>
-          <p class="empty-title">Oops… Forbidden</p>
+          <p class="empty-title">Oops… Anda tidak bisa akses ini</p>
           <p class="empty-subtitle text-secondary">
-            We are sorry but you are not allowed to access this page
+            USer tidak memiliki izin untuk mengakses halaman ini. Silakan hubungi administrator jika Anda yakin ini adalah kesalahan.
           </p>
+          <div class="gif-placeholder rounded-2xl w-64 h-45 mx-auto mb-8 flex items-center justify-center">
+            <div class="text-center">
+                <img src="{{ asset('sus.gif') }}" width="350" height="220" alt="Tabler">
+            </div>
           <div class="empty-action">
+            <p class="empty-subtitle text-secondary">
+            Ngapain coba-coba masuk sini, kamu bukan siapa-siapa! Kembali ke halaman utama aja deh.
+          </p>
+          <p class="empty-title">(˶˃⤙˂˶)</p>
+          <div class="empty-action">
+            <p class="empty-subtitle text-secondary">
+            Hmph!
+          </p>
             <a href="{{route('index')}}" class="btn btn-primary">
               <!-- Download SVG icon from http://tabler-icons.io/i/arrow-left -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l6 6" /><path d="M5 12l6 -6" /></svg>
-              Take me back
+              Kembali
             </a>
           </div>
         </div>

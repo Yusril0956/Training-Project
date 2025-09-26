@@ -42,7 +42,6 @@
           <div class="gif-placeholder rounded-2xl w-64 h-45 mx-auto mb-8 flex items-center justify-center">
             <div class="text-center">
                 <img src="{{ asset('404.gif') }}" width="350" height="220" alt="Tabler">
-                
             </div>
           <div class="empty-action">
             <a href="{{ url()->previous()}}" class="btn btn-primary">
