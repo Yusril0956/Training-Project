@@ -76,14 +76,10 @@
                                         </td>
                                         <td>{{ $t->category }}</td>
                                         <td>
-                                            @if ($t->status === 'approved')
-                                                <span class="badge bg-green-lt">Approved</span>
-                                            @elseif($t->status === 'pending')
-                                                <span class="badge bg-orange-lt">Pending</span>
-                                            @elseif($t->status === 'completed')
-                                                <span class="badge bg-blue-lt">Completed</span>
+                                            @if ($t->status === 'open')
+                                                <span class="badge bg-green-lt">Open</span>
                                             @else
-                                                <span class="badge bg-red-lt">Rejected</span>
+                                                <span class="badge bg-red-lt">Close</span>
                                             @endif
                                         </td>
                                         <td>
@@ -205,10 +201,8 @@
                             <div class="col-md-6">
                                 <label class="form-label">Status</label>
                                 <select name="status" class="form-select">
-                                    <option value="pending" selected>Pending</option>
-                                    <option value="approved">Approved</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="rejected">Rejected</option>
+                                    <option value="open" selected>Open</option>
+                                    <option value="close">Close</option>
                                 </select>
                             </div>
                             <div class="col-md-3">

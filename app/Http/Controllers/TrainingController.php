@@ -26,7 +26,7 @@ class TrainingController extends Controller
     public function index(Request $request)
     {
         $query = Training::with(['jenisTraining', 'detail', 'members', 'materis'])
-            ->where('status', 'approved');
+            ->where('status', 'open');
 
         // Search functionality
         if ($request->filled('search')) {
@@ -142,7 +142,7 @@ class TrainingController extends Controller
         $trainings = Training::where('jenis_training_id', $jenisCR->id)->get();
 
         // $trainings = Training::all();
-        $approvedTrainings = Training::where('status', 'approved')->where('jenis_training_id', $jenisCR->id)->get();
+        $approvedTrainings = Training::where('status', 'open')->where('jenis_training_id', $jenisCR->id)->get();
         $modalId = 'action-training';
         $modalTitle = 'Action';
         $modalDescription = 'Silahkan pilih tindakan yang diinginkan.';
@@ -173,7 +173,7 @@ class TrainingController extends Controller
     public function reject($id)
     {
         $training = Training::findOrFail($id);
-        $training->status = 'rejected';
+        $training->status = 'close';
         $training->save();
         return redirect()->back()->with('success', 'Training berhasil ditolak');
     }
@@ -181,7 +181,7 @@ class TrainingController extends Controller
     public function approve($id)
     {
         $training = Training::findOrFail($id);
-        $training->status = 'approved';
+        $training->status = 'open';
         $training->save();
         return redirect()->back()->with('success', 'Training berhasil disetujui');
     }
@@ -200,7 +200,7 @@ class TrainingController extends Controller
             'name'             => $request->name,
             'description'      => $request->description,
             'jenis_training_id' => 3, //default ke customer request
-            'status'           => 'pending',
+            'status'           => 'open',
         ]);
 
         return redirect()

@@ -30,175 +30,175 @@ class TrainingSeeder extends Seeder
             'name' => 'Pelatihan Sistem Avionik',
             'description' => 'Pelatihan mengenai sistem avionik terbaru untuk teknisi.',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Pelatihan Keselamatan Kerja',
             'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
             'jenis_training_id' => 2,
-            'status' => 'pending',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Pelatihan Manajemen Proyek',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
             'jenis_training_id' => 3,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Pelatihan Kepatuhan Regulasi',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
             'jenis_training_id' => 3,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Pelatihan pengelolaan Risiko',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
             'jenis_training_id' => 3,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Pelatihan Kepatuhan Regulasi',
             'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
             'jenis_training_id' => 4,
-            'status' => 'completed',
+            'status' => 'close',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Risk Management Leadership',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Human Factors',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Software Engineering',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Program S2 (MBA/TI)',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Basic Aircraft',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Teknik Presentasi & Dokumentasi',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Human Resources BP',
             'description' => '',
             'jenis_training_id' => 1,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Character Building',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Analisa & Design System',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Design Database',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'English - Conversation',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'English - TOEFL Preparation',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Safety Management System',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Training for Trainer',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Database (PL/SQL, ORACLE/POSTGRES, DLL)',
             'description' => '',
             'jenis_training_id' => 2,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Lisensi Pilot Komersial',
             'description' => 'Pelatihan untuk mendapatkan lisensi pilot komersial.',
             'jenis_training_id' => 4,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Lisensi Maintenance Pesawat',
             'description' => 'Pelatihan untuk lisensi maintenance pesawat terbang.',
             'jenis_training_id' => 4,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Lisensi Air Traffic Controller',
             'description' => 'Pelatihan untuk lisensi pengendali lalu lintas udara.',
             'jenis_training_id' => 4,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Lisensi Dispatcher Udara',
             'description' => 'Pelatihan untuk lisensi dispatcher operasi penerbangan.',
             'jenis_training_id' => 4,
-            'status' => 'approved',
+            'status' => 'open',
         ]);
 
         // Call related seeders to populate linked data

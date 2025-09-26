@@ -57,13 +57,9 @@
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="status" class="form-select">
-                                <option value="pending" {{ $training->status === 'pending' ? 'selected' : '' }}>Pending
+                                <option value="open" {{ $training->status === 'open' ? 'selected' : '' }}>Open
                                 </option>
-                                <option value="approved" {{ $training->status === 'approved' ? 'selected' : '' }}>Approved
-                                </option>
-                                <option value="ongoing" {{ $training->status === 'ongoing' ? 'selected' : '' }}>Sedang
-                                    Berjalan</option>
-                                <option value="completed" {{ $training->status === 'completed' ? 'selected' : '' }}>Selesai
+                                <option value="close" {{ $training->status === 'close' ? 'selected' : '' }}>Close
                                 </option>
                             </select>
                         </div>

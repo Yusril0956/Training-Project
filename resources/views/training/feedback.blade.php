@@ -41,12 +41,10 @@
 
                         <dt class="col-sm-3">Status</dt>
                         <dd class="col-sm-9">
-                            @if ($training->status == 'approved')
-                                <span class="badge bg-success">Approved</span>
-                            @elseif($training->status == 'rejected')
-                                <span class="badge bg-danger">Rejected</span>
+                            @if ($training->status == 'open')
+                                <span class="badge bg-success">Open</span>
                             @else
-                                <span class="badge bg-warning">Pending Approval</span>
+                                <span class="badge bg-danger">Close</span>
                             @endif
                         </dd>
                     </dl>
