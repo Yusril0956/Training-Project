@@ -135,9 +135,6 @@
                                 <span class="nav-link-title">More</span>
                             </a>
                             <div class="dropdown-menu">
-                                @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                                    <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
-                                @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
 
                                 <a class="dropdown-item" href="{{ route('help') }}">Help</a>
