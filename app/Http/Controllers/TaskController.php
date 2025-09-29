@@ -9,6 +9,7 @@ use App\Models\TaskSubmission;
 use App\Models\TaskReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 
 class TaskController extends Controller
@@ -100,7 +101,7 @@ class TaskController extends Controller
 
             // Store file with custom path and filename
             $filePath = $request->file('submission_file')->storeAs(
-                'task_submissions/' . $task->name,
+                'task_submissions/' . $task->title,
                 $newFileName,
                 'public'
             );
@@ -162,5 +163,68 @@ class TaskController extends Controller
             $submission->task->training_id,
             $submission->task_id
         ])->with('success', 'Penilaian berhasil disimpan.');
+    }
+
+    public function editTask(Request $request, $trainingId, $taskId)
+    {
+        $request->validate([
+            'submission_file' => 'nullable|file|max:5120',
+            'message' => 'nullable|string|max:1000',
+        ]);
+
+        $user = User::find(Auth::id());
+        $task = Tasks::findOrFail($taskId);
+
+        // Check if deadline has passed
+        if ($task->deadline < now()) {
+            return back()->with('error', 'Tidak dapat mengedit tugas setelah deadline telah berlalu.');
+        }
+
+        // Find existing submission
+        $existingSubmission = TaskSubmission::where('user_id', $user->id)
+            ->where('task_id', $taskId)
+            ->first();
+
+        if (!$existingSubmission) {
+            return back()->with('error', 'Pengumpulan tugas tidak ditemukan.');
+        }
+
+        // Check if submission has been reviewed
+        if ($existingSubmission->review) {
+            return back()->with('error', 'Tidak dapat mengedit tugas yang sudah dinilai.');
+        }
+
+        // Handle file upload
+        $filePath = $existingSubmission->file_path; // Keep existing file path by default
+
+        if ($request->hasFile('submission_file')) {
+            // Delete old file if exists
+            if ($existingSubmission->file_path && Storage::disk('public')->exists($existingSubmission->file_path)) {
+                Storage::disk('public')->delete($existingSubmission->file_path);
+            }
+
+            $originalFileName = $request->file('submission_file')->getClientOriginalName();
+            $userName = str_replace(' ', '_', $user->name); // Replace spaces with underscores
+            $extension = $request->file('submission_file')->getClientOriginalExtension();
+
+            // Create new filename: original_name_userName.extension
+            $newFileName = pathinfo($originalFileName, PATHINFO_FILENAME) . '_' . $userName . '.' . $extension;
+
+            // Store file with custom path and filename
+            $filePath = $request->file('submission_file')->storeAs(
+                'task_submissions/' . $task->title,
+                $newFileName,
+                'public'
+            );
+        }
+
+        // Update existing submission
+        $existingSubmission->update([
+            'answer' => $request->message,
+            'file_path' => $filePath,
+            'submitted_at' => now(),
+        ]);
+
+        return back()->with('success', 'Tugas berhasil diperbarui.');
     }
 }
