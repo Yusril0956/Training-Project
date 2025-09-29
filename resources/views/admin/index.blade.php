@@ -272,7 +272,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">NIK</label>
                                     <input type="text" maxlength="6" class="form-control" name="nik"
-                                        placeholder="Masukkan NIK 16 digit">
+                                        placeholder="Masukkan NIK 6 digit">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
