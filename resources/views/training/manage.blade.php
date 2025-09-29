@@ -181,7 +181,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Jenis Pelatihan</label>
-                                <select name="jenis_training_id" class="form-select" required>
+                                <select name="jenisTraining" class="form-select" required>
                                     <option value="">Pilih Jenis</option>
                                     @foreach ($jenisTraining as $jenis)
                                         <option value="{{ $jenis->id }}">{{ $jenis->name }} ({{ $jenis->code }})
