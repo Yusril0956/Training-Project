@@ -90,18 +90,17 @@
                         <div class="mb-2">
                             <label class="form-label">Password</label>
                             <div class="input-group input-group-flat">
-                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                <input type="password" id="register-password-input" class="form-control @error('password') is-invalid @enderror"
                                     name="password" placeholder="Your password" autocomplete="off" required>
                                 <span class="input-group-text">
                                     <a href="#" class="link-secondary" title="Show password"
-                                        data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                                        data-bs-toggle="tooltip" id="register-toggle-password">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round" id="register-eye-icon">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                            <path
-                                                d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                            <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                         </svg>
                                     </a>
                                 </span>
@@ -158,6 +157,35 @@
     <!-- Tabler Core -->
     <script src="{{ asset('dist/js/tabler.min.js?1692870487') }}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js?1692870487') }}" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const passwordInput = document.getElementById('register-password-input');
+            const togglePassword = document.getElementById('register-toggle-password');
+            const eyeIcon = document.getElementById('register-eye-icon');
+
+            if (togglePassword) {
+                togglePassword.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.innerHTML = `
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>
+                        <path d="M3 3l18 18" stroke="red"/>
+                    `;
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.innerHTML = `
+                        <path stroke="none" d="M0 0h24v24v0z" fill="none"/>
+                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/>
+                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>
+                    `;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
