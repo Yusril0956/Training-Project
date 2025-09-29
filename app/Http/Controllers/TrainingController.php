@@ -578,13 +578,14 @@ class TrainingController extends Controller
 
         $training = $member->trainingDetail->training;
 
-        $user = $request->user();
+        $user = $member->user; // Fix: Get the member being graduated, not the admin who clicked
 
         // Siapkan data untuk sertifikat
         $data = [
             'user'             => $user,
             'training'         => $training->load('detail'),
             'certificateNumber' => strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd')),
+            'supervisorName'   => 'Ir. Budi Santoso, M.T.', // Nama atasan untuk tanda tangan
         ];
 
         // Render Blade menjadi PDF (A4 landscape)

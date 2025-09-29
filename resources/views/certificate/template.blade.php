@@ -36,6 +36,29 @@
       margin: 0.75rem 0;
       color: #212529;
     }
+    .signature-section {
+      position: absolute;
+      bottom: 4cm;
+      right: 3cm;
+      text-align: center;
+    }
+    .signature-line {
+      border-bottom: 2px solid #007bff;
+      width: 200px;
+      margin: 0 auto 0.5rem auto;
+      padding-bottom: 0.5rem;
+    }
+    .signature-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #004085;
+      margin-bottom: 0.25rem;
+    }
+    .signature-title {
+      font-size: 12px;
+      color: #6c757d;
+      font-style: italic;
+    }
     .footer {
       position: absolute;
       bottom: 2cm;
@@ -73,6 +96,13 @@
     Periode {{ \Carbon\Carbon::parse($training->detail->start_date)->format('d M Y') }}
     &ndash;
     {{ \Carbon\Carbon::parse($training->detail->end_date)->format('d M Y') }}
+  </div>
+
+  <div class="signature-section">
+    <div class="signature-line">
+      <div class="signature-name">{{ $supervisorName }}</div>
+      <div class="signature-title">Supervisor</div>
+    </div>
   </div>
 
   <div class="footer">
