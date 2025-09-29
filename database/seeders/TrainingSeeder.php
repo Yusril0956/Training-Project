@@ -70,105 +70,105 @@ class TrainingSeeder extends Seeder
 
         Training::updateOrCreate([
             'name' => 'Risk Management Leadership',
-            'description' => '',
+            'description' => 'Pelatihan kepemimpinan dalam manajemen risiko untuk meningkatkan kemampuan identifikasi dan mitigasi risiko operasional.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Human Factors',
-            'description' => '',
+            'description' => 'Pelatihan mengenai faktor manusia dalam operasi penerbangan untuk meningkatkan keselamatan dan efisiensi.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Software Engineering',
-            'description' => '',
+            'description' => 'Pelatihan rekayasa perangkat lunak untuk pengembangan sistem informasi dan aplikasi penerbangan.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Program S2 (MBA/TI)',
-            'description' => '',
+            'description' => 'Program magister bisnis dan teknologi informasi untuk pengembangan karir manajerial dan teknis.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Basic Aircraft',
-            'description' => '',
+            'description' => 'Pelatihan dasar mengenai struktur dan sistem pesawat terbang untuk teknisi pemeliharaan.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Teknik Presentasi & Dokumentasi',
-            'description' => '',
+            'description' => 'Pelatihan teknik presentasi efektif dan pembuatan dokumentasi teknis yang profesional.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Human Resources BP',
-            'description' => '',
+            'description' => 'Pelatihan manajemen sumber daya manusia untuk best practices dalam organisasi penerbangan.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Character Building',
-            'description' => '',
+            'description' => 'Pelatihan pembentukan karakter untuk meningkatkan etika kerja dan integritas profesional.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Analisa & Design System',
-            'description' => '',
+            'description' => 'Pelatihan analisis dan perancangan sistem untuk pengembangan solusi teknologi informasi.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Design Database',
-            'description' => '',
+            'description' => 'Pelatihan perancangan database untuk sistem informasi yang efisien dan terstruktur.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'English - Conversation',
-            'description' => '',
+            'description' => 'Pelatihan percakapan bahasa Inggris untuk komunikasi profesional dalam industri penerbangan.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'English - TOEFL Preparation',
-            'description' => '',
+            'description' => 'Persiapan ujian TOEFL untuk meningkatkan kemampuan bahasa Inggris akademik dan profesional.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Safety Management System',
-            'description' => '',
+            'description' => 'Pelatihan sistem manajemen keselamatan untuk implementasi praktik keselamatan di lingkungan kerja.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Training for Trainer',
-            'description' => '',
+            'description' => 'Pelatihan untuk menjadi instruktur yang efektif dalam penyampaian materi pelatihan.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Database (PL/SQL, ORACLE/POSTGRES, DLL)',
-            'description' => '',
+            'description' => 'Pelatihan database menggunakan PL/SQL, Oracle, PostgreSQL dan teknologi terkait lainnya.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
