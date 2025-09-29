@@ -57,7 +57,7 @@
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th class="w-1">#</th>
+                                    <th class="w-1">No</th>
                                     <th>Nama Pelatihan</th>
                                     <th>Jenis</th>
                                     <th>Kategori</th>
