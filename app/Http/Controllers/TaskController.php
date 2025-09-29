@@ -149,12 +149,24 @@ class TaskController extends Controller
 
         $submission = TaskSubmission::findOrFail($submissionId);
 
-        $submission->review()->create([
-            'score' => $request->score,
-            'comment' => $request->comment,
-            'reviewer_id' => Auth::id(),
-        ]);
+        // Cek apakah submission sudah memiliki review
+        if ($submission->review) {
+            $submission->review->update([
+                'score' => $request->score,
+                'comment' => $request->comment,
+                'reviewer_id' => Auth::id(),
+            ]);
+            $message = 'Penilaian berhasil diperbarui.';
+        } else {
+            $submission->review()->create([
+                'score' => $request->score,
+                'comment' => $request->comment,
+                'reviewer_id' => Auth::id(),
+            ]);
+            $message = 'Penilaian berhasil disimpan.';
+        }
 
+        // Send notification to user
         $user = User::find($submission->user_id);
         $user->notify(new \App\Notifications\TaskSubmissionNotification($submission->task, $submission));
 
@@ -162,7 +174,7 @@ class TaskController extends Controller
         return redirect()->route('training.task.detail', [
             $submission->task->training_id,
             $submission->task_id
-        ])->with('success', 'Penilaian berhasil disimpan.');
+        ])->with('success', $message);
     }
 
     public function editTask(Request $request, $trainingId, $taskId)
