@@ -153,6 +153,88 @@
                 @endif
             </div>
 
+            <div class="card mb-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="card-title mb-1">Certificates Management</h2>
+                        <p class="text-muted">Lihat daftar sertifikat user</p>
+                    </div>
+                    <div class="col-auto ms-auto">
+                        <div class="btn-list">
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modal-create">
+                                <i class="ti ti-user-plus me-1"></i>
+                                Add Certificate
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div id="table-default" class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><button class="table-sort" data-sort="sort-name">No</button></th>
+                                    <th><button class="table-sort" data-sort="sort-name">Name</button></th>
+                                    <th><button class="table-sort" data-sort="sort-email">Kegiatan</button></th>
+                                    <th><button class="table-sort" data-sort="sort-status">Status</button></th>
+                                    <th><button class="table-sort" data-sort="sort-date">Date</button></th>
+                                    <th><button class="table-sort" data-sort="sort-status">File</button></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-tbody">
+                                @forelse ($certificates as $certificate)
+                                    <tr>
+                                        <td class="sort-name">{{ $certificate->user_id }}</td>
+                                        <td class="sort-name">{{ $certificate->participant_name }}</td>
+                                        <td class="sort-email">{{ $certificate->activity_name }}</td>
+                                        <td class="sort-role">{{ $certificate->status }}</td>
+                                        <td class="sort-date">{{ $certificate->activity_date }}</td>
+                                        <td class="sort-date"><a href="{{ asset('storage/' . $certificate->file_path) }}"
+                                                target="_blank">
+                                                {{ basename($certificate->file_path, 5) }}
+                                            </a></td>
+                                        <td class="sort-action">
+                                            <form
+                                                action="{{ route('admin.certificate.accept', $certificate->id) }}"
+                                                method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-sm btn-success">Terima</button>
+                                            </form>
+                                            <form
+                                                action="{{ route('admin.certificate.reject', $certificate->id) }}"
+                                                method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-sm btn-danger">Tolak</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="colspan-6">
+                                            <div class="alert alert-warning text-center">
+                                                Belum ada user yang request.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @if ($certificates->hasPages())
+                    <div class="mt-4 d-flex justify-content-center">
+                        {{ $certificates->withQueryString()->links() }}
+                    </div>
+                @endif
+            </div>
+
             <!-- Keep the original danger modal for backward compatibility -->
             <div class="modal modal-blur fade" id="modal-danger" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">

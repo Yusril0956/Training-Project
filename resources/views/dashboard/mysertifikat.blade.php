@@ -73,7 +73,7 @@
             <div class="row row-cards">
                 @forelse($externalCertificates as $extCertificate)
                     <div class="col-md-6 col-lg-4">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm {{ $extCertificate->status === 'pending' ? 'bg-gray-600' : '' }}">
                             <div class="ratio ratio-4x3">
                                 @if ($extCertificate->file_path)
                                     <iframe src="{{ asset('storage/' . $extCertificate->file_path) }}" class="w-100 h-100"
@@ -84,7 +84,12 @@
                                 @endif
                             </div>
                             <div class="card-body">
-                                <h4 class="card-title mb-2">{{ $extCertificate->activity_name }}</h4>
+                                <div class="d-flex mb-2">
+                                    <h4 class="card-title">{{ $extCertificate->activity_name }}</h4>
+                                    @if ( $extCertificate->status === 'pending' )
+                                        <span class="badge bg-orange-lt pb-0">Pending</span>
+                                    @endif
+                                </div>
                                 <div class="mb-1 text-muted">{{ $extCertificate->participant_name }}</div>
                                 <div class="mb-2 text-muted">
                                     {{ \Carbon\Carbon::parse($extCertificate->activity_date)->format('d M Y') }}</div>

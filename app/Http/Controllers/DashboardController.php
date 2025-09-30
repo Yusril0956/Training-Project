@@ -45,6 +45,9 @@ class DashboardController extends Controller
         }
 
         $users = $query->paginate(10);
+
+        $certificates = ExternalCertificate::paginate(10);
+
         $assignments = Assignment::all(); // ✅ ambil semua tugas
 
         // data untuk modal
@@ -56,18 +59,41 @@ class DashboardController extends Controller
 
         return view('admin.index', compact(
             'users',
-            'assignments',   // ✅ kirim ke view
+            'assignments',
             'modalId',
             'modalTitle',
             'modalDescription',
             'modalButton',
-            'formMethod'
+            'formMethod',
+            'certificates'
         ));
     }
 
     public function tManage()
     {
         return view('pages.training-manage');
+    }
+
+    public function acceptCertificate( $externalCertificate)
+    {
+        $certificate = ExternalCertificate::findOrFail($externalCertificate);
+        $certificate->update(['status' => 'approved']);
+
+        $user = User::find($certificate->user_id);
+        $user->notify(new \App\Notifications\acceptCertificateNotification($certificate));
+
+        return redirect()->back()->with('success', 'sertifikat berhasil diterima');
+    }
+
+    public function rejectCertificate( $externalCertificate)
+    {
+        $certificate = ExternalCertificate::findOrFail($externalCertificate);
+        $certificate->delete();
+
+        $user = User::find($certificate->user_id);
+        $user->notify(new \App\Notifications\rejectCertificateNotification($certificate));
+
+        return redirect()->back()->with('success', 'sertifikat berhasil ditolak');
     }
 
     public function notification()
@@ -168,21 +194,6 @@ class DashboardController extends Controller
     {
         $users = User::all();
         return view('admin.settings', compact('users'));
-    }
-
-    public function openAllAccess(Request $request)
-    {
-        // Logic to open all access - this could be a system setting or toggle
-        // For now, we'll just return a success message
-        return redirect()->back()->with('success', 'All access has been opened!');
-    }
-
-    public function deleteDatabase(Request $request)
-    {
-        // WARNING: This is a dangerous operation!
-        // In a real application, you would want to add additional security measures
-        // For now, we'll just return a warning message
-        return redirect()->back()->with('warning', 'Database deletion is not implemented for safety reasons!');
     }
 
     public function resetUserPassword(Request $request, $id)
