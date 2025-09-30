@@ -28,6 +28,12 @@
                                 {{ basename($submission->file_path) }}
                             </a>
                         </p>
+                        @if (in_array(pathinfo($task->attachment_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                            <div class="mt-3">
+                                <img src="{{ asset('storage/' . $task->attachment_path) }}" alt="Lampiran Gambar"
+                                    class="img-fluid rounded">
+                            </div>
+                        @endif
                         <p><strong>Pesan:</strong> {{ $submission->answer ?? 'Tidak ada pesan.' }}</p>
 
                         <div class="mb-3">

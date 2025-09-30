@@ -31,24 +31,16 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nama</th>
-                                    <th>Instansi</th>
                                     <th>Email</th>
-                                    <th>Waktu Kehadiran</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($training->members as $index => $member)
-                                    {{-- @if ($member->is_present) --}}
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $member->user->name }}</td>
-                                        <td>{{ $member->user->instansi ?? '-' }}</td>
                                         <td>{{ $member->user->email }}</td>
-                                        {{-- <td>
-                                                {{ $member->present_at ? \Carbon\Carbon::parse($member->present_at)->format('d M Y H:i') : '-' }}
-                                            </td> --}}
                                     </tr>
-                                    {{-- @endif --}}
                                 @empty
                                     <tr>
                                         <td colspan="5" class="text-center text-muted">Belum ada peserta hadir.</td>

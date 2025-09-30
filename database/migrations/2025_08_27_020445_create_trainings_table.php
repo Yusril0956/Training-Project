@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('trainings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('category');
             $table->text('description');
-            $table->enum('status', ['pending', 'approved', 'completed', 'rejected'])->default('pending');
+            $table->enum('status', ['open', 'close'])->default('open');
             $table->foreignId('jenis_training_id')->constrained('jenis_trainings')->cascadeOnDelete();
             $table->timestamps();
         });

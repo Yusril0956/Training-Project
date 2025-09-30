@@ -91,7 +91,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'phone' => 'required|numeric|digits_between:10,15',
-            'nik' => 'required|numeric|digits:16',
+            'nik' => 'required|numeric|digits:6',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
         ]);

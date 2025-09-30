@@ -37,11 +37,11 @@ class TaskSubmissionNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Tugas Baru Disubmit')
+            ->subject('Tugas anda telah dinilai')
             ->greeting('Halo ' . $notifiable->name . '!')
-            ->line('Tugas "' . $this->task->title . '" telah disubmit oleh ' . $this->submission->user->name)
-            ->line('Silakan klik tombol di bawah untuk meninjau tugas yang disubmit.')
-            ->action('Tinjau Tugas', route('training.showTasks', [$this->task->training_id, $this->task->id]))
+            ->line('Tugas "' . $this->task->title . '" telah dinilai oleh ' . $this->submission->user->name)
+            ->line('Silakan klik tombol di bawah untuk meninjau tugas .')
+            ->action('Tinjau Tugas', route('training.task.detail', [$this->task->training_id, $this->task->id]))
             ->line('Mohon segera meninjau dan memberikan feedback pada tugas ini.')
             ->salutation('Salam, Tim Training');
     }
@@ -57,7 +57,7 @@ class TaskSubmissionNotification extends Notification
             'task_id' => $this->task->id,
             'task_title' => $this->task->title,
             'training_id' => $this->task->training_id,
-            'action_url' => route('training.showTasks', [$this->task->training_id, $this->task->id]),
+            'action_url' => route('training.task.detail', [$this->task->training_id, $this->task->id]),
             'type' => 'task_submission',
         ];
     }

@@ -74,7 +74,7 @@
     <!-- Page body -->
     <div class="page-body">
         <div class="container-xl">
-            @include('components.alert')
+            {{-- @include('components.alert') --}}
 
             <div class="card">
                 <div class="row g-0">

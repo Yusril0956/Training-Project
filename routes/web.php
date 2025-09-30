@@ -148,6 +148,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
         Route::get('/tasks/{id}', [TaskController::class, 'index'])->name('tasks');
         Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('task.submit');
+        Route::post('/tasks/{trainingId}/{taskId}/edit', [TaskController::class, 'editTask'])->name('task.edit');
         Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
         Route::get('/tasks/{trainingId}/detail/{taskId}', [TaskController::class, 'show'])->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
@@ -167,6 +168,7 @@ Route::middleware('auth')->group(function () {
     // ============================
     Route::middleware(['check_role:Admin,Super Admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'admin'])->name('index');
+        Route::get('/export-users', [DashboardController::class, 'exportUsers'])->name('export.users');
         Route::post('/user/add', [DashboardController::class, 'addUser'])->name('user.add');
         Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
         Route::get('/example-modal', [DashboardController::class, 'exampleModal'])->name('example.modal');

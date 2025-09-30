@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-                <a href="#">
+                <a href="{{ route('index') }}">
                     <img src="{{ asset('images/LOGOrl2.png') }}" class="navbar-brand-image "
                         alt="logo">PT.Dirgantara
                 </a>
@@ -135,9 +135,6 @@
                                 <span class="nav-link-title">More</span>
                             </a>
                             <div class="dropdown-menu">
-                                @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                                    <a class="dropdown-item" href="{{ route('admin.settings') }}">Admin Settings</a>
-                                @endif
                                 <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
 
                                 <a class="dropdown-item" href="{{ route('help') }}">Help</a>

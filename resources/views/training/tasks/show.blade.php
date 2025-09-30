@@ -46,6 +46,13 @@
                             <i class="ti ti-paperclip me-1"></i>
                             {{ basename($task->attachment_path) }}
                         </a>
+                        {{-- Jika lampiran berupa gambar, tampilkan pratinjau --}}
+                        @if (in_array(pathinfo($task->attachment_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                            <div class="mt-3">
+                                <img src="{{ asset('storage/' . $task->attachment_path) }}" alt="Lampiran Gambar"
+                                    class="img-fluid rounded">
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -65,6 +72,7 @@
                                         <th>Peserta</th>
                                         <th>File</th>
                                         <th>Waktu Kirim</th>
+                                        <th>Nilai</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -79,6 +87,7 @@
                                                 </a>
                                             </td>
                                             <td>{{ $submission->created_at->format('d M Y H:i') }}</td>
+                                            <td>{{ $submission->review->score ?? 'belum dinilai' }}</td>
                                             <td>
                                                 <a href="{{ route('admin.submission.download', $submission->id) }}"
                                                     class="btn btn-sm btn-primary">
@@ -92,7 +101,7 @@
                                                         <path d="M12 4l0 12" />
                                                     </svg>
                                                 </a>
-                                                <a href="{{ route('admin.task.review', [ $training->id, $task->id, $submission->id]) }}"
+                                                <a href="{{ route('admin.task.review', [$training->id, $task->id, $submission->id]) }}"
                                                     class="btn btn-sm btn-success">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -120,7 +129,7 @@
             @else
                 {{-- Submission Form (Peserta) --}}
                 <div class="card shadow-sm mb-4">
-                    <form action="{{ route('training.task.submit', [$training->name, $task->id]) }}" method="POST"
+                    <form action="{{ route('training.task.edit', [$training->id, $task->id]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
@@ -130,29 +139,92 @@
                             @endphp
 
                             @if ($userSubmission && $userSubmission->file_path)
-                                <p class="text-success">Kamu sudah mengumpulkan tugas ini.</p>
+                                <p class="text-success">
+                                    <i class="ti ti-check me-1"></i> Kamu sudah mengumpulkan tugas ini.
+                                </p>
                                 <a href="{{ asset('storage/' . $userSubmission->file_path) }}"
                                     class="btn btn-sm btn-outline-secondary mb-3" target="_blank">
-                                    <i class="ti ti-paperclip me-1"></i>
-                                    Lihat Kiriman
+                                    <i class="ti ti-paperclip me-1"></i> Lihat Kiriman
                                 </a>
-                                @if ($userSubmission && $userSubmission->review)
-                                    <div class="card mt-4">
+
+                                @if ($task->deadline >= now() && !$userSubmission->review)
+                                    <button class="btn btn-sm btn-info mb-3" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#editForm-{{ $task->id }}" aria-expanded="false"
+                                        aria-controls="editForm-{{ $task->id }}">
+                                        <i class="ti ti-edit"></i> Edit Kiriman
+                                    </button>
+                                @elseif ($userSubmission->review)
+                                    <button class="btn btn-sm btn-info mb-3" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#reviewForm-{{ $task->id }}" aria-expanded="false"
+                                        aria-controls="reviewForm-{{ $task->id }}">
+                                        <i class="ti ti-edit"></i> Lihat Penilaian
+                                    </button>
+                                @else
+                                    @if ($task->deadline < now())
+                                        <div class="alert alert-warning mb-3">
+                                            <i class="ti ti-alert-triangle me-1"></i>
+                                            Tidak dapat mengedit tugas karena deadline telah berlalu.
+                                        </div>
+                                    @endif
+                                @endif
+
+                                <div class="collapse" id="editForm-{{ $task->id }}">
+                                    <form action="{{ route('training.task.edit', [$training->name, $task->id]) }}"
+                                        method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="card border border-info mb-3">
+                                            <div class="card-body">
+                                                <h4 class="card-title mb-2">Form Edit</h4>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Ganti File</label>
+                                                    <input type="file" name="submission_file"
+                                                        class="form-control @error('submission_file') is-invalid @enderror">
+                                                    @error('submission_file')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+
+                                                    <label class="form-label mt-2">Edit Pesan</label>
+                                                    <input type="text" name="message"
+                                                        class="form-control @error('message') is-invalid @enderror"
+                                                        value="{{ old('message', $userSubmission->message) }}"
+                                                        placeholder="Pesan (opsional)">
+                                                    @error('message')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <button type="submit" class="btn btn-info">
+                                                    <i class="ti ti-refresh"></i> Update Kiriman
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="collapse" id="reviewForm-{{ $task->id }}">
+                                    <div class="card border border-info mb-3">
                                         <div class="card-body">
-                                            <h4>📊 Penilaian Tugas</h4>
-                                            <p><strong>Nilai:</strong> {{ $userSubmission->review->score }}</p>
-                                            <p><strong>Komentar:</strong> {{ $userSubmission->review->comment }}</p>
-                                            <p class="text-muted">Dinilai oleh:
-                                                {{ $userSubmission->review->reviewer->name }}
-                                            </p>
+                                            <h4 class="card-title mb-2">📊 Penilaian Tugas</h4>
+                                            <div class="mb-3">
+                                                <p><strong>Nilai:</strong> {{ $userSubmission->review->score }}</p>
+                                                <p><strong>Komentar:</strong> {{ $userSubmission->review->comment }}</p>
+                                                <p class="text-muted">Dinilai oleh:
+                                                    {{ $userSubmission->review->reviewer->name }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                @endif
+                                </div>
                             @else
+                                {{-- Form Kirim Tugas Baru --}}
                                 <div class="mb-3">
                                     <label class="form-label">Pilih File</label>
                                     <input type="file" name="submission_file"
                                         class="form-control @error('submission_file') is-invalid @enderror" required>
+                                    @if (in_array(pathinfo($task->attachment_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                                        <div class="mt-3">
+                                            <img src="{{ asset('storage/' . $task->attachment_path) }}"
+                                                alt="Lampiran Gambar" class="img-fluid rounded">
+                                        </div>
+                                    @endif
                                     @error('submission_file')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

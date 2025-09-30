@@ -13,8 +13,6 @@
                 ],
             ])
 
-            @include('components.alert')
-
             <!-- Header -->
             <div class="card mb-4">
                 <div class="card-body">
@@ -39,11 +37,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control" rows="4">{{ $training->deskripsi }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Kategori</label>
-                            <input type="text" name="kategori" class="form-control" value="{{ $training->kategori }}">
+                            <textarea name="description" class="form-control" rows="4">{{ $training->description }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Durasi</label>
@@ -57,13 +51,9 @@
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="status" class="form-select">
-                                <option value="pending" {{ $training->status === 'pending' ? 'selected' : '' }}>Pending
+                                <option value="open" {{ $training->status === 'open' ? 'selected' : '' }}>Open
                                 </option>
-                                <option value="approved" {{ $training->status === 'approved' ? 'selected' : '' }}>Approved
-                                </option>
-                                <option value="ongoing" {{ $training->status === 'ongoing' ? 'selected' : '' }}>Sedang
-                                    Berjalan</option>
-                                <option value="completed" {{ $training->status === 'completed' ? 'selected' : '' }}>Selesai
+                                <option value="close" {{ $training->status === 'close' ? 'selected' : '' }}>Close
                                 </option>
                             </select>
                         </div>
