@@ -24,6 +24,7 @@ class ExternalCertificateController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'user_id'          => 'nullable|exists:users,id',
             'participant_name' => 'required|string|max:255',
             'activity_name'    => 'required|string|max:255',
             'activity_date'    => 'required|date',
@@ -36,15 +37,23 @@ class ExternalCertificateController extends Controller
             $filePath = $request->file('certificate_file')->store('external_certificates', 'public');
         }
 
+        $userId = $request->user_id ?? Auth::id();
+        $status = $request->user_id ? 'approved' : 'pending';
+
         ExternalCertificate::create([
-            'user_id'          => Auth::id(),
+            'user_id'          => $userId,
             'participant_name' => $request->participant_name,
             'activity_name'    => $request->activity_name,
             'activity_date'    => $request->activity_date,
             'file_path'        => $filePath,
+            'status'           => $status,
         ]);
 
-        return redirect()->route('manual-certificates.index')->with('success', 'Sertifikat berhasil ditambahkan.');
+        if ($request->user_id) {
+            return redirect()->route('admin.index')->with('success', 'Sertifikat berhasil ditambahkan untuk user.');
+        } else {
+            return redirect()->route('mysertifikat')->with('success', 'Sertifikat berhasil ditambahkan dan menunggu persetujuan admin.');
+        }
     }
 
     public function show(ExternalCertificate $certificate)

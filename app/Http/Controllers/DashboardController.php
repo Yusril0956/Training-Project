@@ -69,11 +69,6 @@ class DashboardController extends Controller
         ));
     }
 
-    public function tManage()
-    {
-        return view('pages.training-manage');
-    }
-
     public function acceptCertificate( $externalCertificate)
     {
         $certificate = ExternalCertificate::findOrFail($externalCertificate);

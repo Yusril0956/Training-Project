@@ -161,9 +161,7 @@
                     </div>
                     <div class="col-auto ms-auto">
                         <div class="btn-list">
-                            <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#modal-create">
-                                <i class="ti ti-user-plus me-1"></i>
+                            <a href="{{ route('admin.certificate.create') }}" class="btn btn-primary">
                                 Add Certificate
                             </a>
                         </div>
