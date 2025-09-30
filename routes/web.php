@@ -178,6 +178,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('delete.database');
         Route::post('/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('reset.password');
 
+        Route::get('/admin/extcertificate/create', fn() => view('manual-certificates.create'))->name('certificate.create');
+        Route::patch('/extcertificate/{extcertificateId}/accept', [DashboardController::class, 'acceptCertificate'])->name('certificate.accept');
+        Route::patch('/extcertificate/{extcertificateId}/reject', [DashboardController::class, 'rejectCertificate'])->name('certificate.reject');
+
         // Training Management
         Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
         Route::delete('/training/{trainingId}', [TrainingController::class, 'destroy'])->name('training.destroy');

@@ -23,6 +23,23 @@
                 @csrf
                 <div class="card-body">
 
+                    @if(Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin'))
+                        <div class="mb-3">
+                            <label class="form-label required">Pilih User Penerima Sertifikat</label>
+                            <select name="user_id" class="form-select @error('user_id') is-invalid @enderror" required>
+                                <option value="">-- Pilih User --</option>
+                                @foreach(\App\Models\User::all() as $user)
+                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }} ({{ $user->email }})
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    @endif
+
                     <div class="mb-3">
                         <label class="form-label required">Nama Peserta</label>
                         <input type="text" name="participant_name"

@@ -212,18 +212,23 @@ class TrainingController extends Controller
         $request->validate([
             'name'             => 'required|string|max:255',
             'description'      => 'nullable|string',
+            'jenisTraining'    => 'required|exists:jenis_trainings,id',
+            'status'           => 'required|in:open,close',
         ]);
 
-        Training::create([
-            'name'             => $request->name,
-            'description'      => $request->description,
-            'jenis_training_id' => 3, //default ke customer request
-            'status'           => 'open',
-        ]);
+        try {
+            $training = Training::create([
+                'name'             => $request->name,
+                'description'      => $request->description,
+                'jenis_training_id' => $request->jenisTraining,
+                'status'           => $request->status,
+            ]);
 
-        return redirect()
-            ->route('admin.training.manage')
-            ->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
+            return redirect()->back()->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            \Log::error('Error creating training: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan pelatihan: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function home($id)

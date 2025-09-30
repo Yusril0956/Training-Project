@@ -30,20 +30,8 @@
           <div class="empty-header">403</div>
           <p class="empty-title">Oops… Anda tidak bisa akses ini</p>
           <p class="empty-subtitle text-secondary">
-            USer tidak memiliki izin untuk mengakses halaman ini. Silakan hubungi administrator jika Anda yakin ini adalah kesalahan.
+            Anda tidak memiliki izin untuk mengakses halaman ini. Silahkan kembali
           </p>
-          <div class="gif-placeholder rounded-2xl w-64 h-45 mx-auto mb-8 flex items-center justify-center">
-            <div class="text-center">
-                <img src="{{ asset('sus.gif') }}" width="350" height="220" alt="Tabler">
-            </div>
-          <div class="empty-action">
-            <p class="empty-subtitle text-secondary">
-            Ngapain coba-coba masuk sini, kamu bukan siapa-siapa! Kembali ke halaman utama aja deh.
-          </p>
-          <p class="empty-title">(˶˃⤙˂˶)</p>
-          <div class="empty-action">
-            <p class="empty-subtitle text-secondary">
-            Hmph!
           </p>
             <a href="{{route('index')}}" class="btn btn-primary">
               <!-- Download SVG icon from http://tabler-icons.io/i/arrow-left -->

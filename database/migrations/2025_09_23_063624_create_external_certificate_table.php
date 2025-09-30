@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('participant_name');
             $table->string('activity_name');
             $table->date('activity_date');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('file_path')->nullable();
             $table->timestamps();
         });

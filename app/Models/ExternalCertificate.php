@@ -14,6 +14,7 @@ class ExternalCertificate extends Model
         'participant_name',
         'activity_name',
         'activity_date',
+        'status',
         'file_path',
     ];
 
