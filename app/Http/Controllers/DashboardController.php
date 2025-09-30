@@ -213,37 +213,6 @@ class DashboardController extends Controller
         }
     }
 
-    public function history()
-    {
-        $user = Auth::user();
-
-
-
-        $trainings = Training::whereHas('members', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->with(['members' => function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        }, 'detail'])->paginate(9);
-
-        // training yang sudah lulus oleh user
-        $tGraduated = Training::whereHas('members', function ($q) use ($user) {
-            $q->where('user_id', $user->id)
-                ->where('status', 'graduate');
-        })->with(['members' => function ($q) use ($user) {
-            $q->where('user_id', $user->id)
-                ->where('status', 'graduate');
-        }, 'detail'])->paginate(9);
-
-
-        $certificates = $user->certificates;
-
-        $member = $trainings->first()?->members->first();
-        $status = $member ? $member->status : 'none';
-
-
-        return view('dashboard.history', compact('trainings', 'certificates', 'status', 'tGraduated'));
-    }
-
     public function mysertifikat()
     {
         $user = Auth::user();

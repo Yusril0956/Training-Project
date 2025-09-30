@@ -69,7 +69,6 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
-    Route::get('/history', [DashboardController::class, 'history'])->name('history');
     Route::get('/sertifikat', [DashboardController::class, 'mysertifikat'])->name('mysertifikat');
     Route::get('/notifikasi', [DashboardController::class, 'notification'])->name('notifikasi');
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
