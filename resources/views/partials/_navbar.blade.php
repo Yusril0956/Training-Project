@@ -143,11 +143,6 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="searchbar-wrapper" style="position:relative;display:flex;align-items:center;min-width:50px;">
-                <input type="text" class="searchfield" placeholder="Search..." />
-                <div class="search"></div>
-            </div>
         </div>
     </header>
 </div>

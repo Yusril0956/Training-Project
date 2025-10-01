@@ -64,28 +64,6 @@ class TrainingController extends Controller
     }
 
     /**
-     * Catat atau update waktu absen peserta
-     */
-    public function markAttendance($memberId)
-    {
-        $member = TrainingMember::findOrFail($memberId);
-
-        if ($member->attendance()->count() > 0) {
-            $attendance = $member->attendance()->latest()->first();
-            $attendance->attended_at = now()->setTimezone('Asia/Jakarta');
-            $attendance->save();
-            return redirect()->back()->with('success', 'Waktu absen berhasil diperbarui.');
-        }
-
-        $member->attendance()->create([
-            'attended_at' => now()->setTimezone('Asia/Jakarta'),
-            'status' => 'present',
-        ]);
-
-        return redirect()->back()->with('success', 'Absen berhasil dicatat.');
-    }
-
-    /**
      * List General Knowledge Training
      */
     public function generalKnowledge(Request $request)
@@ -323,15 +301,7 @@ class TrainingController extends Controller
         return view('training.materials.index', compact('training'));
     }
 
-    /**
-     * Tampilkan detail tugas training
-     */
-    public function showTasks($trainingId, $taskId)
-    {
-        $training = Training::findOrFail($trainingId);
-        $task = Tasks::with(['training', 'submissions.user'])->findOrFail($taskId);
-        return view('training.tasks.show', compact('training', 'task'));
-    }
+
 
     /**
      * Halaman daftar member training

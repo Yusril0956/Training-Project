@@ -171,11 +171,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/export-users', [DashboardController::class, 'exportUsers'])->name('export.users');
         Route::post('/user/add', [DashboardController::class, 'addUser'])->name('user.add');
         Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
-        Route::get('/example-modal', [DashboardController::class, 'exampleModal'])->name('example.modal');
 
         Route::get('/setting', [DashboardController::class, 'adminSettings'])->name('settings');
-        Route::post('/settings/open-access', [DashboardController::class, 'openAllAccess'])->name('open.access');
-        Route::post('/settings/delete-database', [DashboardController::class, 'deleteDatabase'])->name('delete.database');
         Route::post('/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('reset.password');
 
         Route::get('/admin/extcertificate/create', fn() => view('manual-certificates.create'))->name('certificate.create');
