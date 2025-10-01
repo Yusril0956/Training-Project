@@ -192,3 +192,17 @@ resources/
         ├── sidebar.blade.php
         ├── sidebar-training.blade.php
         └── header.blade.php
+
+
+Analisis dan optimalkan controller Laravel berikut ini agar lebih efisien dan sesuai best practice.
+
+- Hindari N+1 query dengan eager loading (with()).
+- Gunakan pagination untuk data list, bukan all().
+- Tambahkan validasi pada method store() dan update().
+- Kembalikan data ke Blade view, bukan JSON.
+- Gunakan dependency injection bila perlu.
+- Bersihkan kode duplikat atau query yang tidak efisien.
+- Tambahkan komentar singkat di setiap method.
+
+Berikut kode controllernya:
+#file:TrainingController.php #file:TaskController.php #file:DashboardController.php #file:AuthController.php #file:ProfileController.php
