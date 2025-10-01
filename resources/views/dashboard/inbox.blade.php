@@ -43,49 +43,15 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                {{-- <tbody>
-                                    <!-- Contoh data statis, ganti dengan loop Laravel -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Rina</td>
-                                        <td>Sistem training sangat membantu, semoga terus dikembangkan.</td>
-                                        <td>2025-08-27</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Andi</td>
-                                        <td>Mohon ditambahkan fitur reminder untuk jadwal pelatihan.</td>
-                                        <td>2025-08-26</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Siti</td>
-                                        <td>Website sudah bagus, tapi loading agak lambat di mobile.</td>
-                                        <td>2025-08-25</td>
-                                    </tr>
-                                </tbody> --}}
                             </table>
                         </div>
 
                         <!-- Pagination (opsional) -->
-                        <div class="mt-3">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-end">
-                                    <li class="page-item disabled">
-                                        <a class="page-link">Previous</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        @if ($feedback->hasPages())
+                            <div class="mt-4 d-flex justify-content-center">
+                                {{ $feedback->withQueryString()->links() }}
+                            </div>
+                        @endif
 
                     </div>
                 </div>

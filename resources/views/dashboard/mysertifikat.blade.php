@@ -145,6 +145,12 @@
                 @endforelse
             </div>
 
+            @if($externalCertificates->hasPages())
+                <div class="mt-4">
+                    {{ $externalCertificates->withQueryString()->links() }}
+                </div>
+            @endif
+
         </div>
     </div>
 @endsection

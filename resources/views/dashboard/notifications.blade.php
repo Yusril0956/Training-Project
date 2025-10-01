@@ -89,6 +89,12 @@
                 @endforelse
             </div>
 
+            @if($notifications->hasPages())
+                <div class="mt-4">
+                    {{ $notifications->withQueryString()->links() }}
+                </div>
+            @endif
+
         </div>
     </div>
 @endsection

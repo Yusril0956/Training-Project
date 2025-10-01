@@ -88,31 +88,48 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Reject an external certificate and notify the user.
+     */
     public function rejectCertificate($externalCertificate)
     {
         try{
             $certificate = ExternalCertificate::findOrFail($externalCertificate);
             $certificate->delete();
-    
+
             $user = User::find($certificate->user_id);
             $user->notify(new \App\Notifications\rejectCertificateNotification($certificate));
-    
-            return redirect()->back()->with('success', 'sertifikat berhasil ditolak');
+
+            return redirect()->back()->with('success', 'Sertifikat berhasil ditolak');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menolak sertifikat: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Display user notifications.
+     */
     public function notification()
     {
         $user = Auth::user();
-        $notifications = $user->notifications()->latest()->get();
+        $notifications = $user->notifications()->latest()->paginate(10); // Use pagination
 
         return view('dashboard.notifications', compact('notifications'));
     }
 
+    /**
+     * Update user details.
+     * Validates input and prevents updating super admin.
+     */
     public function userUpdate(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'role' => 'required|in:admin,user,staff',
+            'status' => 'required|in:active,inactive',
+        ]);
+
         try {
             $user = User::findOrFail($id);
             if ($user->role === 'super_admin') {
@@ -172,9 +189,12 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Display all feedback messages.
+     */
     public function inbox()
     {
-        $feedback = Feedback::all();
+        $feedback = Feedback::paginate(10); // Use pagination
 
         return view('dashboard.inbox', compact('feedback'));
     }
@@ -197,9 +217,12 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Display admin settings page with all users.
+     */
     public function adminSettings()
     {
-        $users = User::all();
+        $users = User::paginate(10); // Use pagination
         return view('admin.settings', compact('users'));
     }
 
@@ -225,16 +248,23 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Display user's certificates and external certificates.
+     */
     public function mysertifikat()
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        // Ambil semua sertifikat milik user
-        $certificates = $user->certificates()->with('training')->paginate(9);
+            // Ambil semua sertifikat milik user
+            $certificates = $user->certificates()->with('training')->paginate(12);
 
-        $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(12);
+            $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(6);
 
-        return view('dashboard.mysertifikat', compact('certificates', 'externalCertificates'));
+            return view('dashboard.mysertifikat', compact('certificates', 'externalCertificates'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error loading certificates: ' . $e->getMessage());
+        }
     }
 
     public function settings()
@@ -243,6 +273,9 @@ class DashboardController extends Controller
         return view('dashboard.settings', compact('user'));
     }
 
+    /**
+     * Update user settings.
+     */
     public function updateSettings(Request $request)
     {
         $user = Auth::user();
@@ -262,9 +295,12 @@ class DashboardController extends Controller
         }
     }
 
+    /**
+     * Export users as CSV.
+     */
     public function exportUsers(Request $request)
     {
-        $query = User::query();
+        $query = User::query()->with('roles');
 
         // Apply same filters as admin method
         if ($request->filled('search')) {
@@ -316,7 +352,7 @@ class DashboardController extends Controller
                     $user->name,
                     $user->email,
                     $user->nik ?? '',
-                    $user->role,
+                    $user->roles->pluck('name')->first() ?? 'User',
                     $user->status,
                     $user->created_at->format('Y-m-d H:i:s'),
                     $user->updated_at->format('Y-m-d H:i:s')
