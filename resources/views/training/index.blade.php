@@ -23,7 +23,14 @@
                         <div class="col-md-8">
                             <label for="search" class="form-label">Cari Pelatihan</label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="ti ti-search"></i></span>
+                                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                        <path d="M21 21l-6 -6" />
+                                    </svg></span>
                                 <input type="text" class="form-control" id="search" name="search"
                                     placeholder="Cari berdasarkan nama atau deskripsi..." value="{{ $request->search }}">
                             </div>
@@ -31,10 +38,24 @@
                         <div class="col-md-4">
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary flex-fill">
-                                    <i class="ti ti-search me-1"></i>Cari
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                        <path d="M21 21l-6 -6" />
+                                    </svg>Cari
                                 </button>
                                 <a href="{{ route('training.index') }}" class="btn btn-outline-secondary flex-fill">
-                                    <i class="ti ti-x me-1"></i>Reset
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-x">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M18 6l-12 12" />
+                                        <path d="M6 6l12 12" />
+                                    </svg>Reset
                                 </a>
                             </div>
                         </div>
@@ -46,8 +67,7 @@
             <div class="row row-cards">
                 @forelse($trainings as $training)
                     <div class="col-md-6 col-lg-4">
-                        <div
-                            class="card shadow-sm {{ $training->status === 'close' ? 'bg-gray-500' : '' }}">
+                        <div class="card shadow-sm {{ $training->status === 'close' ? 'bg-gray-500' : '' }}">
 
                             {{-- Banner dengan avatar seperti di index-old --}}
                             <div class="card-body text-center {{ $training->status === 'close' ? 'bg-gray-500' : '' }}">

@@ -17,7 +17,13 @@
                 <div class="ms-auto">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddTraining">
-                        <i class="ti ti-plus me-1"></i> Tambah Pelatihan
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 5l0 14" />
+                            <path d="M5 12l14 0" />
+                        </svg> Tambah Pelatihan
                     </button>
                 </div>
             </div>
@@ -41,10 +47,22 @@
                     </div>
                     <div class="col-auto ms-auto">
                         <button type="submit" class="btn btn-outline-primary">
-                            <i class="ti ti-search me-1"></i> Filter
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                <path d="M21 21l-6 -6" />
+                            </svg> Filter
                         </button>
                         <a href="{{ route('admin.training.manage') }}" class="btn btn-outline-secondary ms-2">
-                            <i class="ti ti-refresh me-1"></i> Reset
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                            </svg> Reset
                         </a>
                     </div>
                 </div>
@@ -93,8 +111,8 @@
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-list">
-                                                <a href="{{ route('training.detail', $t->id) }}" class="btn btn-sm btn-info btn-pill"
-                                                    title="Detail">
+                                                <a href="{{ route('training.detail', $t->id) }}"
+                                                    class="btn btn-sm btn-info btn-pill" title="Detail">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -119,12 +137,13 @@
                                                         <path d="M16 5l3 3" />
                                                     </svg>
                                                 </a>
-                                                <form action="{{ route('admin.training.destroy', $t->id) }}" method="POST"
-                                                    class="d-inline"
+                                                <form action="{{ route('admin.training.destroy', $t->id) }}"
+                                                    method="POST" class="d-inline"
                                                     onsubmit="return confirm('Yakin ingin menghapus pelatihan ini?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger btn-pill" title="Hapus">
+                                                    <button type="submit" class="btn btn-sm btn-danger btn-pill"
+                                                        title="Hapus">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                             height="24" viewBox="0 0 24 24" fill="none"
                                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -220,7 +239,15 @@
                             Batal
                         </button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="ti ti-check me-1"></i> Simpan
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-device-floppy">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+                                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M14 4l0 4l-6 0l0 -4" />
+                            </svg> Simpan
                         </button>
                     </div>
                 </form>

@@ -23,7 +23,16 @@
                             <div class="btn-list">
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#modal-create">
-                                    <i class="ti ti-user-plus me-1"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                        <path d="M16 19h6" />
+                                        <path d="M19 16v6" />
+                                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                    </svg>
                                     Add User
                                 </a>
 
@@ -35,14 +44,14 @@
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
                                             <a class="dropdown-item" href="#">
-                                                <i class="ti ti-upload me-1"></i> Import Users
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>  Import Users
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item"
                                                 href="{{ route('admin.export.users', request()->query()) }}"
                                                 target="_blank">
-                                                <i class="ti ti-download me-1"></i> Export Users
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>  Export Users
                                             </a>
                                         </li>
                                     </ul>
@@ -68,7 +77,7 @@
                         <div class="col-md-6">
                             <label for="search" class="form-label">Cari User</label>
                             <div class="input-group">
-                                <span class="input-group-text"><i class="ti ti-search"></i></span>
+                                <span class="input-group-text"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg></span>
                                 <input type="text" class="form-control" id="search" name="search"
                                     placeholder="Cari berdasarkan nama atau email..." value="{{ request('search') }}">
                             </div>
@@ -86,10 +95,10 @@
                         <div class="col-md-3">
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary flex-fill" onclick="applyFilters()">
-                                    <i class="ti ti-filter me-1"></i>Filter
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-filter-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6h16" /><path d="M6 12h12" /><path d="M9 18h6" /></svg>Filter
                                 </button>
                                 <a href="{{ route('admin.index') }}" class="btn btn-outline-secondary flex-fill">
-                                    <i class="ti ti-x me-1"></i>Reset
+                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></i>Reset
                                 </a>
                             </div>
                         </div>
@@ -197,15 +206,13 @@
                                                 {{ basename($certificate->file_path, 5) }}
                                             </a></td>
                                         <td class="sort-action">
-                                            <form
-                                                action="{{ route('admin.certificate.accept', $certificate->id) }}"
+                                            <form action="{{ route('admin.certificate.accept', $certificate->id) }}"
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-success">Terima</button>
                                             </form>
-                                            <form
-                                                action="{{ route('admin.certificate.reject', $certificate->id) }}"
+                                            <form action="{{ route('admin.certificate.reject', $certificate->id) }}"
                                                 method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PATCH')

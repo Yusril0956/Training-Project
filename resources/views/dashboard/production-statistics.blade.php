@@ -7,14 +7,17 @@
         .stat-card {
             transition: transform 0.2s;
         }
+
         .stat-card:hover {
             transform: translateY(-2px);
         }
+
         .production-chart {
             height: 300px;
             position: relative;
             z-index: 1;
         }
+
         .capacity-indicator {
             position: relative;
             height: 20px;
@@ -22,6 +25,7 @@
             border-radius: 10px;
             overflow: hidden;
         }
+
         .capacity-fill {
             height: 100%;
             border-radius: 10px;
@@ -92,7 +96,8 @@
                         <div class="col-md-8">
                             <div class="mb-3">
                                 <h5>Total Produksi: 70 unit (hingga 2024)</h5>
-                                <p class="text-muted">PTDI telah memproduksi dan mengirimkan sebanyak 70 unit pesawat CN-235 series ke berbagai pelanggan internasional hingga 2024.</p>
+                                <p class="text-muted">PTDI telah memproduksi dan mengirimkan sebanyak 70 unit pesawat CN-235
+                                    series ke berbagai pelanggan internasional hingga 2024.</p>
                             </div>
                             <div class="mb-3">
                                 <h6>Kapasitas Produksi Tahunan</h6>
@@ -102,10 +107,12 @@
                                         <div class="capacity-fill bg-success" style="width: 80%"></div>
                                     </div>
                                 </div>
-                                <small class="text-muted">Setelah revitalisasi dan reformasi prosedur kerja, kapasitas meningkat dari 2–3 menjadi 8 unit/tahun</small>
+                                <small class="text-muted">Setelah revitalisasi dan reformasi prosedur kerja, kapasitas
+                                    meningkat dari 2–3 menjadi 8 unit/tahun</small>
                             </div>
                             <div class="alert alert-info">
-                                <strong>Proyek Berjalan:</strong> CN-235-220 Military Transport untuk TNI AL (unit ke-7 sedang diselesaikan, target Februari 2025)
+                                <strong>Proyek Berjalan:</strong> CN-235-220 Military Transport untuk TNI AL (unit ke-7
+                                sedang diselesaikan, target Februari 2025)
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -125,7 +132,9 @@
                         <div class="col-md-8">
                             <div class="mb-3">
                                 <h5>Total Produksi: 123 unit (2014–sekarang)</h5>
-                                <p class="text-muted">Sejak 2014, PTDI adalah satu-satunya pabrikan NC212i. Hingga kini, telah diproduksi dan dikirim sebanyak 123 unit NC212 series ke pelanggan global, dari total populasi 606 unit di dunia.</p>
+                                <p class="text-muted">Sejak 2014, PTDI adalah satu-satunya pabrikan NC212i. Hingga kini,
+                                    telah diproduksi dan dikirim sebanyak 123 unit NC212 series ke pelanggan global, dari
+                                    total populasi 606 unit di dunia.</p>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-6">
@@ -360,7 +369,13 @@
 
                     <div class="text-center">
                         <a href="{{ route('training.index') }}" class="btn btn-primary">
-                            <i class="ti ti-school me-2"></i>Access Training Portal
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-school">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M22 9l-10 -4l-10 4l10 4l10 -4v6" />
+                                <path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" />
+                            </svg>Access Training Portal
                         </a>
                     </div>
                 </div>
@@ -376,17 +391,64 @@
                         <div class="col-md-6">
                             <h5 class="text-success">Peningkatan Kapasitas</h5>
                             <ul class="list-unstyled">
-                                <li class="mb-2"><i class="ti ti-check text-success me-2"></i>CN-235: Kapasitas meningkat 167% (2-3 → 8 unit/tahun)</li>
-                                <li class="mb-2"><i class="ti ti-check text-success me-2"></i>NC212i: Produksi konsisten sejak 2014</li>
-                                <li class="mb-2"><i class="ti ti-check text-success me-2"></i>Roket & Munisi: Kapasitas ribuan unit per tahun</li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M5 12l5 5l10 -10" />
+                                </svg>CN-235: Kapasitas
+                                meningkat 167% (2-3 → 8 unit/tahun)</li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M5 12l5 5l10 -10" />
+                                </svg>NC212i: Produksi konsisten
+                                sejak 2014</li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M5 12l5 5l10 -10" />
+                                </svg>Roket & Munisi: Kapasitas
+                                ribuan unit per tahun</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <h5 class="text-primary">Permintaan Global</h5>
                             <ul class="list-unstyled">
-                                <li class="mb-2"><i class="ti ti-trending-up text-primary me-2"></i>Permintaan tinggi untuk CN-235 series</li>
-                                <li class="mb-2"><i class="ti ti-globe text-primary me-2"></i>Ekspor ke Filipina senilai Rp 1,2 triliun</li>
-                                <li class="mb-2"><i class="ti ti-shield text-primary me-2"></i>KP III Tasikmalaya sebagai pusat produksi munisi</li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M3 17l6 -6l4 4l8 -8" />
+                                    <path d="M14 7l7 0l0 7" />
+                                </svg>Permintaan tinggi
+                                untuk CN-235 series</li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-globe">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M7 9a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                    <path d="M5.75 15a8.015 8.015 0 1 0 9.25 -13" />
+                                    <path d="M11 17v4" />
+                                    <path d="M7 21h8" />
+                                </svg>Ekspor ke Filipina senilai
+                                Rp 1,2 triliun</li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-shield">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path
+                                        d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+                                </svg>KP III Tasikmalaya
+                                sebagai pusat produksi munisi</li>
                             </ul>
                         </div>
                     </div>
@@ -396,7 +458,14 @@
             <!-- Back Button -->
             <div class="text-center mb-4">
                 <a href="{{ route('index') }}" class="btn btn-secondary">
-                    <i class="ti ti-arrow-left me-2"></i>Kembali ke Home
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M5 12l14 0" />
+                        <path d="M5 12l6 6" />
+                        <path d="M5 12l6 -6" />
+                    </svg>Kembali ke Home
                 </a>
             </div>
 
@@ -416,17 +485,28 @@
             chart: {
                 type: 'area',
                 height: 300,
-                toolbar: { show: false },
-                animations: { enabled: false }
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: false
+                }
             },
             colors: ['#0054a6'],
-            dataLabels: { enabled: false },
-            stroke: { curve: 'smooth', width: 2 },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
             xaxis: {
                 categories: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
             },
             yaxis: {
-                title: { text: 'Unit Produksi' }
+                title: {
+                    text: 'Unit Produksi'
+                }
             },
             fill: {
                 type: 'gradient',
@@ -450,18 +530,26 @@
             chart: {
                 type: 'bar',
                 height: 300,
-                toolbar: { show: false },
-                animations: { enabled: false }
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: false
+                }
             },
             colors: ['#28a745'],
             plotOptions: {
-                bar: { borderRadius: 4 }
+                bar: {
+                    borderRadius: 4
+                }
             },
             xaxis: {
                 categories: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
             },
             yaxis: {
-                title: { text: 'Unit Produksi' }
+                title: {
+                    text: 'Unit Produksi'
+                }
             }
         };
         const nc212Chart = new ApexCharts(document.querySelector("#nc212-chart"), nc212Options);
@@ -479,16 +567,24 @@
             chart: {
                 type: 'line',
                 height: 300,
-                toolbar: { show: false },
-                animations: { enabled: false }
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: false
+                }
             },
             colors: ['#007bff', '#ffc107'],
-            stroke: { width: 3 },
+            stroke: {
+                width: 3
+            },
             xaxis: {
                 categories: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
             },
             yaxis: {
-                title: { text: 'Unit Produksi' }
+                title: {
+                    text: 'Unit Produksi'
+                }
             },
             legend: {
                 position: 'top'
@@ -506,18 +602,26 @@
             chart: {
                 type: 'bar',
                 height: 300,
-                toolbar: { show: false },
-                animations: { enabled: false }
+                toolbar: {
+                    show: false
+                },
+                animations: {
+                    enabled: false
+                }
             },
             colors: ['#17a2b8'],
             plotOptions: {
-                bar: { borderRadius: 4 }
+                bar: {
+                    borderRadius: 4
+                }
             },
             xaxis: {
                 categories: ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
             },
             yaxis: {
-                title: { text: 'Number of Participants' }
+                title: {
+                    text: 'Number of Participants'
+                }
             }
         };
         const trainingChart = new ApexCharts(document.querySelector("#training-chart"), trainingOptions);

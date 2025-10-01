@@ -302,7 +302,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('history') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->is('history') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('history') }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -319,7 +319,7 @@
                             History
                         </span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item {{ request()->is('mysertifikat') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('mysertifikat') }}">
                         <span

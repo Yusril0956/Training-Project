@@ -87,8 +87,8 @@
                                     style="background-image: url({{ $user->avatar_url ? asset($user->avatar_url) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                             </div>
                             <div class="col-auto">
-                                <a href="#" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#modal-avatar">Ganti Profile</a>
+                                <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-avatar">Ganti
+                                    Profile</a>
                             </div>
                             <div class="col-auto">
                                 <!-- DELETE AVATAR FORM -->
@@ -104,7 +104,14 @@
                         <h3 class="card-title mt-4">Profile
                             <a href="#" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit-profile">
-                                <i class="ti ti-edit me-1"></i>Edit
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                    <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                    <path d="M16 5l3 3" />
+                                </svg> Edit
                             </a>
                         </h3>
                         <div class="row g-3">
@@ -134,14 +141,16 @@
                         </div>
 
                         <h3 class="card-title mt-4">Password</h3>
-                        <p class="card-subtitle">Anda dapat mengatur kata sandi permanen jika tidak ingin menggunakan kode login sementara.</p>
+                        <p class="card-subtitle">Anda dapat mengatur kata sandi permanen jika tidak ingin menggunakan kode
+                            login sementara.</p>
                         <div>
                             <a href="#" class="btn" data-bs-toggle="modal" data-bs-target="#modal-new-password">Set
                                 new password</a>
                         </div>
 
                         <h3 class="card-title mt-4">Public profile</h3>
-                        <p class="card-subtitle">Menjadikan profil Anda publik berarti siapa pun di jaringan Dashkit akan dapat menemukan Anda.</p>
+                        <p class="card-subtitle">Menjadikan profil Anda publik berarti siapa pun di jaringan Dashkit akan
+                            dapat menemukan Anda.</p>
                         <div>
                             <label class="form-check form-switch form-switch-lg">
                                 <input class="form-check-input" type="checkbox"
@@ -236,7 +245,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">NIK</label>
-                        <input type="text" class="form-control" name="nik" id="edit-profile-nik" maxlength="6" required>
+                        <input type="text" class="form-control" name="nik" id="edit-profile-nik" maxlength="6"
+                            required>
                     </div>
                 </div>
                 <div class="modal-footer">

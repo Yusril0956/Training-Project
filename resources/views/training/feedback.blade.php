@@ -62,21 +62,35 @@
                         <div class="mb-3">
                             <label for="nama_pengirim" class="form-label">Nama Lengkap</label>
                             <input type="text" class="form-control" id="nama_pengirim" name="nama_pengirim"
-                                   value="{{ Auth::user()->name }}" required>
+                                value="{{ Auth::user()->name }}" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="pesan" class="form-label">Pesan Feedback</label>
                             <textarea class="form-control" id="pesan" name="pesan" rows="5"
-                                      placeholder="Tulis feedback Anda tentang pelatihan ini..." required></textarea>
+                                placeholder="Tulis feedback Anda tentang pelatihan ini..." required></textarea>
                         </div>
 
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">
-                                <i class="ti ti-send"></i> Kirim Feedback
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-send">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10 14l11 -11" />
+                                    <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5" />
+                                </svg> Kirim Feedback
                             </button>
                             <a href="{{ route('training.detail', $training->id) }}" class="btn btn-secondary">
-                                <i class="ti ti-arrow-left"></i> Kembali
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M5 12l14 0" />
+                                    <path d="M5 12l6 6" />
+                                    <path d="M5 12l6 -6" />
+                                </svg> Kembali
                             </a>
                         </div>
                     </form>

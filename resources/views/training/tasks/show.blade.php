@@ -19,7 +19,15 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <div class="d-flex mb-3 align-items-center">
-                        <i class="ti ti-clipboard-task fs-2 text-primary me-3"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-text">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" />
+                            <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z" />
+                            <path d="M9 12h6" />
+                            <path d="M9 16h6" />
+                        </svg>
                         <div class="flex-fill">
                             <h2 class="card-title mb-1">{{ $task->title }}</h2>
                             <small class="text-muted">
@@ -43,7 +51,13 @@
                         <h5>Lampiran</h5>
                         <a href="{{ asset('storage/' . $task->attachment_path) }}" target="_blank"
                             class="btn btn-sm btn-outline-secondary mb-4">
-                            <i class="ti ti-paperclip me-1"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" />
+                            </svg>
                             {{ basename($task->attachment_path) }}
                         </a>
                         {{-- Jika lampiran berupa gambar, tampilkan pratinjau --}}
@@ -140,29 +154,69 @@
 
                             @if ($userSubmission && $userSubmission->file_path)
                                 <p class="text-success">
-                                    <i class="ti ti-check me-1"></i> Kamu sudah mengumpulkan tugas ini.
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-check">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M5 12l5 5l10 -10" />
+                                    </svg> Kamu sudah mengumpulkan tugas ini.
                                 </p>
                                 <a href="{{ asset('storage/' . $userSubmission->file_path) }}"
                                     class="btn btn-sm btn-outline-secondary mb-3" target="_blank">
-                                    <i class="ti ti-paperclip me-1"></i> Lihat Kiriman
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" />
+                                    </svg> Lihat Kiriman
                                 </a>
 
                                 @if ($task->deadline >= now() && !$userSubmission->review)
                                     <button class="btn btn-sm btn-info mb-3" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#editForm-{{ $task->id }}" aria-expanded="false"
                                         aria-controls="editForm-{{ $task->id }}">
-                                        <i class="ti ti-edit"></i> Edit Kiriman
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                            <path
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                            <path d="M16 5l3 3" />
+                                        </svg> Edit Kiriman
                                     </button>
                                 @elseif ($userSubmission->review)
                                     <button class="btn btn-sm btn-info mb-3" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#reviewForm-{{ $task->id }}" aria-expanded="false"
                                         aria-controls="reviewForm-{{ $task->id }}">
-                                        <i class="ti ti-edit"></i> Lihat Penilaian
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-edit">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                            <path
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                            <path d="M16 5l3 3" />
+                                        </svg> Lihat Penilaian
                                     </button>
                                 @else
                                     @if ($task->deadline < now())
                                         <div class="alert alert-warning mb-3">
-                                            <i class="ti ti-alert-triangle me-1"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="icon icon-tabler icons-tabler-outline icon-tabler-alert-triangle">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M12 9v4" />
+                                                <path
+                                                    d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" />
+                                                <path d="M12 16h.01" />
+                                            </svg>
                                             Tidak dapat mengedit tugas karena deadline telah berlalu.
                                         </div>
                                     @endif
@@ -193,7 +247,14 @@
                                                     @enderror
                                                 </div>
                                                 <button type="submit" class="btn btn-info">
-                                                    <i class="ti ti-refresh"></i> Update Kiriman
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-refresh">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+                                                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                                                    </svg> Update Kiriman
                                                 </button>
                                             </div>
                                         </div>
@@ -238,7 +299,15 @@
                                     @enderror
                                 </div>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="ti ti-upload me-1"></i> Kirim Tugas
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-upload">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                                        <path d="M7 9l5 -5l5 5" />
+                                        <path d="M12 4l0 12" />
+                                    </svg> Kirim Tugas
                                 </button>
                             @endif
                         </div>
@@ -248,7 +317,14 @@
 
             {{-- Back Button --}}
             <a href="{{ route('training.tasks', $training->id) }}" class="btn btn-secondary">
-                <i class="ti ti-arrow-left me-1"></i> Kembali ke Daftar Tugas
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-left">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M5 12l14 0" />
+                    <path d="M5 12l6 6" />
+                    <path d="M5 12l6 -6" />
+                </svg> Kembali ke Daftar Tugas
             </a>
 
         </div>

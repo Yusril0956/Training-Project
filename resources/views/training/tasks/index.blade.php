@@ -31,7 +31,13 @@
                     @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                         <a href="{{ route('admin.tasks.create', ['trainingId' => $training->id]) }}"
                             class="btn btn-primary">
-                            <i class="ti ti-plus me-1"></i> Add Task
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 5l0 14" />
+                                <path d="M5 12l14 0" />
+                            </svg> Add Task
                         </a>
                     @endif
                 </div>
@@ -63,7 +69,13 @@
                                         {{ $task->deadline->format('d M Y H:i') }}
                                     </span>
                                 </div>
-                                <i class="ti ti-chevron-down ms-3 accordion-chevron"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M6 9l6 6l6 -6" />
+                                </svg>
                             </button>
                         </div>
                         <div id="collapse-{{ $task->id }}" class="accordion-collapse collapse"
@@ -74,14 +86,29 @@
                                 @if ($task->attachment_path)
                                     <a href="{{ asset('storage/' . $task->attachment_path) }}" target="_blank"
                                         class="btn btn-sm btn-outline-secondary mb-3">
-                                        <i class="ti ti-paperclip"></i> Lampiran
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-paperclip">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5" />
+                                        </svg> Lampiran
                                     </a>
                                 @endif
 
                                 <div class="text-end">
                                     <a href="{{ route('training.task.detail', [$training->id, $task->id]) }}"
                                         class="btn btn-sm btn-info">
-                                        <i class="ti ti-eye"></i> Detail
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                            <path
+                                                d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                        </svg> Detail
                                     </a>
                                 </div>
                             </div>
