@@ -39,7 +39,7 @@ class ExternalCertificateController extends Controller
 
         $userId = $request->user_id ?? Auth::id();
         $status = $request->user_id ? 'approved' : 'pending';
-
+        
         ExternalCertificate::create([
             'user_id'          => $userId,
             'participant_name' => $request->participant_name,

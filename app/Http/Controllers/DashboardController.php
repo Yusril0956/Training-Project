@@ -14,6 +14,7 @@ use App\Models\ExternalCertificate;
 
 class DashboardController extends Controller
 {
+
     public function index()
     {
         return view('dashboard.index');
@@ -33,7 +34,7 @@ class DashboardController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
@@ -48,7 +49,7 @@ class DashboardController extends Controller
 
         $certificates = ExternalCertificate::paginate(10);
 
-        $assignments = Assignment::all(); // ✅ ambil semua tugas
+        $assignments = Assignment::all();
 
         // data untuk modal
         $modalId = 'deleteUser';
@@ -69,26 +70,37 @@ class DashboardController extends Controller
         ));
     }
 
-    public function acceptCertificate( $externalCertificate)
+    /**
+     * Accept an external certificate and notify the user.
+     */
+    public function acceptCertificate($externalCertificate)
     {
-        $certificate = ExternalCertificate::findOrFail($externalCertificate);
-        $certificate->update(['status' => 'approved']);
+        try {
+            $certificate = ExternalCertificate::findOrFail($externalCertificate);
+            $certificate->update(['status' => 'approved']);
 
-        $user = User::find($certificate->user_id);
-        $user->notify(new \App\Notifications\acceptCertificateNotification($certificate));
+            $user = User::find($certificate->user_id);
+            $user->notify(new \App\Notifications\acceptCertificateNotification($certificate));
 
-        return redirect()->back()->with('success', 'sertifikat berhasil diterima');
+            return redirect()->back()->with('success', 'Sertifikat berhasil diterima');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menerima sertifikat: ' . $e->getMessage());
+        }
     }
 
-    public function rejectCertificate( $externalCertificate)
+    public function rejectCertificate($externalCertificate)
     {
-        $certificate = ExternalCertificate::findOrFail($externalCertificate);
-        $certificate->delete();
-
-        $user = User::find($certificate->user_id);
-        $user->notify(new \App\Notifications\rejectCertificateNotification($certificate));
-
-        return redirect()->back()->with('success', 'sertifikat berhasil ditolak');
+        try{
+            $certificate = ExternalCertificate::findOrFail($externalCertificate);
+            $certificate->delete();
+    
+            $user = User::find($certificate->user_id);
+            $user->notify(new \App\Notifications\rejectCertificateNotification($certificate));
+    
+            return redirect()->back()->with('success', 'sertifikat berhasil ditolak');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menolak sertifikat: ' . $e->getMessage());
+        }
     }
 
     public function notification()
@@ -259,7 +271,7 @@ class DashboardController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
@@ -282,7 +294,7 @@ class DashboardController extends Controller
             'Expires' => '0'
         ];
 
-        $callback = function() use ($users) {
+        $callback = function () use ($users) {
             $file = fopen('php://output', 'w');
 
             // CSV headers
