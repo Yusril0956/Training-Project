@@ -76,7 +76,7 @@
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
                         <h3 class="card-title mb-3">Daftar Pengumpulan</h3>
-                        @if ($task->submissions->isEmpty())
+                        @if ($submissions->isEmpty())
                             <p class="text-muted">Belum ada peserta yang mengumpulkan.</p>
                         @else
                             <table class="table table-vcenter">
@@ -91,7 +91,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($task->submissions as $submission)
+                                    @foreach ($submissions as $submission)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $submission->user->name }}</td>
@@ -143,14 +143,14 @@
             @else
                 {{-- Submission Form (Peserta) --}}
                 <div class="card shadow-sm mb-4">
-                    <form action="{{ route('training.task.edit', [$training->id, $task->id]) }}" method="POST"
+                    @php
+                        $userSubmission = $submissions->where('user_id', auth()->id())->first();
+                    @endphp
+                    <form action="{{ $userSubmission ? route('training.task.edit', [$training->id, $task->id]) : route('training.task.submit', [$training->id, $task->id]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <h3 class="card-title mb-3">Kumpulkan Tugas</h3>
-                            @php
-                                $userSubmission = $task->submissions->where('user_id', auth()->id())->first();
-                            @endphp
 
                             @if ($userSubmission && $userSubmission->file_path)
                                 <p class="text-success">
@@ -223,7 +223,7 @@
                                 @endif
 
                                 <div class="collapse" id="editForm-{{ $task->id }}">
-                                    <form action="{{ route('training.task.edit', [$training->name, $task->id]) }}"
+                                    <form action="{{ route('training.task.edit', [$training->id, $task->id]) }}"
                                         method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="card border border-info mb-3">
@@ -261,6 +261,8 @@
                                     </form>
                                 </div>
 
+
+                                @if ($userSubmission->review)
                                 <div class="collapse" id="reviewForm-{{ $task->id }}">
                                     <div class="card border border-info mb-3">
                                         <div class="card-body">
@@ -274,6 +276,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             @else
                                 {{-- Form Kirim Tugas Baru --}}
                                 <div class="mb-3">

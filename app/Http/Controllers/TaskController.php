@@ -75,7 +75,10 @@ class TaskController extends Controller
         $training = Training::findOrFail($trainingId);
         $task = Tasks::with(['submissions.user'])->where('training_id', $trainingId)->findOrFail($taskId);
 
-        return view('training.tasks.show', compact('task', 'training'));
+        // Load submissions for the task
+        $submissions = $task->submissions()->with('user', 'review')->get();
+
+        return view('training.tasks.show', compact('task', 'training', 'submissions'));
     }
 
     /**
@@ -90,7 +93,7 @@ class TaskController extends Controller
     /**
      * Submit tugas oleh user
      */
-    public function submit(Request $request, $trainingName, $taskId)
+    public function submit(Request $request, $trainingId, $taskId)
     {
         $request->validate([
             'submission_file' => 'required|file|max:5120',
