@@ -2,13 +2,25 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2>Absen Peserta Training: {{ $training->name }}</h2>
+    <!-- Menampilkan Nama Pengguna yang Login di Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Absen Peserta Training: {{ $training->name }}</h2>
+        
+        @if (Auth::check()) <!-- Cek jika pengguna sudah login -->
+            <div class="user-info">
+            </div>
+        @else
+            <div class="user-info">
+                <span class="font-weight-bold">Hello, Guest</span>
+            </div>
+        @endif
+    </div>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <!-- Summary Statistics -->
+    <!-- Summary Statistics (tidak ada perubahan) -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card border-primary">
@@ -70,13 +82,10 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <span class=" style="background-image: url({{ asset($member->user->avatar_url ?? 'images/default_avatar.png') }})"></span>
                                     <div>
                                         <strong>{{ $member->user->name }}</strong>
                                         @if($member->status == 'accept')
-                                            <span class="badge bg-primary ms-2">Aktif</span>
                                         @else
-                                            <span class="badge bg-light text-primary border border-primary ms-2">Pending</span>
                                         @endif
                                     </div>
                                 </div>

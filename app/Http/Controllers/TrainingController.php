@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-
 use Illuminate\Http\Request;
 use App\Models\Training;
 use App\Models\JenisTraining;
@@ -62,7 +61,27 @@ class TrainingController extends Controller
         return view('training.absen', compact('training', 'members'));
     }
 
+    public function markAttendance($memberId)
+    {
+        $member = TrainingMember::findOrFail($memberId);
 
+        // Check if attendance already exists
+        if ($member->attendance()->count() > 0) {
+            // Update attended_at to current time to reflect actual click time
+            $attendance = $member->attendance()->latest()->first();
+            $attendance->attended_at = now()->setTimezone('Asia/Jakarta');
+            $attendance->save();
+
+            return redirect()->back()->with('success', 'Waktu absen berhasil diperbarui.');
+        }
+
+        $member->attendance()->create([
+            'attended_at' => now()->setTimezone('Asia/Jakarta'),
+            'status' => 'present',
+        ]);
+
+        return redirect()->back()->with('success', 'Absen berhasil dicatat.');
+    }
 
     public function generalKnowledge(Request $request)
     {
@@ -268,8 +287,11 @@ class TrainingController extends Controller
 
         $training = Training::findOrFail($trainingId);
 
-        $user = User::find(Auth::id());
-        $user->notify(new \App\Notifications\TrainingRejectedNotification($training));
+        Notification::create([
+            'user_id' => Auth::id(),
+            'title' => 'Kick Training' . $training->name,
+            'message' => 'Anda telah dikeluarkan dari training' . $training->name,
+        ]);
 
         return redirect()->back()->with('success', 'Peserta telah dihapus.');
     }
@@ -420,8 +442,11 @@ class TrainingController extends Controller
             $message .= " Pesan: " . $request->message;
         }
 
-        $user = User::find(Auth::id());
-        $user->notify(new \App\Notifications\TrainingInvitationNotification($training));
+        Notification::create([
+            'user_id' => Auth::id(),
+            'title' => 'Anda telah ditambahkan ke ' . $training->name,
+            'message' => 'Anda telah ditambahkan ke ' . $training->name . 'selamat datang',
+        ]);
 
         return redirect()->route('training.members', $trainingId)->with('success', $message);
     }
@@ -495,8 +520,11 @@ class TrainingController extends Controller
         $member->update(['status' => 'accept']);
 
         // Create notification
-        $user = User::find($member->user_id);
-        $user->notify(new \App\Notifications\TrainingAcceptedNotification($member->trainingDetail->training));
+        Notification::create([
+            'user_id' => $member->user_id,
+            'title' => 'Pendaftaran Training Diterima',
+            'message' => 'Selamat! Pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah diterima.',
+        ]);
 
         return redirect()->back()->with('success', 'Peserta telah diterima.');
     }
@@ -507,8 +535,11 @@ class TrainingController extends Controller
         $member->delete();
 
         // Create notification
-        $user = User::find($member->user_id);
-        $user->notify(new \App\Notifications\TrainingRejectedNotification($member->trainingDetail->training));
+        Notification::create([
+            'user_id' => $member->user_id,
+            'title' => 'Pendaftaran Training Ditolak',
+            'message' => 'Maaf, pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah ditolak.',
+        ]);
 
         return redirect()->back()->with('success', 'Peserta telah ditolak.');
     }
@@ -615,8 +646,11 @@ class TrainingController extends Controller
 
 
         // Create notification
-        $user = User::find($member->user_id);
-        $user->notify(new \App\Notifications\TrainingGraduatedNotification($training));
+        Notification::create([
+            'user_id' => $member->user_id,
+            'title' => 'Selamat! Anda telah lulus dari Training',
+            'message' => 'Selamat! Anda telah lulus dari training "' . $training->name . '" dan menerima sertifikat.',
+        ]);
 
         return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
     }
@@ -820,11 +854,9 @@ class TrainingController extends Controller
                     $py = $startY + $y;
 
                     if ($px >= 0 && $px < count($pattern[0]) && $py >= 0 && $py < count($pattern)) {
-                        if (
-                            $x == 0 || $x == 6 || $y == 0 || $y == 6 ||
+                        if ($x == 0 || $x == 6 || $y == 0 || $y == 6 ||
                             ($x == 1 || $x == 5) && ($y == 1 || $y == 5) ||
-                            ($x == 2 || $x == 4) && ($y == 2 || $y == 4)
-                        ) {
+                            ($x == 2 || $x == 4) && ($y == 2 || $y == 4)) {
                             $pattern[$py][$px] = 1;
                         }
                     }
@@ -856,8 +888,7 @@ class TrainingController extends Controller
     {
         // Skip if position conflicts with finder patterns
         if (($x < 7 && $y < 7) || ($x > count($pattern[0]) - 8 && $y < 7) ||
-            ($x < 7 && $y > count($pattern) - 8)
-        ) {
+            ($x < 7 && $y > count($pattern) - 8)) {
             return;
         }
 
@@ -867,10 +898,8 @@ class TrainingController extends Controller
                 $px = $x + $dx;
                 $py = $y + $dy;
                 if ($px >= 0 && $px < count($pattern[0]) && $py >= 0 && $py < count($pattern)) {
-                    if (
-                        abs($dx) == 2 || abs($dy) == 2 ||
-                        ($dx == 0 && $dy == 0)
-                    ) {
+                    if (abs($dx) == 2 || abs($dy) == 2 ||
+                        ($dx == 0 && $dy == 0)) {
                         $pattern[$py][$px] = 1;
                     }
                 }
@@ -952,60 +981,9 @@ class TrainingController extends Controller
         // Version information pattern (simplified)
         // Real QR codes have 18 bits of version information with BCH error correction
         return [
-            1,
-            1,
-            1,
-            1,
-            1,
-            1,
-            0,
-            1,
-            0,
-            0,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            1,
-            0,
-            1,
-            0,
-            1,
-            1,
-            1,
-            0,
-            1,
-            0,
-            1,
-            1,
-            0,
-            1,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            0,
-            1,
-            0,
-            0,
-            1,
-            1,
-            1,
-            1,
-            0,
-            0,
-            1,
-            0,
-            1,
-            1,
-            0,
-            1,
-            0,
-            0
+            1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0,
+            1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1,
+            0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0
         ];
     }
 
@@ -1061,14 +1039,8 @@ class TrainingController extends Controller
     {
         // Approximate data capacity for different QR code sizes
         $capacities = [
-            21 => 152,
-            25 => 272,
-            29 => 440,
-            33 => 640,
-            37 => 864,
-            41 => 1088,
-            45 => 1248,
-            49 => 1456
+            21 => 152, 25 => 272, 29 => 440, 33 => 640,
+            37 => 864, 41 => 1088, 45 => 1248, 49 => 1456
         ];
         return $capacities[$size] ?? 200;
     }
@@ -1077,15 +1049,13 @@ class TrainingController extends Controller
     {
         // Check if position is reserved for finder patterns, timing, alignment, etc.
         if (($x < 9 && $y < 9) || ($x > $size - 10 && $y < 9) ||
-            ($x < 9 && $y > $size - 10) || $y == 6 || $x == 6
-        ) {
+            ($x < 9 && $y > $size - 10) || $y == 6 || $x == 6) {
             return true;
         }
 
         // Skip format information areas
         if (($y == 8 && $x < 9) || ($x == 8 && $y < 9) ||
-            ($y == 8 && $x > $size - 9) || ($x == 8 && $y > $size - 9)
-        ) {
+            ($y == 8 && $x > $size - 9) || ($x == 8 && $y > $size - 9)) {
             return true;
         }
 
@@ -1283,7 +1253,7 @@ class TrainingController extends Controller
         return [
             'user_id' => Auth::id(),
             'training_id' => request()->route('id'),
-            'member_id' => Auth::user()->trainingMembers()->whereHas('trainingDetail', function ($q) {
+            'member_id' => Auth::user()->trainingMembers()->whereHas('trainingDetail', function($q) {
                 $q->where('training_id', request()->route('id'));
             })->first()->id,
             'timestamp' => now()->timestamp,
@@ -1297,11 +1267,11 @@ class TrainingController extends Controller
         $expectedSignature = hash('sha256', $userId . $trainingId . $qrData['timestamp']);
 
         return $qrData['user_id'] == $userId &&
-            $qrData['training_id'] == $trainingId &&
-            $qrData['member_id'] == $memberId &&
-            isset($qrData['signature']) &&
-            $qrData['signature'] === $expectedSignature &&
-            (now()->timestamp - $qrData['timestamp']) < 3600; // Valid for 1 hour
+               $qrData['training_id'] == $trainingId &&
+               $qrData['member_id'] == $memberId &&
+               isset($qrData['signature']) &&
+               $qrData['signature'] === $expectedSignature &&
+               (now()->timestamp - $qrData['timestamp']) < 3600; // Valid for 1 hour
     }
 
     public function downloadQR($id)
