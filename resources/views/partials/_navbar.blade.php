@@ -91,7 +91,7 @@
                                 style="background-image: url({{ Auth::user()->avatar_url ? asset(Auth::user()->avatar_url) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                            <a href="#" class="dropdown-item">Status</a>
+                            
                             <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                             <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
                             <div class="dropdown-divider"></div>
