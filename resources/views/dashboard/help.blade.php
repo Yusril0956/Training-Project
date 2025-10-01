@@ -32,6 +32,107 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
+                        <h3 class="card-title">Tutotial Penggunaan training</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mendaftar akun baru?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara login ke sistem?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara reset password?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara memperbarui data profil?</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion untuk FAQ -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tutotial Penggunaan training</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeadingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="true" aria-controls="faqCollapseOne">
+                                        Bagaimana cara masuk ke halaman training?
+                                    </button>
+                                </h2>
+                                <div id="faqCollapseOne" class="accordion-collapse collapse show" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Klik tombol "Mulai Training" pada halaman home training atau "Training" di bagian navbar untuk ke halaman Training
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeadingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                                        Bagaimana cara mendaftar training?
+                                    </button>
+                                </h2>
+                                <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Klik tombol "Daftar" pada training yang di inginkan di halaman training, lalu akan ada tulisan "Pending" berarti anda sudah mendaftar dan tunggu sampai admin ACC akun anda untuk mengikuti training.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeadingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                                        Cara absen pada training online?
+                                    </button>
+                                </h2>
+                                <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Belum ada atau hilang
+                                        <div class="gif-placeholder rounded-2xl w-64 h-45 mx-auto mb-8 flex items-center justify-center">
+                                            <div class="text-center">
+                                                <img src="{{ asset('404.gif') }}" width="350" height="220" alt="404">
+                                            </div>
+          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeadingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                                        Bagaimana cara mengerjakan tugas?
+                                    </button>
+                                </h2>
+                                <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Masuk ke halaman training yang ingin dikerjakan tugasnya, lalu klik tombol "Tugas & Evaluasi" di bagian navigasi training, lalu kerjakan tugas yang diberikan oleh instruktur. 
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeadingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                                        Bagaimana cara mengirim tugas?
+                                    </button>
+                                </h2>
+                                <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Pilih tugas pelatihan yang di instruksikan oleh instruktur, lalu klik tombol "Detail" di situ ada kumpulkan tugas lalu pilih file tugas yang akan di kumpulkan dan isi Pesan (Opsiional) lalu klik tombol "Kirim Tugas"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row row-cards">
+            <!-- Basic FAQs -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
                         <h3 class="card-title">FAQ Dasar</h3>
                     </div>
                     <div class="card-body">
