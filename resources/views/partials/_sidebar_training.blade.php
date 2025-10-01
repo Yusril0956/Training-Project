@@ -7,7 +7,7 @@
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href="{{ route('index') }}">
                 <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">PT.Dirgantara
+                    class="navbar-brand-image">     PT.Dirgantara
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
