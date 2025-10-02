@@ -14,6 +14,11 @@ use App\Models\Notification;
 use App\Models\Certificate;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\TrainingAcceptedNotification;
+use App\Notifications\TrainingRejectedNotification;
+use App\Notifications\TrainingInvitationNotification;
+use App\Notifications\TrainingGraduatedNotification;
+use App\Notifications\TrainingKickedNotification;
 
 class TrainingController extends Controller
 {
@@ -279,15 +284,11 @@ class TrainingController extends Controller
     public function deleteMember($memberId, $trainingId)
     {
         $member = TrainingMember::findOrFail($memberId);
+        $training = Training::findOrFail($trainingId);
+        $user = $member->user;
         $member->delete();
 
-        $training = Training::findOrFail($trainingId);
-
-        Notification::create([
-            'user_id' => Auth::id(),
-            'title' => 'Kick Training ' . $training->name,
-            'message' => 'Anda telah dikeluarkan dari training ' . $training->name,
-        ]);
+        $user->notify(new TrainingKickedNotification($training));
 
         return redirect()->back()->with('success', 'Peserta telah dihapus.');
     }
@@ -318,7 +319,9 @@ class TrainingController extends Controller
                 $q->where('training_id', $id);
             })->where('status', 'pending')->get();
 
-            $graduateMember = TrainingMember::with('user')->whereHas('trainingDetail', function ($q) use ($id) {
+            $graduateMember = TrainingMember::with(['user.certificates' => function ($q) use ($id) {
+                $q->where('training_id', $id);
+            }])->whereHas('trainingDetail', function ($q) use ($id) {
                 $q->where('training_id', $id);
             })->where('status', 'graduate')->get();
 
@@ -422,6 +425,9 @@ class TrainingController extends Controller
                 'status' => 'present',
             ]);
 
+            // Notify the added user
+            $newMember->user->notify(new TrainingInvitationNotification($training));
+
             $addedCount++;
         }
 
@@ -429,12 +435,6 @@ class TrainingController extends Controller
         if ($addedCount > 0) $message .= "$addedCount peserta berhasil ditambahkan.";
         if ($skippedCount > 0) $message .= " $skippedCount peserta sudah terdaftar (diabaikan).";
         if ($request->message) $message .= " Pesan: " . $request->message;
-
-        Notification::create([
-            'user_id' => Auth::id(),
-            'title' => 'Anda telah ditambahkan ke ' . $training->name,
-            'message' => 'Anda telah ditambahkan ke ' . $training->name . ' selamat datang',
-        ]);
 
         return redirect()->route('training.members', $trainingId)->with('success', $message);
     }
@@ -513,11 +513,7 @@ class TrainingController extends Controller
         $member = TrainingMember::findOrFail($memberId);
         $member->update(['status' => 'accept']);
 
-        Notification::create([
-            'user_id' => $member->user_id,
-            'title' => 'Pendaftaran Training Diterima',
-            'message' => 'Selamat! Pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah diterima.',
-        ]);
+        $member->user->notify(new TrainingAcceptedNotification($member->trainingDetail->training));
 
         return redirect()->back()->with('success', 'Peserta telah diterima.');
     }
@@ -528,13 +524,11 @@ class TrainingController extends Controller
     public function rejectMember($trainingId, $memberId)
     {
         $member = TrainingMember::findOrFail($memberId);
+        $training = $member->trainingDetail->training;
+        $user = $member->user;
         $member->delete();
 
-        Notification::create([
-            'user_id' => $member->user_id,
-            'title' => 'Pendaftaran Training Ditolak',
-            'message' => 'Maaf, pendaftaran Anda untuk training "' . $member->trainingDetail->training->name . '" telah ditolak.',
-        ]);
+        $user->notify(new TrainingRejectedNotification($training));
 
         return redirect()->back()->with('success', 'Peserta telah ditolak.');
     }
@@ -630,11 +624,7 @@ class TrainingController extends Controller
             'file_path' => $filename,
         ]);
 
-        Notification::create([
-            'user_id' => $member->user_id,
-            'title' => 'Selamat! Anda telah lulus dari Training',
-            'message' => 'Selamat! Anda telah lulus dari training "' . $training->name . '" dan menerima sertifikat.',
-        ]);
+        $member->user->notify(new TrainingGraduatedNotification($training));
 
         return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
     }
