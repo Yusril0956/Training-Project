@@ -27,176 +27,176 @@ class TrainingSeeder extends Seeder
         }
 
         Training::updateOrCreate([
-            'name' => 'Pelatihan Sistem Avionik',
-            'description' => 'Pelatihan mengenai sistem avionik terbaru untuk teknisi.',
+            'name' => 'Software Requirements Analyst & Design (SA)',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Pelatihan Keselamatan Kerja',
-            'description' => 'Pelatihan keselamatan kerja untuk karyawan lapangan.',
+            'name' => 'Mastering Linux & Shell Programming',
+            'description' => 'entah deskripsi nya apa.',
+            'jenis_training_id' => 1,
+            'status' => 'open',
+        ]);
+
+        Training::updateOrCreate([
+            'name' => 'CompTIA Network+',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Pelatihan Manajemen Proyek',
-            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'name' => 'Certified Ethical Hacker (CEH)',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 3,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Pelatihan Kepatuhan Regulasi',
-            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'name' => 'Computer Hacking Forensics Investigator (CHFI)',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 3,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Pelatihan pengelolaan Risiko',
-            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'name' => 'Secure Programming - Open Worldwide Security Project (OWASP)',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 3,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Pelatihan Kepatuhan Regulasi',
-            'description' => 'Pelatihan mengenai kepatuhan terhadap regulasi pemerintah terbaru.',
+            'name' => 'Privacy and Data Protection Foundation',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
             'status' => 'close',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Risk Management Leadership',
-            'description' => 'Pelatihan kepemimpinan dalam manajemen risiko untuk meningkatkan kemampuan identifikasi dan mitigasi risiko operasional.',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Human Factors',
-            'description' => 'Pelatihan mengenai faktor manusia dalam operasi penerbangan untuk meningkatkan keselamatan dan efisiensi.',
+            'name' => 'Image & Video Forensic',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Software Engineering',
-            'description' => 'Pelatihan rekayasa perangkat lunak untuk pengembangan sistem informasi dan aplikasi penerbangan.',
+            'name' => 'MacOS Forensic',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Program S2 (MBA/TI)',
-            'description' => 'Program magister bisnis dan teknologi informasi untuk pengembangan karir manajerial dan teknis.',
+            'name' => 'Digital Leadership',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Basic Aircraft',
-            'description' => 'Pelatihan dasar mengenai struktur dan sistem pesawat terbang untuk teknisi pemeliharaan.',
+            'name' => 'Leadership for the Digital Age',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Teknik Presentasi & Dokumentasi',
-            'description' => 'Pelatihan teknik presentasi efektif dan pembuatan dokumentasi teknis yang profesional.',
+            'name' => 'Certified Cloud Security Professional (CCSP)',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Human Resources BP',
-            'description' => 'Pelatihan manajemen sumber daya manusia untuk best practices dalam organisasi penerbangan.',
-            'jenis_training_id' => 1,
-            'status' => 'open',
-        ]);
-
-        Training::updateOrCreate([
-            'name' => 'Character Building',
-            'description' => 'Pelatihan pembentukan karakter untuk meningkatkan etika kerja dan integritas profesional.',
+            'name' => 'Software Requirements Analysis',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Analisa & Design System',
-            'description' => 'Pelatihan analisis dan perancangan sistem untuk pengembangan solusi teknologi informasi.',
+            'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Design Database',
-            'description' => 'Pelatihan perancangan database untuk sistem informasi yang efisien dan terstruktur.',
+            'name' => 'SAP S/4HANA Overview, Business Process Mapping, SAP Enterprise Structure',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'English - Conversation',
-            'description' => 'Pelatihan percakapan bahasa Inggris untuk komunikasi profesional dalam industri penerbangan.',
+            'name' => 'SAP Module-Specific Training ',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'English - TOEFL Preparation',
-            'description' => 'Persiapan ujian TOEFL untuk meningkatkan kemampuan bahasa Inggris akademik dan profesional.',
+            'name' => 'Requirement Management, Business Process Documentation, Change & Release Management',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Safety Management System',
-            'description' => 'Pelatihan sistem manajemen keselamatan untuk implementasi praktik keselamatan di lingkungan kerja.',
+            'name' => 'pelatihan sertifikasi ABAP',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Training for Trainer',
-            'description' => 'Pelatihan untuk menjadi instruktur yang efektif dalam penyampaian materi pelatihan.',
+            'name' => 'Front-End Fundamental, Front-End Framework & Library',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
             'name' => 'Database (PL/SQL, ORACLE/POSTGRES, DLL)',
-            'description' => 'Pelatihan database menggunakan PL/SQL, Oracle, PostgreSQL dan teknologi terkait lainnya.',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Lisensi Pilot Komersial',
-            'description' => 'Pelatihan untuk mendapatkan lisensi pilot komersial.',
+            'name' => 'Back-End Fundamental (Node.js, Python, Java, PHP)',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Lisensi Maintenance Pesawat',
-            'description' => 'Pelatihan untuk lisensi maintenance pesawat terbang.',
+            'name' => 'Pengembangan Full-Stack (MERN Stack, MEAN Stack)',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
             'status' => 'open',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Lisensi Air Traffic Controller',
-            'description' => 'Pelatihan untuk lisensi pengendali lalu lintas udara.',
+            'name' => ' DevOps & Cloud',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
             'status' => 'close',
         ]);
 
         Training::updateOrCreate([
-            'name' => 'Lisensi Dispatcher Udara',
-            'description' => 'Pelatihan untuk lisensi dispatcher operasi penerbangan.',
+            'name' => 'Fundamental QA dan Pengujian Manual',
+            'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
             'status' => 'close',
         ]);
