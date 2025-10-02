@@ -48,7 +48,7 @@ class isMember
         })->where('user_id', $user->id)->exists();
 
         if (!$isMember) {
-            return redirect()->route('training.register', $trainingId);
+            return redirect()->back()->with('error', 'Anda bukan anggota dari training ini.');
         }
 
         return $next($request);

@@ -252,18 +252,23 @@ class TrainingController extends Controller
             'instructor' => 'nullable|string|max:255',
         ]);
 
-        $training = Training::findOrFail($id);
+        try {
+            $training = Training::findOrFail($id);
 
-        $training->schedules()->create([
-            'title' => $request->title,
-            'date' => $request->date,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
-            'location' => $request->location,
-            'instructor' => $request->instructor,
-        ]);
+            $training->schedules()->create([
+                'title' => $request->title,
+                'date' => $request->date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'location' => $request->location,
+                'instructor' => $request->instructor,
+            ]);
 
-        return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan!');
+            return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            \Log::error('Error storing schedule: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan jadwal: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -271,11 +276,16 @@ class TrainingController extends Controller
      */
     public function deleteSchedule($trainingId, $scheduleId)
     {
-        $training = Training::findOrFail($trainingId);
-        $schedule = $training->schedules()->findOrFail($scheduleId);
-        $schedule->delete();
-
-        return redirect()->back()->with('success', 'Jadwal berhasil dihapus!');
+        try {
+            $training = Training::findOrFail($trainingId);
+            $schedule = $training->schedules()->findOrFail($scheduleId);
+            $schedule->delete();
+    
+            return redirect()->back()->with('success', 'Jadwal berhasil dihapus!');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting schedule: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus jadwal: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -283,14 +293,19 @@ class TrainingController extends Controller
      */
     public function deleteMember($memberId, $trainingId)
     {
-        $member = TrainingMember::findOrFail($memberId);
-        $training = Training::findOrFail($trainingId);
-        $user = $member->user;
-        $member->delete();
+        try {
+            $member = TrainingMember::findOrFail($memberId);
+            $training = Training::findOrFail($trainingId);
+            $user = $member->user;
+            $member->delete();
 
-        $user->notify(new TrainingKickedNotification($training));
+            $user->notify(new TrainingKickedNotification($training));
 
-        return redirect()->back()->with('success', 'Peserta telah dihapus.');
+            return redirect()->back()->with('success', 'Peserta telah dihapus.');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting member: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus peserta: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -391,52 +406,57 @@ class TrainingController extends Controller
             'message' => 'nullable|string|max:500',
         ]);
 
-        $training = Training::findOrFail($trainingId);
-        $trainingDetail = $training->detail;
-        if (!$trainingDetail) {
-            $trainingDetail = $training->detail()->create([
-                'start_date' => now()->toDateString(),
-                'end_date' => now()->addMonth()->toDateString(),
-            ]);
-        }
-
-        $addedCount = 0;
-        $skippedCount = 0;
-
-        foreach ($request->user_ids as $userId) {
-            $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
-                ->where('user_id', $userId)->where('status', 'accept')
-                ->first();
-
-            if ($existingMember) {
-                $skippedCount++;
-                continue;
+        try {
+            $training = Training::findOrFail($trainingId);
+            $trainingDetail = $training->detail;
+            if (!$trainingDetail) {
+                $trainingDetail = $training->detail()->create([
+                    'start_date' => now()->toDateString(),
+                    'end_date' => now()->addMonth()->toDateString(),
+                ]);
             }
 
-            $newMember = TrainingMember::create([
-                'training_detail_id' => $trainingDetail->id,
-                'user_id' => $userId,
-                'status' => 'accept',
-                'series' => 'TRN-' . strtoupper(uniqid()),
-            ]);
+            $addedCount = 0;
+            $skippedCount = 0;
 
-            $newMember->attendance()->create([
-                'attended_at' => now()->setTimezone('Asia/Jakarta'),
-                'status' => 'present',
-            ]);
+            foreach ($request->user_ids as $userId) {
+                $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
+                    ->where('user_id', $userId)->where('status', 'accept')
+                    ->first();
 
-            // Notify the added user
-            $newMember->user->notify(new TrainingInvitationNotification($training));
+                if ($existingMember) {
+                    $skippedCount++;
+                    continue;
+                }
 
-            $addedCount++;
+                $newMember = TrainingMember::create([
+                    'training_detail_id' => $trainingDetail->id,
+                    'user_id' => $userId,
+                    'status' => 'accept',
+                    'series' => 'TRN-' . strtoupper(uniqid()),
+                ]);
+
+                $newMember->attendance()->create([
+                    'attended_at' => now()->setTimezone('Asia/Jakarta'),
+                    'status' => 'present',
+                ]);
+
+                // Notify the added user
+                $newMember->user->notify(new TrainingInvitationNotification($training));
+
+                $addedCount++;
+            }
+
+            $message = '';
+            if ($addedCount > 0) $message .= "$addedCount peserta berhasil ditambahkan.";
+            if ($skippedCount > 0) $message .= " $skippedCount peserta sudah terdaftar (diabaikan).";
+            if ($request->message) $message .= " Pesan: " . $request->message;
+
+            return redirect()->route('training.members', $trainingId)->with('success', $message);
+        } catch (\Exception $e) {
+            \Log::error('Error adding members: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan peserta: ' . $e->getMessage());
         }
-
-        $message = '';
-        if ($addedCount > 0) $message .= "$addedCount peserta berhasil ditambahkan.";
-        if ($skippedCount > 0) $message .= " $skippedCount peserta sudah terdaftar (diabaikan).";
-        if ($request->message) $message .= " Pesan: " . $request->message;
-
-        return redirect()->route('training.members', $trainingId)->with('success', $message);
     }
 
     /**
@@ -459,50 +479,18 @@ class TrainingController extends Controller
             'status' => 'required|in:open,close',
         ]);
 
-        $training = Training::findOrFail($id);
-        $training->name = $request->name;
-        $training->description = $request->description;
-        $training->status = $request->status;
-        $training->save();
+        try {
+            $training = Training::findOrFail($id);
+            $training->name = $request->name;
+            $training->description = $request->description;
+            $training->status = $request->status;
+            $training->save();
 
-        return redirect()->route('training.settings', $training->name)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
-    }
-
-    /**
-     * Self register ke training
-     */
-    public function selfRegister(Request $request, $trainingId)
-    {
-        $training = Training::findOrFail($trainingId);
-
-        if ($training->status === 'close') {
-            return redirect()->back()->with('error', 'Pendaftaran untuk training ini sudah ditutup.');
+            return redirect()->route('training.settings', $training->name)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
+        } catch (\Exception $e) {
+            \Log::error('Error updating settings: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memperbarui pengaturan: ' . $e->getMessage());
         }
-
-        $trainingDetail = $training->detail;
-        if (!$trainingDetail) {
-            $trainingDetail = $training->detail()->create([
-                'start_date' => now()->toDateString(),
-                'end_date' => now()->addMonth()->toDateString(),
-            ]);
-        }
-
-        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
-            ->where('user_id', Auth::id())
-            ->first();
-
-        if ($existingMember) {
-            return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
-        }
-
-        TrainingMember::create([
-            'training_detail_id' => $trainingDetail->id,
-            'user_id' => Auth::id(),
-            'status' => 'pending',
-            'series' => 'TRN-' . strtoupper(uniqid()),
-        ]);
-
-        return redirect()->back()->with('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
     }
 
     /**
@@ -510,12 +498,17 @@ class TrainingController extends Controller
      */
     public function acceptMember($trainingId, $memberId)
     {
-        $member = TrainingMember::findOrFail($memberId);
-        $member->update(['status' => 'accept']);
+        try {
+            $member = TrainingMember::findOrFail($memberId);
+            $member->update(['status' => 'accept']);
 
-        $member->user->notify(new TrainingAcceptedNotification($member->trainingDetail->training));
+            $member->user->notify(new TrainingAcceptedNotification($member->trainingDetail->training));
 
-        return redirect()->back()->with('success', 'Peserta telah diterima.');
+            return redirect()->back()->with('success', 'Peserta telah diterima.');
+        } catch (\Exception $e) {
+            \Log::error('Error accepting member: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menerima peserta: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -523,14 +516,19 @@ class TrainingController extends Controller
      */
     public function rejectMember($trainingId, $memberId)
     {
-        $member = TrainingMember::findOrFail($memberId);
-        $training = $member->trainingDetail->training;
-        $user = $member->user;
-        $member->delete();
+        try {
+            $member = TrainingMember::findOrFail($memberId);
+            $training = $member->trainingDetail->training;
+            $user = $member->user;
+            $member->delete();
 
-        $user->notify(new TrainingRejectedNotification($training));
+            $user->notify(new TrainingRejectedNotification($training));
 
-        return redirect()->back()->with('success', 'Peserta telah ditolak.');
+            return redirect()->back()->with('success', 'Peserta telah ditolak.');
+        } catch (\Exception $e) {
+            \Log::error('Error rejecting member: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menolak peserta: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -557,39 +555,27 @@ class TrainingController extends Controller
      */
     public function destroy($trainingId)
     {
-        $training = Training::findOrFail($trainingId);
+        try {
+            $training = Training::findOrFail($trainingId);
 
-        if ($training->detail) $training->detail->delete();
-        $training->members()->delete();
-        $training->schedules()->delete();
-        $training->materis()->delete();
+            if ($training->detail) $training->detail->delete();
+            $training->members()->delete();
+            $training->schedules()->delete();
+            $training->materis()->delete();
 
-        foreach ($training->tasks as $task) {
-            $task->submissions()->delete();
-            $task->delete();
+            foreach ($training->tasks as $task) {
+                $task->submissions()->delete();
+                $task->delete();
+            }
+
+            $training->certificates()->delete();
+            $training->delete();
+
+            return redirect()->route('admin.training.manage')->with('success', 'Pelatihan berhasil dihapus.');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting training: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus pelatihan: ' . $e->getMessage());
         }
-
-        $training->certificates()->delete();
-        $training->delete();
-
-        return redirect()->route('admin.training.manage')->with('success', 'Pelatihan berhasil dihapus.');
-    }
-
-    /**
-     * Register user ke training
-     */
-    public function register($userId, $trainingId)
-    {
-        $user = User::findOrFail($userId);
-        $training = Training::findOrFail($trainingId);
-
-        $user->trainingMembers()->create([
-            'training_detail_id' => $training->detail->id,
-            'status' => 'pending',
-            'series' => 'TRN-' . strtoupper(uniqid()),
-        ]);
-
-        return redirect()->back()->with('success', 'Selamat! Anda berhasil mendaftar sebagai peserta training "' . $training->name . '".');
     }
 
     /**
@@ -597,36 +583,41 @@ class TrainingController extends Controller
      */
     public function graduateMember(Request $request, $trainingId, $memberId)
     {
-        $member = TrainingMember::findOrFail($memberId);
-        $member->update(['status' => 'graduate']);
+        try {
+            $member = TrainingMember::findOrFail($memberId);
+            $member->update(['status' => 'graduate']);
 
-        $training = $member->trainingDetail->training;
-        $user = $member->user;
+            $training = $member->trainingDetail->training;
+            $user = $member->user;
 
-        $data = [
-            'user'             => $user,
-            'training'         => $training->load('detail'),
-            'certificateNumber' => strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd')),
-            'supervisorName'   => 'Ir. Budi Santoso, M.T.',
-        ];
+            $data = [
+                'user'             => $user,
+                'training'         => $training->load('detail'),
+                'certificateNumber' => strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd')),
+                'supervisorName'   => 'Ir. Budi Santoso, M.T.',
+            ];
 
-        $pdf = PDF::loadView('certificate.template', $data)->setPaper('a4', 'landscape');
-        $filename = 'certificates/' . $data['certificateNumber'] . '.pdf';
-        Storage::disk('public')->put($filename, $pdf->output());
+            $pdf = PDF::loadView('certificate.template', $data)->setPaper('a4', 'landscape');
+            $filename = 'certificates/' . $data['certificateNumber'] . '.pdf';
+            Storage::disk('public')->put($filename, $pdf->output());
 
-        Certificate::create([
-            'user_id' => $member->user_id,
-            'training_id' => $training->id,
-            'name' => 'Sertifikat ' . $training->name,
-            'organization' => 'PT Dirgantara Indonesia',
-            'issue_date' => now()->toDateString(),
-            'expiry_date' => null,
-            'file_path' => $filename,
-        ]);
+            Certificate::create([
+                'user_id' => $member->user_id,
+                'training_id' => $training->id,
+                'name' => 'Sertifikat ' . $training->name,
+                'organization' => 'PT Dirgantara Indonesia',
+                'issue_date' => now()->toDateString(),
+                'expiry_date' => null,
+                'file_path' => $filename,
+            ]);
 
-        $member->user->notify(new TrainingGraduatedNotification($training));
+            $member->user->notify(new TrainingGraduatedNotification($training));
 
-        return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
+            return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
+        } catch (\Exception $e) {
+            \Log::error('Error graduating member: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menandai peserta sebagai lulus: ' . $e->getMessage());
+        }
     }
 
     /**

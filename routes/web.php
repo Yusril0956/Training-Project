@@ -202,14 +202,3 @@ Route::middleware('auth')->group(function () {
 Route::view('/sistem-training', 'training.system')->name('sistem-training');
 Route::view('/404', 'errors.training-404')->name('404');
 Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');
-
-// Assignments
-Route::prefix('training/{trainingId}/assignments')->name('assignments.')->group(function () {
-    Route::get('/', [AssignmentController::class, 'index'])->name('index');
-    Route::get('/create', [AssignmentController::class, 'create'])->name('create');
-    Route::post('/', [AssignmentController::class, 'store'])->name('store');
-});
-
-Route::post('/assignments/{assignmentId}/submit', [AssignmentController::class, 'submit'])->name('assignments.submit');
-Route::get('/assignments/{assignmentId}/submissions', [AssignmentController::class, 'submissions'])->name('assignments.submissions');
-Route::post('/submissions/{submissionId}/grade', [AssignmentController::class, 'grade'])->name('assignments.grade');
