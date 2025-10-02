@@ -121,6 +121,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nama</th>
+                                    <th>Sertifikat</th>
                                     <th>Email</th>
                                 </tr>
                             </thead>
@@ -129,6 +130,12 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $gMember->user->name }}</td>
+                                        <td>
+                                            <a href="{{ $gMember->user->certificates->first()?->file_path ? asset('storage/' . $gMember->user->certificates->first()->file_path) : '#' }}"
+                                                class="btn {{ $gMember->user->certificates->first()?->file_path ? 'btn-primary' : 'btn-secondary' }} btn-sm">
+                                                {{ $gMember->user->certificates->first()?->file_path ? 'Lihat' : 'N/A' }}
+                                            </a>
+                                        </td>
                                         <td>{{ $gMember->user->email }}</td>
                                     </tr>
                                 @endforeach
