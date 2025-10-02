@@ -107,8 +107,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/mandatory', [TrainingController::class, 'mandatory'])->name('mandatory');
         Route::get('/license', [TrainingController::class, 'license'])->name('license');
         Route::get('/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer');
-        Route::get('/detail-training', fn() => view('training.detail'))->name('detail.view');
-        Route::get('/{id}/detail', [TrainingController::class, 'detail'])->name('detail');
 
         Route::get('/create', [TrainingController::class, 'create'])->name('create');
         Route::post('/store', [TrainingController::class, 'store'])->name('store');

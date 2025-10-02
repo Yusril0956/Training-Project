@@ -39,7 +39,7 @@ class TrainingInvitationNotification extends Notification
             ->greeting('Halo ' . $notifiable->name . '!')
             ->line('Anda telah ditambahkan ke training "' . $this->training->name . '"')
             ->line('Silakan klik tombol di bawah untuk melihat detail training.')
-            ->action('Lihat Training', route('training.detail', $this->training->id))
+            ->action('Lihat Training', route('training.home', $this->training->id))
             ->line('Terima kasih telah bergabung dengan training ini!')
             ->salutation('Salam, Tim Training');
     }
@@ -54,7 +54,7 @@ class TrainingInvitationNotification extends Notification
             'message' => 'Anda telah ditambahkan ke training "' . $this->training->name . '"',
             'training_id' => $this->training->id,
             'training_name' => $this->training->name,
-            'action_url' => route('training.detail', $this->training->id),
+            'action_url' => route('training.home', $this->training->id),
             'type' => 'training_invitation',
         ];
     }
