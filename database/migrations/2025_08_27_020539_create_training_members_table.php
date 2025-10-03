@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('training_members', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('training_detail_id')->constrained('training_details')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('training_detail_id')->constrained('training_details')->cascadeOnDelete()->index();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->index();
             $table->enum('status', ['accept', 'pending', 'graduate']);
             $table->string('series')->unique();
             $table->timestamps();

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('trainings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->text('description');
-            $table->enum('status', ['open', 'close'])->default('open');
+            $table->string('name')->index(); // Index for search
+            $table->text('description'); // Text fields not indexed for search
+            $table->enum('status', ['open', 'close'])->default('open')->index(); // Index for filtering
             $table->foreignId('jenis_training_id')->constrained('jenis_trainings')->cascadeOnDelete();
             $table->timestamps();
         });
