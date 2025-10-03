@@ -33,6 +33,7 @@
     </style>
     @stack('styles')
     @stack('avatar')
+    @livewireStyles
 </head>
 
 <body>
@@ -52,6 +53,7 @@
     <!-- Tabler Core -->
     <script src="{{asset('dist/js/tabler.min.js?1692870487')}}" defer></script>
     <script src="{{asset('dist/js/demo.min.js?1692870487')}}" defer></script>
+    @livewireScripts
     @stack('script')
 </body>
 
