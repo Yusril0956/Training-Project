@@ -111,7 +111,6 @@ class TrainingController extends Controller
             ]);
             return redirect()->back()->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
         } catch (\Exception $e) {
-            \Log::error('Error creating training: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menambahkan pelatihan: ' . $e->getMessage())->withInput();
         }
     }
@@ -153,7 +152,6 @@ class TrainingController extends Controller
 
             return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan!');
         } catch (\Exception $e) {
-            \Log::error('Error storing schedule: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menambahkan jadwal: ' . $e->getMessage());
         }
     }
@@ -170,7 +168,6 @@ class TrainingController extends Controller
     
             return redirect()->back()->with('success', 'Jadwal berhasil dihapus!');
         } catch (\Exception $e) {
-            \Log::error('Error deleting schedule: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menghapus jadwal: ' . $e->getMessage());
         }
     }
@@ -190,7 +187,6 @@ class TrainingController extends Controller
 
             return redirect()->back()->with('success', 'Peserta telah dihapus.');
         } catch (\Exception $e) {
-            \Log::error('Error deleting member: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menghapus peserta: ' . $e->getMessage());
         }
     }
@@ -341,7 +337,6 @@ class TrainingController extends Controller
 
             return redirect()->route('training.members', $trainingId)->with('success', $message);
         } catch (\Exception $e) {
-            \Log::error('Error adding members: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menambahkan peserta: ' . $e->getMessage());
         }
     }
@@ -375,7 +370,6 @@ class TrainingController extends Controller
 
             return redirect()->route('training.settings', $training->name)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
         } catch (\Exception $e) {
-            \Log::error('Error updating settings: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal memperbarui pengaturan: ' . $e->getMessage());
         }
     }
@@ -393,7 +387,6 @@ class TrainingController extends Controller
 
             return redirect()->back()->with('success', 'Peserta telah diterima.');
         } catch (\Exception $e) {
-            \Log::error('Error accepting member: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menerima peserta: ' . $e->getMessage());
         }
     }
@@ -413,7 +406,6 @@ class TrainingController extends Controller
 
             return redirect()->back()->with('success', 'Peserta telah ditolak.');
         } catch (\Exception $e) {
-            \Log::error('Error rejecting member: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menolak peserta: ' . $e->getMessage());
         }
     }
@@ -460,7 +452,6 @@ class TrainingController extends Controller
 
             return redirect()->route('admin.training.manage')->with('success', 'Pelatihan berhasil dihapus.');
         } catch (\Exception $e) {
-            \Log::error('Error deleting training: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menghapus pelatihan: ' . $e->getMessage());
         }
     }
@@ -502,7 +493,6 @@ class TrainingController extends Controller
 
             return redirect()->back()->with('success', 'Peserta telah ditandai sebagai lulus dan sertifikat telah dibuat.');
         } catch (\Exception $e) {
-            \Log::error('Error graduating member: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Gagal menandai peserta sebagai lulus: ' . $e->getMessage());
         }
     }

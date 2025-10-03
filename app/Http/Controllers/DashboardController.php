@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\Notifications;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Assignment;
+use App\Models\Certificate;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
@@ -93,7 +95,7 @@ class DashboardController extends Controller
      */
     public function rejectCertificate($externalCertificate)
     {
-        try{
+        try {
             $certificate = ExternalCertificate::findOrFail($externalCertificate);
             $certificate->delete();
 
@@ -112,7 +114,9 @@ class DashboardController extends Controller
     public function notification()
     {
         $user = Auth::user();
-        $notifications = $user->notifications()->latest()->paginate(10); // Use pagination
+        $notifications = Notification::where('notifiable_id', $user->id)
+            ->latest()
+            ->paginate(10);
 
         return view('dashboard.notifications', compact('notifications'));
     }
@@ -226,7 +230,9 @@ class DashboardController extends Controller
             $user = Auth::user();
 
             // Ambil semua sertifikat milik user
-            $certificates = $user->certificates()->with('training')->paginate(12);
+            $certificates = Certificate::where('user_id', $user->id)
+                ->with('training')
+                ->paginate(12);
 
             $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(6);
 
@@ -254,7 +260,7 @@ class DashboardController extends Controller
         ]);
 
         try {
-            $user->update([
+            User::where('id', $user->id)->update([
                 'email_notifications' => $request->email_notifications,
             ]);
 
