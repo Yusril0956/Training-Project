@@ -170,9 +170,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/user/add', [DashboardController::class, 'addUser'])->name('user.add');
         Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
 
-        Route::get('/setting', [DashboardController::class, 'adminSettings'])->name('settings');
-        Route::post('/settings/reset-password/{id}', [DashboardController::class, 'resetUserPassword'])->name('reset.password');
-
         Route::get('/admin/extcertificate/create', fn() => view('manual-certificates.create'))->name('certificate.create');
         Route::patch('/extcertificate/{extcertificateId}/accept', [DashboardController::class, 'acceptCertificate'])->name('certificate.accept');
         Route::patch('/extcertificate/{extcertificateId}/reject', [DashboardController::class, 'rejectCertificate'])->name('certificate.reject');

@@ -194,7 +194,7 @@ class DashboardController extends Controller
      */
     public function inbox()
     {
-        $feedback = Feedback::paginate(10); // Use pagination
+        $feedback = Feedback::paginate(10);
 
         return view('dashboard.inbox', compact('feedback'));
     }
@@ -214,37 +214,6 @@ class DashboardController extends Controller
             return redirect()->back()->with('success', 'Feedback berhasil dikirim!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengirim feedback!');
-        }
-    }
-
-    /**
-     * Display admin settings page with all users.
-     */
-    public function adminSettings()
-    {
-        $users = User::paginate(10); // Use pagination
-        return view('admin.settings', compact('users'));
-    }
-
-    public function resetUserPassword(Request $request, $id)
-    {
-        $request->validate([
-            'new_password' => 'required|string|min:6',
-        ]);
-
-        try {
-            $user = User::findOrFail($id);
-            if ($user->role === 'super_admin') {
-                return redirect()->back()->with('error', 'Cannot reset super admin password!');
-            }
-
-            $newPassword = $request->new_password;
-            $user->password = bcrypt($newPassword);
-            $user->save();
-
-            return redirect()->back()->with('success', 'Password for ' . $user->name . ' has been reset successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to reset password!');
         }
     }
 
