@@ -36,10 +36,12 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled">
-                            <li><a href="#" class="text-decoration-none">Bagaimana cara mendaftar akun baru?</a></li>
-                            <li><a href="#" class="text-decoration-none">Bagaimana cara login ke sistem?</a></li>
-                            <li><a href="#" class="text-decoration-none">Bagaimana cara reset password?</a></li>
-                            <li><a href="#" class="text-decoration-none">Bagaimana cara memperbarui data profil?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara masuk ke halaman training?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mendaftar training?</a></li>
+                            <li><a href="#" class="text-decoration-none">Cara absen pada training online?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mengerjakan tugas?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mengirim tugas?</a></li>
+                            <li><a href="#" class="text-decoration-none">Cara mengirim kritik dan saran?</a></li>
                         </ul>
                     </div>
                 </div>
@@ -107,7 +109,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingFour">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
@@ -117,6 +118,18 @@
                                 <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
                                         Pilih tugas pelatihan yang di instruksikan oleh instruktur, lalu klik tombol "Detail" di situ ada kumpulkan tugas lalu pilih file tugas yang akan di kumpulkan dan isi Pesan (Opsiional) lalu klik tombol "Kirim Tugas"
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeadingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                                        Cara mengirim kritik dan saran?
+                                    </button>
+                                </h2>
+                                <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        Di halaman home training ada fitur "Kritik & Saran" isi form yang ada di situ lalu klik tombol "Kirim" untuk mengirimkan pesan anda kepada admin atau staff IT.
                                     </div>
                                 </div>
                             </div>
