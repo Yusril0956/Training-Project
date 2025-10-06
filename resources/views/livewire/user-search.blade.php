@@ -13,13 +13,13 @@
                                 <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                                 <path d="M21 21l-6 -6" />
                             </svg></span>
-                        <input type="text" wire:model.debounce.500ms="search" class="form-control"
+                        <input type="text" wire:model.live="search" class="form-control"
                             placeholder="Cari berdasarkan nama atau email...">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label for="role" class="form-label">Filter Role</label>
-                    <select wire:model.debounce.500ms="role" class="form-select">
+                    <select wire:model.live="role" class="form-select">
                         <option value="">Semua Role</option>
                         <option value="Super Admin">Super Admin</option>
                         <option value="Admin">Admin</option>

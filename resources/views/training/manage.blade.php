@@ -111,7 +111,7 @@
                                         </td>
                                         <td class="text-end">
                                             <div class="btn-list">
-                                                <a href="{{ route('training.detail', $t->id) }}"
+                                                <a href="{{ route('training.home', $t->id) }}"
                                                     class="btn btn-sm btn-info btn-pill" title="Detail">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
