@@ -1,8 +1,9 @@
+````markdown
 # 🚀 Training Project
 
 ![Banner](public/images/Banner.png)
 
-Aplikasi web Training hasil tugas PKL di PT. Dirgantara, dibangun dengan Laravel 12 untuk manajemen pelatihan, sertifikat, dan riwayat peserta.
+Aplikasi web Training hasil tugas PKL di PT. Dirgantara, dibangun dengan **Laravel 12** untuk manajemen pelatihan, sertifikat, dan riwayat peserta.
 
 [![Laravel Version](https://img.shields.io/badge/Laravel-12-red?logo=laravel)](https://laravel.com)
 [![PHP Version](https://img.shields.io/badge/PHP-8.2+-blue?logo=php)](https://php.net)
@@ -22,11 +23,6 @@ Aplikasi web Training hasil tugas PKL di PT. Dirgantara, dibangun dengan Laravel
 - [Kontributor](#-kontributor)
 - [Prasyarat](#-prasyarat)
 - [Instalasi & Setup](#-instalasi--setup)
-  - [Clone Repository](#clone-repository)
-  - [Persiapan Database](#persiapan-database)
-  - [Install Dependencies](#install-dependencies)
-  - [Generate Key & Link Storage](#generate-key--link-storage)
-  - [Jalankan Aplikasi](#jalankan-aplikasi)
 - [Penggunaan](#-penggunaan)
 - [Troubleshooting](#-troubleshooting)
 - [Kontribusi](#-kontribusi)
@@ -36,20 +32,22 @@ Aplikasi web Training hasil tugas PKL di PT. Dirgantara, dibangun dengan Laravel
 
 ## 📖 Tentang Proyek
 
-Training Project adalah aplikasi web yang dikembangkan sebagai bagian dari tugas PKL di PT. Dirgantara. Aplikasi ini dirancang untuk memfasilitasi manajemen pelatihan internal perusahaan, termasuk pengelolaan peserta, sertifikat, tugas, dan riwayat pelatihan. Dibangun dengan framework Laravel terbaru untuk memastikan performa dan keamanan yang optimal.
+**Training Project** adalah aplikasi web yang dikembangkan sebagai bagian dari tugas PKL di **PT. Dirgantara**.  
+Aplikasi ini dirancang untuk memfasilitasi manajemen pelatihan internal perusahaan, mencakup pengelolaan peserta, sertifikat, tugas, dan riwayat pelatihan.  
+Dibangun dengan **Laravel 12** untuk memastikan performa, keamanan, dan skalabilitas yang optimal.
 
 ---
 
 ## ✨ Fitur Utama
 
-- **Manajemen Pengguna**: Registrasi, login, dan pengelolaan profil pengguna dengan role-based access.
-- **Manajemen Pelatihan**: Buat, edit, dan kelola jadwal pelatihan serta detailnya.
-- **Sertifikat**: Generate dan unduh sertifikat dalam format PDF untuk peserta yang menyelesaikan pelatihan.
-- **Tugas & Penugasan**: Buat tugas, kumpulkan submission, dan berikan feedback.
-- **Kehadiran**: Tracking kehadiran peserta dalam pelatihan.
-- **Notifikasi**: Sistem notifikasi untuk update pelatihan dan tugas.
-- **Dashboard**: Tampilan dashboard untuk admin dan peserta dengan statistik real-time.
-- **Feedback**: Sistem feedback untuk evaluasi pelatihan.
+- **Manajemen Pengguna** — Registrasi, login, dan pengelolaan profil pengguna dengan role-based access.
+- **Manajemen Pelatihan** — Buat, edit, dan kelola jadwal pelatihan serta detailnya.
+- **Sertifikat Otomatis** — Generate dan unduh sertifikat dalam format PDF untuk peserta yang lulus.
+- **Tugas & Penilaian** — Buat tugas, lihat submission, dan beri nilai.
+- **Kehadiran Peserta** — Tracking kehadiran dalam pelatihan.
+- **Notifikasi Real-Time** — Informasi pembaruan pelatihan dan tugas.
+- **Dashboard Interaktif** — Statistik real-time untuk admin dan peserta.
+- **Feedback System** — Evaluasi pelatihan dari peserta.
 
 ---
 
@@ -118,120 +116,131 @@ Training Project adalah aplikasi web yang dikembangkan sebagai bagian dari tugas
 
 ## 📋 Prasyarat
 
-Sebelum menjalankan aplikasi, pastikan sistem Anda memenuhi persyaratan berikut:
+Pastikan sistem Anda memenuhi persyaratan berikut sebelum menjalankan aplikasi:
 
-- **PHP**: Versi 8.2 atau lebih tinggi
-- **Composer**: Untuk manajemen dependensi PHP
-- **Node.js & NPM**: Untuk asset frontend (opsional)
-- **Database**: MySQL atau SQLite
-- **Web Server**: Apache atau Nginx (untuk production)
+- **PHP** ≥ 8.2  
+- **Composer** — Manajemen dependensi PHP  
+- **Node.js & NPM** — Untuk asset frontend *(opsional)*  
+- **Database** — MySQL atau SQLite  
+- **Web Server** — Apache atau Nginx  
 
 ---
 
 ## 🚀 Instalasi & Setup
 
-### Clone Repository
+### 1️⃣ Clone Repository
 
-<<<<<<< HEAD
-masuk ke folder laravel 
-=======
 ```bash
 git clone https://github.com/Yusril0956/Training-Project.git
 cd Training-Project
+````
+
+### 2️⃣ Install Livewire
+
+```bash
+composer require livewire/livewire
+php artisan livewire:publish --assets
 ```
->>>>>>> ae0cf380ef33e68dc8a8c89045a3bbc09b5e2df6
 
-### Persiapan Database
+### 3️⃣ Generate PDF Sertifikat
 
-1. Rename atau sesuaikan file `.env.example` menjadi `.env`.
-2. Pilih database:
-   - **MySQL**: Atur `DB_CONNECTION=mysql`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`.
-   - **SQLite**: Atur `DB_CONNECTION=sqlite` lalu buat file `database/database.sqlite`.
+```bash
+composer require barryvdh/laravel-dompdf
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+```
 
-### Install Dependencies
+### 4️⃣ Persiapan Database
+
+1. Salin file `.env.example` menjadi `.env`
+2. Konfigurasi sesuai kebutuhan:
+
+   * **MySQL**
+
+     ```
+     DB_CONNECTION=mysql
+     DB_DATABASE=training_project
+     DB_USERNAME=root
+     DB_PASSWORD=
+     ```
+   * **SQLite**
+
+     ```
+     DB_CONNECTION=sqlite
+     ```
+
+     dan buat file `database/database.sqlite`
+
+### 5️⃣ Install Dependencies
 
 ```bash
 composer install
 npm install   # jika ada asset frontend
 ```
 
-### Generate Key & Link Storage
+### 6️⃣ Generate Key & Link Storage
 
 ```bash
 php artisan key:generate
 php artisan storage:link
 ```
 
-### Migrasi & Seed
+### 7️⃣ Migrasi & Seed Database
 
 ```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-### Jalankan Aplikasi
+### 8️⃣ Jalankan Aplikasi
 
 ```bash
 php artisan serve
 ```
 
-Akses di `http://127.0.0.1:8000`.
+Buka di browser: [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
 
 ## 📖 Penggunaan
 
-1. **Login**: Gunakan akun admin atau peserta yang telah di-seed.
-2. **Dashboard**: Lihat statistik dan navigasi menu.
-3. **Manajemen Pelatihan**: Buat pelatihan baru, tambah peserta, dan kelola jadwal.
-4. **Sertifikat**: Generate sertifikat untuk peserta yang lulus.
-5. **Tugas**: Buat tugas, lihat submission, dan berikan nilai.
+1. **Login** dengan akun admin atau peserta (hasil seeding).
+2. **Dashboard** menampilkan statistik pelatihan dan tugas.
+3. **Manajemen Pelatihan** untuk membuat dan mengelola jadwal pelatihan.
+4. **Sertifikat** otomatis digenerate untuk peserta yang lulus.
+5. **Tugas & Penilaian** melalui fitur submission.
 
 ---
 
 ## 🛠️ Troubleshooting
 
-- **Error `vendor/autoload.php` not found**
-  ```bash
-  composer install
-  # atau jika tidak ada composer.lock
-  composer update
-  ```
-- **Error login admin**
-  Pastikan seed berhasil dijalankan:
-  ```bash
-  php artisan migrate --seed
-  ```
-- **Missing APP_KEY**
-  ```bash
-  php artisan key:generate
-  ```
-- **Cache issues**
-  ```bash
-  php artisan config:clear
-  php artisan cache:clear
-  ```
-- **Upload gambar tidak muncul**
-  ```bash
-  php artisan storage:link
-  ```
-- **Generate PDF sertifikat**
-  ```bash
-  composer require barryvdh/laravel-dompdf
-  php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
-  ```
+| Masalah                         | Solusi                                                         |
+| ------------------------------- | -------------------------------------------------------------- |
+| `vendor/autoload.php` not found | Jalankan `composer install`                                    |
+| Error login admin               | Jalankan `php artisan migrate --seed`                          |
+| Missing `APP_KEY`               | Jalankan `php artisan key:generate`                            |
+| Cache error                     | Jalankan `php artisan config:clear && php artisan cache:clear` |
+| Gambar tidak muncul             | Jalankan `php artisan storage:link`                            |
 
 ---
 
 ## 🤝 Kontribusi
 
-Kami menyambut kontribusi dari komunitas! Untuk berkontribusi:
+Kami menyambut kontribusi dari komunitas!
+Langkah-langkah kontribusi:
 
-1. Fork repository ini.
-2. Buat branch fitur baru (`git checkout -b feature/AmazingFeature`).
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`).
-4. Push ke branch (`git push origin feature/AmazingFeature`).
-5. Buat Pull Request.
+```bash
+# 1. Fork repository
+# 2. Buat branch baru
+git checkout -b feature/NamaFitur
+
+# 3. Commit perubahan
+git commit -m "Add: Nama fitur"
+
+# 4. Push ke repository
+git push origin feature/NamaFitur
+```
+
+Lalu buat **Pull Request** ke branch utama.
 
 ---
 
@@ -241,4 +250,7 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 ---
 
-> Jangan lupa jalankan semua artisan command sebelum testing. Semoga membantu! 🌟
+> 💡 Pastikan semua perintah Artisan dijalankan sebelum testing aplikasi.
+
+```
+```
