@@ -27,8 +27,8 @@
                     </select>
                 </div>
                 <div class="col-md-3 d-flex align-items-end">
-                    <button class="btn btn-outline-secondary w-100" wire:click="resetFilters">
-                        Reset Filter
+                    <button class="btn btn-outline-secondary w-100" wire:click="resetFilter">
+                        Reset
                     </button>
                 </div>
             </div>

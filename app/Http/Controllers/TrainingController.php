@@ -27,7 +27,7 @@ class TrainingController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Training::with(['jenisTraining', 'detail', 'members', 'materis']);
+        $query = Training::with(['jenisTraining', 'detail', 'members', 'materis'])->orderBy('status', 'desc');
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -38,6 +38,7 @@ class TrainingController extends Controller
         }
 
         $trainings = $query->paginate(9);
+        $jenisTrainings = JenisTraining::all();
         $userId = Auth::id();
         $userStatuses = [];
 
@@ -46,7 +47,7 @@ class TrainingController extends Controller
             $userStatuses[$training->id] = $member ? $member->status : 'none';
         }
 
-        return view('training.index', compact('trainings', 'userStatuses', 'request'));
+        return view('training.index', compact('trainings', 'userStatuses', 'request', 'jenisTrainings'));
     }
 
     public function home($id)
