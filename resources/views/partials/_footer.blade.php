@@ -19,7 +19,7 @@
   <div class="container-xl">
     <div class="row align-items-center">
       <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-        <span>© 2025 <a href="." class="text-decoration-none text-info fw-semibold">PT.Dirgantara</a>. Indonesian Aerospace.</span>
+        <span>© 2025 <a href="{{ route('index') }}" class="text-decoration-none text-info fw-semibold">PT.Dirgantara</a>. Indonesian Aerospace.</span>
         <span class="ms-2">
           <a href="./changelog.html" class="text-decoration-none text-muted small">v1</a>
         </span>

@@ -41,7 +41,7 @@
     <div class="page page-center">
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
-                <a href="." class="navbar-brand navbar-brand-autodark">
+                <a href="{{ route('index') }}" class="navbar-brand navbar-brand-autodark">
                     <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
                         class="navbar-brand-image"> PT.Dirgantara
                 </a>
