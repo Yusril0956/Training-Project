@@ -5,17 +5,20 @@ namespace App\Livewire;
 use App\Models\Training;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
 
 class TrainingSearch extends Component
 {
     use WithPagination;
 
     public string $search = '';
+    public string $jenis = '';
+    public string $pageType = 'user';
+    protected $paginationTheme = 'bootstrap';
 
-    public $jenis = '';
-
-    protected $paginationTheme = 'bootstrap'; // Biar cocok sama Tabler
+    public function mount($pageType = 'user')
+    {
+        $this->pageType = $pageType;
+    }
 
     public function updatingSearch()
     {
@@ -52,7 +55,11 @@ class TrainingSearch extends Component
             ->orderBy('status', 'desc')
             ->paginate(9);
 
-        return view('livewire.training-search', [
+        $viewName = $this->pageType === 'admin'
+            ? 'livewire.tmanage-search'
+            : 'livewire.training-search';
+
+        return view($viewName, [
             'trainings' => $trainings,
         ]);
     }

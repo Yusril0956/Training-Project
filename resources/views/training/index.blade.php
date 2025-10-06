@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <livewire:training-search />
+            <livewire:training-search page-type="user" />
 
             {{-- Offcanvas Details --}}
             @foreach ($trainings as $training)
