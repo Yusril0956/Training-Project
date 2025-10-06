@@ -90,20 +90,6 @@ Dibangun dengan framework **Laravel terbaru** untuk memastikan performa dan keam
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-
-### 🏠 Dashboard Utama
-<img src="public/images/default-training.jpg" alt="Dashboard" width="80%">
-
-### 🏆 Halaman Sertifikat
-<img src="public/images/SertifikatPenghargaan.png" alt="Certificate" width="60%">
-
-</div>
-
----
-
 ## 👥 Contributors
 
 <div align="center">
@@ -197,7 +183,19 @@ npm run build
 npm run dev
 ```
 
-### 9. Start Application
+### 9. Require Livewire
+```bash
+composer require livewire/livewire
+php artisan livewire:publish --assets
+```
+
+### 10. Require DomPDF
+```bash
+composer require barryvdh/laravel-dompdf
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+```
+
+### 11. Start Application
 ```bash
 php artisan serve
 ```
