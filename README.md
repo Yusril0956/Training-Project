@@ -1,256 +1,377 @@
-````markdown
 # 🚀 Training Project
 
-![Banner](public/images/Banner.png)
+<div align="center">
+  <img src="public/images/Banner.png" alt="Training Project Banner" width="100%">
 
-Aplikasi web Training hasil tugas PKL di PT. Dirgantara, dibangun dengan **Laravel 12** untuk manajemen pelatihan, sertifikat, dan riwayat peserta.
+  <p><strong>Aplikasi web Training hasil tugas PKL di PT. Dirgantara</strong></p>
+  <p>Dibangun dengan Laravel 12 untuk manajemen pelatihan, sertifikat, dan riwayat peserta</p>
 
-[![Laravel Version](https://img.shields.io/badge/Laravel-12-red?logo=laravel)](https://laravel.com)
-[![PHP Version](https://img.shields.io/badge/PHP-8.2+-blue?logo=php)](https://php.net)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Commit Activity](https://img.shields.io/github/commit-activity/t/Yusril0956/Training-Project?label=Total%20Commits)](https://github.com/Yusril0956/Training-Project/commits)
-[![Last Commit](https://img.shields.io/github/last-commit/Yusril0956/Training-Project?label=Last%20Commit)](https://github.com/Yusril0956/Training-Project/commits)
-[![Contributors](https://img.shields.io/github/contributors/Yusril0956/Training-Project?label=Contributors)](https://github.com/Yusril0956/Training-Project/graphs/contributors)
+  <br>
 
----
-
-## 📑 Daftar Isi
-
-- [Tentang Proyek](#-tentang-proyek)
-- [Fitur Utama](#-fitur-utama)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-- [Screenshot](#-screenshot)
-- [Kontributor](#-kontributor)
-- [Prasyarat](#-prasyarat)
-- [Instalasi & Setup](#-instalasi--setup)
-- [Penggunaan](#-penggunaan)
-- [Troubleshooting](#-troubleshooting)
-- [Kontribusi](#-kontribusi)
-- [Lisensi](#-lisensi)
+  [![Laravel Version](https://img.shields.io/badge/Laravel-12-red?logo=laravel)](https://laravel.com)
+  [![PHP Version](https://img.shields.io/badge/PHP-8.2+-blue?logo=php)](https://php.net)
+  [![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql)](https://mysql.com)
+  [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+  <br>
+  [![Commit Activity](https://img.shields.io/github/commit-activity/t/Yusril0956/Training-Project?label=Total%20Commits)](https://github.com/Yusril0956/Training-Project/commits)
+  [![Last Commit](https://img.shields.io/github/last-commit/Yusril0956/Training-Project?label=Last%20Commit)](https://github.com/Yusril0956/Training-Project/commits)
+  [![Contributors](https://img.shields.io/github/contributors/Yusril0956/Training-Project?label=Contributors)](https://github.com/Yusril0956/Training-Project/graphs/contributors)
+</div>
 
 ---
 
-## 📖 Tentang Proyek
+## 📋 Table of Contents
 
-**Training Project** adalah aplikasi web yang dikembangkan sebagai bagian dari tugas PKL di **PT. Dirgantara**.  
-Aplikasi ini dirancang untuk memfasilitasi manajemen pelatihan internal perusahaan, mencakup pengelolaan peserta, sertifikat, tugas, dan riwayat pelatihan.  
-Dibangun dengan **Laravel 12** untuk memastikan performa, keamanan, dan skalabilitas yang optimal.
-
----
-
-## ✨ Fitur Utama
-
-- **Manajemen Pengguna** — Registrasi, login, dan pengelolaan profil pengguna dengan role-based access.
-- **Manajemen Pelatihan** — Buat, edit, dan kelola jadwal pelatihan serta detailnya.
-- **Sertifikat Otomatis** — Generate dan unduh sertifikat dalam format PDF untuk peserta yang lulus.
-- **Tugas & Penilaian** — Buat tugas, lihat submission, dan beri nilai.
-- **Kehadiran Peserta** — Tracking kehadiran dalam pelatihan.
-- **Notifikasi Real-Time** — Informasi pembaruan pelatihan dan tugas.
-- **Dashboard Interaktif** — Statistik real-time untuk admin dan peserta.
-- **Feedback System** — Evaluasi pelatihan dari peserta.
+- [🎯 About](#-about)
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📸 Screenshots](#-screenshots)
+- [👥 Contributors](#-contributors)
+- [📋 Requirements](#-requirements)
+- [🚀 Installation](#-installation)
+- [🔧 Configuration](#-configuration)
+- [🎮 Usage](#-usage)
+- [🔍 API Documentation](#-api-documentation)
+- [🛠️ Troubleshooting](#️-troubleshooting)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## 🎯 About
 
-![HTML5](https://img.shields.io/badge/Code-HTML5-orange?logo=html5)
-![CSS3](https://img.shields.io/badge/Style-CSS3-blue?logo=css3)
-![JavaScript](https://img.shields.io/badge/Logic-JavaScript-yellow?logo=javascript)
-![PHP](https://img.shields.io/badge/Backend-PHP-777BB4?logo=php)
-![Laravel](https://img.shields.io/badge/Framework-Laravel-red?logo=laravel)
-![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql)
-![DomPDF](https://img.shields.io/badge/PDF-DomPDF-FF6B35?logo=adobe-acrobat-reader)
+Training Project adalah aplikasi web yang dikembangkan sebagai bagian dari tugas PKL di **PT. Dirgantara**. Aplikasi ini dirancang untuk memfasilitasi manajemen pelatihan internal perusahaan, termasuk pengelolaan peserta, sertifikat, tugas, dan riwayat pelatihan.
+
+Dibangun dengan framework **Laravel terbaru** untuk memastikan performa dan keamanan yang optimal, serta menggunakan **Livewire** untuk interaksi real-time yang smooth.
 
 ---
 
-## 📸 Screenshot
+## ✨ Features
 
-### Dashboard Utama
-![Dashboard](public/images/default-training.jpg)
+### 👨‍💼 Admin Features
+- ✅ **User Management** - CRUD operations untuk pengguna dengan role-based access
+- ✅ **Training Management** - Buat, edit, dan kelola jadwal pelatihan
+- ✅ **Certificate Generation** - Generate dan unduh sertifikat PDF otomatis
+- ✅ **Task Management** - Buat tugas, kelola submission, dan berikan feedback
+- ✅ **Attendance Tracking** - Monitoring kehadiran peserta
+- ✅ **Notification System** - Sistem notifikasi real-time
+- ✅ **Dashboard Analytics** - Statistik real-time dan reporting
 
-### Halaman Sertifikat
-![Sertifikat](public/images/SertifikatPenghargaan.png)
-
----
-
-## 👨‍💻 Kontributor
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://github.com/Reqi2007">
-        <img src="https://github.com/Reqi2007.png?size=100" width="100" alt="Refan"/>
-        <br/>
-        <sub><b>Refan</b></sub>
-      </a>
-      <br/>💻 Fullstack Developer
-    </td>
-    <td align="center">
-      <a href="https://github.com/Yusril0956">
-        <img src="https://github.com/Yusril0956.png?size=100" width="100" alt="Yusril"/>
-        <br/>
-        <sub><b>Yusril</b></sub>
-      </a>
-      <br/>💻 Fullstack Developer
-    </td>
-    <td align="center">
-      <a href="https://github.com/ehan4426-pixel">
-        <img src="https://github.com/ehan4426-pixel.png?size=100" width="100" alt="Raihan"/>
-        <br/>
-        <sub><b>Raihan</b></sub>
-      </a>
-      <br/>🤝 Support Developer
-    </td>
-    <td align="center">
-      <a href="https://github.com/vein13046-ui">
-        <img src="https://github.com/vein13046-ui.png?size=100" width="100" alt="Daelingka"/>
-        <br/>
-        <sub><b>Daelingka</b></sub>
-      </a>
-      <br/>🤝 Support Developer
-    </td>
-  </tr>
-</table>
+### 👨‍🎓 User Features
+- ✅ **Training Registration** - Daftar dan ikuti pelatihan
+- ✅ **Task Submission** - Upload tugas dan lihat feedback
+- ✅ **Certificate Download** - Unduh sertifikat setelah lulus
+- ✅ **Progress Tracking** - Monitor progress pembelajaran
+- ✅ **Feedback System** - Berikan feedback untuk pelatihan
 
 ---
 
-## 📋 Prasyarat
+## 🛠️ Tech Stack
 
-Pastikan sistem Anda memenuhi persyaratan berikut sebelum menjalankan aplikasi:
+<div align="center">
 
-- **PHP** ≥ 8.2  
-- **Composer** — Manajemen dependensi PHP  
-- **Node.js & NPM** — Untuk asset frontend *(opsional)*  
-- **Database** — MySQL atau SQLite  
-- **Web Server** — Apache atau Nginx  
+| Component | Technology |
+|-----------|------------|
+| **Backend** | ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?logo=php) ![Laravel](https://img.shields.io/badge/Laravel-12-FF2D20?logo=laravel) |
+| **Frontend** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) |
+| **Database** | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white) |
+| **Real-time** | ![Livewire](https://img.shields.io/badge/Livewire-4B5L5Y?logo=laravel&logoColor=white) |
+| **PDF Generation** | ![DomPDF](https://img.shields.io/badge/DomPDF-FF6B35?logo=adobe-acrobat-reader&logoColor=white) |
+| **UI Framework** | ![Tabler](https://img.shields.io/badge/Tabler-206BC4?logo=bootstrap&logoColor=white) |
+
+</div>
+
+### Dependencies
+- **Laravel Framework** - Full-stack framework
+- **Livewire** - Real-time frontend interactions
+- **DomPDF** - PDF certificate generation
+- **Tabler UI** - Modern admin interface
+- **Alpine.js** - Lightweight JavaScript framework
 
 ---
 
-## 🚀 Instalasi & Setup
+## 👥 Contributors
 
-### 1️⃣ Clone Repository
+<div align="center">
 
+| [<img src="https://github.com/Reqi2007.png?size=100" width="100px;"><br /><sub><b>Refan</b></sub>](https://github.com/Reqi2007)<br />💻 Fullstack Developer | [<img src="https://github.com/Yusril0956.png?size=100" width="100px;"><br /><sub><b>Yusril</b></sub>](https://github.com/Yusril0956)<br />💻 Fullstack Developer | [<img src="https://github.com/ehan4426-pixel.png?size=100" width="100px;"><br /><sub><b>Raihan</b></sub>](https://github.com/ehan4426-pixel)<br />🤝 Support Developer | [<img src="https://github.com/vein13046-ui.png?size=100" width="100px;"><br /><sub><b>Daelingka</b></sub>](https://github.com/vein13046-ui)<br />🤝 Support Developer |
+| :---: | :---: | :---: | :---: |
+
+</div>
+
+---
+
+## 📋 Requirements
+
+Sebelum menjalankan aplikasi, pastikan sistem Anda memenuhi persyaratan berikut:
+
+### System Requirements
+- **PHP**: `>= 8.2`
+- **Composer**: Latest version
+- **Node.js & NPM**: Latest LTS version (opsional)
+- **Database**: MySQL 8.0+ atau SQLite 3.0+
+- **Web Server**: Apache/Nginx atau built-in PHP server
+
+### PHP Extensions
+```
+- BCMath
+- Ctype
+- Fileinfo
+- JSON
+- Mbstring
+- OpenSSL
+- PDO
+- Tokenizer
+- XML
+```
+
+---
+
+## 🚀 Installation
+
+### 1. Clone Repository
 ```bash
 git clone https://github.com/Yusril0956/Training-Project.git
 cd Training-Project
-````
-
-### 2️⃣ Install Livewire
-
-```bash
-composer require livewire/livewire
-php artisan livewire:publish --assets
 ```
 
-### 3️⃣ Generate PDF Sertifikat
-
-```bash
-composer require barryvdh/laravel-dompdf
-php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
-```
-
-### 4️⃣ Persiapan Database
-
-1. Salin file `.env.example` menjadi `.env`
-2. Konfigurasi sesuai kebutuhan:
-
-   * **MySQL**
-
-     ```
-     DB_CONNECTION=mysql
-     DB_DATABASE=training_project
-     DB_USERNAME=root
-     DB_PASSWORD=
-     ```
-   * **SQLite**
-
-     ```
-     DB_CONNECTION=sqlite
-     ```
-
-     dan buat file `database/database.sqlite`
-
-### 5️⃣ Install Dependencies
-
+### 2. Install PHP Dependencies
 ```bash
 composer install
-npm install   # jika ada asset frontend
 ```
 
-### 6️⃣ Generate Key & Link Storage
+### 3. Install Node Dependencies (Optional)
+```bash
+npm install
+```
 
+### 4. Environment Configuration
+```bash
+cp .env.example .env
+```
+
+Edit `.env` file dengan konfigurasi database Anda:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=training_project
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### 5. Generate Application Key
 ```bash
 php artisan key:generate
-php artisan storage:link
 ```
 
-### 7️⃣ Migrasi & Seed Database
-
+### 6. Database Setup
 ```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-### 8️⃣ Jalankan Aplikasi
+### 7. Storage Link
+```bash
+php artisan storage:link
+```
 
+### 8. Build Assets (Optional)
+```bash
+npm run build
+# atau untuk development
+npm run dev
+```
+
+### 9. Require Livewire
+```bash
+composer require livewire/livewire
+php artisan livewire:publish --assets
+```
+
+### 10. Require DomPDF
+```bash
+composer require barryvdh/laravel-dompdf
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+```
+
+### 11. Start Application
 ```bash
 php artisan serve
 ```
 
-Buka di browser: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+Akses aplikasi di: `http://127.0.0.1:8000`
 
 ---
 
-## 📖 Penggunaan
+## 🔧 Configuration
 
-1. **Login** dengan akun admin atau peserta (hasil seeding).
-2. **Dashboard** menampilkan statistik pelatihan dan tugas.
-3. **Manajemen Pelatihan** untuk membuat dan mengelola jadwal pelatihan.
-4. **Sertifikat** otomatis digenerate untuk peserta yang lulus.
-5. **Tugas & Penilaian** melalui fitur submission.
+### Environment Variables
+```env
+# Application
+APP_NAME="Training Project"
+APP_ENV=local
+APP_KEY=base64:your_app_key
+APP_DEBUG=true
+APP_URL=http://localhost
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=training_project
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Mail Configuration (Optional)
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=your_email@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### Default Accounts
+Setelah seeding, Anda dapat login dengan akun berikut:
+
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@dirgantara.com | admin123 |
+| Admin | admin2@dirgantara.com | admin123 |
+| User | user@dirgantara.com | user123 |
+
+---
+
+## 🎮 Usage
+
+### For Administrators
+1. **Login** dengan akun admin
+2. **Dashboard** - Lihat statistik dan navigasi
+3. **User Management** - Kelola pengguna dan roles
+4. **Training Management** - Buat dan kelola pelatihan
+5. **Certificate Generation** - Generate sertifikat untuk peserta
+
+### For Users
+1. **Register/Login** ke aplikasi
+2. **Browse Trainings** - Lihat pelatihan tersedia
+3. **Enroll** dalam pelatihan
+4. **Complete Tasks** - Kerjakan dan submit tugas
+5. **Download Certificate** - Unduh sertifikat setelah lulus
+
+---
+
+## 🔍 API Documentation
+
+Aplikasi ini menyediakan REST API endpoints untuk integrasi eksternal. Dokumentasi lengkap dapat diakses melalui:
+
+- **Postman Collection**: `docs/api_collection.json`
+- **API Documentation**: `docs/api.md`
+
+### Sample API Endpoints
+```http
+GET    /api/trainings
+GET    /api/trainings/{id}
+POST   /api/trainings
+PUT    /api/trainings/{id}
+DELETE /api/trainings/{id}
+```
 
 ---
 
 ## 🛠️ Troubleshooting
 
-| Masalah                         | Solusi                                                         |
-| ------------------------------- | -------------------------------------------------------------- |
-| `vendor/autoload.php` not found | Jalankan `composer install`                                    |
-| Error login admin               | Jalankan `php artisan migrate --seed`                          |
-| Missing `APP_KEY`               | Jalankan `php artisan key:generate`                            |
-| Cache error                     | Jalankan `php artisan config:clear && php artisan cache:clear` |
-| Gambar tidak muncul             | Jalankan `php artisan storage:link`                            |
+### Common Issues
 
----
-
-## 🤝 Kontribusi
-
-Kami menyambut kontribusi dari komunitas!
-Langkah-langkah kontribusi:
-
+#### ❌ `vendor/autoload.php` not found
 ```bash
-# 1. Fork repository
-# 2. Buat branch baru
-git checkout -b feature/NamaFitur
-
-# 3. Commit perubahan
-git commit -m "Add: Nama fitur"
-
-# 4. Push ke repository
-git push origin feature/NamaFitur
+composer install
 ```
 
-Lalu buat **Pull Request** ke branch utama.
+#### ❌ `No application encryption key has been specified`
+```bash
+php artisan key:generate
+```
+
+#### ❌ `Database connection error`
+- Pastikan database credentials di `.env` benar
+- Jalankan `php artisan migrate` jika belum
+
+#### ❌ `Class not found` errors
+```bash
+composer dump-autoload
+```
+
+#### ❌ `Permission denied` on storage
+```bash
+chmod -R 755 storage/
+chmod -R 755 bootstrap/cache/
+```
+
+#### ❌ `Livewire not working`
+```bash
+npm run dev
+# atau
+npm run build
+```
+
+### Debug Mode
+Untuk debugging, aktifkan debug mode di `.env`:
+```env
+APP_DEBUG=true
+```
+
+### Clear Cache
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+```
 
 ---
 
-## 📄 Lisensi
+## 🤝 Contributing
 
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+Kami sangat menyambut kontribusi dari komunitas! 🚀
+
+### How to Contribute
+1. **Fork** repository ini
+2. **Create** branch fitur baru (`git checkout -b feature/AmazingFeature`)
+3. **Commit** perubahan Anda (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** ke branch (`git push origin feature/AmazingFeature`)
+5. **Open** Pull Request
+
+### Development Guidelines
+- Ikuti PSR-12 coding standards
+- Gunakan meaningful commit messages
+- Test your changes thoroughly
+- Update documentation if needed
+
+### Issues & Feature Requests
+- Gunakan GitHub Issues untuk melaporkan bug
+- Sertakan langkah-langkah untuk mereproduksi bug
+- Berikan informasi sistem dan versi yang digunakan
 
 ---
 
-> 💡 Pastikan semua perintah Artisan dijalankan sebelum testing aplikasi.
+## 📄 License
 
-```
-```
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+
+**Made with ❤️ by PKL Team at PT. Dirgantara**
+
+[![GitHub stars](https://img.shields.io/github/stars/Yusril0956/Training-Project?style=social)](https://github.com/Yusril0956/Training-Project/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Yusril0956/Training-Project?style=social)](https://github.com/Yusril0956/Training-Project/network/members)
+
+---
+
+> **💡 Tip**: Jangan lupa jalankan `php artisan migrate --seed` sebelum testing aplikasi!
+
+</div>
