@@ -91,6 +91,46 @@ class TrainingController extends Controller
         return redirect()->back()->with('success', 'Training berhasil disetujui');
     }
 
+    
+
+    /**
+     * register/daftar Training untuk user
+     */
+    public function register(Request $request, $trainingId)
+    {
+        $training = Training::findOrFail($trainingId);
+
+        if ($training->status === 'close') {
+            return redirect()->back()->with('error', 'Pendaftaran untuk training ini sudah ditutup.');
+        }
+
+        $trainingDetail = $training->detail;
+        if (!$trainingDetail) {
+            $trainingDetail = $training->detail()->create([
+                'start_date' => now()->toDateString(),
+                'end_date' => now()->addMonth()->toDateString(),
+            ]);
+        }
+
+        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingMember) {
+            return redirect()->back()->with('error', 'Anda sudah terdaftar sebagai peserta training ini.');
+        }
+
+        TrainingMember::create([
+            'training_detail_id' => $trainingDetail->id,
+            'user_id' => Auth::id(),
+            'status' => 'pending',
+            'series' => 'TRN-' . strtoupper(uniqid()),
+        ]);
+
+        return redirect()->back()->with('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
+    }
+    
+
     /**
      * Simpan data Training baru
      */

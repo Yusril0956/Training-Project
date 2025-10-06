@@ -1,4 +1,3 @@
-{{-- resources/views/pages/training/user-list.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Daftar Training')
 

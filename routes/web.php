@@ -128,7 +128,7 @@ Route::middleware('auth')->group(function () {
 
         // Register
         Route::get('/register/{id}', [TrainingController::class, 'daftarTraining'])->name('register');
-        Route::post('/{id}/self-register', [TrainingController::class, 'selfRegister'])->name('self.register');
+        Route::post('/{id}/self-register', [TrainingController::class, 'register'])->name('self.register');
     });
 
     // Certificates
