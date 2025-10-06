@@ -1,4 +1,3 @@
-{{-- resources/views/pages/training/user-list.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Daftar Training')
 
@@ -16,7 +15,7 @@
                 </div>
             </div>
 
-            <livewire:training-search />
+            <livewire:training-search page-type="user" />
 
             {{-- Offcanvas Details --}}
             @foreach ($trainings as $training)
