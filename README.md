@@ -90,20 +90,6 @@ Dibangun dengan framework **Laravel terbaru** untuk memastikan performa dan keam
 
 ---
 
-## 📸 Screenshots
-
-<div align="center">
-
-### 🏠 Dashboard Utama
-<img src="public/images/default-training.jpg" alt="Dashboard" width="80%">
-
-### 🏆 Halaman Sertifikat
-<img src="public/images/SertifikatPenghargaan.png" alt="Certificate" width="60%">
-
-</div>
-
----
-
 ## 👥 Contributors
 
 <div align="center">
