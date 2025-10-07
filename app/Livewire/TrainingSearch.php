@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Training;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingSearch extends Component
 {
@@ -55,12 +56,20 @@ class TrainingSearch extends Component
             ->orderBy('status', 'desc')
             ->paginate(9);
 
+        $userId = Auth::id();
+        $userStatuses = [];
+        foreach ($trainings as $training) {
+            $member = $training->members->where('user_id', $userId)->first();
+            $userStatuses[$training->id] = $member ? $member->status : 'none';
+        }
+
         $viewName = $this->pageType === 'admin'
             ? 'livewire.tmanage-search'
             : 'livewire.training-search';
 
         return view($viewName, [
             'trainings' => $trainings,
+            'userStatuses' => $userStatuses,
         ]);
     }
 }
