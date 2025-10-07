@@ -131,30 +131,7 @@ class TrainingController extends Controller
     }
     
 
-    /**
-     * Simpan data Training baru
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'             => 'required|string|max:255',
-            'description'      => 'nullable|string',
-            'jenisTraining'    => 'required|exists:jenis_trainings,id',
-            'status'           => 'required|in:open,close',
-        ]);
 
-        try {
-            Training::create([
-                'name'             => $request->name,
-                'description'      => $request->description,
-                'jenis_training_id' => $request->jenisTraining,
-                'status'           => $request->status,
-            ]);
-            return redirect()->back()->with('success', 'Permintaan pelatihan berhasil ditambahkan.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan pelatihan: ' . $e->getMessage())->withInput();
-        }
-    }
 
     /**
      * Halaman jadwal training
@@ -465,37 +442,11 @@ class TrainingController extends Controller
      */
     public function tManage()
     {
-        $trainings = Training::with('detail')->paginate(10);
         $jenisTraining = JenisTraining::all();
-        return view('training.manage', compact('trainings', 'jenisTraining'));
+        return view('training.manage', compact('jenisTraining'));
     }
 
-    /**
-     * Hapus training beserta relasi terkait
-     */
-    public function destroy($trainingId)
-    {
-        try {
-            $training = Training::findOrFail($trainingId);
 
-            if ($training->detail) $training->detail->delete();
-            $training->members()->delete();
-            $training->schedules()->delete();
-            $training->materis()->delete();
-
-            foreach ($training->tasks as $task) {
-                $task->submissions()->delete();
-                $task->delete();
-            }
-
-            $training->certificates()->delete();
-            $training->delete();
-
-            return redirect()->route('admin.training.manage')->with('success', 'Pelatihan berhasil dihapus.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menghapus pelatihan: ' . $e->getMessage());
-        }
-    }
 
     /**
      * Tandai member sebagai lulus dan buat sertifikat
