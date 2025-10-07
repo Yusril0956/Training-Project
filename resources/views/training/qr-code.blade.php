@@ -51,7 +51,7 @@
                             </svg>
                             <div>
                                 <strong>QR Code ini bersifat pribadi</strong> dan hanya dapat digunakan untuk absen training ini.
-                                Pastikan untuk menunjukkan QR Code ini kepada admin saat absen.
+                                tidak dapat di gunakan untuk training lain.
                             </div>
                         </div>
                     </div>

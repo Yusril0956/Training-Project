@@ -84,7 +84,7 @@
                 </div>
                 <div class="col-md-6">
                     <h6>2. Upload QR Code untuk Absensi</h6>
-                    <p>Setelah mendapatkan QR code, upload gambar QR code tersebut di form bawah ini untuk melakukan absensi.</p>
+                    <p>Setelah mendapatkan QR code, upload gambar QR code tersebut di form bawah ini untuk melakukan data absensi.</p>
 
                     <form action="{{ route('training.process.qr', $training->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -107,7 +107,7 @@
     @else
     <div class="card">
         <div class="card-header">
-            <h5>Absen Selesai</h5>
+            <h5>Absen selesai</h5>
         </div>
         <div class="card-body">
             <div class="alert alert-success">
