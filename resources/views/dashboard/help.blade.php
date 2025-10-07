@@ -38,10 +38,10 @@
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-decoration-none">Bagaimana cara masuk ke halaman training?</a></li>
                             <li><a href="#" class="text-decoration-none">Bagaimana cara mendaftar training?</a></li>
-                            <li><a href="#" class="text-decoration-none">Cara absen pada training online?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara absen pada setiap training?</a></li>
                             <li><a href="#" class="text-decoration-none">Bagaimana cara mengerjakan tugas?</a></li>
                             <li><a href="#" class="text-decoration-none">Bagaimana cara mengirim tugas?</a></li>
-                            <li><a href="#" class="text-decoration-none">Cara mengirim kritik dan saran?</a></li>
+                            <li><a href="#" class="text-decoration-none">Bagaimana cara mengirim kritik dan saran?</a></li>
                         </ul>
                     </div>
                 </div>
@@ -82,15 +82,14 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingThree">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
-                                        Cara absen pada training online?
+                                        bagaimana cara absen pada setiap training?
                                     </button>
                                 </h2>
                                 <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
-                                        Belum ada atau hilang
+                                       "unduh QR code yang di sediakan oleh instruktur pada halaman training, "lalu scan QR code tersebut untuk di upload pada halaman absen di Training sesuai jenis pelatihan, dan data absen anda akan otomatis masuk ke dalam sistem admin.
                                         <div class="gif-placeholder rounded-2xl w-64 h-45 mx-auto mb-8 flex items-center justify-center">
                                             <div class="text-center">
-                                                <img src="{{ asset('404.gif') }}" width="350" height="220" alt="404">
                                             </div>
           
                                         </div>
@@ -124,7 +123,7 @@
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingFour">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
-                                        Cara mengirim kritik dan saran?
+                                       Bagaimana2 Cara mengirim kritik dan saran?
                                     </button>
                                 </h2>
                                 <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
