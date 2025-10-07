@@ -29,45 +29,14 @@ class DashboardController extends Controller
 
     public function admin(Request $request)
     {
-        $query = User::query();
-
-        // Search functionality
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-            });
-        }
-
-        // Role filter
-        if ($request->filled('role')) {
-            $query->whereHas('roles', function ($q) use ($request) {
-                $q->where('name', $request->role);
-            });
-        }
-
-        $users = $query->paginate(10);
+        // Since user management is handled by Livewire, remove user query and modal data
 
         $certificates = ExternalCertificate::paginate(10);
 
         $assignments = Assignment::all();
 
-        // data untuk modal
-        $modalId = 'deleteUser';
-        $modalTitle = 'Delete User';
-        $modalDescription = 'Are you sure you want to delete this user?';
-        $modalButton = 'Delete';
-        $formMethod = 'DELETE';
-
         return view('admin.index', compact(
-            'users',
             'assignments',
-            'modalId',
-            'modalTitle',
-            'modalDescription',
-            'modalButton',
-            'formMethod',
             'certificates'
         ));
     }
@@ -121,77 +90,7 @@ class DashboardController extends Controller
         return view('dashboard.notifications', compact('notifications'));
     }
 
-    /**
-     * Update user details.
-     * Validates input and prevents updating super admin.
-     */
-    public function userUpdate(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'role' => 'required|in:admin,user,staff',
-            'status' => 'required|in:active,inactive',
-        ]);
 
-        try {
-            $user = User::findOrFail($id);
-            if ($user->role === 'super_admin') {
-                return redirect()->back()->with('error', 'Akun super admin tidak dapat diupdate!');
-            }
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->role = $request->role;
-            $user->status = $request->status;
-            $user->save();
-
-            return redirect()->back()->with('success', 'User berhasil diupdate!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal mengupdate user!');
-        }
-    }
-
-    public function addUser(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'nik' => 'required|numeric|digits:6',
-            'email' => 'required|email|unique:users,email',
-            'role' => 'required|in:admin,user,staff',
-            'status' => 'required',
-        ]);
-
-        try {
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'nik' => $request->nik,
-                'password' => $request->nik,
-                'role' => $request->role,
-                'status' => $request->status,
-            ]);
-            return redirect()->back()->with('success', 'User berhasil ditambahkan!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan user!');
-        }
-    }
-
-    public function deleteUser($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            if ($user->role === 'super_admin') {
-                return redirect()->back()->with('error', 'Akun super admin tidak dapat dihapus!');
-            }
-            $user->delete();
-            return redirect()->back()->with('success', 'User berhasil dihapus!');
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return redirect()->back()->with('error', 'User tidak ditemukan!');
-        } catch (\Exception $e) {
-            $error = $e->getMessage();
-            return redirect()->back()->with('error', 'Gagal menghapus user! ' . $error);
-        }
-    }
 
     /**
      * Display all feedback messages.

@@ -60,7 +60,7 @@
         <div class="card-header bg-primary text-white">
             <h3 class="card-title">Data Absen Peserta</h3>
             <div class="card-actions">
-                <small class="text-white-50">Data absen otomatis dari QR Code</small>
+                <small class="text-white-50">Data absen otomatis masuk dari QR Code</small>
             </div>
         </div>
         <div class="card-body">
@@ -107,8 +107,7 @@
                                     </span>
                                 @else
                                     <span class="badge bg-light text-primary border border-primary">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      
                                             <path d="M18 6l-12 12"/>
                                             <path d="M6 6l12 12"/>
                                         </svg>
@@ -139,8 +138,8 @@
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                         <path d="M12 2l3.09 6.26l6.91 1l-5 4.87l1.18 6.88l-6.18 -3.25l-6.18 3.25l1.18 -6.88l-5 -4.87l6.91 -1l3.09 -6.26z"/>
                                     </svg>
-                                    <h4 class="text-primary">Belum ada data absen</h4>
-                                    <p>Data absen akan muncul otomatis ketika peserta mengupload QR Code mereka.</p>
+                                    <h4 class="text-primary">Belum ada data absen yang masuk</h4>
+                                    <p>Data absen akan masuk otomatis ketika pengguna mengupload QR Code sesuai training yang mereka ikuti.</p>
                                 </div>
                             </td>
                         </tr>
