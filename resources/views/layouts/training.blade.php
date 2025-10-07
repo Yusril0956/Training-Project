@@ -20,6 +20,7 @@
     <link href="{{ asset('dist/css/tabler-payments.min.css?1692870487') }}" rel="stylesheet" />
     <link href="{{ asset('dist/css/tabler-vendors.min.css?1692870487') }}" rel="stylesheet" />
     <link href="{{ asset('dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
+    @vite('resources/js/app.js')
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
