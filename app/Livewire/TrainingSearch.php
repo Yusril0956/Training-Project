@@ -160,16 +160,16 @@ class TrainingSearch extends Component
             ->orderBy('status', 'desc')
             ->paginate(9);
 
-<<<<<<< HEAD
-        $userId = Auth::id();
-        $userStatuses = [];
-        foreach ($trainings as $training) {
-            $member = $training->members->where('user_id', $userId)->first();
+
+             $userId = Auth::id();
+             $userStatuses = [];
+             foreach ($trainings as $training) {
+             $member = $training->members->where('user_id', $userId)->first();
             $userStatuses[$training->id] = $member ? $member->status : 'none';
         }
-=======
+
         $jenisTrainings = $this->pageType === 'admin' ? JenisTraining::all() : [];
->>>>>>> cd79f30d2b859c81db9c7bd5f9f40e77c04bf38a
+
 
         $viewName = $this->pageType === 'admin'
             ? 'livewire.tmanage-search'
@@ -177,11 +177,11 @@ class TrainingSearch extends Component
 
         return view($viewName, [
             'trainings' => $trainings,
-<<<<<<< HEAD
+
             'userStatuses' => $userStatuses,
-=======
+
             'jenisTrainings' => $jenisTrainings,
->>>>>>> cd79f30d2b859c81db9c7bd5f9f40e77c04bf38a
+
         ]);
     }
 }
