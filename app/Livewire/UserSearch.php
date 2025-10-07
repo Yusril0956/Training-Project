@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Cache;
 
 class UserSearch extends Component
@@ -86,19 +87,27 @@ class UserSearch extends Component
                 'email' => $this->email,
                 'nik' => $this->nik,
                 'password' => bcrypt($this->nik),
-                'role' => $this->roleInput,
+                // 'role' => $this->roleInput,
                 // 'status' => $this->status,
             ]);
+            $role = Role::where('name', $this->roleInput)->first();
+            if ($role) {
+                $user->roles()->attach($role->id);
+            }
             session()->flash('success', 'User berhasil ditambahkan.');
         } else {
             $user = User::findOrFail($this->userId);
             $user->name = $this->name;
             $user->email = $this->email;
             $user->nik = $this->nik;
-            $user->role = $this->roleInput;
+            // $user->role = $this->roleInput;
             // $user->status = $this->status;
             // if ($this->password) $user->password = bcrypt($this->password);
             $user->save();
+            $role = Role::where('name', $this->roleInput)->first();
+            if ($role) {
+                $user->roles()->sync([$role->id]);
+            }
             session()->flash('success', 'User berhasil diupdate.');
         }
 
@@ -137,7 +146,9 @@ class UserSearch extends Component
         }
 
         if ($this->role) {
-            $query->where('role', $this->role);
+            $query->whereHas('roles', function ($q) {
+                $q->where('name', $this->role);
+            });
         }
 
         $users = $query->orderBy('created_at', 'desc')->paginate($this->perPage);
