@@ -61,50 +61,58 @@
     </div>
 
     <div class="card mb-3">
-        <div class="card-header">
-            <div class="row g-3 align-items-end">
-                <div class="col-md-6">
-                    <label for="search" class="form-label">Cari User</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-search">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-                                <path d="M21 21l-6 -6" />
-                            </svg></span>
-                        <input type="text" wire:model.live="search" class="form-control"
-                            placeholder="Cari berdasarkan nama atau email...">
-                    </div>
+        <div class="card-header d-flex justify-content-between align-items-end">
+            <div class="flex-grow-1 me-3">
+                <label for="search" class="form-label">Cari User</label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-search">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                            <path d="M21 21l-6 -6" />
+                        </svg>
+                    </span>
+                    <input type="text" wire:model.live="search" class="form-control"
+                        placeholder="Cari berdasarkan nama atau email...">
                 </div>
-                <div class="col-md-3">
-                    <label for="role" class="form-label">Filter Role</label>
+            </div>
+
+            <div class="d-flex">
+                <div>
                     <select wire:model.live="role" class="form-select">
-                        <option value="">Semua Role</option>
+                        <option value="">Filter Role</option>
                         <option value="Super Admin">Super Admin</option>
                         <option value="Admin">Admin</option>
                         <option value="User">User</option>
                     </select>
                 </div>
-                <div class="col-md-3 d-flex align-items-end">
-                    <button class="btn btn-outline-secondary w-100" wire:click="resetFilters">
+
+                <div>
+                    <button class="btn btn-outline-secondary" wire:click="resetFilters">
                         Reset
                     </button>
                 </div>
             </div>
         </div>
-        <div class="card-body">
+
+        {{-- LOADING INDICATOR --}}
+        <div wire:loading.delay.shorter wire:target="search,role,resetFilters" class="text-center my-3">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="text-muted mt-2">Memuat data pengguna...</p>
+        </div>
+
+        {{-- TABLE --}}
+        <div class="card-body" wire:loading.remove wire:target="search,role,resetFilters">
             <div id="table-default" class="table-responsive">
-                <table class="table table-striped table-hover" wire:loading.class="opacity-50"
-                    wire:target="search,role">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
                             <th>NIK</th>
                             <th>Role</th>
-                            {{-- <th>Status</th> --}}
                             <th>Date</th>
                             <th>Action</th>
                         </tr>
@@ -116,11 +124,6 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->nik }}</td>
                                 <td>{{ $user->role ?? 'User' }}</td>
-                                {{-- <td>
-                                    <span class="badge bg-{{ $user->status === 'active' ? 'success' : 'danger' }}">
-                                        {{ ucfirst($user->status ?? 'active') }}
-                                    </span>
-                                </td> --}}
                                 <td>{{ $user->created_at->format('F d, Y') }}</td>
                                 <td>
                                     @if (Auth::id() !== $user->id && $user->role !== 'Super Admin')
@@ -128,7 +131,7 @@
                                             wire:click="showEditModal({{ $user->id }})">Edit</button>
                                         <button class="btn btn-sm btn-danger"
                                             wire:click="deleteUser({{ $user->id }})"
-                                            wire:confirm="Are you sure you want to delete this user?">Delete</button>
+                                            wire:confirm="Yakin ingin menghapus user ini?">Delete</button>
                                     @else
                                         <span class="text-muted">No action</span>
                                     @endif
@@ -145,7 +148,7 @@
 
             {{-- Pagination --}}
             <div class="mt-4 d-flex justify-content-center">
-                {{ $users->links('pagination::bootstrap-5') }}
+                {{ $users->links() }}
             </div>
         </div>
     </div>
@@ -187,6 +190,7 @@
                             <select class="form-select" wire:model="roleInput" required>
                                 <option value="User">User</option>
                                 <option value="Admin">Admin</option>
+                                <option value="Super Admin">Super Admin</option>
                             </select>
                             @error('roleInput')
                                 <div class="text-danger">{{ $message }}</div>
