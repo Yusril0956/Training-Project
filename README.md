@@ -25,7 +25,6 @@
 - [🎯 About](#-about)
 - [✨ Features](#-features)
 - [🛠️ Tech Stack](#️-tech-stack)
-- [📸 Screenshots](#-screenshots)
 - [👥 Contributors](#-contributors)
 - [📋 Requirements](#-requirements)
 - [🚀 Installation](#-installation)
@@ -140,12 +139,17 @@ cd Training-Project
 composer install
 ```
 
-### 3. Install Node Dependencies (Optional)
+### 3. Install Node Dependencies
 ```bash
 npm install
 ```
 
-### 4. Environment Configuration
+### 4. Install Alpine Js
+```bash
+npm install
+```
+
+### 5. Environment Configuration
 ```bash
 cp .env.example .env
 ```
@@ -160,42 +164,42 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-### 5. Generate Application Key
+### 6. Generate Application Key
 ```bash
 php artisan key:generate
 ```
 
-### 6. Database Setup
+### 7. Database Setup
 ```bash
 php artisan migrate
 php artisan db:seed
 ```
 
-### 7. Storage Link
+### 8. Storage Link
 ```bash
 php artisan storage:link
 ```
 
-### 8. Build Assets (Optional)
+### 9. Build Assets (Optional)
 ```bash
 npm run build
 # atau untuk development
 npm run dev
 ```
 
-### 9. Require Livewire
+### 10. Require Livewire
 ```bash
 composer require livewire/livewire
 php artisan livewire:publish --assets
 ```
 
-### 10. Require DomPDF
+### 11. Require DomPDF
 ```bash
 composer require barryvdh/laravel-dompdf
 php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
 ```
 
-### 11. Start Application
+### 12. Start Application
 ```bash
 php artisan serve
 ```
