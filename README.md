@@ -146,7 +146,7 @@ npm install
 
 ### 4. Install Alpine Js
 ```bash
-npm install
+npm install alpinejs
 ```
 
 ### 5. Environment Configuration
