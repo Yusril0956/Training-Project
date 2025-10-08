@@ -7,6 +7,7 @@ use App\Models\JenisTraining;
 use App\Models\Tasks;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingSearch extends Component
 {
@@ -159,7 +160,16 @@ class TrainingSearch extends Component
             ->orderBy('status', 'desc')
             ->paginate(9);
 
+
+             $userId = Auth::id();
+             $userStatuses = [];
+             foreach ($trainings as $training) {
+             $member = $training->members->where('user_id', $userId)->first();
+            $userStatuses[$training->id] = $member ? $member->status : 'none';
+        }
+
         $jenisTrainings = $this->pageType === 'admin' ? JenisTraining::all() : [];
+
 
         $viewName = $this->pageType === 'admin'
             ? 'livewire.tmanage-search'
@@ -167,7 +177,11 @@ class TrainingSearch extends Component
 
         return view($viewName, [
             'trainings' => $trainings,
+
+            'userStatuses' => $userStatuses,
+
             'jenisTrainings' => $jenisTrainings,
+
         ]);
     }
 }
