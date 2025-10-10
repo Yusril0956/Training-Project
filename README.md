@@ -321,6 +321,13 @@ npm run dev
 npm run build
 ```
 
+#### ❌ `Vite manifest not found`
+```bash
+npm run dev
+# atau
+npm run build
+```
+
 ### Debug Mode
 Untuk debugging, aktifkan debug mode di `.env`:
 ```env
