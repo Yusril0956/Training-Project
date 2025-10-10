@@ -316,6 +316,7 @@
                 @endif
             });
         @endif
+        });
     </script>
 @endpush
 </x-layouts.training>

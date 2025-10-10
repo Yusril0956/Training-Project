@@ -1,7 +1,4 @@
-@extends('layouts.training')
-@section('title', 'Task')
-
-@section('content')
+<x-layouts.training title="Task">
     <div class="page-body">
         <div class="container-xl">
 
@@ -48,12 +45,12 @@
                 @forelse($tasks as $task)
                     <div class="card shadow-sm mb-3">
                         <div class="card-header p-3">
-                            <button class="btn btn-transparent d-flex align-items-center w-100 text-start" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-{{ $task->id }}"
+                            <button class="btn btn-transparent d-flex align-items-center w-100 text-start"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $task->id }}"
                                 aria-expanded="false" aria-controls="collapse-{{ $task->id }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
                                     class="icon icon-tabler icons-tabler-outline icon-tabler-clipboard-text">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path
@@ -69,9 +66,9 @@
                                         {{ $task->deadline->format('d M Y H:i') }}
                                     </span>
                                 </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
                                     class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-down">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                     <path d="M6 9l6 6l6 -6" />
@@ -128,18 +125,18 @@
 
         </div>
     </div>
-@endsection
 
-@push('styles')
-    <style>
-        /* Rotate chevron when open */
-        .accordion-collapse.collapse.show+.card-header .accordion-chevron,
-        .card-header button[aria-expanded="true"] .accordion-chevron {
-            transform: rotate(180deg);
-        }
+    @push('styles')
+        <style>
+            /* Rotate chevron when open */
+            .accordion-collapse.collapse.show+.card-header .accordion-chevron,
+            .card-header button[aria-expanded="true"] .accordion-chevron {
+                transform: rotate(180deg);
+            }
 
-        .accordion-chevron {
-            transition: transform 0.2s ease;
-        }
-    </style>
-@endpush
+            .accordion-chevron {
+                transition: transform 0.2s ease;
+            }
+        </style>
+    @endpush
+</x-layouts.training>

@@ -1,7 +1,4 @@
-@extends('layouts.training')
-@section('title', 'Tambah Tugas')
-
-@section('content')
+<x-layouts.training title="Tambah Tugas">
     <div class="page-body">
         <div class="container-xl">
 
@@ -60,4 +57,4 @@
 
         </div>
     </div>
-@endsection
+</x-layouts.training>

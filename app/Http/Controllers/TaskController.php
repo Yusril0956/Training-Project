@@ -23,7 +23,7 @@ class TaskController extends Controller
 
         $tasks = $training->tasks()->latest()->paginate(10);
 
-        return view('training.tasks.index', compact('training', 'tasks'));
+        return view('training.tasks.index', compact('training', 'tasks', 'id'));
     }
 
     /**
@@ -49,17 +49,17 @@ class TaskController extends Controller
                 'deadline' => $request->deadline,
                 'attachment_path' => $path,
             ]);
-    
+
             // Notifikasi ke semua member yang diterima (eager loading user)
             $training = Training::with(['members.user'])->findOrFail($trainingId);
             $acceptedMembers = $training->members->where('status', 'accept');
-    
+
             foreach ($acceptedMembers as $member) {
                 if ($member->user) {
                     $member->user->notify(new \App\Notifications\TaskNotification($task));
                 }
             }
-    
+
             return redirect()->route('training.tasks', $trainingId)
                 ->with('success', 'Tugas berhasil ditambahkan dan notifikasi telah dikirim ke semua peserta.');
         } catch (\Exception $e) {
@@ -135,7 +135,7 @@ class TaskController extends Controller
                 'file_path' => $filePath,
                 'submitted_at' => now(),
             ]);
-    
+
             return back()->with('success', 'Tugas berhasil dikirim.');
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal mengirim tugas: ' . $e->getMessage());

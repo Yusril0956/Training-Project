@@ -52,10 +52,8 @@ class TrainingController extends Controller
 
     public function home($id)
     {
-        $training = Training::withCount(['members', 'materis', 'tasks'])->findOrFail($id);
-        $schedule = $training->schedules()->orderBy('date', 'asc')->first();
-
-        return view('training.main', compact('training', 'schedule'));
+        $training = Training::findOrFail($id);
+        return view('training.main', compact('id', 'training'));
     }
 
     /**
@@ -63,10 +61,8 @@ class TrainingController extends Controller
      */
     public function absen($id)
     {
-        $training = Training::with(['detail', 'jenisTraining'])->findOrFail($id);
-        $members = $training->members()->with(['user', 'attendance'])->get();
-
-        return view('training.absen', compact('training', 'members'));
+        $training = Training::findOrFail($id);
+        return view('training.absen', compact('id', 'training'));
     }
 
     /**
@@ -138,56 +134,8 @@ class TrainingController extends Controller
      */
     public function schedule($id)
     {
-        $training = Training::with('schedules')->findOrFail($id);
-        return view('training.schedule.index', compact('training'));
-    }
-
-    /**
-     * Simpan jadwal training (validasi)
-     */
-    public function storeSchedule(Request $request, $id)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
-            'location' => 'nullable|string|max:255',
-            'instructor' => 'nullable|string|max:255',
-        ]);
-
-        try {
-            $training = Training::findOrFail($id);
-
-            $training->schedules()->create([
-                'title' => $request->title,
-                'date' => $request->date,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-                'location' => $request->location,
-                'instructor' => $request->instructor,
-            ]);
-
-            return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menambahkan jadwal: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Hapus jadwal training
-     */
-    public function deleteSchedule($trainingId, $scheduleId)
-    {
-        try {
-            $training = Training::findOrFail($trainingId);
-            $schedule = $training->schedules()->findOrFail($scheduleId);
-            $schedule->delete();
-    
-            return redirect()->back()->with('success', 'Jadwal berhasil dihapus!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menghapus jadwal: ' . $e->getMessage());
-        }
+        $training = Training::findOrFail($id);
+        return view('training.schedule.index', compact('id', 'training'));
     }
 
     /**
@@ -214,8 +162,8 @@ class TrainingController extends Controller
      */
     public function materials($id)
     {
-        $training = Training::with('materis')->findOrFail($id);
-        return view('training.materials.index', compact('training'));
+        $training = Training::findOrFail($id);
+        return view('training.materials.index', compact('id', 'training'));
     }
 
 
@@ -226,7 +174,7 @@ class TrainingController extends Controller
     public function members($id)
     {
         $user = Auth::user();
-        if ($user->roles()->whereIn('name', ['Admin', 'Super Admin'])->exists()) {
+        if (Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
             $training = Training::with(['members' => function ($q) {
                 $q->where('status', 'accept');
             }])->findOrFail($id);
