@@ -328,6 +328,18 @@ npm run dev
 npm run build
 ```
 
+#### ❌ `'node' is not recognized as an internal or external command, operable program or batch file.`
+'node' is not recognized as an internal or external command, operable program or batch file.
+Pilih:
+```bash
+Windows Installer (.msi) — LTS version
+```
+Setelah selesai, tutup CMD lama, lalu buka CMD baru dan cek:
+```bash
+node -v
+npm -v
+```
+
 ### Debug Mode
 Untuk debugging, aktifkan debug mode di `.env`:
 ```env
