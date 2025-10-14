@@ -191,7 +191,7 @@
                         </span>
                         <span class="nav-link-title">
                             Sertifikat Saya
-                        </span>
+                        </trspan>
                     </a>
                 </li>
 

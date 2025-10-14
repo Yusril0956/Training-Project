@@ -1,35 +1,28 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Admin;
 
 use App\Models\Training;
 use App\Models\JenisTraining;
-use App\Models\Tasks;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\Auth;
 
-class TrainingSearch extends Component
+class TrainingManage extends Component
 {
     use WithPagination;
 
     public string $search = '';
     public string $jenis = '';
-    public string $pageType = 'user';
     protected $paginationTheme = 'bootstrap';
 
-    // CRUD properties
     public $showCreateForm = false;
     public $editingId = null;
     public $name = '';
     public $description = '';
     public $jenis_training_id = '';
     public $status = 'open';
-
-    public function mount($pageType = 'user')
-    {
-        $this->pageType = $pageType;
-    }
+    public $start_date = '';
+    public $end_date = '';
 
     public function updatingSearch()
     {
@@ -50,37 +43,44 @@ class TrainingSearch extends Component
 
     public function resetForm()
     {
-        if ($this->pageType !== 'admin') return;
         $this->name = '';
         $this->description = '';
         $this->jenis_training_id = '';
         $this->status = 'open';
+        $this->start_date = '';
+        $this->end_date = '';
         $this->editingId = null;
         $this->showCreateForm = false;
     }
 
     public function create()
     {
-        if ($this->pageType !== 'admin') return;
         $this->resetForm();
         $this->showCreateForm = true;
     }
 
     public function store()
     {
-        if ($this->pageType !== 'admin') return;
         $this->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'jenis_training_id' => 'required|exists:jenis_trainings,id',
             'status' => 'required|in:open,close',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
-        Training::create([
+        $training = Training::create([
             'name' => $this->name,
             'description' => $this->description,
             'jenis_training_id' => $this->jenis_training_id,
             'status' => $this->status,
+        ]);
+
+        // Create training detail with dates
+        $training->detail()->create([
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
         ]);
 
         session()->flash('success', 'Pelatihan berhasil ditambahkan.');
@@ -89,24 +89,26 @@ class TrainingSearch extends Component
 
     public function edit($id)
     {
-        if ($this->pageType !== 'admin') return;
         $training = Training::findOrFail($id);
         $this->editingId = $id;
         $this->name = $training->name;
         $this->description = $training->description;
         $this->jenis_training_id = $training->jenis_training_id;
         $this->status = $training->status;
+        $this->start_date = $training->detail ? $training->detail->start_date : '';
+        $this->end_date = $training->detail ? $training->detail->end_date : '';
         $this->showCreateForm = true;
     }
 
     public function update()
     {
-        if ($this->pageType !== 'admin') return;
         $this->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'jenis_training_id' => 'required|exists:jenis_trainings,id',
             'status' => 'required|in:open,close',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         $training = Training::findOrFail($this->editingId);
@@ -117,13 +119,21 @@ class TrainingSearch extends Component
             'status' => $this->status,
         ]);
 
+        // Update or create training detail
+        $training->detail()->updateOrCreate(
+            ['training_id' => $training->id],
+            [
+                'start_date' => $this->start_date,
+                'end_date' => $this->end_date,
+            ]
+        );
+
         session()->flash('success', 'Pelatihan berhasil diperbarui.');
         $this->resetForm();
     }
 
     public function destroy($id)
     {
-        if ($this->pageType !== 'admin') return;
         $training = Training::findOrFail($id);
 
         if ($training->detail) $training->detail->delete();
@@ -160,28 +170,11 @@ class TrainingSearch extends Component
             ->orderBy('status', 'desc')
             ->paginate(9);
 
+        $jenisTrainings = JenisTraining::all();
 
-             $userId = Auth::id();
-             $userStatuses = [];
-             foreach ($trainings as $training) {
-             $member = $training->members->where('user_id', $userId)->first();
-            $userStatuses[$training->id] = $member ? $member->status : 'none';
-        }
-
-        $jenisTrainings = $this->pageType === 'admin' ? JenisTraining::all() : [];
-
-
-        $viewName = $this->pageType === 'admin'
-            ? 'livewire.tmanage-search'
-            : 'livewire.training-search';
-
-        return view($viewName, [
+        return view('livewire.admin.training-manage', [
             'trainings' => $trainings,
-
-            'userStatuses' => $userStatuses,
-
             'jenisTrainings' => $jenisTrainings,
-
         ]);
     }
 }

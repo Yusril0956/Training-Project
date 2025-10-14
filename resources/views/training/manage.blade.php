@@ -2,21 +2,23 @@
 @section('title', 'Manajemen Pelatihan')
 
 @section('content')
+    <div class="page-header d-print-none">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                {{-- Kolom kiri: breadcrumb --}}
+                <div class="col">
+                    @include('partials._breadcrumb', [
+                        'items' => [['title' => 'Training Manage', 'url' => route('training.manage')]],
+                    ])
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="page-body">
         <div class="container-xl">
 
-            <!-- Page Header -->
-            <div class="d-flex mb-4">
-                <div class="flex-fill">
-                    <h2 class="page-title">📚 Manajemen Pelatihan</h2>
-                    <p class="text-muted">
-                        Buat, edit, dan hapus pelatihan untuk semua jenis: General Knowledge, Mandatory, Customer Requested,
-                        dan License.
-                    </p>
-                </div>
-            </div>
-
-            <livewire:training-search page-type="admin" />
+            <livewire:admin.training-manage />
 
         </div>
     </div>
