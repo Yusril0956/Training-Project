@@ -2,25 +2,42 @@
 
 namespace App\Livewire\Training\Tasks;
 
-use Livewire\Component;
 use App\Models\Training;
 use App\Models\Tasks;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public $trainingId;
     public $training;
-    protected $tasks;
 
     public function mount($trainingId)
     {
         $this->trainingId = $trainingId;
         $this->training = Training::findOrFail($trainingId);
-        $this->tasks = Tasks::where('training_id', $trainingId)->paginate();
+    }
+
+    public function deleteTask($taskId)
+    {
+        $task = Tasks::where('training_id', $this->training->id)->findOrFail($taskId);
+        $task->submissions()->delete();
+        $task->delete();
+
+        session()->flash('success', 'Tugas berhasil dihapus.');
     }
 
     public function render()
     {
-        return view('livewire.training.tasks.index', ['tasks' => $this->tasks]);
+        $tasks = Tasks::where('training_id', $this->trainingId)
+            ->latest()
+            ->paginate(10);
+
+        return view('livewire.training.tasks.index', [
+            'training' => $this->training,
+            'tasks' => $tasks,
+        ])->layout('components.layouts.training', ['title' => 'Daftar Tugas']);
     }
 }

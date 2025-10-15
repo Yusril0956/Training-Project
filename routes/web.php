@@ -143,11 +143,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
-        Route::get('/tasks/{id}', [TaskController::class, 'index'])->name('tasks');
+        Route::get('/tasks/{trainingId}', \App\Livewire\Training\Tasks\Index::class)->name('tasks');
         Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('task.submit');
         Route::post('/tasks/{trainingId}/{taskId}/edit', [TaskController::class, 'editTask'])->name('task.edit');
         Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
-        Route::get('/tasks/{trainingId}/detail/{taskId}', [TaskController::class, 'show'])->name('task.detail');
+        Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
         Route::post('/training/{id}/feedback', [TrainingController::class, 'submitFeedback'])->name('feedback.submit');
     });
@@ -181,10 +181,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete.get');
         Route::delete('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
 
-        Route::get('/training/{trainingId}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+        Route::get('/training/{trainingId}/tasks/create', \App\Livewire\Training\Tasks\Create::class)->name('tasks.create');
         Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
         Route::get('/training/{trainingId}/tasks/', [TaskController::class, 'index'])->name('submission.download');
-        Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', [TaskController::class, 'reviewTaskSubmission'])->name('task.review');
+        Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', \App\Livewire\Training\Tasks\Review::class)->name('task.review');
         Route::post('training/tasks/review/{submissionId}', [TaskController::class, 'storeReview'])->name('submission.review.store');
     });
 });
