@@ -20,6 +20,7 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.training.index');
+        return view('livewire.training.index')
+            ->layout('layouts.training');
     }
 }

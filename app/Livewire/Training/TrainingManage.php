@@ -172,7 +172,7 @@ class TrainingManage extends Component
 
         $jenisTrainings = JenisTraining::all();
 
-        return view('livewire.admin.training-manage', [
+        return view('livewire.training.training-manage', [
             'trainings' => $trainings,
             'jenisTrainings' => $jenisTrainings,
         ]);

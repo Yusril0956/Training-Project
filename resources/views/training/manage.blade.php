@@ -8,7 +8,7 @@
                 {{-- Kolom kiri: breadcrumb --}}
                 <div class="col">
                     @include('partials._breadcrumb', [
-                        'items' => [['title' => 'Training Manage', 'url' => route('training.manage')]],
+                        'items' => [['title' => 'Training Manage', 'url' => route('admin.training.manage')]],
                     ])
                 </div>
             </div>

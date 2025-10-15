@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <livewire:user.training-index />
+            <livewire:training.training-index />
 
             {{-- Offcanvas Details --}}
             @foreach ($trainings as $training)

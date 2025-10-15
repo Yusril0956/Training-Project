@@ -14,7 +14,7 @@ class Sidebar extends Component
 
     public function mount()
     {
-        $id = request()->route('id');
+        $id = request()->route('id') ?? request()->route('trainingId');
         $this->training = Training::findOrFail($id);
         $this->loadNotifications();
     }

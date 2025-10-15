@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User;
+namespace App\Livewire\Training;
 
 use App\Models\Training;
 use Livewire\Component;
@@ -57,7 +57,7 @@ class TrainingIndex extends Component
             $userStatuses[$training->id] = $member ? $member->status : 'none';
         }
 
-        return view('livewire.user.training-index', [
+        return view('livewire.training.training-index', [
             'trainings' => $trainings,
             'userStatuses' => $userStatuses,
         ]);
