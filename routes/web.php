@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('/{id}/reject', [TrainingController::class, 'reject'])->name('reject');
         Route::put('/{id}/approve', [TrainingController::class, 'approve'])->name('approve');
-        Route::get('/{idabsen}/', [TrainingController::class, 'absen'])->name('absen');
+        Route::get('/{id}/', \App\Livewire\Training\Absen::class)->name('absen');
         Route::get('/{idabsen}/data', [TrainingController::class, 'absen'])->name('absen.data');
 
         // User Attendance with QR Code

@@ -18,7 +18,7 @@
     <div class="page-body">
         <div class="container-xl">
 
-            <livewire:admin.training-manage />
+            <livewire:training.training-manage />
 
         </div>
     </div>

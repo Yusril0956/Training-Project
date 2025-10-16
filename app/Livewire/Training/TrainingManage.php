@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Training;
 
 use App\Models\Training;
 use App\Models\JenisTraining;

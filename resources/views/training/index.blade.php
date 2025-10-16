@@ -12,6 +12,11 @@
                         <h2 class="card-title mb-1">📚 Pilih Pelatihan</h2>
                         <p class="text-muted">Lihat dan daftar pelatihan yang tersedia untuk Anda.</p>
                     </div>
+                    @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
+                        <a href="{{ route('admin.training.manage') }}" class="btn btn-primary">
+                            Manage
+                        </a>
+                    @endif
                 </div>
             </div>
 

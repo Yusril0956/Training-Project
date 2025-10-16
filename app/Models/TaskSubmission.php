@@ -15,6 +15,9 @@ class TaskSubmission extends Model
     ];
 
     protected $table = 'task_submissions';
+    protected $casts = [
+        'submitted_at' => 'datetime', 
+    ];
 
     public function user()
     {

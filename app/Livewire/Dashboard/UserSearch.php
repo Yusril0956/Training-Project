@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Dashboard;
 
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -18,7 +18,7 @@ class UserSearch extends Component
 
     // Modal state
     public $showModal = false;
-    public $modalMode = 'create'; // create|edit
+    public $modalMode = 'create'; 
     public $userId = null;
     public $name, $email, $password, $nik, $roleInput;
 
@@ -153,7 +153,7 @@ class UserSearch extends Component
 
         $users = $query->orderBy('created_at', 'desc')->paginate($this->perPage);
 
-        return view('livewire.user-search', [
+        return view('livewire.dashboard.user-search', [
             'users' => $users,
         ]);
     }

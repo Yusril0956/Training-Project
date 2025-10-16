@@ -20,6 +20,6 @@ class Absen extends Component
 
     public function render()
     {
-        return view('livewire.training.absen');
+        return view('livewire.training.absen')->layout('components.layouts.training');
     }
 }
