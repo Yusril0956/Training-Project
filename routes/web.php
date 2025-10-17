@@ -138,7 +138,7 @@ Route::middleware('auth')->group(function () {
     // ============================
     Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
         Route::get('/training/{id}', [TrainingController::class, 'home'])->name('home');
-        Route::get('/members/{id}', [TrainingController::class, 'members'])->name('members');
+        Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members');
         Route::get('/materials/{id}', [TrainingController::class, 'materials'])->name('materials');
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
@@ -154,10 +154,10 @@ Route::middleware('auth')->group(function () {
 
 
     // Member Management
-    Route::prefix('training/{id}')->name('training.')->middleware('isMember')->group(function () {
-        Route::get('/add-member', [TrainingController::class, 'showAddMemberForm'])->name('member.add.form');
+    Route::prefix('training/{trainingId}')->name('training.')->middleware('isMember')->group(function () {
+        Route::get('/add-member', \App\Livewire\Training\Members\Add::class)->name('member.add.form');
+        Route::get('/create-user-member', \App\Livewire\Training\Members\CreateUserAndMember::class)->name('member.create');
         Route::post('/add-member', [TrainingController::class, 'addMember'])->name('member.add');
-        Route::post('/add-member-user', [TrainingController::class, 'addUserMember'])->name('member.add.user');
     });
 
     // ============================

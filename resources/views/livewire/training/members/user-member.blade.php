@@ -1,7 +1,4 @@
-@extends('layouts.training')
-@section('title', 'Peserta Hadir')
-
-@section('content')
+<div>
     <div class="page-body">
         <div class="container-xl">
 
@@ -54,4 +51,4 @@
 
         </div>
     </div>
-@endsection
+</div>

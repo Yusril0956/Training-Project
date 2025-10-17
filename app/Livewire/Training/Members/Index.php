@@ -2,10 +2,17 @@
 
 namespace App\Livewire\Training\Members;
 
-use Livewire\Component;
+use App\Models\Certificate;
 use App\Models\Training;
 use App\Models\TrainingMember;
+use App\Notifications\TrainingAcceptedNotification;
+use App\Notifications\TrainingGraduatedNotification;
+use App\Notifications\TrainingKickedNotification;
+use App\Notifications\TrainingRejectedNotification;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
 
 class Index extends Component
 {
@@ -13,37 +20,133 @@ class Index extends Component
     public $training;
     public $pendingMembers;
     public $graduateMember;
-
-    public function mount($trainingId)
+    public $isAdmin = false;
+    
+    public function mount($id)
     {
-        $this->trainingId = $trainingId;
+        $this->trainingId = $id;
+        $this->loadData();
+    }
+
+    public function loadData()
+    {
         $user = Auth::user();
+
         if ($user->hasAnyRole(['Admin', 'Super Admin'])) {
-            $this->training = Training::with(['members' => function ($q) {
-                $q->where('status', 'accept');
-            }])->findOrFail($trainingId);
+            $this->isAdmin = true;
 
-            $this->pendingMembers = TrainingMember::with('user')->whereHas('trainingDetail', function ($q) use ($trainingId) {
-                $q->where('training_id', $trainingId);
-            })->where('status', 'pending')->get();
+            $this->training = Training::with([
+                'members' => fn($q) => $q->where('status', 'accept')->with('user'),
+                'pendingMembers' => fn($q) => $q->where('status', 'pending')->with('user'),
+                'graduateMembers' => fn($q) => $q->where('status', 'graduate')->with('user.certificates', fn($cert) => $cert->where('training_id', $this->trainingId)),
+            ])->findOrFail($this->trainingId);
+            
+            $this->pendingMembers = $this->training->pendingMembers;
+            $this->graduateMember = $this->training->graduateMembers;
 
-            $this->graduateMember = TrainingMember::with(['user.certificates' => function ($q) use ($trainingId) {
-                $q->where('training_id', $trainingId);
-            }])->whereHas('trainingDetail', function ($q) use ($trainingId) {
-                $q->where('training_id', $trainingId);
-            })->where('status', 'graduate')->get();
         } else {
-            $userId = Auth::id();
-            $this->training = Training::whereHas('members', function ($q) use ($userId) {
-                $q->where('user_id', $userId)->whereIn('status', ['accept', 'graduate']);
+            $this->isAdmin = false;
+            $this->training = Training::whereHas('members', function ($q) {
+                $q->where('user_id', Auth::id())->whereIn('status', ['accept', 'graduate']);
             })
-                ->with(['detail', 'jenisTraining', 'members'])
-                ->findOrFail($trainingId);
+            ->with(['detail', 'jenisTraining', 'members.user'])
+            ->findOrFail($this->trainingId);
         }
     }
 
     public function render()
     {
-        return view('livewire.training.members.index');
+        $view = $this->isAdmin ? 'livewire.training.members.index' : 'livewire.training.members.user-member';
+        return view($view)->layout('components.layouts.training', ['title' => 'Daftar Peserta']);
+    }
+
+    private function findMemberOrFail($memberId)
+    {
+        return TrainingMember::with('user', 'trainingDetail.training')->findOrFail($memberId);
+    }
+
+    public function acceptMember($memberId)
+    {
+        try {
+            $member = $this->findMemberOrFail($memberId);
+            $member->update(['status' => 'accept']);
+            $member->user->notify(new TrainingAcceptedNotification($member->trainingDetail->training));
+            session()->flash('success', 'Peserta telah diterima.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal menerima peserta: ' . $e->getMessage());
+        }
+        $this->loadData();
+    }
+
+    public function rejectMember($memberId)
+    {
+        try {
+            $member = $this->findMemberOrFail($memberId);
+            $training = $member->trainingDetail->training;
+            $user = $member->user;
+            
+            $member->delete();
+            $user->notify(new TrainingRejectedNotification($training));
+            
+            session()->flash('success', 'Peserta telah ditolak dan dihapus.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal menolak peserta: ' . $e->getMessage());
+        }
+        $this->loadData();
+    }
+
+    public function deleteMember($memberId)
+    {
+        try {
+            $member = $this->findMemberOrFail($memberId);
+            $training = $member->trainingDetail->training;
+            $user = $member->user;
+
+            $member->delete();
+            $user->notify(new TrainingKickedNotification($training));
+            
+            session()->flash('success', 'Peserta telah dihapus.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal menghapus peserta: ' . $e->getMessage());
+        }
+        $this->loadData();
+    }
+
+    public function graduateMember($memberId)
+    {
+        try {
+            $member = $this->findMemberOrFail($memberId);
+            $training = $member->trainingDetail->training;
+            $user = $member->user;
+            
+            $member->update(['status' => 'graduate']);
+
+            $certificateNumber = strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd'));
+            $data = [
+                'user' => $user,
+                'training' => $training->load('detail'),
+                'certificateNumber' => $certificateNumber,
+                'supervisorName' => 'Ir. Budi Santoso, M.T.',
+            ];
+
+            $pdf = Pdf::loadView('certificate.template', $data)->setPaper('a4', 'landscape');
+            $filename = 'certificates/' . $certificateNumber . '.pdf';
+            Storage::disk('public')->put($filename, $pdf->output());
+
+            Certificate::create([
+                'user_id' => $user->id,
+                'training_id' => $training->id,
+                'name' => 'Sertifikat ' . $training->name,
+                'organization' => 'PT Dirgantara Indonesia',
+                'issue_date' => now(),
+                'file_path' => $filename,
+            ]);
+
+            $user->notify(new TrainingGraduatedNotification($training));
+            session()->flash('success', 'Peserta telah lulus dan sertifikat telah dibuat.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal meluluskan peserta: ' . $e->getMessage());
+        }
+        $this->loadData();
     }
 }
