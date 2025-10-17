@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Training;
+namespace App\Livewire\Training\Absen;
 
 use App\Models\Training;
 use Livewire\Component;
 
-class Absen extends Component
+class Admin extends Component
 {
     public $id;
     public $training;
@@ -20,6 +20,6 @@ class Absen extends Component
 
     public function render()
     {
-        return view('livewire.training.absen')->layout('components.layouts.training');
+        return view('livewire.training.absen.admin')->layout('components.layouts.training', ['title' => 'Absensi']);
     }
 }

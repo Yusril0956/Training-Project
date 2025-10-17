@@ -44,7 +44,12 @@
 
             @include('components.alerts')
 
-            {{ $slot }}
+            @isset($slot)
+                {{ $slot }}
+            @endisset
+
+            {{-- Untuk Blade biasa --}}
+            @yield('content')
 
             @include('partials._footer')
         </div>
