@@ -43,16 +43,6 @@
                         <p><strong>Jumlah Peserta:</strong> {{ $training->members->count() }}</p>
 
                         <hr>
-
-                        <h6>Matriks Materi</h6>
-                        <ul>
-                            @foreach ($training->materis as $mat)
-                                <li>{{ $mat->title }}</li>
-                            @endforeach
-                            @if ($training->materis->isEmpty())
-                                <li class="text-muted">Belum ada materi</li>
-                            @endif
-                        </ul>
                     </div>
                 </div>
             @endforeach

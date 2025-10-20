@@ -139,7 +139,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
         Route::get('/training/{id}', [TrainingController::class, 'home'])->name('home');
         Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members');
-        Route::get('/materials/{id}', [TrainingController::class, 'materials'])->name('materials');
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
@@ -148,6 +147,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/tasks/{trainingId}/{taskId}/edit', [TaskController::class, 'editTask'])->name('task.edit');
         Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
         Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
+        Route::get('/materi/{trainingId}', \App\Livewire\Training\Materi\MateriIndex::class)->name('materi.index');
+        Route::get('/materi/{trainingId}/create', \App\Livewire\Training\Materi\MateriCreate::class)->name('materi.create');
         Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
         Route::post('/training/{id}/feedback', [TrainingController::class, 'submitFeedback'])->name('feedback.submit');
     });

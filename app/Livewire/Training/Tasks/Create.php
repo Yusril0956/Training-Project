@@ -39,19 +39,26 @@ class Create extends Component
         $this->validate();
 
         try {
-            // Simpan file jika ada
-            $path = $this->attachment
-                ? $this->attachment->store('attachments', 'public')
-                : null;
-
-            // Simpan ke database
+            // Simpan ke database terlebih dahulu untuk mendapatkan task_id
             $task = Tasks::create([
                 'training_id' => $this->training_id,
                 'title' => $this->title,
                 'description' => $this->description,
                 'deadline' => $this->deadline,
-                'attachment_path' => $path,
+                'attachment_path' => null, // akan diupdate jika ada attachment
             ]);
+
+            // Simpan file jika ada
+            if ($this->attachment) {
+                $originalName = $this->attachment->getClientOriginalName();
+                $extension = $this->attachment->getClientOriginalExtension();
+                $uniqueName = time() . '_' . Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $extension;
+                $folderName = 'trainings/' . $this->training_id . '/task_attachments/' . $task->id . '/';
+                $path = $this->attachment->storeAs($folderName, $uniqueName, 'public');
+
+                // Update task dengan path attachment
+                $task->update(['attachment_path' => $path]);
+            }
 
             // Kirim notifikasi ke member yang diterima
             $training = Training::with(['members.user'])->findOrFail($this->training_id);

@@ -21,7 +21,7 @@
                     <div class="mb-3">
                         <label class="form-label">Judul Tugas</label>
                         <input type="text" wire:model="title" class="form-control"
-                            placeholder="Contoh: Resume Materi Hari ke-2" required>
+                            placeholder="Contoh: Resume Hari ke-2" required>
                         @error('title')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

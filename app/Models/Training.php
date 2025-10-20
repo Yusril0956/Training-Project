@@ -33,11 +33,6 @@ class Training extends Model
         return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id');
     }
 
-    public function materis()
-    {
-        return $this->hasMany(Materi::class, 'training_id');
-    }
-
     public function tasks()
     {
         return $this->hasMany(Tasks::class, 'training_id');
@@ -51,5 +46,10 @@ class Training extends Model
     public function certificates()
     {
         return $this->hasMany(Certificate::class, 'training_id');
+    }
+
+    public function materis()
+    {
+        return $this->hasMany(Materi::class, 'training_id');
     }
 }

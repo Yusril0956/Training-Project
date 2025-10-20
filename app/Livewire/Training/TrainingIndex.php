@@ -35,7 +35,7 @@ class TrainingIndex extends Component
     public function render()
     {
         $trainings = Training::query()
-            ->with(['jenisTraining', 'detail', 'members', 'materis'])
+            ->with(['jenisTraining', 'detail', 'members'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', '%' . $this->search . '%')

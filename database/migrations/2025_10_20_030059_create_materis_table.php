@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('training_materials', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
+        Schema::create('materis', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('media_type');
-            $table->string('media_path');
+            $table->string('file_path')->nullable();
+            $table->string('file_name')->nullable();
+            $table->string('file_type')->nullable();
+            $table->unsignedBigInteger('training_id');
+            $table->foreign('training_id')->references('id')->on('trainings')->onDelete('cascade');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('training_materials');
+        Schema::dropIfExists('materis');
     }
 };

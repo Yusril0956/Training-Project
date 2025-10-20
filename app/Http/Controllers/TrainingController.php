@@ -27,7 +27,7 @@ class TrainingController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Training::with(['jenisTraining', 'detail', 'members', 'materis'])->orderBy('status', 'desc');
+        $query = Training::with(['jenisTraining', 'detail', 'members'])->orderBy('status', 'desc');
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -155,15 +155,6 @@ class TrainingController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus peserta: ' . $e->getMessage());
         }
-    }
-
-    /**
-     * Halaman materi training
-     */
-    public function materials($id)
-    {
-        $training = Training::findOrFail($id);
-        return view('training.materials.index', compact('id', 'training'));
     }
 
 

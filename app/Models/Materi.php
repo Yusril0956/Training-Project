@@ -9,15 +9,14 @@ class Materi extends Model
     protected $fillable = [
         'title',
         'description',
-        'media_type',
-        'media_path',
+        'file_path',
+        'file_name',
+        'file_type',
         'training_id',
     ];
 
-    protected $table = 'training_materials';
-
     public function training()
     {
-        return $this->belongsTo(Training::class, 'training_id');
+        return $this->belongsTo(Training::class);
     }
 }

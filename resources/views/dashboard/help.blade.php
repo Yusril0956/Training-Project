@@ -230,7 +230,7 @@
                     <div class="card-body">
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-decoration-none">Mengelola data pelatihan</a></li>
-                            <li><a href="#" class="text-decoration-none">Mengakses materi dan jadwal training</a></li>
+                            <li><a href="#" class="text-decoration-none">Mengakses dan jadwal training</a></li>
                             <li><a href="#" class="text-decoration-none">Menggunakan fitur admin (khusus admin)</a></li>
                             <li><a href="#" class="text-decoration-none">Mengunduh sertifikat pelatihan</a></li>
                         </ul>

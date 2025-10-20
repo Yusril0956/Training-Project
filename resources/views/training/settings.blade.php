@@ -76,10 +76,6 @@
                                 class="btn btn-outline-primary w-100">Kelola Peserta</a>
                         </div>
                         <div class="col-md-6">
-                            <a href="{{ route('training.materials', $training->id) }}"
-                                class="btn btn-outline-success w-100">Kelola Materi</a>
-                        </div>
-                        <div class="col-md-6">
                             <a href="{{ route('training.tasks', $training->id) }}"
                                 class="btn btn-outline-warning w-100">Kelola Tugas</a>
                         </div>

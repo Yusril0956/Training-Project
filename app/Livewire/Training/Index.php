@@ -14,7 +14,7 @@ class Index extends Component
     public function mount($id)
     {
         $this->id = $id;
-        $this->training = Training::withCount(['members', 'materis', 'tasks'])->findOrFail($id);
+        $this->training = Training::withCount(['members', 'tasks'])->findOrFail($id);
         $this->schedule = $this->training->schedules()->orderBy('date', 'asc')->first();
     }
 
