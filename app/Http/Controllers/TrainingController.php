@@ -57,15 +57,6 @@ class TrainingController extends Controller
     }
 
     /**
-     * Halaman absen training
-     */
-    public function absen($id)
-    {
-        $training = Training::findOrFail($id);
-        return view('training.absen', compact('id', 'training'));
-    }
-
-    /**
      * Reject training request
      */
     public function reject($id)

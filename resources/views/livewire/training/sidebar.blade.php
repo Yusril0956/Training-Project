@@ -212,52 +212,6 @@
                         </span>
                     </a>
                 </li>
-                @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                    <li class="nav-item @if (request()->routeIs('training.absen')) active @endif">
-                        <a class="nav-link" href="{{ route('training.absen', $training->id) }}" wire:navigate>
-                            <span
-                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
-                                    <path d="M16 3v4" />
-                                    <path d="M8 3v4" />
-                                    <path d="M4 11h16" />
-                                    <path d="M15 19l2 2l4 -4" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Data Absen Training
-                            </span>
-                        </a>
-                    </li>
-                @endif
-                @if (Auth::user()->hasRole('User'))
-                    <li class="nav-item @if (request()->routeIs('training.user.absen')) active @endif">
-                        <a class="nav-link" href="{{ route('training.user.absen', $training->id) }}" wire:navigate>
-                            <span
-                                class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
-                                    <path d="M16 3v4" />
-                                    <path d="M8 3v4" />
-                                    <path d="M4 11h16" />
-                                    <path d="M15 19l2 2l4 -4" />
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Absen Training
-                            </span>
-                        </a>
-                    </li>
-                @endif
                 <li class="nav-item @if (request()->routeIs('training.schedule')) active @endif">
                     <a class="nav-link" href="{{ route('training.schedule', $training->id) }}" wire:navigate>
                         <span

@@ -9,7 +9,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
-use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ScheduleController;
@@ -112,14 +111,6 @@ Route::middleware('auth')->group(function () {
 
         Route::delete('/{id}/reject', [TrainingController::class, 'reject'])->name('reject');
         Route::put('/{id}/approve', [TrainingController::class, 'approve'])->name('approve');
-        Route::get('/{id}/', \App\Livewire\Training\Absen\Admin::class)->name('absen');
-        Route::get('/{idabsen}/data', [TrainingController::class, 'absen'])->name('absen.data');
-
-        // User Attendance with QR Code
-        Route::get('/{id}/user-absen', [AttendanceController::class, 'userAbsen'])->name('user.absen');
-        Route::get('/{id}/generate-qr', [AttendanceController::class, 'generateQR'])->name('generate.qr');
-        Route::get('/{id}/download-qr', [AttendanceController::class, 'downloadQR'])->name('download.qr');
-        Route::post('/{id}/process-qr', [AttendanceController::class, 'processQR'])->name('process.qr');
 
         // Settings
         Route::get('/settings/{id}', \App\Livewire\Training\Settings::class)->name('settings');
