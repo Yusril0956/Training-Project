@@ -66,7 +66,6 @@ class MateriCreate extends Component
 
             session()->flash('success', 'Materi berhasil ditambahkan!');
             return redirect()->route('training.materi.index', $this->trainingId);
-
         } catch (Exception $e) {
             session()->flash('error', 'Gagal menambahkan materi. Terjadi kesalahan pada server.');
         }
@@ -75,6 +74,6 @@ class MateriCreate extends Component
     public function render()
     {
         return view('livewire.training.materi.materi-create')
-            ->layout('components.layouts.training');
+            ->layout('layouts.training');
     }
 }

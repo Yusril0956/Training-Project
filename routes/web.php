@@ -122,8 +122,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/process-qr', [AttendanceController::class, 'processQR'])->name('process.qr');
 
         // Settings
-        Route::get('/settings/{name}', [TrainingController::class, 'settings'])->name('settings');
-        Route::post('/setting/{id}/update', [TrainingController::class, 'updateSettings'])->name('settings.update');
+        Route::get('/settings/{id}', \App\Livewire\Training\Settings::class)->name('settings');
 
         // Register
         Route::get('/register/{id}', [TrainingController::class, 'daftarTraining'])->name('register');
@@ -137,8 +136,8 @@ Route::middleware('auth')->group(function () {
     // Member Routes
     // ============================
     Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
-        Route::get('/training/{id}', [TrainingController::class, 'home'])->name('home');
-        Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members');
+        Route::get('/training/{id}', \App\Livewire\Training\Index::class)->name('home');
+        Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members.index');
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
         Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
         Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
@@ -175,7 +174,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/extcertificate/{extcertificateId}/reject', [DashboardController::class, 'rejectCertificate'])->name('certificate.reject');
 
         // Training Management
-        Route::get('/training/manage', [TrainingController::class, 'tManage'])->name('training.manage');
+        Route::get('/training/manage', \App\Livewire\Training\TrainingManage::class)->name('training.manage');
         Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
         Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
         Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');

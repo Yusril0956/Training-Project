@@ -5,7 +5,7 @@
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => $training->name, 'url' => route('training.home', $training->id)],
-                    ['title' => 'Members', 'url' => route('training.members', $training->id)],
+                    ['title' => 'Members', 'url' => route('training.members.index', $training->id)],
                 ],
             ])
 
@@ -32,7 +32,7 @@
                                 </svg>
                                 Add Member
                             </a>
-                            {{-- SESUDAH --}}
+                            
                             <a href="{{ route('training.member.create', $training->id) }}" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -185,9 +185,4 @@
             </div>
         </div>
     </div>
-
-    @if ($isAdmin)
-        <livewire:training.members.create-user-and-member :trainingId="$training->id"
-            wire:key="create-user-for-training-{{ $training->id }}" />
-    @endif
 </div>

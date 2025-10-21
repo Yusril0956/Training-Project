@@ -87,7 +87,7 @@ class TrainingController extends Controller
         return redirect()->back()->with('success', 'Training berhasil disetujui');
     }
 
-    
+
 
     /**
      * register/daftar Training untuk user
@@ -125,7 +125,7 @@ class TrainingController extends Controller
 
         return redirect()->back()->with('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
     }
-    
+
 
 
 
@@ -298,38 +298,7 @@ class TrainingController extends Controller
         }
     }
 
-    /**
-     * Halaman pengaturan training
-     */
-    public function settings($name)
-    {
-        $training = Training::where('name', $name)->firstOrFail();
-        return view('training.settings', compact('training'));
-    }
 
-    /**
-     * Update pengaturan training
-     */
-    public function updateSettings(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:open,close',
-        ]);
-
-        try {
-            $training = Training::findOrFail($id);
-            $training->name = $request->name;
-            $training->description = $request->description;
-            $training->status = $request->status;
-            $training->save();
-
-            return redirect()->route('training.settings', $training->name)->with('success', 'Pengaturan pelatihan berhasil diperbarui!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal memperbarui pengaturan: ' . $e->getMessage());
-        }
-    }
 
     /**
      * Admin menerima member training

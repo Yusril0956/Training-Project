@@ -1,4 +1,4 @@
-@props(['title' => 'Default Title'])
+@props(['title' => 'Training'])
 <!doctype html>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
@@ -44,12 +44,7 @@
 
             @include('components.alerts')
 
-            @isset($slot)
-                {{ $slot }}
-            @endisset
-
-            {{-- Untuk Blade biasa --}}
-            @yield('content')
+            {{ $slot }}
 
             @include('partials._footer')
         </div>

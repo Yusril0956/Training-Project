@@ -21,7 +21,7 @@ class Index extends Component
     public $pendingMembers;
     public $graduateMember;
     public $isAdmin = false;
-    
+
     public function mount($id)
     {
         $this->trainingId = $id;
@@ -40,24 +40,23 @@ class Index extends Component
                 'pendingMembers' => fn($q) => $q->where('status', 'pending')->with('user'),
                 'graduateMembers' => fn($q) => $q->where('status', 'graduate')->with('user.certificates', fn($cert) => $cert->where('training_id', $this->trainingId)),
             ])->findOrFail($this->trainingId);
-            
+
             $this->pendingMembers = $this->training->pendingMembers;
             $this->graduateMember = $this->training->graduateMembers;
-
         } else {
             $this->isAdmin = false;
             $this->training = Training::whereHas('members', function ($q) {
                 $q->where('user_id', Auth::id())->whereIn('status', ['accept', 'graduate']);
             })
-            ->with(['detail', 'jenisTraining', 'members.user'])
-            ->findOrFail($this->trainingId);
+                ->with(['detail', 'jenisTraining', 'members.user'])
+                ->findOrFail($this->trainingId);
         }
     }
 
     public function render()
     {
         $view = $this->isAdmin ? 'livewire.training.members.index' : 'livewire.training.members.user-member';
-        return view($view)->layout('components.layouts.training', ['title' => 'Daftar Peserta']);
+        return view($view)->layout('layouts.training', ['title' => 'Daftar Peserta']);
     }
 
     private function findMemberOrFail($memberId)
@@ -84,10 +83,10 @@ class Index extends Component
             $member = $this->findMemberOrFail($memberId);
             $training = $member->trainingDetail->training;
             $user = $member->user;
-            
+
             $member->delete();
             $user->notify(new TrainingRejectedNotification($training));
-            
+
             session()->flash('success', 'Peserta telah ditolak dan dihapus.');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal menolak peserta: ' . $e->getMessage());
@@ -104,7 +103,7 @@ class Index extends Component
 
             $member->delete();
             $user->notify(new TrainingKickedNotification($training));
-            
+
             session()->flash('success', 'Peserta telah dihapus.');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal menghapus peserta: ' . $e->getMessage());
@@ -118,7 +117,7 @@ class Index extends Component
             $member = $this->findMemberOrFail($memberId);
             $training = $member->trainingDetail->training;
             $user = $member->user;
-            
+
             $member->update(['status' => 'graduate']);
 
             $certificateNumber = strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd'));

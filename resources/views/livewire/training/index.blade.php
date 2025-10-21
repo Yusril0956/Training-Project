@@ -48,7 +48,7 @@
             <div class="card-body">
                 <div class="row row-cards">
                     <div class="col-md-4">
-                        <a href="{{ route('training.members', $training->id) }}" class="card card-link">
+                        <a href="{{ route('training.members.index', $training->id) }}" class="card card-link">
                             <div class="card-body text-center">
                                 <span class="avatar bg-green-lt text-green mb-2"><svg xmlns="http://www.w3.org/2000/svg"
                                         width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -131,12 +131,12 @@
                     </div>
                     @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                         <div class="col-md-4">
-                            <a href="{{ route('training.settings', $training->name) }}" class="card card-link">
+                            <a href="{{ route('training.settings', $training->id) }}" class="card card-link">
                                 <div class="card-body text-center">
-                                    <span class="avatar bg-red-lt text-red mb-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    <span class="avatar bg-red-lt text-red mb-2"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path

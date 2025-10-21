@@ -52,4 +52,14 @@ class Training extends Model
     {
         return $this->hasMany(Materi::class, 'training_id');
     }
+
+    public function pendingMembers()
+    {
+        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id')->where('training_members.status', 'pending');
+    }
+
+    public function graduateMembers()
+    {
+        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id')->where('training_members.status', 'graduate');
+    }
 }

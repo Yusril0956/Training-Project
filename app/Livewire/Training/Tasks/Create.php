@@ -85,6 +85,6 @@ class Create extends Component
     {
         return view('livewire.training.tasks.create', [
             'training' => $this->training,
-        ])->layout('components.layouts.training', ['title' => 'Buat Tugas']);
+        ])->layout('layouts.training', ['title' => 'Buat Tugas']);
     }
 }

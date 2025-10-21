@@ -67,7 +67,7 @@ class Review extends Component
 
     public function render()
     {
-        return view('livewire.training.tasks.review')->layout('components.layouts.training', [
+        return view('livewire.training.tasks.review')->layout('layouts.training', [
             'training' => $this->training,
             'task' => $this->task,
             'submission' => $this->submission,

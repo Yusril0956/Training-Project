@@ -38,6 +38,6 @@ class Index extends Component
         return view('livewire.training.tasks.index', [
             'training' => $this->training,
             'tasks' => $tasks,
-        ])->layout('components.layouts.training', ['title' => 'Daftar Tugas']);
+        ])->layout('layouts.training', ['title' => 'Daftar Tugas']);
     }
 }

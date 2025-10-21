@@ -20,6 +20,6 @@ class Admin extends Component
 
     public function render()
     {
-        return view('livewire.training.absen.admin')->layout('components.layouts.training', ['title' => 'Absensi']);
+        return view('livewire.training.absen.admin')->layout('layouts.training', ['title' => 'Absensi']);
     }
 }

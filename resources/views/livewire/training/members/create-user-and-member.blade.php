@@ -6,7 +6,7 @@
                 'items' => [
                     ['title' => 'Training', 'url' => route('training.index')],
                     ['title' => $training->name, 'url' => route('training.home', $training->id)],
-                    ['title' => 'Members', 'url' => route('training.members', $training->id)],
+                    ['title' => 'Members', 'url' => route('training.members.index', $training->id)],
                     ['title' => 'Add New Member', 'url' => '#'],
                 ],
             ])
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-end">
-                        <a href="{{ route('training.members', $training->id) }}" class="btn">Cancel</a>
+                        <a href="{{ route('training.members.index', $training->id) }}" class="btn">Cancel</a>
                         <button type="submit" class="btn btn-primary">
                             <div wire:loading wire:target="addNewUser" class="spinner-border spinner-border-sm" role="status"></div>
                             Submit

@@ -49,19 +49,17 @@ class CreateUserAndMember extends Component
                 'start_date' => now(),
                 'end_date' => now()->addMonth(),
             ]);
-            
+
             $trainingDetail->members()->create([
                 'user_id' => $newUser->id,
                 'status' => 'accept',
                 'series' => 'TRN-' . strtoupper(uniqid()),
             ]);
-            
+
             $newUser->notify(new TrainingInvitationNotification($this->training));
 
-            // Redirect kembali ke halaman member dengan pesan sukses
-            return redirect()->route('training.members', $this->trainingId)
-                             ->with('success', 'User baru berhasil ditambahkan dan didaftarkan.');
-
+            return redirect()->route('training.members.index', $this->trainingId)
+                ->with('success', 'User baru berhasil ditambahkan dan didaftarkan.');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal menambahkan user: ' . $e->getMessage());
         }
@@ -71,6 +69,6 @@ class CreateUserAndMember extends Component
     {
         // Render view dengan layout utama untuk training
         return view('livewire.training.members.create-user-and-member')
-            ->layout('components.layouts.training', ['title' => 'Add New Member']);
+            ->layout('layouts.training', ['title' => 'Add New Member']);
     }
 }

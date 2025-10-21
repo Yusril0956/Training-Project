@@ -4,8 +4,8 @@
         @include('partials._breadcrumb', [
             'items' => [
                 ['title' => 'Training', 'url' => route('training.index')],
-                ['title' => Str::limit($trainingName, 10), 'url' => route('training.home', $training->id)],
-                ['title' => 'Tugas', 'url' => route('training.tasks', $trainingId)],
+                ['title' => Str::limit($training->name, 10), 'url' => route('training.home', $training->id)],
+                ['title' => 'Tugas', 'url' => route('training.tasks', $training->id)],
             ],
         ])
 

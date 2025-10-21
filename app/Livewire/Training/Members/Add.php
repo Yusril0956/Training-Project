@@ -7,32 +7,52 @@ use App\Models\TrainingMember;
 use App\Models\User;
 use App\Notifications\TrainingInvitationNotification;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
-use Livewire\Attributes\Computed;
+use Exception;
 
 class Add extends Component
 {
     public Training $training;
-    public $users;
-
+    
+    public $users = [];
     public $selectedUsers = [];
     public $selectAll = false;
 
-    public function mount(Training $training)
+    public function mount($trainingId) 
     {
-        $this->training = $training;
+        $this->training = Training::findOrFail($trainingId);
         $this->loadUsers();
     }
 
     public function loadUsers()
     {
-        // 1. Ambil semua ID user yang sudah menjadi anggota di pelatihan ini
-        $existingMemberIds = TrainingMember::whereHas('trainingDetail', function ($query) {
-            $query->where('training_id', $this->training->id);
-        })->pluck('user_id')->toArray();
+        $trainingDetail = $this->training->detail()->firstOrCreate([], [
+            'start_date' => now(),
+            'end_date'   => now()->addMonth(),
+        ]);
 
-        // 2. Ambil semua user yang ID-nya tidak termasuk dalam daftar di atas
-        $this->users = User::whereNotIn('id', $existingMemberIds)->get();
+        $existingMemberIds = TrainingMember::where('training_detail_id', $trainingDetail->id)
+            ->pluck('user_id');
+
+        $this->users = User::whereNotIn('id', $existingMemberIds)
+            ->select('id', 'name', 'email', 'nik')
+            ->orderBy('name')
+            ->get();
+    }
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selectedUsers = $this->users->pluck('id')->map(fn($id) => (string) $id)->toArray();
+        } else {
+            $this->selectedUsers = [];
+        }
+    }
+
+    public function updatedSelectedUsers()
+    {
+        $this->selectAll = count($this->selectedUsers) === count($this->users);
     }
 
     public function addMembers()
@@ -43,28 +63,20 @@ class Add extends Component
         ]);
 
         try {
-            // Pastikan training detail ada, jika tidak, buat baru
-            $trainingDetail = $this->training->detail()->firstOrCreate([], [
-                'start_date' => now(),
-                'end_date'   => now()->addMonth(),
-            ]);
+            $trainingDetail = $this->training->detail;
 
-            // 1. Ambil ID pengguna yang dipilih dan sudah menjadi anggota untuk diabaikan
             $alreadyMemberIds = TrainingMember::where('training_detail_id', $trainingDetail->id)
                 ->whereIn('user_id', $this->selectedUsers)
                 ->pluck('user_id')
                 ->toArray();
-                
-            // 2. Filter untuk mendapatkan hanya ID pengguna baru yang akan ditambahkan
+
             $newUserIds = array_diff($this->selectedUsers, $alreadyMemberIds);
 
             if (empty($newUserIds)) {
                 session()->flash('info', 'Semua peserta yang dipilih sudah terdaftar.');
-                $this->dispatch('close-modal', 'add-member-modal'); // Tutup modal
-                return;
+                return redirect()->route('training.members.index', $this->training->id); // Asumsi nama route
             }
 
-            // 3. Siapkan data untuk bulk insert
             $newMembersData = [];
             $now = now();
             foreach ($newUserIds as $userId) {
@@ -78,16 +90,13 @@ class Add extends Component
                 ];
             }
 
-            // 4. Lakukan bulk insert
             DB::table('training_members')->insert($newMembersData);
-            
-            // 5. Kirim notifikasi ke pengguna yang baru ditambahkan
+
             $newlyAddedUsers = User::whereIn('id', $newUserIds)->get();
             foreach ($newlyAddedUsers as $user) {
                 $user->notify(new TrainingInvitationNotification($this->training));
             }
 
-            // Siapkan pesan flash
             $addedCount = count($newUserIds);
             $skippedCount = count($alreadyMemberIds);
             $message = "$addedCount peserta berhasil ditambahkan.";
@@ -96,38 +105,16 @@ class Add extends Component
             }
 
             session()->flash('success', $message);
-
-        } catch (\Exception $e) {
-            session()->flash('error', 'Terjadi kesalahan: ' . $e->getMessage());
-        } finally {
-            // Reset state dan muat ulang data
-            $this->reset(['selectedUsers', 'selectAll']);
-            $this->loadUsers();
-            $this->dispatch('close-modal', 'add-member-modal'); // Selalu tutup modal
+        } catch (Exception $e) {
+            Log::error('Gagal tambah member: ' . $e->getMessage());
+            session()->flash('error', 'Terjadi kesalahan saat menambahkan peserta.');
         }
-    }
-
-    public function canAddMembers()
-    {
-        return count($this->selectedUsers) > 0;
-    }
-
-    public function updatedSelectAll($value)
-    {
-        if ($value) {
-            $this->selectedUsers = $this->users->pluck('id')->map(fn ($id) => (string) $id)->toArray();
-        } else {
-            $this->selectedUsers = [];
-        }
-    }
-    
-    public function updatedSelectedUsers()
-    {
-        $this->selectAll = count($this->selectedUsers) === count($this->users);
+        return redirect()->route('training.members.index', $this->training->id);
     }
 
     public function render()
     {
-        return view('livewire.training.members.add')->layout('components.layouts.training');
+        return view('livewire.training.members.add')
+            ->layout('layouts.training');
     }
 }

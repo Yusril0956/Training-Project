@@ -6,14 +6,13 @@
         'navbar-collapsed': collapsed
     }">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" @click="toggle()"
-            aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" @click="toggle()" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href="{{ route('index') }}" wire:navigate>
                 <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">     PT.Dirgantara
+                    class="navbar-brand-image"> PT.Dirgantara
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -145,7 +144,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    
+
                     <a href="{{ route('profile') }}" wire:navigate class="dropdown-item">Profile</a>
                     <a href="{{ route('index') }}/#feedback" wire:navigate class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
@@ -175,7 +174,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->routeIs('training.home')) active @endif">
+                <li class="nav-item @if (request()->routeIs('training.home')) active @endif">
                     <a class="nav-link" href="{{ route('training.home', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -193,8 +192,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->routeIs('training.members')) active @endif">
-                    <a class="nav-link" href="{{ route('training.members', $training->id) }}" wire:navigate>
+                <li class="nav-item @if (request()->routeIs('training.members.index')) active @endif">
+                    <a class="nav-link" href="{{ route('training.members.index', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -214,32 +213,52 @@
                     </a>
                 </li>
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                    <li class="nav-item @if(request()->routeIs('training.absen')) active @endif">
+                    <li class="nav-item @if (request()->routeIs('training.absen')) active @endif">
                         <a class="nav-link" href="{{ route('training.absen', $training->id) }}" wire:navigate>
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M15 19l2 2l4 -4" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Data Absen Training
-                            </span>                           
+                            </span>
                         </a>
                     </li>
                 @endif
                 @if (Auth::user()->hasRole('User'))
-                    <li class="nav-item @if(request()->routeIs('training.user.absen')) active @endif">
+                    <li class="nav-item @if (request()->routeIs('training.user.absen')) active @endif">
                         <a class="nav-link" href="{{ route('training.user.absen', $training->id) }}" wire:navigate>
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M15 19l2 2l4 -4" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Absen Training
-                            </span>                           
+                            </span>
                         </a>
                     </li>
                 @endif
-                <li class="nav-item @if(request()->routeIs('training.schedule')) active @endif">
+                <li class="nav-item @if (request()->routeIs('training.schedule')) active @endif">
                     <a class="nav-link" href="{{ route('training.schedule', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
@@ -258,7 +277,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item @if(request()->routeIs('training.tasks')) active @endif">
+                <li class="nav-item @if (request()->routeIs('training.tasks')) active @endif">
                     <a class="nav-link" href="{{ route('training.tasks', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
@@ -278,7 +297,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->routeIs('training.materi.index')) active @endif">
+                <li class="nav-item @if (request()->routeIs('training.materi.index')) active @endif">
                     <a class="nav-link" href="{{ route('training.materi.index', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/book -->
@@ -299,7 +318,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @if(request()->routeIs('training.feedback')) active @endif">
+                <li class="nav-item @if (request()->routeIs('training.feedback')) active @endif">
                     <a class="nav-link" href="{{ route('training.feedback', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
@@ -319,8 +338,8 @@
                     </a>
                 </li>
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
-                    <li class="nav-item @if(request()->routeIs('training.settings')) active @endif">
-                        <a class="nav-link" href="{{ route('training.settings', $training->name) }}" wire:navigate>
+                    <li class="nav-item @if (request()->routeIs('training.settings')) active @endif">
+                        <a class="nav-link" href="{{ route('training.settings', $training->id) }}" wire:navigate>
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

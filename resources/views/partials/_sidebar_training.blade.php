@@ -7,7 +7,7 @@
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href="{{ route('index') }}">
                 <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">     PT.Dirgantara
+                    class="navbar-brand-image"> PT.Dirgantara
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -139,7 +139,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    
+
                     <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
@@ -187,8 +187,8 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('training.members') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('training.members', $training->id) }}">
+                <li class="nav-item {{ request()->routeIs('training.members.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('training.members.index', $training->id) }}">
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -212,11 +212,21 @@
                         <a class="nav-link" href="{{ route('training.absen', $training->id) }}">
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M15 19l2 2l4 -4" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Data Absen Training
-                            </span>                           
+                            </span>
                         </a>
                     </li>
                 @endif
@@ -225,11 +235,21 @@
                         <a class="nav-link" href="{{ route('training.user.absen', $training->id) }}">
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/check -->
-                               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M15 19l2 2l4 -4" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                    <path d="M16 3v4" />
+                                    <path d="M8 3v4" />
+                                    <path d="M4 11h16" />
+                                    <path d="M15 19l2 2l4 -4" />
+                                </svg>
                             </span>
                             <span class="nav-link-title">
                                 Absen Training
-                            </span>                           
+                            </span>
                         </a>
                     </li>
                 @endif
@@ -293,7 +313,7 @@
                 </li>
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item {{ request()->routeIs('training.settings') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('training.settings', $training->name) }}">
+                        <a class="nav-link" href="{{ route('training.settings', $training->id) }}">
                             <span
                                 class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -411,7 +431,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    
+
                     <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
