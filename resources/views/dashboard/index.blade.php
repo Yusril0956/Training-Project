@@ -397,27 +397,70 @@ seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
     <div class="accordion accordion-flush" id="accordionInfo">
 
       <!-- Sejarah Perusahaan -->
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
-            🏛️ Sejarah Perusahaan
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionInfo">
-          <div class="accordion-body">
-            <p>
-              PT Dirgantara Indonesia (PTDI), sebelumnya dikenal sebagai IPTN, berdiri pada <strong>26 April 1976</strong> atas gagasan B.J. Habibie dan diresmikan Presiden Soeharto. 
-              Akar industrinya dimulai sejak <strong>1953</strong> melalui lembaga penerbangan milik AURI (kemudian LIPNUR).
-            </p>
-            <p>
-              Sejak berdiri, PTDI telah mengembangkan dan memproduksi berbagai pesawat: helikopter <em>NBO-105</em>, <em>NC-212</em>, <em>CN-235</em>, hingga <em>N-219</em> yang mendapat sertifikasi pada 2020.
-            </p>
-            <p>
-              Perusahaan terdampak krisis 1998 dan berganti nama menjadi PTDI pada 2000. Kini, PTDI menjadi bagian dari <strong>DEFEND ID</strong> dengan fokus pada pengembangan pesawat, helikopter, dan UAV untuk sipil maupun militer.
-            </p>
-          </div>
-        </div>
-      </div>
+<div class="accordion-item">
+  <h2 class="accordion-header" id="headingOne">
+    <button
+      class="accordion-button"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseOne"
+      aria-expanded="true"
+    >
+      🏛️ Sejarah Perusahaan
+    </button>
+  </h2>
+
+  <div
+    id="collapseOne"
+    class="accordion-collapse collapse show"
+    data-bs-parent="#accordionInfo"
+  >
+    <div class="accordion-body sejarah-text">
+      <p>
+        Awal mula PT. Dirgantara Indonesia (Indonesian Aerospace Inc.) sebenarnya telah muncul sejak masa awal kemerdekaan Indonesia. Saat itu, upaya perintisan dilakukan dengan peralatan dan material yang cukup sederhana. Tercatat dalam sejarah, pesawat pertama yang diterbangkan tahun 1948 di lapangan udara Maospati dengan nama RIX WEL-1 hasil karya Wiwik Soepomo. Pada tahun 1954, Nurtanio Pringgoadisuryo pun berhasil merancang pesawat dengan nama NU-200. Tidak hanya itu, badan yang diprakarsai Nurtanio bernama Depot Penyelidikan, Percobaan, dan Pembuatan Pesawat Terbang (DPPP) yang didirikan Agustus 1956 telah mampu membuat pesawat terbang eksperimental seperti Belalang (pesawat latih), Si Kunang (pesawat olahraga), Kolintang, dan Gelatik.
+      </p>
+
+      <p>
+        Pada tahun 1962, nama DPPP diubah menjadi Lembaga Persiapan Industri Penerbangan (LAPIP) sesuai dengan misi dan sasaran yang ingin dicapai. Selanjutnya, pada tahun 1966 diubah menjadi Lembaga Industri Penerbangan Nurtanio (LIPNUR) sebagai penghormatan atas jasa-jasa Nurtanio yang meninggal saat uji terbang.
+      </p>
+
+      <p>
+        Perkembangan industri penerbangan nasional kemudian memasuki tonggak pertama ketika aset LIPNUR (TNI AU) dengan ATTP (Pertamina) dilebur menjadi Industri Pesawat Terbang Nurtanio (IPTN) pada 23 Agustus 1976. Industri ini menjadi salah satu kekuatan dirgantara nasional karena dari situlah sejarah industri pesawat terbang modern Indonesia mulai dibangun dan dipacu percepatannya untuk menghadapi tantangan zaman.
+      </p>
+
+      <p>
+        Pada periode ini, segala aspek seperti infrastruktur, fasilitas, sumber daya manusia, hukum, dan peraturan yang berkaitan dengan industri pesawat terbang diatur secara menyeluruh. Tanggal 11 Oktober 1985, PT Industri Pesawat Terbang Nurtanio diubah menjadi PT Industri Pesawat Terbang Nusantara (IPTN) setelah pembangunan fasilitas serta sarana dan prasarana yang diperlukan. Industri ini kemudian mengembangkan teknologi canggih dan menerapkan konsep transformasi teknologi sebagai upaya untuk menguasai teknologi penerbangan dalam waktu yang relatif singkat, yaitu 20 tahun.
+      </p>
+
+      <p>
+        Berpegangan pada filosofi transformasi teknologi “Begin at the end and end at the beginning”, IPTN berhasil mentransfer teknologi penerbangan yang rumit dan terbaru. IPTN secara khusus telah menguasai desain pesawat terbang, rekayasa pengembangan, serta manufaktur pesawat komuter kecil dan sedang. IPTN bekerja sama dengan berbagai pihak pabrikan dalam pembuatan pesawat seperti NC 212 Aviocar, CN 235, NBO 105, NBK 117, BN 109, SA 330 Puma, NAS 332 Super Puma, dan Nbell 412. Keberhasilan ini kemudian berlanjut pada pembuatan pesawat N250 dan N2130.
+      </p>
+
+      <p>
+        Di tengah memburuknya kondisi IPTN, Presiden RI KH. Abdurrahman Wahid pada tanggal 24 Agustus 2000 meresmikan perubahan nama IPTN menjadi PT Dirgantara Indonesia (Persero). Perubahan nama tersebut dimaksudkan untuk memberi napas dan paradigma baru bagi perusahaan. Meskipun tantangan semakin kompleks, seperti volume bisnis yang menurun, budaya organisasi yang tidak sehat, lemahnya fungsi direksi, dan beban keuangan yang berat, PT DI tetap dipertahankan karena merupakan aset nasional dan industri strategis yang mendukung kepentingan kedirgantaraan Indonesia.
+      </p>
+
+      <p>
+        Di bawah pimpinan B.J. Habibie, yang menerapkan Progressive Manufacturing Plan (PMP), para karyawan IPTN telah berhasil melalui fase alih teknologi. Pada fase ini, beberapa helikopter (Rotary Wing) dan pesawat bersayap tetap (Fixed Wing) berhasil diproduksi dan dipasarkan. Program pertama PT IPTN adalah memproduksi helikopter NBO-105 di bawah lisensi dari Messerschmitt-Bölkow-Blohm (MBB) Jerman Barat. Untuk jenis pesawat bersayap tetap, IPTN memproduksi NC-212 Aviocar di bawah lisensi dari Construcciones Aeronáuticas SA (CASA) Spanyol.
+      </p>
+
+      <p>
+        Selanjutnya, pada tahun 1979 ditandatangani kerja sama antara PT IPTN dan Aérospatiale Prancis untuk memproduksi helikopter NAS-330 Puma dan NAS-332 Super Puma. Pada tahun yang sama pula, PT IPTN bekerja sama dengan CASA membentuk usaha patungan bernama Aircraft Technology Industries (Airtech) yang berkedudukan di Madrid, Spanyol, dengan modal 50%-50%. Program pertama Airtech adalah merancang dan memproduksi pesawat angkut serbaguna CN-235, yang menggunakan dua mesin turboprop CT-7 buatan General Electric, Amerika Serikat, dengan kapasitas 35–44 penumpang. Pesawat ini diumumkan ke dunia oleh Prof. Dr. Ing. B.J. Habibie pada Paris Air Show ke-34 tanggal 10 Juni 1981. Kehadiran PT IPTN dalam percaturan industri pesawat terbang internasional semakin mantap dengan ditandatanganinya berbagai kerja sama internasional lainnya.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ini css buat code di atas coy yang Sejarah Perusahaan -->
+<style>
+  .sejarah-text p {
+    text-indent: 2em; /* efek tab di awal paragraf */
+    text-align: justify; /* biar rapi kiri kanan */
+    margin-bottom: 1rem; /* beri jarak antar paragraf */
+    line-height: 1.7; /* lebih enak dibaca */
+  }
+</style>
+
 
       <!-- Produk & Layanan -->
       <div class="accordion-item">
