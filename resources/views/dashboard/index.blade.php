@@ -486,13 +486,13 @@ seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
         <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionInfo">
           <div class="accordion-body">
             <p><strong>Visi:</strong> <br>
-              Menjadi market leader pesawat turboprop menengah & ringan, serta acuan perusahaan dirgantara Asia Pasifik dengan kompetensi terbaik.
+              Menjadi market leader pesawat terbang turboprop kelas menengah dan ringan, serta menjadi acuan dari perusahaan di wilayah Asia Pasifik dengan mengoptimalkan kompetensi industri dan komersial terbaik
             </p>
             <p><strong>Misi:</strong></p>
             <ol>
-              <li>Menjadi pusat kompetensi industri kedirgantaraan & misi militer.</li>
-              <li>Menjadi pemain kunci global melalui aliansi strategis.</li>
-              <li>Menyediakan produk & jasa kompetitif dalam kualitas dan biaya.</li>
+              <li> Sebagai pusat kompetensi dalam industri kedirgantaraan dan misi militer, serta untuk aplikasi non-aerospace yang relevan.</li>
+              <li> Sebagai pemain kunci di industri global yang memiliki aliansi strategis dengan industri kedirgantaraan kelas dunia lainnya.</li>
+              <li> Memberikan produk dan jasa yang kompetitif dalam hal kualitas dan biaya. </li>
             </ol>
           </div>
         </div>
