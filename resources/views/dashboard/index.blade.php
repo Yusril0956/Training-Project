@@ -54,7 +54,7 @@
         <div class="container-xl">
 <!-- Banner -->
 <div class="youtube-banner">
-  <img src="{{ asset('images/Banner.png') }}" alt="Banner Training">
+  <img src="{{ asset('images/pN219.png') }}" alt="Banner Training">
 </div>
 
 <style>
