@@ -85,13 +85,7 @@ seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
                 </div>
             </div>
 
-            <!-- Tambahkan tombol Mulai Training di bawah Hero Section -->
-<div class="text-center mb-4">
-    <button id="btn-mulai-training" class="btn btn-lg btn-primary rounded-3 shadow-sm" style="position:relative;overflow:hidden;">
-        <img src="{{ asset('logoputih.png') }}" alt="Logo PTDI" id="logo-animasi" style="height:32px;width:32px;vertical-align:middle;margin-right:8px;opacity:0;transition:opacity 0.3s, transform 0.6s;" />
-        <span id="text-mulai-training">Mulai Training</span>
-    </button>
-</div>
+            
 
             <!-- Informasi Utama -->
             <div class="row row-cards mb-4">

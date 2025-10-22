@@ -63,7 +63,7 @@
                                 </h2>
                                 <div id="faqCollapseOne" class="accordion-collapse collapse show" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">
-                                        Klik tombol "Mulai Training" pada halaman home training atau "Training" di bagian navbar untuk ke halaman Training
+                                        Klik tombol "Training" di bagian navbar untuk ke halaman Training
                                     </div>  
                                 </div>
                             </div>
