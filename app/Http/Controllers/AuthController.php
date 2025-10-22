@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -55,31 +56,31 @@ class AuthController extends Controller
     }
 
     public function register(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'nik' => 'required|numeric|digits:6',
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required|string|min:6', 
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'nik' => 'required|numeric|digits:6',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+        ]);
 
-    // Tentukan role berdasarkan email yang diakhiri dengan 'AD'
-    $role = str_ends_with($request->email, 'AD') ? 'admin' : 'user';
+        // Tentukan role berdasarkan email yang diakhiri dengan 'AD'
+        $role = str_ends_with($request->email, 'AD') ? 'admin' : 'user';
 
-    // Buat user baru dan simpan role
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'nik' => $request->nik,
-        'password' => bcrypt($request->password),
-        'role' => $role, // simpan role ke kolom 'role' di tabel users
-    ]);
+        // Buat user baru dan simpan role
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'nik' => $request->nik,
+            'password' => bcrypt($request->password),
+            'role' => $role, // simpan role ke kolom 'role' di tabel users
+        ]);
 
-    // Login otomatis
-    Auth::login($user);
+        // Login otomatis
+        Auth::login($user);
 
-    return redirect('/home');
-}
+        return redirect('/home');
+    }
 
 
     public function completeForm()
@@ -116,5 +117,27 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function googleCallback()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        $user = User::firstOrCreate(
+            ['email' => $googleUser->getEmail()],
+            [
+                'name'      => $googleUser->getName(),
+                'password'  => bcrypt(str()->random(16)),
+                'google_id' => $googleUser->getId(),
+            ]
+        );
+
+        Auth::login($user);
+
+        if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
+            return redirect()->route('profile.complete');
+        }
+
+        return redirect()->route('index');
     }
 }

@@ -272,26 +272,7 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item @if (request()->routeIs('training.feedback')) active @endif">
-                    <a class="nav-link" href="{{ route('training.feedback', $training->id) }}" wire:navigate>
-                        <span
-                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/mail-opened -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-inbox">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path
-                                    d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
-                                <path d="M4 13h3l3 3h4l3 -3h3" />
-                            </svg>
-                        </span>
-                        <span class="nav-link-title">
-                            Feedback
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item @if (request()->routeIs('training.attendance')) active @endif">
+                {{-- <li class="nav-item @if (request()->routeIs('training.attendance')) active @endif">
                     <a class="nav-link" href="{{ route('training.attendance', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-check -->
@@ -311,7 +292,7 @@
                             Absensi
                         </span>
                     </a>
-                </li>
+                </li> --}}
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item @if (request()->routeIs('training.settings')) active @endif">
                         <a class="nav-link" href="{{ route('training.settings', $training->id) }}" wire:navigate>

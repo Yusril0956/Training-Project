@@ -1,15 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
-use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ExternalCertificateController;
 
 /*
@@ -37,26 +34,7 @@ Route::middleware('guest')->group(function () {
 
     // Google Login
     Route::get('auth/google', fn() => Socialite::driver('google')->redirect())->name('google.login');
-    Route::get('/auth/google/callback', function () {
-        $googleUser = Socialite::driver('google')->user();
-
-        $user = User::firstOrCreate(
-            ['email' => $googleUser->getEmail()],
-            [
-                'name'      => $googleUser->getName(),
-                'password'  => bcrypt(str()->random(16)),
-                'google_id' => $googleUser->getId(),
-            ]
-        );
-
-        Auth::login($user);
-
-        if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
-            return redirect()->route('profile.complete');
-        }
-
-        return redirect()->route('index');
-    });
+    Route::get('/auth/google/callback', [AuthController::class, 'googleCallback'])->name('google.callback');
 });
 
 // ============================
@@ -109,16 +87,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/settings/{id}', \App\Livewire\Training\Settings::class)->name('settings');
     });
 
-    // Certificates
-    Route::resource('certificates', CertificateController::class)->only(['index', 'store', 'update', 'destroy']);
-
     // ============================
     // Member Routes
     // ============================
     Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
         Route::get('/training/{id}', \App\Livewire\Training\Index::class)->name('home');
         Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members.index');
-        Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
+        Route::get('/schedule/{id}', \App\Livewire\Training\ScheduleList::class)->name('schedule');
         Route::get('/tasks/{trainingId}', \App\Livewire\Training\Tasks\Index::class)->name('tasks');
         Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
         Route::get('/materi/{trainingId}', \App\Livewire\Training\Materi\MateriIndex::class)->name('materi.index');
@@ -158,9 +133,3 @@ Route::middleware('auth')->group(function () {
         Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', \App\Livewire\Training\Tasks\Review::class)->name('task.review');
     });
 });
-
-// ============================
-// Public Routes
-// ============================
-
-Route::view('/404', 'errors.training-404')->name('404');

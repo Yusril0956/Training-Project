@@ -31,13 +31,16 @@
 <body>
     <script src="{{ asset('dist/js/demo-theme.min.js?1692870487') }}"></script>
     <div class="page">
-      
-      @include('partials._navbar')
+
+        @include('partials._navbar')
         <div class="page-wrapper">
 
             @include('components.alerts')
 
-            {{-- {{ $slot }} --}}
+            @isset($slot)
+                {{ $slot }}
+            @endisset
+
             @yield('content')
 
             @include('partials._footer')

@@ -44,13 +44,4 @@ class TrainingController extends Controller
         $training->save();
         return redirect()->back()->with('success', 'Training berhasil disetujui');
     }
-
-    /**
-     * Halaman jadwal training
-     */
-    public function schedule($id)
-    {
-        $training = Training::findOrFail($id);
-        return view('training.schedule.index', compact('id', 'training'));
-    }
 }

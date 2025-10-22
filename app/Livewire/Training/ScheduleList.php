@@ -66,6 +66,6 @@ class ScheduleList extends Component
 
     public function render()
     {
-        return view('livewire.training.schedule-list');
+        return view('livewire.training.schedule-list')->layout('layouts.training');
     }
 }
