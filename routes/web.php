@@ -10,9 +10,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\CertificateController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\ExternalCertificateController;
 
 /*
@@ -101,11 +98,7 @@ Route::middleware('auth')->group(function () {
 
     // Training
     Route::prefix('training')->name('training.')->group(function () {
-        Route::get('/', [TrainingController::class, 'index'])->name('index');
-        Route::get('/general-knowledge', [TrainingController::class, 'generalKnowledge'])->name('general');
-        Route::get('/mandatory', [TrainingController::class, 'mandatory'])->name('mandatory');
-        Route::get('/license', [TrainingController::class, 'license'])->name('license');
-        Route::get('/customer-requested', [TrainingController::class, 'customerRequested'])->name('customer');
+        Route::get('/', \App\Livewire\Training\TrainingIndex::class)->name('index');
 
         Route::get('/create', [TrainingController::class, 'create'])->name('create');
 
@@ -114,10 +107,6 @@ Route::middleware('auth')->group(function () {
 
         // Settings
         Route::get('/settings/{id}', \App\Livewire\Training\Settings::class)->name('settings');
-
-        // Register
-        Route::get('/register/{id}', [TrainingController::class, 'daftarTraining'])->name('register');
-        Route::post('/{id}/self-register', [TrainingController::class, 'register'])->name('self.register');
     });
 
     // Certificates
@@ -130,17 +119,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/training/{id}', \App\Livewire\Training\Index::class)->name('home');
         Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members.index');
         Route::get('/schedule/{id}', [TrainingController::class, 'schedule'])->name('schedule');
-        Route::post('/schedule/{id}', [TrainingController::class, 'storeSchedule'])->name('schedule.store');
-        Route::delete('/schedule/{trainingId}/{scheduleId}', [TrainingController::class, 'deleteSchedule'])->name('schedule.delete');
         Route::get('/tasks/{trainingId}', \App\Livewire\Training\Tasks\Index::class)->name('tasks');
-        Route::post('/tasks/{trainingId}/{taskId}/submit', [TaskController::class, 'submit'])->name('task.submit');
-        Route::post('/tasks/{trainingId}/{taskId}/edit', [TaskController::class, 'editTask'])->name('task.edit');
-        Route::post('/{trainingName}/tasks/{taskId}/submit', [TaskController::class, 'submit'])->name('training.task.submit');
         Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
         Route::get('/materi/{trainingId}', \App\Livewire\Training\Materi\MateriIndex::class)->name('materi.index');
         Route::get('/materi/{trainingId}/create', \App\Livewire\Training\Materi\MateriCreate::class)->name('materi.create');
-        Route::get('/feedback/{id}', [TrainingController::class, 'feedback'])->name('feedback');
-        Route::post('/training/{id}/feedback', [TrainingController::class, 'submitFeedback'])->name('feedback.submit');
     });
 
 
@@ -173,10 +155,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
 
         Route::get('/training/{trainingId}/tasks/create', \App\Livewire\Training\Tasks\Create::class)->name('tasks.create');
-        Route::post('/training/{trainingId}/tasks', [TaskController::class, 'store'])->name('tasks.store');
-        Route::get('/training/{trainingId}/tasks/', [TaskController::class, 'index'])->name('submission.download');
         Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', \App\Livewire\Training\Tasks\Review::class)->name('task.review');
-        Route::post('training/tasks/review/{submissionId}', [TaskController::class, 'storeReview'])->name('submission.review.store');
     });
 });
 
@@ -185,4 +164,3 @@ Route::middleware('auth')->group(function () {
 // ============================
 
 Route::view('/404', 'errors.training-404')->name('404');
-Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');

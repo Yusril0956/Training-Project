@@ -33,10 +33,8 @@ class DashboardController extends Controller
 
         $certificates = ExternalCertificate::paginate(10);
 
-        $assignments = Assignment::all();
 
         return view('admin.index', compact(
-            'assignments',
             'certificates'
         ));
     }
