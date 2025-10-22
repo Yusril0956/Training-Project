@@ -52,25 +52,51 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-<!-- Banner -->
+<!-- 🌸 Banner Section -->
 <div class="youtube-banner">
-  <img src="{{ asset('images/pN219.png') }}" alt="Banner Training">
+    <div class="banner-wrapper">
+        <img src="{{ asset('images/pN219.png') }}" alt="Banner Training">
+    </div>
 </div>
 
 <style>
+/* === Banner Styling === */
 .youtube-banner {
-  width: 100%;
-  height: auto; /* sesuaikan tinggi dengan desain */
-  overflow: hidden;
-  background-color: #000; /* fallback jika gambar gagal load */
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 20px; /* sudut lembut */
+    background-color: #f5f6fa; /* warna pastel lembut */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
 }
+
+/* Bungkus untuk memastikan rasio tetap proporsional */
+.youtube-banner .banner-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 48%; /* tinggi proporsional (rasio 16:6 kira-kira) */
+}
+
 .youtube-banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* crop otomatis seperti YouTube */
-  display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* crop otomatis seperti YouTube */
+    display: block;
+    transition: transform 0.6s ease, filter 0.3s ease;
+    border-radius: 20px;
+}
+
+/* Efek lembut saat hover */
+.youtube-banner img:hover {
+    transform: scale(1.03);
+    filter: brightness(1.05);
 }
 </style>
+
 
 
             <!-- Hero Section -->
@@ -78,12 +104,12 @@
                 <div class="card-body text-center py-5">
                     <h1 class="card-title">Selamat Datang di PT Dirgantara Indonesia</h1>
                     <p class="card-subtitle text-muted">PT Dirgantara Indonesia (Indonesian-aircraft Industries) memproduksi
-berbagai jenis pesawat untuk memenuhi kebutuhan maskapai sipil, operator militer, dan
-misi-misi tertentu. Selama bertahun-tahun berkecimpung dalam desain pesawat, PTDI telah menjadi ahli dalam merancang
-pesawat baru dan mengubah konfigurasi sistem serta struktur pesawat untuk misi-misi tertentu
+berbagai jenis pesmengubah konfigurasi sistem serta struktur pesawat untuk misi-misi tertentu
 seperti patroli maritim, pengawasan, dan penjaga pantai..</p>
                 </div>
-            </div>
+            </div>awat untuk memenuhi kebutuhan maskapai sipil, operator militer, dan
+misi-misi tertentu. Selama bertahun-tahun berkecimpung dalam desain pesawat, PTDI telah menjadi ahli dalam merancang
+pesawat baru dan 
 
             
 
