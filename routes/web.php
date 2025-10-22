@@ -192,6 +192,6 @@ Route::middleware('auth')->group(function () {
 // ============================
 // Public Routes
 // ============================
-Route::view('/sistem-training', 'training.system')->name('sistem-training');
+
 Route::view('/404', 'errors.training-404')->name('404');
 Route::get('/calendar/events', [ScheduleController::class, 'events'])->name('calendar.events');
