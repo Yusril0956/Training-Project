@@ -42,7 +42,7 @@
         <livewire:training.sidebar />
         <div class="page-wrapper">
 
-            @include('components.alerts')
+            {{-- @include('components.alerts') --}}
 
             {{ $slot }}
 

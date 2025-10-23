@@ -2,36 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AttendanceSession extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'training_id',
-        'name',
+        'title',
         'date',
         'start_time',
         'end_time',
         'description',
-        'is_active',
     ];
 
     protected $casts = [
         'date' => 'date',
-        'start_time' => 'datetime:H:i',
-        'end_time' => 'datetime:H:i',
-        'is_active' => 'boolean',
     ];
 
-    public function training(): BelongsTo
+    public function training()
     {
-        return $this->belongsTo(Training::class);
+        return $this->belongsTo(Training::class, 'training_id');
     }
 
-    public function attendances(): HasMany
+    public function records()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(AttendanceRecord::class, 'attendance_session_id');
     }
 }

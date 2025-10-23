@@ -272,8 +272,8 @@
                         </span>
                     </a>
                 </li>
-                {{-- <li class="nav-item @if (request()->routeIs('training.attendance')) active @endif">
-                    <a class="nav-link" href="{{ route('training.attendance', $training->id) }}" wire:navigate>
+                <li class="nav-item @if (request()->routeIs('admin.training.attendance.manage')) active @endif">
+                    <a class="nav-link" href="{{ route('admin.training.attendance.manage', $training->id) }}" wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-check -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -292,7 +292,7 @@
                             Absensi
                         </span>
                     </a>
-                </li> --}}
+                </li>
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <li class="nav-item @if (request()->routeIs('training.settings')) active @endif">
                         <a class="nav-link" href="{{ route('training.settings', $training->id) }}" wire:navigate>

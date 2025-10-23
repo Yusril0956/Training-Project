@@ -131,5 +131,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/training/{trainingId}/tasks/create', \App\Livewire\Training\Tasks\Create::class)->name('tasks.create');
         Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', \App\Livewire\Training\Tasks\Review::class)->name('task.review');
+
+        Route::get('/training/{trainingId}/attendance', App\Livewire\Training\Attendance\ManageTrainingAttendance::class)->name('training.attendance.manage');
+        Route::get('/training/{trainingId}/attendance/create', App\Livewire\Training\Attendance\CreateAttendanceSession::class)->name('training.attendance.create');
     });
 });

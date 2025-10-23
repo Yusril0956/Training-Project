@@ -62,4 +62,9 @@ class Training extends Model
     {
         return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id')->where('training_members.status', 'graduate');
     }
+
+    public function attendanceSessions()
+    {
+        return $this->hasMany(AttendanceSession::class, 'training_id')->orderBy('date', 'asc');
+    }
 }
