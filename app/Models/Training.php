@@ -38,11 +38,6 @@ class Training extends Model
         return $this->hasMany(Tasks::class, 'training_id');
     }
 
-    public function schedules()
-    {
-        return $this->hasMany(Schedule::class, 'training_id');
-    }
-
     public function certificates()
     {
         return $this->hasMany(Certificate::class, 'training_id');

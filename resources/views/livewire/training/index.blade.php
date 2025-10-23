@@ -7,53 +7,94 @@
             ],
         ])
 
-        <!-- Header Training -->
         <div class="card mb-4">
             <div class="card-body text-center py-4">
                 <h2 class="card-title">{{ $training->name }}</h2>
                 <p class="text-muted">{{ $training->description ?? 'Deskripsi belum tersedia.' }}</p>
-                <span class="badge bg-blue-lt">{{ ucfirst($training->category) }}</span>
                 <span class="badge bg-green-lt">{{ ucfirst($training->status) }}</span>
             </div>
         </div>
 
-        <!-- Info Kelas -->
-        <div class="row row-cards mb-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">📅 Jadwal Pelatihan</h4>
-                        <p><strong>Tanggal:</strong> {{ $schedule->date ?? 'belum ada jadwal' }}</p>
-                        <p><strong>Durasi:</strong> -</p>
-                        <p><strong>Lokasi:</strong> {{ $schedule->location ?? 'belum ada jadwal' }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">👥 Informasi Training</h4>
-                        <p><strong>PIC Internal:</strong> -</p>
-                        <p><strong>Status:</strong> {{ ucfirst($training->status) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigasi Fitur -->
+        {{-- 
+          BAGIAN JADWAL (DIRANCANG ULANG - SUPER SIMPLE)
+          Menghilangkan semua ikon dan card, fokus pada list sederhana.
+        --}}
         <div class="card mb-4">
             <div class="card-header">
-                <h3 class="card-title">Navigasi Training</h3>
+                {{-- Menghapus ikon dari header --}}
+                <h3 class="card-title">Jadwal Pelatihan Terdekat</h3>
+            </div>
+            <div class="card-body">
+                @if ($training->attendanceSessions->count() > 0)
+                    {{-- Ini adalah wrapper untuk list kustom kita --}}
+                    <div>
+                        @foreach ($training->attendanceSessions->sortBy('date') as $session)
+                            
+                            {{-- Setiap item jadwal --}}
+                            <div class="py-3 @if(!$loop->last) border-bottom @endif">
+                                
+                                {{-- Baris 1: Judul di kiri, Tanggal di kanan --}}
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h5 class="mb-0">{{ $session->title }}</h5>
+                                    <span class="text-muted small">{{ $session->date->format('d M Y') }}</span>
+                                </div>
+                                
+                                {{-- Baris 2: Waktu (tanpa ikon) --}}
+                                <div class="text-muted small mb-1">
+                                    Waktu: {{ \Carbon\Carbon::parse($session->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($session->end_time)->format('H:i') }}
+                                </div>
+                                
+                                {{-- Baris 3: Deskripsi (tanpa ikon) --}}
+                                <div class="text-muted small">
+                                    {{ $session->description ?? 'Tidak ada deskripsi' }}
+                                </div>
+                            </div>
+
+                        @endforeach
+                    </div>
+                @else
+                    {{-- Tampilan 'else' tetap sama seperti kode Anda --}}
+                    <div class="text-center py-5">
+                        <div class="mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon text-muted">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                        </div>
+                        <h5 class="text-muted mb-2">Belum Ada Jadwal</h5>
+                        <p class="text-muted">Jadwal pelatihan akan segera diumumkan.</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+        {{-- AKHIR BAGIAN JADWAL --}}
+
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon me-2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1 -2 2H5a2 2 0 0 1 -2 -2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                    </svg>
+                    Navigasi Training
+                </h3>
             </div>
             <div class="card-body">
                 <div class="row row-cards">
                     <div class="col-md-4">
                         <a href="{{ route('training.members.index', $training->id) }}" class="card card-link">
                             <div class="card-body text-center">
-                                <span class="avatar bg-green-lt text-green mb-2"><svg xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                <span class="avatar bg-green-lt text-green mb-2"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
                                         class="icon icon-tabler icons-tabler-outline icon-tabler-users">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
@@ -62,32 +103,6 @@
                                         <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                     </svg></span>
                                 <div>Members</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4">
-                        <a href="{{ route('training.schedule', $training->id) }}" class="card card-link">
-                            <div class="card-body text-center">
-                                <span class="avatar bg-yellow-lt text-yellow mb-2"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-week">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path
-                                            d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M7 14h.013" />
-                                        <path d="M10.01 14h.005" />
-                                        <path d="M13.01 14h.005" />
-                                        <path d="M16.015 14h.005" />
-                                        <path d="M13.015 17h.005" />
-                                        <path d="M7.01 17h.005" />
-                                        <path d="M10.01 17h.005" />
-                                    </svg></span>
-                                <div>Jadwal Pelatihan</div>
                             </div>
                         </a>
                     </div>
@@ -114,32 +129,52 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="#" class="card card-link">
+                        <a href="{{ route('training.materi.index', $training->id) }}" class="card card-link">
                             <div class="card-body text-center">
-                                <span class="avatar bg-orange-lt text-orange mb-2"><svg xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                <span class="avatar bg-purple-lt text-purple mb-2"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-book">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
-                                        <path d="M16 3v4" />
-                                        <path d="M8 3v4" />
-                                        <path d="M4 11h16" />
-                                        <path d="M15 18l2 2l4 -4" />
+                                        <path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                                        <path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
+                                        <path d="M3 6l0 13" />
+                                        <path d="M12 6l0 13" />
+                                        <path d="M21 6l0 13" />
                                     </svg></span>
-                                <div>Absensi</div>
+                                <div>Materi</div>
                             </div>
                         </a>
                     </div>
                     @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                         <div class="col-md-4">
+                            <a href="{{ route('admin.training.attendance.manage', ['trainingId' => $training->id]) }}" class="card card-link">
+                                <div class="card-body text-center">
+                                    <span class="avatar bg-orange-lt text-orange mb-2"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-check">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" />
+                                            <path d="M16 3v4" />
+                                            <path d="M8 3v4" />
+                                            <path d="M4 11h16" />
+                                            <path d="M15 18l2 2l4 -4" />
+                                        </svg></span>
+                                    <div>Absensi</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4">
                             <a href="{{ route('training.settings', $training->id) }}" class="card card-link">
                                 <div class="card-body text-center">
-                                    <span class="avatar bg-red-lt text-red mb-2"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"
+                                    <span class="avatar bg-red-lt text-red mb-2"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                             class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path
@@ -155,10 +190,18 @@
             </div>
         </div>
 
-        <!-- Ringkasan Statistik (Opsional) -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">📊 Ringkasan Aktivitas</h3>
+                <h3 class="card-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon me-2">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    Ringkasan Aktivitas
+                </h3>
             </div>
             <div class="card-body">
                 <ul class="list-group list-group-flush">

@@ -138,7 +138,6 @@ class TrainingManage extends Component
 
         if ($training->detail) $training->detail->delete();
         $training->members()->delete();
-        $training->schedules()->delete();
 
         foreach ($training->tasks as $task) {
             $task->submissions()->delete();

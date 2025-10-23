@@ -205,7 +205,6 @@ class TrainingSeeder extends Seeder
         $this->call([
             TrainingDetailSeeder::class,
             TrainingMemberSeeder::class,
-            ScheduleSeeder::class,
         ]);
     }
 }

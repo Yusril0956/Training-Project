@@ -62,10 +62,6 @@
                             <a href="{{ route('training.tasks', $training->id) }}"
                                 class="btn btn-outline-warning w-100">Kelola Tugas</a>
                         </div>
-                        <div class="col-md-6">
-                            <a href="{{ route('training.schedule', $training->id) }}"
-                                class="btn btn-outline-info w-100">Atur Jadwal</a>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -112,15 +112,6 @@ class TrainingIndex extends Component
         $this->render(); // Re-render to update the status
     }
 
-    /**
-     * Halaman jadwal training
-     */
-    public function schedule($id)
-    {
-        $training = Training::findOrFail($id);
-        return view('training.schedule.index', compact('id', 'training'));
-    }
-
     public function render()
     {
         $trainings = Training::query()

@@ -9,13 +9,17 @@ class Index extends Component
 {
     public $id;
     public $training;
-    public $schedule;
 
     public function mount($id)
     {
         $this->id = $id;
-        $this->training = Training::withCount(['members', 'tasks'])->findOrFail($id);
-        $this->schedule = $this->training->schedules()->orderBy('date', 'asc')->first();
+        $this->training = Training::withCount(['members', 'tasks'])
+            ->with(['attendanceSessions' => function ($query) {
+                $query->where('date', '>=', now()->toDateString())
+                    ->orderBy('date', 'asc')
+                    ->limit(3);
+            }])
+            ->findOrFail($id);
     }
 
     public function render()

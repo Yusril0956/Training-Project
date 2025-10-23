@@ -86,7 +86,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
         Route::get('/training/{id}', \App\Livewire\Training\Index::class)->name('home');
         Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members.index');
-        Route::get('/schedule/{id}', \App\Livewire\Training\ScheduleList::class)->name('schedule');
         Route::get('/tasks/{trainingId}', \App\Livewire\Training\Tasks\Index::class)->name('tasks');
         Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
         Route::get('/materi/{trainingId}', \App\Livewire\Training\Materi\MateriIndex::class)->name('materi.index');

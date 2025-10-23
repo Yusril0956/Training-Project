@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             TrainingSeeder::class,
             TrainingDetailSeeder::class,
             TrainingMemberSeeder::class,
+            AttendanceSessionSeeder::class,
             FeedbackSeeder::class,
             TaskSeeder::class,
-            ScheduleSeeder::class,
         ]);
     }
 }
