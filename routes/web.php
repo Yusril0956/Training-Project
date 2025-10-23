@@ -53,7 +53,6 @@ Route::middleware('auth')->group(function () {
 
     // Static Pages
     Route::view('/help', 'dashboard.help')->name('help');
-    Route::view('/services', 'dashboard.services')->name('services');
     Route::view('/kontak-divisi', 'dashboard.kontak-divisi')->name('kontak.divisi');
     Route::resource('manual-certificates', ExternalCertificateController::class)->only(['index', 'create', 'store', 'show']);
     Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
