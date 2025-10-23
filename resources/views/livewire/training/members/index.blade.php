@@ -72,7 +72,6 @@
                                         <td>{{ $member->user->instansi ?? 'N/A' }}</td>
                                         <td>{{ $member->user->email }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-sm btn-info">Detail</a>
                                             <button wire:click="deleteMember({{ $member->id }})"
                                                 class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Anda yakin ingin menghapus member ini?')">Delete</button>

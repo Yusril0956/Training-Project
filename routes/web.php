@@ -71,8 +71,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('training')->name('training.')->group(function () {
         Route::get('/', \App\Livewire\Training\TrainingIndex::class)->name('index');
 
-        Route::get('/create', [TrainingController::class, 'create'])->name('create');
-
         Route::delete('/{id}/reject', [TrainingController::class, 'reject'])->name('reject');
         Route::put('/{id}/approve', [TrainingController::class, 'approve'])->name('approve');
 
@@ -97,7 +95,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('training/{trainingId}')->name('training.')->middleware('isMember')->group(function () {
         Route::get('/add-member', \App\Livewire\Training\Members\Add::class)->name('member.add.form');
         Route::get('/create-user-member', \App\Livewire\Training\Members\CreateUserAndMember::class)->name('member.create');
-        Route::post('/add-member', [TrainingController::class, 'addMember'])->name('member.add');
     });
 
     // ============================
@@ -115,11 +112,6 @@ Route::middleware('auth')->group(function () {
 
         // Training Management
         Route::get('/training/manage', \App\Livewire\Training\TrainingManage::class)->name('training.manage');
-        Route::patch('/training/{trainingId}/member/{memberId}/accept', [TrainingController::class, 'acceptMember'])->name('training.member.accept');
-        Route::patch('/training/{trainingId}/member/{memberId}/reject', [TrainingController::class, 'rejectMember'])->name('training.member.reject');
-        Route::get('/training/{trainingId}/member/{memberId}/graduate', [TrainingController::class, 'graduateMember'])->name('training.member.graduate');
-        Route::get('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete.get');
-        Route::delete('/member/delete/{memberId}/{trainingId}', [TrainingController::class, 'deleteMember'])->name('training.member.delete');
 
         Route::get('/training/{trainingId}/tasks/create', \App\Livewire\Training\Tasks\Create::class)->name('tasks.create');
         Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', \App\Livewire\Training\Tasks\Review::class)->name('task.review');
