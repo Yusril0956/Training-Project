@@ -111,7 +111,7 @@ class Index extends Component
         $this->loadData();
     }
 
-    public function graduateMember($memberId)
+    public function graduateMemberAction($memberId)
     {
         try {
             $member = $this->findMemberOrFail($memberId);
