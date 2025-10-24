@@ -20,6 +20,7 @@ class TrainingManage extends Component
     public $name = '';
     public $description = '';
     public $jenis_training_id = '';
+    public $instructor_id = '';
     public $status = 'open';
     public $start_date = '';
     public $end_date = '';
@@ -46,6 +47,7 @@ class TrainingManage extends Component
         $this->name = '';
         $this->description = '';
         $this->jenis_training_id = '';
+        $this->instructor_id = '';
         $this->status = 'open';
         $this->start_date = '';
         $this->end_date = '';
@@ -53,7 +55,7 @@ class TrainingManage extends Component
         $this->showCreateForm = false;
     }
 
-    public function create()
+    public function showCreateModal()
     {
         $this->resetForm();
         $this->showCreateForm = true;
@@ -65,6 +67,7 @@ class TrainingManage extends Component
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'jenis_training_id' => 'required|exists:jenis_trainings,id',
+            'instructor_id' => 'nullable|exists:users,id',
             'status' => 'required|in:open,close',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
@@ -74,11 +77,8 @@ class TrainingManage extends Component
             'name' => $this->name,
             'description' => $this->description,
             'jenis_training_id' => $this->jenis_training_id,
+            'instructor_id' => $this->instructor_id,
             'status' => $this->status,
-        ]);
-
-        // Create training detail with dates
-        $training->detail()->create([
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
         ]);
@@ -94,9 +94,10 @@ class TrainingManage extends Component
         $this->name = $training->name;
         $this->description = $training->description;
         $this->jenis_training_id = $training->jenis_training_id;
+        $this->instructor_id = $training->instructor_id;
         $this->status = $training->status;
-        $this->start_date = $training->detail ? $training->detail->start_date : '';
-        $this->end_date = $training->detail ? $training->detail->end_date : '';
+        $this->start_date = $training->start_date ? $training->start_date->format('Y-m-d') : '';
+        $this->end_date = $training->end_date ? $training->end_date->format('Y-m-d') : '';
         $this->showCreateForm = true;
     }
 
@@ -106,6 +107,7 @@ class TrainingManage extends Component
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'jenis_training_id' => 'required|exists:jenis_trainings,id',
+            'instructor_id' => 'nullable|exists:users,id',
             'status' => 'required|in:open,close',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
@@ -116,17 +118,11 @@ class TrainingManage extends Component
             'name' => $this->name,
             'description' => $this->description,
             'jenis_training_id' => $this->jenis_training_id,
+            'instructor_id' => $this->instructor_id,
             'status' => $this->status,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
         ]);
-
-        // Update or create training detail
-        $training->detail()->updateOrCreate(
-            ['training_id' => $training->id],
-            [
-                'start_date' => $this->start_date,
-                'end_date' => $this->end_date,
-            ]
-        );
 
         session()->flash('success', 'Pelatihan berhasil diperbarui.');
         $this->resetForm();
@@ -136,7 +132,6 @@ class TrainingManage extends Component
     {
         $training = Training::findOrFail($id);
 
-        if ($training->detail) $training->detail->delete();
         $training->members()->delete();
 
         foreach ($training->tasks as $task) {
@@ -153,7 +148,7 @@ class TrainingManage extends Component
     public function render()
     {
         $trainings = Training::query()
-            ->with(['jenisTraining', 'detail', 'members'])
+            ->with(['jenisTraining', 'instructor', 'members'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', '%' . $this->search . '%')
@@ -169,10 +164,14 @@ class TrainingManage extends Component
             ->paginate(9);
 
         $jenisTrainings = JenisTraining::all();
+        $instructors = \App\Models\User::whereHas('roles', function ($q) {
+            $q->where('name', 'Admin');
+        })->get();
 
         return view('livewire.training.training-manage', [
             'trainings' => $trainings,
             'jenisTrainings' => $jenisTrainings,
-        ]);
+            'instructors' => $instructors,
+        ])->layout('layouts.dashboard', ['title' => 'Training Management']);
     }
 }

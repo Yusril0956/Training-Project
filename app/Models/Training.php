@@ -14,6 +14,9 @@ class Training extends Model
         'description',
         'status',
         'jenis_training_id',
+        'instructor_id',
+        'start_date',
+        'end_date',
     ];
 
     public function jenisTraining()
@@ -23,14 +26,14 @@ class Training extends Model
 
     protected $table = 'trainings';
 
-    public function detail()
-    {
-        return $this->hasOne(TrainingDetail::class, 'training_id');
-    }
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
 
     public function members()
     {
-        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id');
+        return $this->hasMany(TrainingMember::class, 'training_id');
     }
 
     public function tasks()
@@ -50,16 +53,21 @@ class Training extends Model
 
     public function pendingMembers()
     {
-        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id')->where('training_members.status', 'pending');
+        return $this->hasMany(TrainingMember::class, 'training_id')->where('training_members.status', 'pending');
     }
 
     public function graduateMembers()
     {
-        return $this->hasManyThrough(TrainingMember::class, TrainingDetail::class, 'training_id', 'training_detail_id', 'id', 'id')->where('training_members.status', 'graduate');
+        return $this->hasMany(TrainingMember::class, 'training_id')->where('training_members.status', 'graduate');
     }
 
     public function attendanceSessions()
     {
         return $this->hasMany(AttendanceSession::class, 'training_id')->orderBy('date', 'asc');
+    }
+
+    public function instructor()
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
     }
 }

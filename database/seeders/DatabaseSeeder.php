@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             UserRoleSeeder::class,
             JenisTrainingSeeder::class,
             TrainingSeeder::class,
-            TrainingDetailSeeder::class,
             TrainingMemberSeeder::class,
             AttendanceSessionSeeder::class,
             FeedbackSeeder::class,

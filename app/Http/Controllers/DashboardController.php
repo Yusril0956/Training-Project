@@ -10,8 +10,6 @@ use App\Models\Certificate;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
-use App\Models\TrainingDetail;
-use App\Models\Training;
 use App\Models\ExternalCertificate;
 
 class DashboardController extends Controller

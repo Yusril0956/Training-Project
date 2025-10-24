@@ -43,9 +43,7 @@ class isMember
             }
         }
 
-        $isMember = \App\Models\TrainingMember::whereHas('trainingDetail', function ($q) use ($trainingId) {
-            $q->where('training_id', $trainingId);
-        })->where('user_id', $user->id)->exists();
+        $isMember = \App\Models\TrainingMember::where('training_id', $trainingId)->where('user_id', $user->id)->exists();
 
         if (!$isMember) {
             return redirect()->back()->with('error', 'Anda bukan anggota dari training ini.');

@@ -4,7 +4,7 @@
         <div class="card mb-4">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
-                    <h2 class="card-title mb-1">📚 Pilih Pelatihan</h2>
+                    <h2 class="card-title mb-1">Pilih Pelatihan</h2>
                     <p class="text-muted">Lihat dan daftar pelatihan yang tersedia untuk Anda.</p>
                 </div>
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
@@ -132,6 +132,11 @@
                                         <div class="text-secondary text-truncate">
                                             {{ $training->jenisTraining->name ?? 'Tidak Diketahui' }}
                                         </div>
+                                        @if ($training->instructor)
+                                            <div class="text-secondary small">
+                                                Instruktur: {{ $training->instructor->name }}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -153,10 +158,10 @@
                                             <path d="M8 15h2v2h-2z" />
                                         </svg>
                                         <span>
-                                            @if ($training->detail)
-                                                {{ \Carbon\Carbon::parse($training->detail->start_date)->format('d M') }}
+                                            @if ($training->start_date)
+                                                {{ \Carbon\Carbon::parse($training->start_date)->format('d M') }}
                                                 -
-                                                {{ \Carbon\Carbon::parse($training->detail->end_date)->format('d M Y') }}
+                                                {{ \Carbon\Carbon::parse($training->end_date)->format('d M Y') }}
                                             @else
                                                 Belum Dijadwalkan
                                             @endif

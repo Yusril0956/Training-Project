@@ -26,10 +26,16 @@ class TrainingSeeder extends Seeder
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         }
 
+        // Get admin users to assign as instructors
+        $adminUsers = \App\Models\User::whereHas('roles', function ($q) {
+            $q->where('name', 'Admin');
+        })->pluck('id')->toArray();
+
         Training::updateOrCreate([
             'name' => 'Software Requirements Analyst & Design (SA)',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -37,6 +43,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Mastering Linux & Shell Programming',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -44,6 +51,7 @@ class TrainingSeeder extends Seeder
             'name' => 'CompTIA Network+',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -51,6 +59,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Certified Ethical Hacker (CEH)',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 3,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -58,6 +67,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Computer Hacking Forensics Investigator (CHFI)',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 3,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -65,6 +75,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Secure Programming - Open Worldwide Security Project (OWASP)',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 3,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -72,6 +83,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Privacy and Data Protection Foundation',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'close',
         ]);
 
@@ -79,6 +91,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Risk Management Leadership',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -86,6 +99,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Image & Video Forensic',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -93,6 +107,7 @@ class TrainingSeeder extends Seeder
             'name' => 'MacOS Forensic',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -100,6 +115,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Digital Leadership',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -107,6 +123,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Leadership for the Digital Age',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -114,6 +131,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Certified Cloud Security Professional (CCSP)',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 1,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -121,6 +139,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Software Requirements Analysis',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -128,6 +147,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Analisa & Design System',
             'description' => 'entah deskripsi nya apa',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -135,6 +155,7 @@ class TrainingSeeder extends Seeder
             'name' => 'SAP S/4HANA Overview, Business Process Mapping, SAP Enterprise Structure',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -142,6 +163,7 @@ class TrainingSeeder extends Seeder
             'name' => 'SAP Module-Specific Training ',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -149,6 +171,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Requirement Management, Business Process Documentation, Change & Release Management',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -156,6 +179,7 @@ class TrainingSeeder extends Seeder
             'name' => 'pelatihan sertifikasi ABAP',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -163,6 +187,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Front-End Fundamental, Front-End Framework & Library',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -170,6 +195,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Database (PL/SQL, ORACLE/POSTGRES, DLL)',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 2,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -177,6 +203,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Back-End Fundamental (Node.js, Python, Java, PHP)',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -184,6 +211,7 @@ class TrainingSeeder extends Seeder
             'name' => 'Pengembangan Full-Stack (MERN Stack, MEAN Stack)',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'open',
         ]);
 
@@ -191,6 +219,7 @@ class TrainingSeeder extends Seeder
             'name' => ' DevOps & Cloud',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'close',
         ]);
 
@@ -198,12 +227,12 @@ class TrainingSeeder extends Seeder
             'name' => 'Fundamental QA dan Pengujian Manual',
             'description' => 'entah deskripsi nya apa.',
             'jenis_training_id' => 4,
+            'instructor_id' => !empty($adminUsers) ? $adminUsers[array_rand($adminUsers)] : null,
             'status' => 'close',
         ]);
 
         // Call related seeders to populate linked data
         $this->call([
-            TrainingDetailSeeder::class,
             TrainingMemberSeeder::class,
         ]);
     }

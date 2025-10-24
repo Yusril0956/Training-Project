@@ -45,12 +45,14 @@ class CreateUserAndMember extends Component
                 'status' => $this->newUserStatus,
             ]);
 
-            $trainingDetail = $this->training->detail ?? $this->training->detail()->create([
-                'start_date' => now(),
-                'end_date' => now()->addMonth(),
-            ]);
+            if (!$this->training->start_date) {
+                $this->training->update([
+                    'start_date' => now(),
+                    'end_date' => now()->addMonth(),
+                ]);
+            }
 
-            $trainingDetail->members()->create([
+            $this->training->members()->create([
                 'user_id' => $newUser->id,
                 'status' => 'accept',
                 'series' => 'TRN-' . strtoupper(uniqid()),

@@ -14,12 +14,12 @@ use Exception;
 class Add extends Component
 {
     public Training $training;
-    
+
     public $users = [];
     public $selectedUsers = [];
     public $selectAll = false;
 
-    public function mount($trainingId) 
+    public function mount($trainingId)
     {
         $this->training = Training::findOrFail($trainingId);
         $this->loadUsers();
@@ -27,12 +27,14 @@ class Add extends Component
 
     public function loadUsers()
     {
-        $trainingDetail = $this->training->detail()->firstOrCreate([], [
-            'start_date' => now(),
-            'end_date'   => now()->addMonth(),
-        ]);
+        if (!$this->training->start_date) {
+            $this->training->update([
+                'start_date' => now(),
+                'end_date' => now()->addMonth(),
+            ]);
+        }
 
-        $existingMemberIds = TrainingMember::where('training_detail_id', $trainingDetail->id)
+        $existingMemberIds = TrainingMember::where('training_id', $this->training->id)
             ->pluck('user_id');
 
         $this->users = User::whereNotIn('id', $existingMemberIds)
@@ -63,9 +65,7 @@ class Add extends Component
         ]);
 
         try {
-            $trainingDetail = $this->training->detail;
-
-            $alreadyMemberIds = TrainingMember::where('training_detail_id', $trainingDetail->id)
+            $alreadyMemberIds = TrainingMember::where('training_id', $this->training->id)
                 ->whereIn('user_id', $this->selectedUsers)
                 ->pluck('user_id')
                 ->toArray();
@@ -81,12 +81,12 @@ class Add extends Component
             $now = now();
             foreach ($newUserIds as $userId) {
                 $newMembersData[] = [
-                    'training_detail_id' => $trainingDetail->id,
-                    'user_id'            => $userId,
-                    'status'             => 'accept',
-                    'series'             => 'TRN-' . strtoupper(uniqid()),
-                    'created_at'         => $now,
-                    'updated_at'         => $now,
+                    'training_id' => $this->training->id,
+                    'user_id'     => $userId,
+                    'status'      => 'accept',
+                    'series'      => 'TRN-' . strtoupper(uniqid()),
+                    'created_at'  => $now,
+                    'updated_at'  => $now,
                 ];
             }
 

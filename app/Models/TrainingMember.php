@@ -11,16 +11,16 @@ class TrainingMember extends Model
 
     protected $fillable = [
         'user_id',
-        'training_detail_id',
+        'training_id',
         'status',
         'series',
     ];
 
     protected $table = 'training_members';
 
-    public function trainingDetail()
+    public function training()
     {
-        return $this->belongsTo(TrainingDetail::class, 'training_detail_id', 'id');
+        return $this->belongsTo(Training::class, 'training_id');
     }
 
     public function user()

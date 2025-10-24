@@ -48,7 +48,7 @@ class Index extends Component
             $this->training = Training::whereHas('members', function ($q) {
                 $q->where('user_id', Auth::id())->whereIn('status', ['accept', 'graduate']);
             })
-                ->with(['detail', 'jenisTraining', 'members.user'])
+                ->with(['jenisTraining', 'members.user'])
                 ->findOrFail($this->trainingId);
         }
     }
@@ -61,7 +61,7 @@ class Index extends Component
 
     private function findMemberOrFail($memberId)
     {
-        return TrainingMember::with('user', 'trainingDetail.training')->findOrFail($memberId);
+        return TrainingMember::with('user', 'training')->findOrFail($memberId);
     }
 
     public function acceptMember($memberId)
@@ -69,7 +69,7 @@ class Index extends Component
         try {
             $member = $this->findMemberOrFail($memberId);
             $member->update(['status' => 'accept']);
-            $member->user->notify(new TrainingAcceptedNotification($member->trainingDetail->training));
+            $member->user->notify(new TrainingAcceptedNotification($member->training));
             session()->flash('success', 'Peserta telah diterima.');
         } catch (\Exception $e) {
             session()->flash('error', 'Gagal menerima peserta: ' . $e->getMessage());
@@ -81,7 +81,7 @@ class Index extends Component
     {
         try {
             $member = $this->findMemberOrFail($memberId);
-            $training = $member->trainingDetail->training;
+            $training = $member->training;
             $user = $member->user;
 
             $member->delete();
@@ -98,7 +98,7 @@ class Index extends Component
     {
         try {
             $member = $this->findMemberOrFail($memberId);
-            $training = $member->trainingDetail->training;
+            $training = $member->training;
             $user = $member->user;
 
             $member->delete();
@@ -115,7 +115,7 @@ class Index extends Component
     {
         try {
             $member = $this->findMemberOrFail($memberId);
-            $training = $member->trainingDetail->training;
+            $training = $member->training;
             $user = $member->user;
 
             $member->update(['status' => 'graduate']);
@@ -123,7 +123,7 @@ class Index extends Component
             $certificateNumber = strtoupper('CERT-' . $training->id . '-' . $user->id . '-' . now()->format('Ymd'));
             $data = [
                 'user' => $user,
-                'training' => $training->load('detail'),
+                'training' => $training,
                 'certificateNumber' => $certificateNumber,
                 'supervisorName' => 'Ir. Budi Santoso, M.T.',
             ];

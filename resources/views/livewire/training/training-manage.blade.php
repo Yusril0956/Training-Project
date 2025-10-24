@@ -55,6 +55,15 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Instruktur</label>
+                            <select wire:model="instructor_id" class="form-select">
+                                <option value="">Pilih Instruktur</option>
+                                @foreach ($instructors as $instructor)
+                                    <option value="{{ $instructor->id }}">{{ $instructor->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="col-12">
                             <label class="form-label">Deskripsi</label>
                             <textarea wire:model="description" class="form-control" rows="3"></textarea>
@@ -123,6 +132,7 @@
                             <th class="w-1">No</th>
                             <th>Nama Pelatihan</th>
                             <th>Jenis</th>
+                            <th>Instruktur</th>
                             <th>Status</th>
                             <th>Periode</th>
                             <th class="text-end">Aksi</th>
@@ -137,6 +147,9 @@
                                     <span class="badge bg-azure-lt">{{ $t->jenisTraining->name }}</span>
                                 </td>
                                 <td>
+                                    {{ $t->instructor->name ?? '-' }}
+                                </td>
+                                <td>
                                     @if ($t->status === 'open')
                                         <span class="badge bg-green-lt">Open</span>
                                     @else
@@ -144,10 +157,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($t->detail)
-                                        {{ \Carbon\Carbon::parse($t->detail->start_date)->format('d M Y') }}
+                                    @if ($t->start_date)
+                                        {{ \Carbon\Carbon::parse($t->start_date)->format('d M Y') }}
                                         &ndash;
-                                        {{ \Carbon\Carbon::parse($t->detail->end_date)->format('d M Y') }}
+                                        {{ \Carbon\Carbon::parse($t->end_date)->format('d M Y') }}
                                     @else
                                         <span class="text-muted">Belum dijadwalkan</span>
                                     @endif
@@ -198,7 +211,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted">Tidak ada pelatihan ditemukan.
+                                <td colspan="9" class="text-center text-muted">Tidak ada pelatihan ditemukan.
                                 </td>
                             </tr>
                         @endforelse

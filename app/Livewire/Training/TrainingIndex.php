@@ -84,15 +84,14 @@ class TrainingIndex extends Component
             return;
         }
 
-        $trainingDetail = $training->detail;
-        if (!$trainingDetail) {
-            $trainingDetail = $training->detail()->create([
+        if (!$training->start_date) {
+            $training->update([
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonth()->toDateString(),
             ]);
         }
 
-        $existingMember = TrainingMember::where('training_detail_id', $trainingDetail->id)
+        $existingMember = TrainingMember::where('training_id', $training->id)
             ->where('user_id', Auth::id())
             ->first();
 
@@ -102,7 +101,7 @@ class TrainingIndex extends Component
         }
 
         TrainingMember::create([
-            'training_detail_id' => $trainingDetail->id,
+            'training_id' => $training->id,
             'user_id' => Auth::id(),
             'status' => 'pending',
             'series' => 'TRN-' . strtoupper(uniqid()),
@@ -115,7 +114,7 @@ class TrainingIndex extends Component
     public function render()
     {
         $trainings = Training::query()
-            ->with(['jenisTraining', 'detail', 'members'])
+            ->with(['jenisTraining', 'instructor', 'members'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', '%' . $this->search . '%')

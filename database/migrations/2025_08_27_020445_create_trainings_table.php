@@ -17,6 +17,9 @@ return new class extends Migration
             $table->text('description'); // Text fields not indexed for search
             $table->enum('status', ['open', 'close'])->default('open')->index(); // Index for filtering
             $table->foreignId('jenis_training_id')->constrained('jenis_trainings')->cascadeOnDelete();
+            $table->foreignId('instructor_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }
