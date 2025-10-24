@@ -100,9 +100,6 @@
                     </div>
                 @endif
             </div>
-
-
-            @include('components.modal')
         </div>
     </div>
 @endsection

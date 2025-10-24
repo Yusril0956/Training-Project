@@ -6,7 +6,6 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\ExternalCertificateController;
 
 /*
@@ -70,10 +69,6 @@ Route::middleware('auth')->group(function () {
     // Training
     Route::prefix('training')->name('training.')->group(function () {
         Route::get('/', \App\Livewire\Training\TrainingIndex::class)->name('index');
-
-        Route::delete('/{id}/reject', [TrainingController::class, 'reject'])->name('reject');
-        Route::put('/{id}/approve', [TrainingController::class, 'approve'])->name('approve');
-
         // Settings
         Route::get('/settings/{id}', \App\Livewire\Training\Settings::class)->name('settings');
     });
