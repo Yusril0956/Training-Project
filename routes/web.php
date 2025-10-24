@@ -66,23 +66,18 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
     });
 
-    // Training
-    Route::prefix('training')->name('training.')->group(function () {
-        Route::get('/', \App\Livewire\Training\TrainingIndex::class)->name('index');
-        // Settings
-        Route::get('/settings/{id}', \App\Livewire\Training\Settings::class)->name('settings');
-    });
-
     // ============================
     // Member Routes
     // ============================
     Route::middleware('isMember')->prefix('training')->name('training.')->group(function () {
-        Route::get('/training/{id}', \App\Livewire\Training\Index::class)->name('home');
-        Route::get('/members/{id}', \App\Livewire\Training\Members\Index::class)->name('members.index');
+        Route::get('/{trainingId}', \App\Livewire\Training\Home::class)->name('home');
+        Route::get('/members/{trainingId}', \App\Livewire\Training\Members\Index::class)->name('members.index');
         Route::get('/tasks/{trainingId}', \App\Livewire\Training\Tasks\Index::class)->name('tasks');
         Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
         Route::get('/materi/{trainingId}', \App\Livewire\Training\Materi\MateriIndex::class)->name('materi.index');
         Route::get('/materi/{trainingId}/create', \App\Livewire\Training\Materi\MateriCreate::class)->name('materi.create');
+        Route::get('/', \App\Livewire\Training\TrainingIndex::class)->name('index');
+        Route::get('/settings/{trainingId}', \App\Livewire\Training\Settings::class)->name('settings');
     });
 
 

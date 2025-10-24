@@ -13,10 +13,10 @@ class Settings extends Component
     public $description;
     public $status;
 
-    public function mount($id)
+    public function mount($trainingId)
     {
-        $this->trainingId = $id;
-        $this->training = Training::findOrFail($id);
+        $this->trainingId = $trainingId;
+        $this->training = Training::findOrFail($trainingId);
         $this->name = $this->training->name;
         $this->description = $this->training->description;
         $this->status = $this->training->status;

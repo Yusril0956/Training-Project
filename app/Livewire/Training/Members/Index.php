@@ -22,9 +22,9 @@ class Index extends Component
     public $graduateMember;
     public $isAdmin = false;
 
-    public function mount($id)
+    public function mount($trainingId)
     {
-        $this->trainingId = $id;
+        $this->trainingId = $trainingId;
         $this->loadData();
     }
 

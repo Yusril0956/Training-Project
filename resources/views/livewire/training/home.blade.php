@@ -29,27 +29,26 @@
                     {{-- Ini adalah wrapper untuk list kustom kita --}}
                     <div>
                         @foreach ($training->attendanceSessions->sortBy('date') as $session)
-                            
                             {{-- Setiap item jadwal --}}
-                            <div class="py-3 @if(!$loop->last) border-bottom @endif">
-                                
+                            <div class="py-3 @if (!$loop->last) border-bottom @endif">
+
                                 {{-- Baris 1: Judul di kiri, Tanggal di kanan --}}
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <h5 class="mb-0">{{ $session->title }}</h5>
                                     <span class="text-muted small">{{ $session->date->format('d M Y') }}</span>
                                 </div>
-                                
+
                                 {{-- Baris 2: Waktu (tanpa ikon) --}}
                                 <div class="text-muted small mb-1">
-                                    Waktu: {{ \Carbon\Carbon::parse($session->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($session->end_time)->format('H:i') }}
+                                    Waktu: {{ \Carbon\Carbon::parse($session->start_time)->format('H:i') }} -
+                                    {{ \Carbon\Carbon::parse($session->end_time)->format('H:i') }}
                                 </div>
-                                
+
                                 {{-- Baris 3: Deskripsi (tanpa ikon) --}}
                                 <div class="text-muted small">
                                     {{ $session->description ?? 'Tidak ada deskripsi' }}
                                 </div>
                             </div>
-
                         @endforeach
                     </div>
                 @else
@@ -91,10 +90,10 @@
                     <div class="col-md-4">
                         <a href="{{ route('training.members.index', $training->id) }}" class="card card-link">
                             <div class="card-body text-center">
-                                <span class="avatar bg-green-lt text-green mb-2"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round"
+                                <span class="avatar bg-green-lt text-green mb-2"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"
                                         class="icon icon-tabler icons-tabler-outline icon-tabler-users">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
@@ -149,7 +148,8 @@
                     </div>
                     @if (Auth::check() && Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                         <div class="col-md-4">
-                            <a href="{{ route('admin.training.attendance.manage', ['trainingId' => $training->id]) }}" class="card card-link">
+                            <a href="{{ route('admin.training.attendance.manage', ['trainingId' => $training->id]) }}"
+                                class="card card-link">
                                 <div class="card-body text-center">
                                     <span class="avatar bg-orange-lt text-orange mb-2"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -206,8 +206,8 @@
             <div class="card-body">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Total Peserta: {{ $training->members_count ?? '0' }}</li>
-                    <li class="list-group-item">Tugas Aktif: {{ $training->task_count ?? '0' }}</li>
-                    <li class="list-group-item">Feedback Masuk: {{ $training->feedback_count ?? '0' }}</li>
+                    <li class="list-group-item">Tugas: {{ $training->tasks_count ?? '0' }}</li>
+                    <li class="list-group-item">Materi: {{ $training->materis_count ?? '0' }}</li>
                 </ul>
             </div>
         </div>
