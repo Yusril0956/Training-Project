@@ -73,97 +73,15 @@ class DashboardController extends Controller
         }
     }
 
-    /**
-     * Display user notifications.
-     */
-    public function notification()
-    {
-        $user = Auth::user();
-        $notifications = Notification::where('notifiable_id', $user->id)
-            ->latest()
-            ->paginate(10);
-
-        return view('dashboard.notifications', compact('notifications'));
-    }
 
 
 
-    /**
-     * Display all feedback messages.
-     */
-    public function inbox()
-    {
-        $feedback = Feedback::paginate(10);
 
-        return view('dashboard.inbox', compact('feedback'));
-    }
 
-    public function feedback(Request $request)
-    {
-        $request->validate([
-            'nama_pengirim' => 'required|string|max:100',
-            'pesan' => 'required|string',
-        ]);
 
-        try {
-            Feedback::create([
-                'nama_pengirim' => $request->nama_pengirim,
-                'pesan' => $request->pesan,
-            ]);
-            return redirect()->back()->with('success', 'Feedback berhasil dikirim!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal mengirim feedback!');
-        }
-    }
 
-    /**
-     * Display user's certificates and external certificates.
-     */
-    public function mysertifikat()
-    {
-        try {
-            $user = Auth::user();
 
-            // Ambil semua sertifikat milik user
-            $certificates = Certificate::where('user_id', $user->id)
-                ->with('training')
-                ->paginate(12);
 
-            $externalCertificates = ExternalCertificate::where('user_id', Auth::id())->latest()->paginate(6);
-
-            return view('dashboard.mysertifikat', compact('certificates', 'externalCertificates'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error loading certificates: ' . $e->getMessage());
-        }
-    }
-
-    public function settings()
-    {
-        $user = Auth::user();
-        return view('dashboard.settings', compact('user'));
-    }
-
-    /**
-     * Update user settings.
-     */
-    public function updateSettings(Request $request)
-    {
-        $user = Auth::user();
-
-        $request->validate([
-            'email_notifications' => 'nullable|in:enabled,disabled',
-        ]);
-
-        try {
-            User::where('id', $user->id)->update([
-                'email_notifications' => $request->email_notifications,
-            ]);
-
-            return redirect()->back()->with('success', 'Pengaturan berhasil disimpan!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Gagal menyimpan pengaturan!');
-        }
-    }
 
     /**
      * Export users as CSV.

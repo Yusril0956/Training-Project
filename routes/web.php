@@ -42,11 +42,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
-    Route::get('/inbox', [DashboardController::class, 'inbox'])->name('inbox');
-    Route::get('/sertifikat', [DashboardController::class, 'mysertifikat'])->name('mysertifikat');
-    Route::get('/notifikasi', [DashboardController::class, 'notification'])->name('notifikasi');
+    Route::get('/inbox', \App\Livewire\Dashboard\Inbox::class)->name('inbox');
+    Route::get('/sertifikat', \App\Livewire\Dashboard\MyCertificates::class)->name('mysertifikat');
+    Route::get('/notifikasi', \App\Livewire\Dashboard\Notifications::class)->name('notifikasi');
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
-    Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::put('/useredit/{id}', [DashboardController::class, 'userUpdate'])->name('user.update');
 
@@ -54,8 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/help', 'dashboard.help')->name('help');
     Route::view('/kontak-divisi', 'dashboard.kontak-divisi')->name('kontak.divisi');
     Route::resource('manual-certificates', ExternalCertificateController::class)->only(['index', 'create', 'store', 'show']);
-    Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
-    Route::post('/settings', [DashboardController::class, 'updateSettings'])->name('settings.update');
+    Route::get('/settings', \App\Livewire\Dashboard\Settings::class)->name('settings');
 
     // Profile
     Route::prefix('profile')->group(function () {
