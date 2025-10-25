@@ -42,6 +42,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
+    Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
     Route::get('/inbox', \App\Livewire\Dashboard\Inbox::class)->name('inbox');
     Route::get('/sertifikat', \App\Livewire\Dashboard\MyCertificates::class)->name('mysertifikat');
     Route::get('/notifikasi', \App\Livewire\Dashboard\Notifications::class)->name('notifikasi');

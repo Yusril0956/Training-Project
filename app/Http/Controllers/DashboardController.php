@@ -20,6 +20,25 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
+    public function feedback(Request $request)
+    {
+        $request->validate([
+            'nama_pengirim' => 'required|string|max:100',
+            'pesan' => 'required|string',
+        ]);
+
+        try {
+            Feedback::create([
+                'nama_pengirim' => $request->nama_pengirim,
+                'pesan' => $request->pesan,
+            ]);
+
+            return redirect()->back()->with('success', 'Feedback berhasil dikirim!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengirim feedback!');
+        }
+    }
+
     public function terms()
     {
         return view('dashboard.terms');
