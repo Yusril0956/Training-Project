@@ -7,8 +7,8 @@
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                 <a href="{{ route('index') }}">
-                    <img src="{{ asset('images/LOGOrl2.png') }}" class="navbar-brand-image "
-                        alt="logo">     PT.Dirgantara
+                    <img src="{{ asset('images/LOGOFULL.png') }}" class="navbar-brand-image " alt="logo"
+                        loading="lazy"> PT.Dirgantara
                 </a>
             </h1>
             <div class="navbar-nav flex-row order-md-last">
@@ -34,7 +34,9 @@
                         </svg>
                     </a>
                     @php
-                        $unreadNotifications = Auth::check() ? Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get() : collect();
+                        $unreadNotifications = Auth::check()
+                            ? Auth::user()->notifications()->whereNull('read_at')->latest()->take(5)->get()
+                            : collect();
                     @endphp
                     <div class="nav-item dropdown d-none d-md-flex me-3">
                         <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1"
@@ -47,7 +49,7 @@
                                     d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                                 <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                             </svg>
-                            @if($unreadNotifications->count() > 0)
+                            @if ($unreadNotifications->count() > 0)
                                 <span class="badge bg-red">{{ $unreadNotifications->count() }}</span>
                             @endif
                         </a>
@@ -61,15 +63,18 @@
                                         <div class="list-group-item">
                                             <div class="row align-items-center">
                                                 <div class="col-auto"><span
-                                                        class="status-dot status-dot-animated bg-blue d-block"></span></div>
+                                                        class="status-dot status-dot-animated bg-blue d-block"></span>
+                                                </div>
                                                 <div class="col text-truncate">
-                                                    <div class="text-body d-block">{{ $notification->data['title'] ?? 'Notifikasi' }}</div>
+                                                    <div class="text-body d-block">
+                                                        {{ $notification->data['title'] ?? 'Notifikasi' }}</div>
                                                     <div class="d-block text-secondary text-truncate mt-n1">
-                                                        {{ $notification->data['message'] ?? $notification->data['content'] ?? 'Pesan notifikasi' }}
+                                                        {{ $notification->data['message'] ?? ($notification->data['content'] ?? 'Pesan notifikasi') }}
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                                    <small
+                                                        class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +96,7 @@
                                 style="background-image: url({{ Auth::user()->avatar_url ? asset(Auth::user()->avatar_url) . '?t=' . time() : asset('images/default_avatar.png') }})"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                            
+
                             <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                             <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
                             <div class="dropdown-divider"></div>
@@ -115,7 +120,7 @@
                                 <span class="nav-link-title">Home</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ (request()->routeIs('training.index') ? 'active' : '') }}">
+                        <li class="nav-item {{ request()->routeIs('training.index') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('training.index') }}">
                                 <span class="nav-link-title">Training</span>
                             </a>
