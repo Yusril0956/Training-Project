@@ -43,7 +43,7 @@
             <div class="text-center mb-4">
                 <a href="{{ route('index') }}" class="navbar-brand navbar-brand-autodark">
                     <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                        class="navbar-brand-image"> PT.Dirgantara
+                        class="navbar-brand-image" loading="lazy"> PT.Dirgantara
                 </a>
             </div>
             <div class="card card-md">
@@ -79,14 +79,16 @@
                                 </span>
                             </label>
                             <div class="input-group input-group-flat">
-                                <input type="password" id="password-input" class="form-control @error('password') is-invalid @enderror"
-                                    name="password" placeholder="Your password" autocomplete="off" required>
+                                <input type="password" id="password-input"
+                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    placeholder="Your password" autocomplete="off" required>
                                 <span class="input-group-text">
                                     <a href="#" class="link-secondary" title="Show password"
                                         data-bs-toggle="tooltip" id="toggle-password">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"
                                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                            fill="none" stroke-linecap="round" stroke-linejoin="round" id="eye-icon">
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                            id="eye-icon">
                                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                             <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                                             <path
@@ -124,7 +126,7 @@
                                 </svg>
                                 Login dengan google
                             </a>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,12 +140,12 @@
     <script src="{{ asset('dist/js/tabler.min.js?1692870487') }}" defer></script>
     <script src="{{ asset('dist/js/demo.min.js?1692870487') }}" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const passwordInput = document.getElementById('password-input');
             const togglePassword = document.getElementById('toggle-password');
             const eyeIcon = document.getElementById('eye-icon');
 
-            togglePassword.addEventListener('click', function (e) {
+            togglePassword.addEventListener('click', function(e) {
                 e.preventDefault();
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';

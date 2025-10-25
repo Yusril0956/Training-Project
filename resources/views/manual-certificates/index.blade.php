@@ -39,7 +39,8 @@
                                         class="w-100 h-100" style="border: none;"></iframe>
                                 @else
                                     <img src="{{ asset('images/default-training.jpg') }}"
-                                        class="card-img-top object-fit-cover w-100 h-100" alt="Default Sertifikat" />
+                                        class="card-img-top object-fit-cover w-100 h-100" alt="Default Sertifikat"
+                                        loading="lazy" />
                                 @endif
                             </div>
 

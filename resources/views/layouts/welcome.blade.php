@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,10 +7,11 @@
     <title>Welcome </title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="card">
         <div class="circle" style="--clr:#4da6ff;">
-            <img src="{{ asset ('images/LOGOFULL.png') }}" alt="hiasan" class="logo">
+            <img src="{{ asset('images/LOGOFULL.png') }}" alt="hiasan" class="logo" loading="lazy">
         </div>
         <div class="content">
             <h2>PT.Dirgantara</h2>
@@ -20,7 +22,8 @@
                 <a href="{{ route('login.form') }}">Login</a>
             @endif
         </div>
-        <img src="{{ asset('images/N219.png') }}" alt="" class="product_img">
+        <img src="{{ asset('images/N219.png') }}" alt="" class="product_img" loading="lazy">
     </div>
 </body>
+
 </html>

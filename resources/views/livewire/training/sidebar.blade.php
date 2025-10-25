@@ -12,7 +12,7 @@
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href="{{ route('index') }}" wire:navigate>
                 <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image"> PT.Dirgantara
+                    class="navbar-brand-image" loading="lazy"> PT.Dirgantara
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -254,7 +254,8 @@
                     </a>
                 </li>
                 <li class="nav-item @if (request()->routeIs('admin.training.attendance.manage')) active @endif">
-                    <a class="nav-link" href="{{ route('admin.training.attendance.manage', $training->id) }}" wire:navigate>
+                    <a class="nav-link" href="{{ route('admin.training.attendance.manage', $training->id) }}"
+                        wire:navigate>
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-check -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

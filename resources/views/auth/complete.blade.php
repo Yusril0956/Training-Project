@@ -36,7 +36,7 @@
             <div class="text-center mb-4">
                 <a href="{{ route('index') }}" class="navbar-brand navbar-brand-autodark">
                     <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                        class="navbar-brand-image"> PT.Dirgantara
+                        class="navbar-brand-image" loading="lazy">
                 </a>
             </div>
 

@@ -7,7 +7,7 @@
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href="{{ route('index') }}">
                 <img src="{{ asset('LogoBaru.png') }}" width="110" height="32" alt="Tabler"
-                    class="navbar-brand-image">     PT.Dirgantara
+                    class="navbar-brand-image" loading="lazy"> PT.Dirgantara
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -71,7 +71,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    
+
                     <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
@@ -191,7 +191,7 @@
                         </span>
                         <span class="nav-link-title">
                             Sertifikat Saya
-                        </trspan>
+                            </trspan>
                     </a>
                 </li>
 
@@ -364,7 +364,7 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    
+
                     <a href="{{ route('profile') }}" class="dropdown-item">Profile</a>
                     <a href="{{ route('index') }}/#feedback" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>

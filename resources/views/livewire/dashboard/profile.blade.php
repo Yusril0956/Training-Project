@@ -189,7 +189,7 @@
                         style="cursor: pointer;">
                         @if ($avatar)
                             <img src="{{ $avatar->temporaryUrl() }}" class="img-fluid mb-3"
-                                style="max-height: 200px;">
+                                style="max-height: 200px;" loading="lazy">
                         @else
                             <div class="py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
@@ -256,7 +256,9 @@
                                 const files = e.dataTransfer.files;
                                 if (files.length) {
                                     fileInput.files = files;
-                                    fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+                                    fileInput.dispatchEvent(new Event('change', {
+                                        bubbles: true
+                                    }));
                                 }
                             });
 
@@ -283,11 +285,14 @@
         });
 
         document.addEventListener('livewire:initialized', () => {
-            Livewire.on('modal:close', ({ id }) => {
+            Livewire.on('modal:close', ({
+                id
+            }) => {
                 const modalElement = document.getElementById(id);
                 if (!modalElement) return;
 
-                const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(
+                modalElement);
                 modal.hide();
 
                 // Ensure backdrop is removed if Livewire re-renders modal DOM
