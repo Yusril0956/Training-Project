@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 use App\Services\AuthService;
 
 class AuthController extends Controller
 {
-    protected $authService;
+    protected AuthService $authService;
 
     public function __construct(AuthService $authService)
     {
@@ -23,15 +24,18 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $result = $this->authService->login($request->only(['email', 'password']));
+        $result = $this->authService->login([
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
 
         if ($result['success']) {
             return redirect('/home');
+        } else {
+            return back()->withErrors([
+                'email' => $result['message'],
+            ]);
         }
-
-        return back()->withErrors([
-            'email' => $result['message'],
-        ]);
     }
 
     public function register(Request $request)
@@ -43,9 +47,20 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $this->authService->register($request->only(['name', 'nik', 'email', 'password']));
+        try {
+            $this->authService->register([
+                'name' => $request->name,
+                'nik' => $request->nik,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
 
-        return redirect('/home');
+            return redirect('/home');
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'email' => 'Registration failed: ' . $e->getMessage(),
+            ]);
+        }
     }
 
     public function completeForm()
@@ -62,9 +77,20 @@ class AuthController extends Controller
             'city' => 'required|string|max:255',
         ]);
 
-        $this->authService->completeProfile(Auth::id(), $request->only(['phone', 'nik', 'address', 'city']));
+        try {
+            $this->authService->completeProfile(Auth::id(), [
+                'phone' => $request->phone,
+                'nik' => $request->nik,
+                'address' => $request->address,
+                'city' => $request->city,
+            ]);
 
-        return redirect('/home');
+            return redirect('/home');
+        } catch (\Exception $e) {
+            return back()->withErrors([
+                'error' => 'Profile completion failed: ' . $e->getMessage(),
+            ]);
+        }
     }
 
     public function logout(Request $request)
@@ -79,12 +105,18 @@ class AuthController extends Controller
 
     public function googleCallback()
     {
-        $user = $this->authService->handleGoogleCallback();
+        try {
+            $user = $this->authService->handleGoogleCallback();
 
-        if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
-            return redirect()->route('profile.complete');
+            if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
+                return redirect()->route('profile.complete');
+            }
+
+            return redirect()->route('index');
+        } catch (\Exception $e) {
+            return redirect('/')->withErrors([
+                'error' => 'Google login failed: ' . $e->getMessage(),
+            ]);
         }
-
-        return redirect()->route('index');
     }
 }

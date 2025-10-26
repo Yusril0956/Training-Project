@@ -4,25 +4,22 @@ namespace App\Livewire\Training;
 
 use App\Models\Training;
 use Livewire\Component;
-use App\Services\TrainingService;
 
 class Home extends Component
 {
     public $trainingId;
     public $training;
 
-    protected TrainingService $trainingService;
-
-    public function boot(TrainingService $trainingService)
-    {
-        $this->trainingService = $trainingService;
-    }
-
     public function mount($trainingId)
     {
-        $this->trainingId = $trainingId;
-        $dashboardData = $this->trainingService->getTrainingDashboardData($trainingId);
-        $this->training = $dashboardData['training'];
+        $this->id = $trainingId;
+        $this->training = Training::withCount(['members', 'tasks', 'materis'])
+            ->with(['attendanceSessions' => function ($query) {
+                $query->where('date', '>=', now()->toDateString())
+                    ->orderBy('date', 'asc')
+                    ->limit(3);
+            }])
+            ->findOrFail($trainingId);
     }
 
     public function render()

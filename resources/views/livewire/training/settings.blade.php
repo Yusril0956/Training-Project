@@ -15,6 +15,19 @@
                 <div class="card-body">
                     <h2 class="card-title">Pengaturan Training</h2>
                     <p class="text-muted">Atur informasi dan status pelatihan <strong>{{ $training->name }}</strong>.</p>
+
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -28,10 +41,16 @@
                         <div class="mb-3">
                             <label class="form-label">Judul Pelatihan</label>
                             <input type="text" wire:model="name" class="form-control" required>
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
                             <textarea wire:model="description" class="form-control" rows="4"></textarea>
+                            @error('description')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Status</label>
@@ -39,6 +58,9 @@
                                 <option value="open">Open</option>
                                 <option value="close">Close</option>
                             </select>
+                            @error('status')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Instruktur</label>
@@ -51,6 +73,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('instructor_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>

@@ -18,7 +18,6 @@ use App\Notifications\TrainingGraduatedNotification;
 use App\Notifications\TrainingKickedNotification;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Services\TrainingService;
 
 class TrainingIndex extends Component
 {
@@ -27,13 +26,6 @@ class TrainingIndex extends Component
     public string $search = '';
     public string $jenis = '';
     protected $paginationTheme = 'bootstrap';
-
-    protected TrainingService $trainingService;
-
-    public function boot(TrainingService $trainingService)
-    {
-        $this->trainingService = $trainingService;
-    }
 
     public function updatingSearch()
     {
@@ -63,14 +55,10 @@ class TrainingIndex extends Component
      */
     public function reject($id)
     {
-        try {
-            $this->trainingService->rejectTraining($id);
-            session()->flash('success', 'Training berhasil ditolak');
-        } catch (\Exception $e) {
-            session()->flash('error', 'Gagal menolak training: ' . $e->getMessage());
-        }
-
-        return redirect()->back();
+        $training = Training::findOrFail($id);
+        $training->status = 'close';
+        $training->save();
+        return redirect()->back()->with('success', 'Training berhasil ditolak');
     }
 
     /**
@@ -78,14 +66,10 @@ class TrainingIndex extends Component
      */
     public function approve($id)
     {
-        try {
-            $this->trainingService->approveTraining($id);
-            session()->flash('success', 'Training berhasil disetujui');
-        } catch (\Exception $e) {
-            session()->flash('error', 'Gagal menyetujui training: ' . $e->getMessage());
-        }
-
-        return redirect()->back();
+        $training = Training::findOrFail($id);
+        $training->status = 'open';
+        $training->save();
+        return redirect()->back()->with('success', 'Training berhasil disetujui');
     }
 
     /**
@@ -93,13 +77,37 @@ class TrainingIndex extends Component
      */
     public function register($trainingId)
     {
-        try {
-            $this->trainingService->registerUserForTraining($trainingId, Auth::id());
-            session()->flash('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
-        } catch (\Exception $e) {
-            session()->flash('error', $e->getMessage());
+        $training = Training::findOrFail($trainingId);
+
+        if ($training->status === 'close') {
+            session()->flash('error', 'Pendaftaran untuk training ini sudah ditutup.');
+            return;
         }
 
+        if (!$training->start_date) {
+            $training->update([
+                'start_date' => now()->toDateString(),
+                'end_date' => now()->addMonth()->toDateString(),
+            ]);
+        }
+
+        $existingMember = TrainingMember::where('training_id', $training->id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingMember) {
+            session()->flash('error', 'Anda sudah terdaftar sebagai peserta training ini.');
+            return;
+        }
+
+        TrainingMember::create([
+            'training_id' => $training->id,
+            'user_id' => Auth::id(),
+            'status' => 'pending',
+            'series' => 'TRN-' . strtoupper(uniqid()),
+        ]);
+
+        session()->flash('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
         $this->render(); // Re-render to update the status
     }
 

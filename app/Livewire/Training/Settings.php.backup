@@ -5,7 +5,6 @@ namespace App\Livewire\Training;
 use App\Models\Training;
 use App\Models\User;
 use Livewire\Component;
-use App\Services\TrainingService;
 
 class Settings extends Component
 {
@@ -17,15 +16,9 @@ class Settings extends Component
     public $instructor_id;
     public $instructors;
 
-    protected TrainingService $trainingService;
-
-    public function boot(TrainingService $trainingService)
-    {
-        $this->trainingService = $trainingService;
-    }
-
     public function mount($trainingId)
     {
+
         $this->trainingId = $trainingId;
         $this->training = Training::findOrFail($trainingId);
         $this->name = $this->training->name;
@@ -45,7 +38,7 @@ class Settings extends Component
         ]);
 
         try {
-            $this->trainingService->updateTrainingSettings($this->trainingId, [
+            $this->training->update([
                 'name' => $this->name,
                 'description' => $this->description,
                 'status' => $this->status,
