@@ -13,7 +13,7 @@
             <!-- Header -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h2 class="card-title">⚙️ Pengaturan Training</h2>
+                    <h2 class="card-title">Pengaturan Training</h2>
                     <p class="text-muted">Atur informasi dan status pelatihan <strong>{{ $training->name }}</strong>.</p>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <!-- Form Pengaturan Umum -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h3 class="card-title">📝 Informasi Umum</h3>
+                    <h3 class="card-title">Informasi Umum</h3>
                 </div>
                 <div class="card-body">
                     <form wire:submit.prevent="updateSettings">
@@ -40,6 +40,18 @@
                                 <option value="close">Close</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Instruktur</label>
+                            <select wire:model="instructor_id" class="form-select">
+                                <option value="">Pilih Instruktur</option>
+                                @foreach ($instructors as $instructor)
+                                    <option value="{{ $instructor->id }}"
+                                        {{ $instructor->id == $instructor_id ? 'selected' : '' }}>
+                                        {{ $instructor->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
                         </div>
@@ -50,7 +62,7 @@
             <!-- Aksi Tambahan -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">🔧 Aksi Tambahan</h3>
+                    <h3 class="card-title">Aksi Tambahan</h3>
                 </div>
                 <div class="card-body">
                     <div class="row g-3">

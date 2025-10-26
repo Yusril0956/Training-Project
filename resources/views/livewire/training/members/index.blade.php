@@ -27,7 +27,7 @@
                     <div
                         class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
                         <div class="mb-3 mb-sm-0">
-                            <h2 class="card-title">👥 Daftar Peserta</h2>
+                            <h2 class="card-title">Daftar Peserta</h2>
                             <p class="text-muted mb-0">Berikut adalah peserta yang terdaftar dalam pelatihan
                                 <strong>{{ $training->name }}</strong>.
                             </p>
@@ -110,7 +110,7 @@
 
             <div class="card mb-3">
                 <div class="card-body">
-                    <h2 class="card-title">🎓 Daftar Peserta Lulus</h2>
+                    <h2 class="card-title">Daftar Peserta Lulus</h2>
                     <p class="text-muted">Berikut adalah peserta yang sudah lulus dari pelatihan
                         <strong>{{ $training->name }}</strong>.
                     </p>
@@ -157,7 +157,7 @@
 
             <div class="card mb-3">
                 <div class="card-body">
-                    <h2 class="card-title">📥 Daftar Permintaan Bergabung</h2>
+                    <h2 class="card-title">Daftar Permintaan Bergabung</h2>
                     <p class="text-muted">Berikut adalah daftar permintaan dari user yang ingin bergabung ke pelatihan
                         <strong>{{ $training->name }}</strong>.
                     </p>

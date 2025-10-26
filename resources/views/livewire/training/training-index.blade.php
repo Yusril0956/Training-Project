@@ -9,7 +9,7 @@
                 </div>
                 @if (Auth::user()->hasAnyRole(['Admin', 'Super Admin']))
                     <a href="{{ route('admin.training.manage') }}" class="btn btn-primary">
-                        Manage ko
+                        Manage
                     </a>
                 @endif
             </div>
