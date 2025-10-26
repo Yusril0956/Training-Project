@@ -8,19 +8,16 @@
                 </div>
                 <div class="col-auto ms-auto">
                     <div class="btn-list">
-                        <button class="btn btn-primary" wire:click="showCreateModal">
+                        <a href="{{ route('admin.training.create') }}" class="btn btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus">
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                                <path d="M16 19h6" />
-                                <path d="M19 16v6" />
-                                <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                                <path d="M12 5l0 14" />
+                                <path d="M5 12l14 0" />
                             </svg>
-                            Add User
-                        </button>
+                            Create Training
+                        </a>
                     </div>
                 </div>
             </div>
@@ -39,54 +36,7 @@
             </div>
         @endif
 
-        @if ($showCreateForm)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <form wire:submit="{{ $editingId ? 'update' : 'store' }}">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Nama Pelatihan</label>
-                                <input type="text" wire:model="name" class="form-control" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Jenis Pelatihan</label>
-                                <select wire:model="jenis_training_id" class="form-select" required>
-                                    <option value="">Pilih Jenis</option>
-                                    @foreach ($jenisTrainings as $jenis)
-                                        <option value="{{ $jenis->id }}">{{ $jenis->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Instruktur</label>
-                                <select wire:model="instructor_id" class="form-select">
-                                    <option value="">Pilih Instruktur</option>
-                                    @foreach ($instructors as $instructor)
-                                        <option value="{{ $instructor->id }}">{{ $instructor->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Deskripsi</label>
-                                <textarea wire:model="description" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Status</label>
-                                <select wire:model="status" class="form-select">
-                                    <option value="open">Open</option>
-                                    <option value="close">Close</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <button type="submit"
-                                class="btn btn-primary">{{ $editingId ? 'Update' : 'Simpan' }}</button>
-                            <button type="button" wire:click="resetForm" class="btn btn-secondary">Batal</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        @endif
+
 
         <div class="card mb-3">
             <div class="card-body">
@@ -182,7 +132,7 @@
                                                         d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
                                                 </svg>
                                             </a>
-                                            <button wire:click="edit({{ $t->id }})"
+                                            <a href="{{ route('admin.training.edit', $t->id) }}"
                                                 class="btn btn-sm btn-warning btn-pill" title="Edit">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -193,7 +143,7 @@
                                                         d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                                                     <path d="M16 5l3 3" />
                                                 </svg>
-                                            </button>
+                                            </a>
                                             <button wire:click="destroy({{ $t->id }})"
                                                 class="btn btn-sm btn-danger btn-pill" title="Hapus"
                                                 onclick="return confirm('Yakin ingin menghapus pelatihan ini?')">

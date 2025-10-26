@@ -6,6 +6,7 @@ use App\Models\Training;
 use App\Models\JenisTraining;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Services\TrainingService;
 
 class TrainingManage extends Component
 {
@@ -15,15 +16,14 @@ class TrainingManage extends Component
     public string $jenis = '';
     protected $paginationTheme = 'bootstrap';
 
-    public $showCreateForm = false;
-    public $editingId = null;
-    public $name = '';
-    public $description = '';
-    public $jenis_training_id = '';
-    public $instructor_id = '';
-    public $status = 'open';
-    public $start_date = '';
-    public $end_date = '';
+    // Removed form properties - moved to separate components
+
+    protected TrainingService $trainingService;
+
+    public function boot(TrainingService $trainingService)
+    {
+        $this->trainingService = $trainingService;
+    }
 
     public function updatingSearch()
     {
@@ -42,107 +42,16 @@ class TrainingManage extends Component
         $this->resetPage();
     }
 
-    public function resetForm()
-    {
-        $this->name = '';
-        $this->description = '';
-        $this->jenis_training_id = '';
-        $this->instructor_id = '';
-        $this->status = 'open';
-        $this->start_date = '';
-        $this->end_date = '';
-        $this->editingId = null;
-        $this->showCreateForm = false;
-    }
-
-    public function showCreateModal()
-    {
-        $this->resetForm();
-        $this->showCreateForm = true;
-    }
-
-    public function store()
-    {
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'jenis_training_id' => 'required|exists:jenis_trainings,id',
-            'instructor_id' => 'nullable|exists:users,id',
-            'status' => 'required|in:open,close',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
-
-        $training = Training::create([
-            'name' => $this->name,
-            'description' => $this->description,
-            'jenis_training_id' => $this->jenis_training_id,
-            'instructor_id' => $this->instructor_id,
-            'status' => $this->status,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-        ]);
-
-        session()->flash('success', 'Pelatihan berhasil ditambahkan.');
-        $this->resetForm();
-    }
-
-    public function edit($id)
-    {
-        $training = Training::findOrFail($id);
-        $this->editingId = $id;
-        $this->name = $training->name;
-        $this->description = $training->description;
-        $this->jenis_training_id = $training->jenis_training_id;
-        $this->instructor_id = $training->instructor_id;
-        $this->status = $training->status;
-        $this->start_date = $training->start_date ? $training->start_date->format('Y-m-d') : '';
-        $this->end_date = $training->end_date ? $training->end_date->format('Y-m-d') : '';
-        $this->showCreateForm = true;
-    }
-
-    public function update()
-    {
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'jenis_training_id' => 'required|exists:jenis_trainings,id',
-            'instructor_id' => 'nullable|exists:users,id',
-            'status' => 'required|in:open,close',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
-
-        $training = Training::findOrFail($this->editingId);
-        $training->update([
-            'name' => $this->name,
-            'description' => $this->description,
-            'jenis_training_id' => $this->jenis_training_id,
-            'instructor_id' => $this->instructor_id,
-            'status' => $this->status,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-        ]);
-
-        session()->flash('success', 'Pelatihan berhasil diperbarui.');
-        $this->resetForm();
-    }
+    // Removed form methods - moved to separate components
 
     public function destroy($id)
     {
-        $training = Training::findOrFail($id);
-
-        $training->members()->delete();
-
-        foreach ($training->tasks as $task) {
-            $task->submissions()->delete();
-            $task->delete();
+        try {
+            $this->trainingService->deleteTraining($id);
+            session()->flash('success', 'Pelatihan berhasil dihapus.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Gagal menghapus pelatihan: ' . $e->getMessage());
         }
-
-        $training->certificates()->delete();
-        $training->delete();
-
-        session()->flash('success', 'Pelatihan berhasil dihapus.');
     }
 
     public function render()

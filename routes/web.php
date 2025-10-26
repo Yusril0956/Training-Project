@@ -103,6 +103,8 @@ Route::middleware('auth')->group(function () {
 
         // Training Management
         Route::get('/training/manage', \App\Livewire\Training\TrainingManage::class)->name('training.manage');
+        Route::get('/training/create', \App\Livewire\Training\TrainingCreate::class)->name('training.create');
+        Route::get('/training/{trainingId}/edit', \App\Livewire\Training\TrainingEdit::class)->name('training.edit');
 
         Route::get('/training/{trainingId}/tasks/create', \App\Livewire\Training\Tasks\Create::class)->name('tasks.create');
         Route::get('/training/{trainingId}/tasks/{taskId}/review/{submissionId}', \App\Livewire\Training\Tasks\Review::class)->name('task.review');
