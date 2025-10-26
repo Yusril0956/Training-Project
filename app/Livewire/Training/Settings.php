@@ -18,6 +18,10 @@ class Settings extends Component
 
     public function mount($trainingId)
     {
+        if (!Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
+            abort(403, 'Unauthorized');
+        }
+
         $this->trainingId = $trainingId;
         $this->training = Training::findOrFail($trainingId);
         $this->name = $this->training->name;

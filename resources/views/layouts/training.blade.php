@@ -39,7 +39,11 @@
 
 <body>
     <div class="page">
-        <livewire:training.sidebar />
+        @php
+            $trainingId = Route::current()->parameter('trainingId');
+        @endphp
+
+        @include('partials._training_sidebar')
         <div class="page-wrapper">
 
             {{-- @include('components.alerts') --}}
