@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\ProfileService;
 
 class ProfileController extends Controller
 {
+    protected $profileService;
+
+    public function __construct(ProfileService $profileService)
+    {
+        $this->profileService = $profileService;
+    }
+
     public function profile()
     {
         // ambil data user yang sedang login
@@ -24,9 +32,7 @@ class ProfileController extends Controller
             'password_confirmation' => 'required|min:6|same:password',
         ]);
 
-        $user = User::find(Auth::id());
-        $user->password = bcrypt($request->password);
-        $user->save();
+        $this->profileService->updatePassword(Auth::id(), $request->password);
 
         return redirect()->back()->with('success', 'Password berhasil diubah!');
     }
@@ -37,44 +43,21 @@ class ProfileController extends Controller
             'avatar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $user = User::find(Auth::id());
-
         if ($request->hasFile('avatar')) {
-            $file = $request->file('avatar');
-            $filename = 'avatar_' . $user->id . '.' . $file->getClientOriginalExtension();
-
-            // Store file using public disk for direct web access
-            $path = $file->storeAs('avatars', $filename, 'public');
-
-            if (!$path) {
+            try {
+                $this->profileService->updateAvatar(Auth::id(), $request->file('avatar'));
+                return redirect()->back()->with('success', 'Avatar berhasil diubah!');
+            } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Gagal upload file!');
             }
-
-            // Save the public path for direct web access
-            $user->avatar_url = 'storage/avatars/' . $filename;
-            $user->save();
-
-            return redirect()->back()->with('success', 'Avatar berhasil diubah!');
         } else {
             return redirect()->back()->with('error', 'File tidak ditemukan!');
         }
     }
+
     public function deleteAvatar(Request $request)
     {
-        $user = Auth::user();
-
-        // hapus file lama jika ada
-        if ($user->avatar_url) {
-            $filePath = str_replace('storage/', 'app/public/', $user->avatar_url);
-            $fullPath = storage_path($filePath);
-            if (file_exists($fullPath)) {
-                unlink($fullPath);
-            }
-        }
-
-        // reset ke null / default
-        $user->avatar_url = null;
-        $user->save();
+        $this->profileService->deleteAvatar(Auth::id());
 
         return back()->with('success', 'Avatar berhasil dihapus.');
     }
@@ -87,11 +70,7 @@ class ProfileController extends Controller
             'nik' => 'required|numeric|digits:6',
         ]);
 
-        $user = User::find(Auth::id());
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->nik = $request->nik;
-        $user->save();
+        $this->profileService->updateProfile(Auth::id(), $request->only(['name', 'email', 'nik']));
 
         return redirect()->back()->with('success', 'Profile berhasil diperbarui!');
     }

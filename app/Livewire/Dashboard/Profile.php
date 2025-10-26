@@ -4,10 +4,9 @@ namespace App\Livewire\Dashboard;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use App\Models\User;
+use App\Services\ProfileService;
 
 class Profile extends Component
 {
@@ -21,6 +20,8 @@ class Profile extends Component
     public $password_confirmation;
     public $avatar;
 
+    protected $profileService;
+
     protected $rules = [
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
@@ -29,6 +30,11 @@ class Profile extends Component
         'password_confirmation' => 'nullable|min:6',
         'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ];
+
+    public function boot(ProfileService $profileService)
+    {
+        $this->profileService = $profileService;
+    }
 
     public function mount()
     {
@@ -42,7 +48,7 @@ class Profile extends Component
     {
         $this->validateOnly(['name', 'email', 'nik']);
 
-        $this->user->update([
+        $this->profileService->updateProfile($this->user->id, [
             'name' => $this->name,
             'email' => $this->email,
             'nik' => $this->nik,
@@ -57,8 +63,7 @@ class Profile extends Component
         $this->validateOnly(['password', 'password_confirmation']);
 
         if ($this->password) {
-            $this->user->password = Hash::make($this->password);
-            $this->user->save();
+            $this->profileService->updatePassword($this->user->id, $this->password);
 
             session()->flash('success', 'Password berhasil diubah!');
             $this->password = null;
@@ -74,17 +79,13 @@ class Profile extends Component
         ]);
 
         if ($this->avatar) {
-            $filename = 'avatar_' . $this->user->id . '.' . $this->avatar->getClientOriginalExtension();
-            $path = $this->avatar->storeAs('avatars', $filename, 'public');
-
-            if ($path) {
-                $this->user->avatar_url = 'storage/avatars/' . $filename;
-                $this->user->save();
+            try {
+                $this->profileService->updateAvatar($this->user->id, $this->avatar);
 
                 session()->flash('success', 'Avatar berhasil diubah!');
                 $this->avatar = null;
                 $this->dispatch('closeModal', 'modal-avatar');
-            } else {
+            } catch (\Exception $e) {
                 session()->flash('error', 'Gagal upload file!');
             }
         }
@@ -92,16 +93,7 @@ class Profile extends Component
 
     public function deleteAvatar()
     {
-        if ($this->user->avatar_url) {
-            $filePath = str_replace('storage/', 'app/public/', $this->user->avatar_url);
-            $fullPath = storage_path($filePath);
-            if (file_exists($fullPath)) {
-                unlink($fullPath);
-            }
-        }
-
-        $this->user->avatar_url = null;
-        $this->user->save();
+        $this->profileService->deleteAvatar($this->user->id);
 
         session()->flash('success', 'Avatar berhasil dihapus.');
     }

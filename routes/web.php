@@ -43,7 +43,6 @@ Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
     Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
-    Route::get('/inbox', \App\Livewire\Dashboard\Inbox::class)->name('inbox');
     Route::get('/sertifikat', \App\Livewire\Dashboard\MyCertificates::class)->name('mysertifikat');
     Route::get('/notifikasi', \App\Livewire\Dashboard\Notifications::class)->name('notifikasi');
     Route::get('/terms', [DashboardController::class, 'terms'])->name('terms');
@@ -94,6 +93,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/export-users', [DashboardController::class, 'exportUsers'])->name('export.users');
         Route::post('/user/add', [DashboardController::class, 'addUser'])->name('user.add');
         Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
+
+        Route::get('/inbox', \App\Livewire\Dashboard\Inbox::class)->name('inbox');
+
 
         Route::get('/admin/extcertificate/create', fn() => view('manual-certificates.create'))->name('certificate.create');
         Route::patch('/extcertificate/{extcertificateId}/accept', [DashboardController::class, 'acceptCertificate'])->name('certificate.accept');

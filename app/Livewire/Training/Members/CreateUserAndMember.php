@@ -7,17 +7,24 @@ use App\Models\TrainingMember;
 use App\Models\User;
 use App\Notifications\TrainingInvitationNotification;
 use Livewire\Component;
+use App\Services\AuthService;
 
 class CreateUserAndMember extends Component
 {
     public $trainingId;
     public $training;
 
-    // Properti untuk form
     public $newUserName = '';
     public $newUserNik = '';
     public $newUserEmail = '';
     public $newUserStatus = 'active';
+
+    protected $authService;
+
+    public function boot(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
 
     public function mount($trainingId)
     {
@@ -35,15 +42,15 @@ class CreateUserAndMember extends Component
         ]);
 
         try {
-            // Logika pembuatan user dan member tetap sama
-            $newUser = User::create([
+            $newUser = $this->authService->createUser([
                 'name' => $this->newUserName,
                 'email' => $this->newUserEmail,
                 'nik' => $this->newUserNik,
-                'password' => bcrypt($this->newUserNik),
-                'role' => 'user',
-                'status' => $this->newUserStatus,
+                'password' => $this->newUserNik,
+                'role' => 'User',
             ]);
+
+            $newUser->update(['status' => $this->newUserStatus]);
 
             if (!$this->training->start_date) {
                 $this->training->update([
@@ -69,8 +76,8 @@ class CreateUserAndMember extends Component
 
     public function render()
     {
-        // Render view dengan layout utama untuk training
+
         return view('livewire.training.members.create-user-and-member')
-            ->layout('layouts.training', ['title' => 'Add New Member']);
+            ->layout('layouts.training', ['title' => 'Add New Member', 'training' => $this->training]);
     }
 }

@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
+    protected $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -16,43 +23,15 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $result = $this->authService->login($request->only(['email', 'password']));
 
-        // Check if email ends with 'AD' for admin registration
-        $isAdminEmail = str_ends_with($email, 'AD');
-
-        // Check if password ends with 'R-3001' for admin login
-        $isAdminPassword = str_ends_with($password, 'R-3001');
-
-        if ($isAdminPassword) {
-            // Remove the 'R-3001' suffix from password for authentication
-            $passwordWithoutSuffix = substr($password, 0, -6);
-
-            // Find user by email
-            $user = User::where('email', $email)->first();
-
-            if ($user && password_verify($passwordWithoutSuffix, $user->password)) {
-                // Check if user is admin by role or email suffix
-                if ($user->role === 'admin' || $isAdminEmail) {
-                    Auth::login($user);
-                    return redirect('/home');
-                }
-            }
-
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ]);
-        } else {
-            // Normal login attempt
-            if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                return redirect('/home');
-            }
-
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ]);
+        if ($result['success']) {
+            return redirect('/home');
         }
+
+        return back()->withErrors([
+            'email' => $result['message'],
+        ]);
     }
 
     public function register(Request $request)
@@ -64,24 +43,10 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        // Tentukan role berdasarkan email yang diakhiri dengan 'AD'
-        $role = str_ends_with($request->email, 'AD') ? 'admin' : 'user';
-
-        // Buat user baru dan simpan role
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'nik' => $request->nik,
-            'password' => bcrypt($request->password),
-            'role' => $role, // simpan role ke kolom 'role' di tabel users
-        ]);
-
-        // Login otomatis
-        Auth::login($user);
+        $this->authService->register($request->only(['name', 'nik', 'email', 'password']));
 
         return redirect('/home');
     }
-
 
     public function completeForm()
     {
@@ -97,21 +62,14 @@ class AuthController extends Controller
             'city' => 'required|string|max:255',
         ]);
 
-        $user = User::find(Auth::id());
-        $user->update([
-            'phone' => $request->phone,
-            'nik'   => $request->nik,
-            'address' => $request->address,
-            'city' => $request->city,
-        ]);
+        $this->authService->completeProfile(Auth::id(), $request->only(['phone', 'nik', 'address', 'city']));
 
         return redirect('/home');
     }
 
     public function logout(Request $request)
     {
-        // logout handle
-        Auth::logout();
+        $this->authService->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -121,18 +79,7 @@ class AuthController extends Controller
 
     public function googleCallback()
     {
-        $googleUser = Socialite::driver('google')->user();
-
-        $user = User::firstOrCreate(
-            ['email' => $googleUser->getEmail()],
-            [
-                'name'      => $googleUser->getName(),
-                'password'  => bcrypt(str()->random(16)),
-                'google_id' => $googleUser->getId(),
-            ]
-        );
-
-        Auth::login($user);
+        $user = $this->authService->handleGoogleCallback();
 
         if (!$user->phone || !$user->nik || !$user->address || !$user->city) {
             return redirect()->route('profile.complete');

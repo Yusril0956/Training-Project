@@ -7,6 +7,7 @@ use Livewire\WithPagination;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Cache;
+use App\Services\AuthService;
 
 class UserSearch extends Component
 {
@@ -18,10 +19,11 @@ class UserSearch extends Component
 
     // Modal state
     public $showModal = false;
-    public $modalMode = 'create'; 
+    public $modalMode = 'create';
     public $userId = null;
     public $name, $email, $password, $nik, $roleInput;
 
+    protected $authService;
     protected $paginationTheme = 'bootstrap';
 
     // Validation rules
@@ -38,6 +40,11 @@ class UserSearch extends Component
             'roleInput' => 'required|in:Super Admin,Admin,User',
             // 'status' => 'required|in:active,inactive',
         ];
+    }
+
+    public function boot(AuthService $authService)
+    {
+        $this->authService = $authService;
     }
 
     public function updatingSearch()
@@ -82,32 +89,21 @@ class UserSearch extends Component
         $this->validate();
 
         if ($this->modalMode === 'create') {
-            $user = User::create([
+            $this->authService->createUser([
                 'name' => $this->name,
                 'email' => $this->email,
                 'nik' => $this->nik,
-                'password' => bcrypt($this->nik),
-                // 'role' => $this->roleInput,
-                // 'status' => $this->status,
+                'password' => $this->nik, // Use NIK as default password
+                'role' => $this->roleInput,
             ]);
-            $role = Role::where('name', $this->roleInput)->first();
-            if ($role) {
-                $user->roles()->attach($role->id);
-            }
             session()->flash('success', 'User berhasil ditambahkan.');
         } else {
-            $user = User::findOrFail($this->userId);
-            $user->name = $this->name;
-            $user->email = $this->email;
-            $user->nik = $this->nik;
-            // $user->role = $this->roleInput;
-            // $user->status = $this->status;
-            // if ($this->password) $user->password = bcrypt($this->password);
-            $user->save();
-            $role = Role::where('name', $this->roleInput)->first();
-            if ($role) {
-                $user->roles()->sync([$role->id]);
-            }
+            $this->authService->updateUser($this->userId, [
+                'name' => $this->name,
+                'email' => $this->email,
+                'nik' => $this->nik,
+                'role' => $this->roleInput,
+            ]);
             session()->flash('success', 'User berhasil diupdate.');
         }
 
@@ -118,12 +114,10 @@ class UserSearch extends Component
 
     public function deleteUser($id)
     {
-        $user = User::findOrFail($id);
-        if ($user->role === 'Super Admin') {
+        if (!$this->authService->deleteUser($id)) {
             session()->flash('error', 'Akun super admin tidak dapat dihapus!');
             return;
         }
-        $user->delete();
         session()->flash('success', 'User berhasil dihapus.');
         $this->clearCache();
         $this->resetPage();
