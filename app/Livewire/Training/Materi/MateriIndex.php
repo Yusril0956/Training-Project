@@ -79,6 +79,6 @@ class MateriIndex extends Component
         return view('livewire.training.materi.materi-index', [
             'materis' => $materisQuery->paginate(12),
             'isAdmin' => Auth::user()->hasAnyRole(['Admin', 'Super Admin'])
-        ])->layout('layouts.training');
+        ])->layout('layouts.training', ['title' => 'Materi', 'training' => $this->training]);
     }
 }

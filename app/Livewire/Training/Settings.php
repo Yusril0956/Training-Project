@@ -18,9 +18,6 @@ class Settings extends Component
 
     public function mount($trainingId)
     {
-        if (!Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
-            abort(403, 'Unauthorized');
-        }
 
         $this->trainingId = $trainingId;
         $this->training = Training::findOrFail($trainingId);
@@ -56,6 +53,7 @@ class Settings extends Component
 
     public function render()
     {
-        return view('livewire.training.settings')->layout('layouts.training', ['title' => 'Setting']);
+        return view('livewire.training.settings')
+            ->layout('layouts.training', ['title' => 'Setting', 'training' => $this->training]);
     }
 }

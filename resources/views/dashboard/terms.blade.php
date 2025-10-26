@@ -5,6 +5,10 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
+            @include('partials._breadcrumb', [
+                'items' => [['title' => 'Terms', 'url' => route('terms')]],
+            ])
+
             <div class="card">
                 <div class="row g-0">
                     <div class="col-12 col-md-9 d-flex flex-column">

@@ -108,6 +108,9 @@ class ManageTrainingAttendance extends Component
 
     public function render()
     {
-        return view('livewire.training.attendance.manage-training-attendance');
+        return view('livewire.training.attendance.manage-training-attendance')->layout('layouts.training', [
+            'title' => 'Manajemen Absensi',
+            'training' => $this->training,
+        ]);
     }
 }

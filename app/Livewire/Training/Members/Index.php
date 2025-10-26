@@ -56,7 +56,7 @@ class Index extends Component
     public function render()
     {
         $view = $this->isAdmin ? 'livewire.training.members.index' : 'livewire.training.members.user-member';
-        return view($view)->layout('layouts.training', ['title' => 'Daftar Peserta']);
+        return view($view)->layout('layouts.training', ['title' => 'Daftar Members', 'training' => $this->training]);
     }
 
     private function findMemberOrFail($memberId)

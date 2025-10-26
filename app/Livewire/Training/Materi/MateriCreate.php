@@ -73,7 +73,6 @@ class MateriCreate extends Component
 
     public function render()
     {
-        return view('livewire.training.materi.materi-create')
-            ->layout('layouts.training');
+        return view('livewire.training.materi.materi-create')->layout('layouts.training', ['training' => $this->training]);
     }
 }

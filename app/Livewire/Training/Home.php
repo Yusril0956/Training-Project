@@ -25,6 +25,6 @@ class Home extends Component
     public function render()
     {
         return view('livewire.training.home')
-            ->layout('layouts.training');
+            ->layout('layouts.training', ['title' => 'Home', 'training' => $this->training]);
     }
 }

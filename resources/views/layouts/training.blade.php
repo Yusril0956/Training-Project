@@ -39,13 +39,9 @@
 
 <body>
     <div class="page">
-        @php
-            $trainingId = Route::current()->parameter('trainingId');
-        @endphp
 
-        @include('partials._training_sidebar')
+        @include('partials._training_sidebar', ['trainingId' => $training?->id])
         <div class="page-wrapper">
-
             {{-- @include('components.alerts') --}}
 
             {{ $slot }}
