@@ -40,7 +40,7 @@
 <body>
     <div class="page">
 
-        @include('partials._training_sidebar', ['trainingId' => $training?->id])
+        @include('partials._training_sidebar', ['trainingId' => $training?->id, 'training' => $training])
         <div class="page-wrapper">
             {{-- @include('components.alerts') --}}
 
