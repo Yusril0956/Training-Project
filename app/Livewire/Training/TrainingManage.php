@@ -56,26 +56,15 @@ class TrainingManage extends Component
 
     public function render()
     {
-        $trainings = Training::query()
-            ->with(['jenisTraining', 'members'])
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('description', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->when($this->jenis, function ($query) {
-                $query->whereHas('jenisTraining', function ($q) {
-                    $q->where('name', $this->jenis);
-                });
-            })
-            ->orderBy('status', 'desc')
-            ->paginate(9);
+        $filters = [
+            'search' => $this->search,
+            'jenis' => $this->jenis,
+        ];
+
+        $trainings = $this->trainingService->getTrainingsWithFilters($filters)->paginate(9);
 
         $jenisTrainings = JenisTraining::all();
-        $instructors = \App\Models\User::whereHas('roles', function ($q) {
-            $q->where('name', 'Admin');
-        })->get();
+        $instructors = $this->trainingService->getInstructors();
 
         return view('livewire.training.training-manage', [
             'trainings' => $trainings,

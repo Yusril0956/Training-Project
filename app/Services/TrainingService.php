@@ -255,4 +255,16 @@ class TrainingService
         }
         return $statuses;
     }
+
+    /**
+     * Get instructors (users with Admin role)
+     *
+     * @return Collection
+     */
+    public function getInstructors(): Collection
+    {
+        return \App\Models\User::whereHas('roles', function ($q) {
+            $q->where('name', 'Admin');
+        })->get();
+    }
 }

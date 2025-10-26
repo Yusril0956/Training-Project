@@ -105,28 +105,15 @@ class TrainingIndex extends Component
 
     public function render()
     {
-        $trainings = Training::query()
-            ->with(['jenisTraining', 'members'])
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('description', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->when($this->jenis, function ($query) {
-                $query->whereHas('jenisTraining', function ($q) {
-                    $q->where('name', $this->jenis);
-                });
-            })
-            ->orderBy('status', 'desc')
-            ->paginate(9);
+        $filters = [
+            'search' => $this->search,
+            'jenis' => $this->jenis,
+        ];
+
+        $trainings = $this->trainingService->getTrainingsWithFilters($filters)->paginate(9);
 
         $userId = Auth::id();
-        $userStatuses = [];
-        foreach ($trainings as $training) {
-            $member = $training->members->where('user_id', $userId)->first();
-            $userStatuses[$training->id] = $member ? $member->status : 'none';
-        }
+        $userStatuses = $this->trainingService->getUserTrainingStatuses($trainings, $userId);
 
         return view('livewire.training.training-index', [
             'trainings' => $trainings,
