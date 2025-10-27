@@ -216,9 +216,9 @@ class TrainingService
      * Get trainings with filters
      *
      * @param array $filters
-     * @return Collection
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function getTrainingsWithFilters(array $filters = []): Collection
+    public function getTrainingsWithFilters(array $filters = []): \Illuminate\Database\Eloquent\Builder
     {
         $query = Training::query()
             ->with(['jenisTraining', 'members']);
@@ -236,17 +236,17 @@ class TrainingService
             });
         }
 
-        return $query->orderBy('status', 'desc')->get();
+        return $query->orderBy('status', 'desc');
     }
 
     /**
      * Get user training statuses for a collection of trainings
      *
-     * @param Collection $trainings
+     * @param \Illuminate\Contracts\Pagination\LengthAwarePaginator $trainings
      * @param int $userId
      * @return array
      */
-    public function getUserTrainingStatuses(Collection $trainings, int $userId): array
+    public function getUserTrainingStatuses(\Illuminate\Contracts\Pagination\LengthAwarePaginator $trainings, int $userId): array
     {
         $statuses = [];
         foreach ($trainings as $training) {
