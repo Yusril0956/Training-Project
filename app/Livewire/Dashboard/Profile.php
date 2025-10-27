@@ -5,7 +5,6 @@ namespace App\Livewire\Dashboard;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
-use App\Models\User;
 use App\Services\ProfileService;
 
 class Profile extends Component
@@ -26,9 +25,17 @@ class Profile extends Component
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'nik' => 'required|numeric|digits:6',
-        'password' => 'nullable|min:6|confirmed',
-        'password_confirmation' => 'nullable|min:6',
+        'password' => 'nullable|string|min:6|confirmed',
+        'password_confirmation' => 'nullable|string|min:6',
         'avatar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    ];
+
+    protected $messages = [
+        'password.string' => 'Password harus berupa teks.',
+        'password.min' => 'Password minimal harus 6 karakter.',
+        'password.confirmed' => 'Konfirmasi password tidak cocok.',
+        'password_confirmation.string' => 'Konfirmasi password harus berupa teks.',
+        'password_confirmation.min' => 'Konfirmasi password minimal harus 6 karakter.',
     ];
 
     public function boot(ProfileService $profileService)
@@ -55,20 +62,22 @@ class Profile extends Component
         ]);
 
         session()->flash('success', 'Profile berhasil diperbarui!');
-        $this->dispatch('closeModal', 'modal-edit-profile');
+        // Tidak ada dispatch modal di sini
     }
 
     public function updatePassword()
     {
-        $this->validateOnly(['password', 'password_confirmation']);
+        $this->validate([
+            'password' => 'nullable|string|min:6|confirmed',
+            'password_confirmation' => 'nullable|string|min:6',
+        ]);
 
         if ($this->password) {
             $this->profileService->updatePassword($this->user->id, $this->password);
 
             session()->flash('success', 'Password berhasil diubah!');
-            $this->password = null;
-            $this->password_confirmation = null;
-            $this->dispatch('closeModal', 'modal-password');
+            $this->reset('password', 'password_confirmation');
+            // Tidak ada dispatch modal di sini
         }
     }
 
@@ -83,10 +92,13 @@ class Profile extends Component
                 $this->profileService->updateAvatar($this->user->id, $this->avatar);
 
                 session()->flash('success', 'Avatar berhasil diubah!');
-                $this->avatar = null;
-                $this->dispatch('closeModal', 'modal-avatar');
+                $this->reset('avatar');
+                
+                // --- PERBAIKAN: Tambahkan kembali dispatch event ---
+                $this->dispatch('modal:close', id: 'modal-avatar');
+                
             } catch (\Exception $e) {
-                session()->flash('error', 'Gagal upload file!');
+                session()->flash('error', 'Gagal upload file! ' . $e->getMessage());
             }
         }
     }
@@ -94,12 +106,13 @@ class Profile extends Component
     public function deleteAvatar()
     {
         $this->profileService->deleteAvatar($this->user->id);
-
         session()->flash('success', 'Avatar berhasil dihapus.');
     }
 
     public function render()
     {
-        return view('livewire.dashboard.profile');
+        $this->user = Auth::user()->fresh(); 
+        
+        return view('livewire.dashboard.profile')->layout('layouts.dashboard', ['title' => 'User Profile']);
     }
 }

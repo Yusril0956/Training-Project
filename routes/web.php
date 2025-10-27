@@ -5,7 +5,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExternalCertificateController;
 
 /*
@@ -57,13 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', \App\Livewire\Dashboard\Settings::class)->name('settings');
 
     // Profile
-    Route::prefix('profile')->group(function () {
-        Route::get('/', [ProfileController::class, 'profile'])->name('profile');
-        Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('setting.avatar');
-        Route::post('/password', [ProfileController::class, 'updatePassword'])->name('setting.password');
-        Route::post('/update', [ProfileController::class, 'updateProfile'])->name('setting.profile');
-        Route::delete('/delete-avatar', [ProfileController::class, 'deleteAvatar'])->name('user.deleteAvatar');
-    });
+    Route::get('/profile', App\Livewire\Dashboard\Profile::class)->name('profile');
 
     // ============================
     // Member Routes
@@ -95,7 +88,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
 
         Route::get('/inbox', \App\Livewire\Dashboard\Inbox::class)->name('inbox');
-
 
         Route::get('/admin/extcertificate/create', fn() => view('manual-certificates.create'))->name('certificate.create');
         Route::patch('/extcertificate/{extcertificateId}/accept', [DashboardController::class, 'acceptCertificate'])->name('certificate.accept');

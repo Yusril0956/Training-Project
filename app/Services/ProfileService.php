@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; // Standar untuk file
+use Illuminate\Support\Str; // Dibutuhkan untuk helper string
 use App\Models\User;
+use Illuminate\Http\UploadedFile; // Type-hint yang lebih baik
 
 class ProfileService
 {
@@ -41,9 +43,16 @@ class ProfileService
     /**
      * Update user avatar
      */
-    public function updateAvatar(int $userId, $avatarFile): User
+    // --- OPTIMALISASI: Gunakan type-hint UploadedFile ---
+    public function updateAvatar(int $userId, UploadedFile $avatarFile): User
     {
         $user = User::findOrFail($userId);
+
+        // --- OPTIMALISASI: Hapus avatar lama sebelum upload yang baru ---
+        if ($user->avatar_url) {
+            $oldPath = Str::after($user->avatar_url, 'storage/'); // Mendapat 'avatars/filename.jpg'
+            Storage::disk('public')->delete($oldPath);
+        }
 
         $filename = 'avatar_' . $user->id . '.' . $avatarFile->getClientOriginalExtension();
         $path = $avatarFile->storeAs('avatars', $filename, 'public');
@@ -53,7 +62,8 @@ class ProfileService
         }
 
         $user->update([
-            'avatar_url' => 'storage/avatars/' . $filename,
+            // Tetap gunakan format ini agar konsisten dengan kode Anda
+            'avatar_url' => 'storage/' . $path, 
         ]);
 
         return $user;
@@ -66,13 +76,13 @@ class ProfileService
     {
         $user = User::findOrFail($userId);
 
-        // Delete old file if exists
         if ($user->avatar_url) {
-            $filePath = str_replace('storage/', 'app/public/', $user->avatar_url);
-            $fullPath = storage_path($filePath);
-            if (file_exists($fullPath)) {
-                unlink($fullPath);
-            }
+            // --- PERBAIKAN: Gunakan Storage facade (cara standar) ---
+            // 1. Dapatkan path relatif dari 'storage/avatars/...' -> 'avatars/...'
+            $filePath = Str::after($user->avatar_url, 'storage/');
+
+            // 2. Hapus file menggunakan disk 'public'
+            Storage::disk('public')->delete($filePath);
         }
 
         $user->update([
