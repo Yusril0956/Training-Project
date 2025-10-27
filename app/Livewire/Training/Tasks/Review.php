@@ -71,6 +71,7 @@ class Review extends Component
             'training' => $this->training,
             'task' => $this->task,
             'submission' => $this->submission,
+            'title' => 'Review Submission',
         ]);
     }
 }

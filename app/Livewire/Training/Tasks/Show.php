@@ -224,9 +224,10 @@ class Show extends Component
             'submissions' => $this->submissions,
             'userSubmission' => $this->userSubmission,
             'fileIsImage' => $fileIsImage,
-            'defaultTabId' => $this->defaultTabId, // Kirim ke view
+            'defaultTabId' => $this->defaultTabId,
         ])->layout('layouts.training', [
             'title' => 'Detail Tugas',
+            'training' => $this->training,
         ]);
     }
 }
