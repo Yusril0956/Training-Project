@@ -1,0 +1,107 @@
+USERS
+- id (PK)
+- name
+- email (unique)
+- avatar_url
+- phone
+- address
+- nik (unique)
+- city
+- email_verified_at
+- password
+- google_id (unique)
+- profile_image
+- role (default: 'user')
+- remember_token
+- created_at, updated_at
+
+ROLES
+- id (PK)
+- code (unique)
+- name
+- created_at, updated_at
+
+USER_ROLES (Junction Table)
+- id (PK)
+- user_id (FK → users.id)
+- role_id (FK → roles.id)
+- created_at, updated_at
+- UNIQUE(user_id, role_id)
+
+JENIS_TRAININGS
+- id (PK)
+- code (unique)
+- name
+- description
+- created_at, updated_at
+
+TRAININGS
+- id (PK)
+- name
+- category
+- description
+- status (enum: pending, approved, completed, rejected)
+- jenis_training_id (FK → jenis_trainings.id)
+- created_at, updated_at
+
+TRAINING_DETAILS
+- id (PK)
+- training_id (FK → trainings.id)
+- start_date
+- end_date
+- created_at, updated_at
+
+TRAINING_MEMBERS
+- id (PK)
+- training_detail_id (FK → training_details.id)
+- user_id (FK → users.id)
+- series (unique)
+- created_at, updated_at
+
+TRAINING_MATERIALS
+- id (PK)
+- training_id (FK → trainings.id)
+- title
+- description
+- media_type
+- media_path
+- created_at, updated_at
+
+TASKS
+- id (PK)
+- training_id (FK → trainings.id)
+- title
+- description
+- deadline
+- created_at, updated_at
+
+TASK_SUBMISSIONS
+- id (PK)
+- task_id (FK → tasks.id)
+- user_id (FK → users.id)
+- answer
+- file_path
+- submitted_at
+- created_at, updated_at
+- UNIQUE(task_id, user_id)
+
+SCHEDULES
+- id (PK)
+- training_id (FK → trainings.id)
+- title
+- date
+- start_time
+- end_time
+- location
+- instructor
+- created_at, updated_at
+
+CERTIFICATES
+- id (PK)
+- user_id (FK → users.id)
+- name
+- organization
+- issue_date
+- expiry_date
+- file_path
+- created_at, updated_at

@@ -1,0 +1,83 @@
+           [START]
+              |
+              V
++-------------------------------+
+|  Identifikasi Kebutuhan       |
+|  Pelatihan (Karyawan/Manajer) |
++-------------------------------+
+              |
+              V
++-------------------------------+
+|     Analisis Kebutuhan        |
+|  Pelatihan Berdasarkan Posisi |
+|        (Kompetensi)           |
++-------------------------------+
+              |
+              V
++-------------------------------+
+|     Penentuan Jenis           |
+|         Pelatihan             |
++-------------------------------+
+       /                \
+      /                  \
+     V                    V
++----------------+  +-----------------+
+| Pelatihan MD   |  | Pelatihan GK    |
+| (Mandatory)    |  | (General Knowledge)|
++----------------+  +-----------------+
+      |                 |
+      V                 V
++----------------+  +-----------------+
+|  Pendaftaran   |  |  Pendaftaran   |
+|   Pelatihan MD |  |   Pelatihan GK |
+|    (Wajib)     |  |    (Pilihan)   |
++----------------+  +-----------------+
+      |                 |
+      V                 V
++----------------+  +-----------------+
+|  Pelaksanaan   |  |  Pelaksanaan   |
+|   Pelatihan    |  |   Pelatihan    |
++----------------+  +-----------------+
+      |                 |
+      V                 V
++----------------+  +-----------------+
+|  Ujian &       |  |  Ujian &       |
+|  Evaluasi      |  |  Evaluasi      |
++----------------+  +-----------------+
+      |                 |
+      V                 V
++----------------+  +-----------------+
+|  Hasil Ujian   |  |  Hasil Ujian   |
++----------------+  +-----------------+
+       |                  |
+       /                  \
+      /                    \
+     V                      V
++----------+      +----------+
+|  LULUS   |      | TIDAK    |
+|          |      |  LULUS   |
++----------+      +----------+
+     |                 |
+     V                 V
++----------------+   [END]
+|   Sistem       |
+|  Otomatisasi   |
+|  Sertifikasi   |
++----------------+
+     |
+     V
++-----------------+
+|   Pembuatan     |
+|   Sertifikat    |
+|  Digital Otomatis|
++-----------------+
+     |
+     V
++-----------------+
+|  Pengiriman     |
+|  Sertifikat     |
+|  (Email/Portal) |
++-----------------+
+     |
+     V
+[END]
