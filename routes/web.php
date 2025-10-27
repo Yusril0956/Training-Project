@@ -42,6 +42,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/home', [DashboardController::class, 'index'])->name('index');
+    Route::get('/training', \App\Livewire\Training\TrainingIndex::class)->name('training.index');
     Route::post('/feedback', [DashboardController::class, 'feedback'])->name('feedback');
     Route::get('/sertifikat', \App\Livewire\Dashboard\MyCertificates::class)->name('mysertifikat');
     Route::get('/notifikasi', \App\Livewire\Dashboard\Notifications::class)->name('notifikasi');
@@ -74,7 +75,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/tasks/{trainingId}/detail/{taskId}', \App\Livewire\Training\Tasks\Show::class)->name('task.detail');
         Route::get('/materi/{trainingId}', \App\Livewire\Training\Materi\MateriIndex::class)->name('materi.index');
         Route::get('/materi/{training}/create', \App\Livewire\Training\Materi\MateriCreate::class)->name('materi.create');
-        Route::get('/', \App\Livewire\Training\TrainingIndex::class)->name('index');
         Route::get('/settings/{trainingId}', \App\Livewire\Training\Settings::class)->name('settings');
     });
 
