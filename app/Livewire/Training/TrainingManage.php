@@ -16,8 +16,6 @@ class TrainingManage extends Component
     public string $jenis = '';
     protected $paginationTheme = 'bootstrap';
 
-    // Removed form properties - moved to separate components
-
     protected TrainingService $trainingService;
 
     public function boot(TrainingService $trainingService)
@@ -42,8 +40,6 @@ class TrainingManage extends Component
         $this->resetPage();
     }
 
-    // Removed form methods - moved to separate components
-
     public function destroy($id)
     {
         try {
@@ -63,8 +59,13 @@ class TrainingManage extends Component
 
         $trainings = $this->trainingService->getTrainingsWithFilters($filters)->paginate(9);
 
-        $jenisTrainings = JenisTraining::all();
-        $instructors = $this->trainingService->getInstructors();
+        $jenisTrainings = cache()->remember('jenis_trainings', 3600, function () {
+            return JenisTraining::all();
+        });
+
+        $instructors = cache()->remember('training_instructors', 3600, function () {
+            return $this->trainingService->getInstructors();
+        });
 
         return view('livewire.training.training-manage', [
             'trainings' => $trainings,

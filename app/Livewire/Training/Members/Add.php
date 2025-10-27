@@ -115,6 +115,9 @@ class Add extends Component
     public function render()
     {
         return view('livewire.training.members.add')
-            ->layout('layouts.training');
+            ->layout('layouts.training', [
+                'title' => 'Tambah Peserta Training',
+                'training' => $this->training,
+            ]);
     }
 }

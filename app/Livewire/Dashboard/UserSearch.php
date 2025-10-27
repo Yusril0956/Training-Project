@@ -130,22 +130,34 @@ class UserSearch extends Component
 
     public function render()
     {
-        $query = User::query();
+        $cacheKey = sprintf(
+            'users_search_%s_role_%s_page_%s_perpage_%s',
+            md5($this->search),
+            $this->role,
+            $this->getPage(),
+            $this->perPage
+        );
 
-        if ($this->search) {
-            $query->where(function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
-            });
-        }
+        $users = Cache::remember($cacheKey, 300, function () {
+            $query = User::query()
+                ->with('roles:id,name')
+                ->select(['id', 'name', 'email', 'nik', 'created_at']);
 
-        if ($this->role) {
-            $query->whereHas('roles', function ($q) {
-                $q->where('name', $this->role);
-            });
-        }
+            if ($this->search) {
+                $query->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%');
+                });
+            }
 
-        $users = $query->orderBy('created_at', 'desc')->paginate($this->perPage);
+            if ($this->role) {
+                $query->whereHas('roles', function ($q) {
+                    $q->where('name', $this->role);
+                });
+            }
+
+            return $query->orderBy('created_at', 'desc')->paginate($this->perPage);
+        });
 
         return view('livewire.dashboard.user-search', [
             'users' => $users,

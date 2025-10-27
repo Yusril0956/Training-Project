@@ -6,6 +6,7 @@ use App\Models\Training;
 use App\Models\TrainingMember;
 use App\Models\JenisTraining;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 
@@ -128,7 +129,9 @@ class TrainingService
     public function registerUserForTraining(int $trainingId, int $userId): TrainingMember
     {
         try {
-            $training = Training::findOrFail($trainingId);
+            $training = Cache::remember("training_{$trainingId}", 300, function () use ($trainingId) {
+                return Training::select(['id', 'status', 'start_date', 'end_date'])->findOrFail($trainingId);
+            });
 
             if ($training->status === 'close') {
                 throw new Exception('Pendaftaran untuk training ini sudah ditutup.');
@@ -140,24 +143,34 @@ class TrainingService
                     'start_date' => now()->toDateString(),
                     'end_date' => now()->addMonth()->toDateString(),
                 ]);
+                Cache::forget("training_{$trainingId}");
             }
 
             // Check if user is already registered
-            $existingMember = TrainingMember::where('training_id', $training->id)
-                ->where('user_id', $userId)
-                ->first();
+            $memberKey = "training_member_{$trainingId}_{$userId}";
+            $existingMember = Cache::remember($memberKey, 300, function () use ($training, $userId) {
+                return TrainingMember::where('training_id', $training->id)
+                    ->where('user_id', $userId)
+                    ->first();
+            });
 
             if ($existingMember) {
                 throw new Exception('Anda sudah terdaftar sebagai peserta training ini.');
             }
 
             // Create new member
-            return TrainingMember::create([
+            $member = TrainingMember::create([
                 'training_id' => $training->id,
                 'user_id' => $userId,
                 'status' => 'pending',
                 'series' => 'TRN-' . strtoupper(uniqid()),
             ]);
+
+            // Clear relevant caches
+            Cache::forget($memberKey);
+            Cache::forget("training_dashboard_{$trainingId}");
+
+            return $member;
         } catch (Exception $e) {
             throw new Exception('Gagal mendaftar training: ' . $e->getMessage());
         }
@@ -192,21 +205,38 @@ class TrainingService
     public function getTrainingDashboardData(int $trainingId): array
     {
         try {
-            $training = Training::withCount(['members', 'tasks', 'materis'])
-                ->with(['attendanceSessions' => function ($query) {
-                    $query->where('date', '>=', now()->toDateString())
-                        ->orderBy('date', 'asc')
-                        ->limit(3);
-                }])
-                ->findOrFail($trainingId);
+            // Hapus cache lama agar query baru bisa dieksekusi
+            // Anda bisa hapus baris ini setelah dijalankan sekali
+            Cache::forget("training_dashboard_{$trainingId}");
 
-            return [
-                'training' => $training,
-                'memberCount' => $training->members_count,
-                'taskCount' => $training->tasks_count,
-                'materiCount' => $training->materis_count,
-                'upcomingSessions' => $training->attendanceSessions,
-            ];
+            return cache()->remember("training_dashboard_{$trainingId}", 300, function () use ($trainingId) {
+
+                $training = Training::select(['id', 'name', 'description', 'status', 'start_date', 'end_date'])
+                    ->withCount([
+                        'members' => function ($query) {
+                            $query->where('status', 'accept');
+                        },
+                        'tasks',
+                        'materis'
+                    ])
+                    ->with([
+                        'attendanceSessions' => function ($query) {
+                            $query->select(['id', 'training_id', 'date', 'title', 'start_time', 'end_time', 'description'])
+                                ->where('date', '>=', now()->toDateString())
+                                ->orderBy('date', 'asc')
+                                ->limit(3);
+                        }
+                    ])
+                    ->findOrFail($trainingId);
+
+                return [
+                    'training' => $training,
+                    'memberCount' => $training->members_count,
+                    'taskCount' => $training->tasks_count,
+                    'materiCount' => $training->materis_count,
+                    'upcomingSessions' => $training->attendanceSessions,
+                ];
+            });
         } catch (Exception $e) {
             throw new Exception('Gagal memuat data dashboard: ' . $e->getMessage());
         }
@@ -221,7 +251,21 @@ class TrainingService
     public function getTrainingsWithFilters(array $filters = []): \Illuminate\Database\Eloquent\Builder
     {
         $query = Training::query()
-            ->with(['jenisTraining', 'members']);
+            ->with([
+                'jenisTraining:id,name,code',
+                'members:id,training_id,user_id,status',
+                'instructor:id,name'
+            ])
+            ->select([
+                'id',
+                'name',
+                'description',
+                'status',
+                'start_date',
+                'end_date',
+                'jenis_training_id',
+                'instructor_id'
+            ]);
 
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
@@ -242,18 +286,22 @@ class TrainingService
     /**
      * Get user training statuses for a collection of trainings
      *
-     * @param \Illuminate\Contracts\Pagination\LengthAwarePaginator $trainings
+     * @param mixed $trainings
      * @param int $userId
      * @return array
      */
-    public function getUserTrainingStatuses(\Illuminate\Contracts\Pagination\LengthAwarePaginator $trainings, int $userId): array
+    public function getUserTrainingStatuses($trainings, int $userId): array
     {
-        $statuses = [];
-        foreach ($trainings as $training) {
-            $member = $training->members->where('user_id', $userId)->first();
-            $statuses[$training->id] = $member ? $member->status : 'none';
-        }
-        return $statuses;
+        $cacheKey = "user_training_statuses_{$userId}_" . md5(json_encode($trainings->pluck('id')->toArray()));
+
+        return cache()->remember($cacheKey, 300, function () use ($trainings, $userId) {
+            $statuses = [];
+            foreach ($trainings as $training) {
+                $member = $training->members->where('user_id', $userId)->first();
+                $statuses[$training->id] = $member ? $member->status : 'none';
+            }
+            return $statuses;
+        });
     }
 
     /**

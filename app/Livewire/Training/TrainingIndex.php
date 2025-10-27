@@ -3,19 +3,7 @@
 namespace App\Livewire\Training;
 
 use App\Models\Training;
-use App\Models\JenisTraining;
-use App\Models\User;
-use App\Models\Tasks;
-use App\Models\TrainingMember;
-use App\Models\Notification;
-use App\Models\Certificate;
-use App\Models\Feedback;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\TrainingAcceptedNotification;
-use App\Notifications\TrainingRejectedNotification;
-use App\Notifications\TrainingInvitationNotification;
-use App\Notifications\TrainingGraduatedNotification;
-use App\Notifications\TrainingKickedNotification;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Services\TrainingService;

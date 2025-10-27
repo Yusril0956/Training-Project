@@ -1,4 +1,4 @@
-@props(['title' => 'Training'])
+@props(['title' => 'Training', 'training' => null])
 <!doctype html>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.

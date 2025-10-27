@@ -18,10 +18,8 @@ class AuthService
         $email = $credentials['email'];
         $password = $credentials['password'];
 
-        // Check if email ends with 'AD' for admin registration
         $isAdminEmail = str_ends_with($email, 'AD');
 
-        // Check if password ends with 'R-3001' for admin login
         $isAdminPassword = str_ends_with($password, 'R-3001');
 
         if ($isAdminPassword) {

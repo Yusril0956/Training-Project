@@ -72,21 +72,25 @@ class TrainingEdit extends Component
 
     public function render()
     {
-        $jenisTrainings = JenisTraining::all();
-        $instructors = \App\Models\User::whereHas('roles', function ($q) {
-            $q->where('name', 'Admin');
-        })->get();
+        $jenisTrainings = cache()->remember('jenis_trainings', 3600, function () {
+            return JenisTraining::all();
+        });
+
+        $instructors = cache()->remember('training_instructors', 3600, function () {
+            return \App\Models\User::whereHas('roles', function ($q) {
+                $q->where('name', 'Admin');
+            })->get();
+        });
 
         return view('livewire.training.training-edit', [
             'jenisTrainings' => $jenisTrainings,
             'instructors' => $instructors,
-        ])->layout('layouts.dashboard', [
-            'title' => 'Edit Training',
+            'title' => 'Create Training',
             'breadcrumb' => [
                 ['title' => 'Admin', 'url' => route('admin.index')],
                 ['title' => 'Training Management', 'url' => route('admin.training.manage')],
-                ['title' => 'Edit Training', 'url' => null],
+                ['title' => 'Create Training', 'url' => null],
             ]
-        ]);
+        ])->layout('layouts.dashboard', ['title' => 'Training Create']);
     }
 }

@@ -7,14 +7,12 @@ use App\Models\AttendanceSession;
 use App\Models\Training;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.training', ['title' => 'Manajemen Absensi '])]
 class ManageTrainingAttendance extends Component
 {
     public Training $training;
-    
+
     public ?AttendanceSession $activeSession = null;
     public $sessionId;
 
@@ -38,7 +36,10 @@ class ManageTrainingAttendance extends Component
     #[Computed]
     public function members()
     {
-        return $this->training->members()->with('user')->get();
+        return $this->training->members()
+            ->where('status', 'accept')
+            ->with('user')
+            ->get();
     }
 
     #[Computed]
@@ -68,7 +69,7 @@ class ManageTrainingAttendance extends Component
         foreach ($this->members() as $member) {
             $record = $records->get($member->id);
             $data[$member->id] = [
-                'status' => $record->status ?? 'absen', 
+                'status' => $record->status ?? 'absen',
                 'notes' => $record->notes ?? '',
             ];
         }

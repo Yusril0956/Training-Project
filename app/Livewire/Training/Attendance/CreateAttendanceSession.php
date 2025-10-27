@@ -3,11 +3,9 @@
 namespace App\Livewire\Training\Attendance;
 
 use App\Models\Training;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
-#[Layout('layouts.training', ['title' => 'Create Absensi: '])]
 class CreateAttendanceSession extends Component
 {
     public Training $training;
@@ -30,7 +28,7 @@ class CreateAttendanceSession extends Component
     public function mount($trainingId)
     {
         $this->training = Training::findOrFail($trainingId);
-        
+
         $this->date = now()->format('Y-m-d');
     }
 
@@ -41,14 +39,17 @@ class CreateAttendanceSession extends Component
         $this->training->attendanceSessions()->create($validated);
 
         session()->flash('success', 'Sesi absensi baru berhasil dibuat.');
-        
+
         return $this->redirectRoute('admin.training.attendance.manage', [
-            'trainingId' => $this->training->id 
+            'trainingId' => $this->training->id
         ]);
     }
 
     public function render()
     {
-        return view('livewire.training.attendance.create-attendance-session');
+        return view('livewire.training.attendance.create-attendance-session')->layout('layouts.training', [
+            'title' => 'Create Attendance Session',
+            'training' => $this->training
+        ]);
     }
 }

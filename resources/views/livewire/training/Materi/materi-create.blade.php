@@ -39,7 +39,6 @@
             <div class="card-body">
                 <div class="mb-3">
                     <label class="form-label required">Judul Materi</label>
-                    {{-- [OPTIMASI] wire:model.blur: Hanya update saat fokus hilang (lebih ringan) --}}
                     <input type="text" class="form-control @error('title') is-invalid @enderror"
                         wire:model.blur="title" placeholder="Masukkan judul materi">
                     @error('title')
@@ -49,7 +48,6 @@
 
                 <div class="mb-3">
                     <label class="form-label">Deskripsi</label>
-                    {{-- [OPTIMASI] wire:model.blur --}}
                     <textarea class="form-control @error('description') is-invalid @enderror" wire:model.blur="description" rows="4"
                         placeholder="Masukkan deskripsi materi (opsional)"></textarea>
                     @error('description')
@@ -60,15 +58,14 @@
                 <div class="mb-3">
                     <label class="form-label">File Materi</label>
                     
-                    {{-- [PERBAIKAN BUG] wire:model.live: Upload instan untuk preview --}}
+                    {{-- [PERUBAHAN] Hapus .live agar file di-submit bersama form --}}
                     <input type="file" class="form-control @error('file') is-invalid @enderror"
-                        wire:model.live="file"
+                        wire:model="file"
                         accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.mp4,.avi,.mov">
                     
-                    <div wire:loading wire:target="file" class="text-muted small mt-2">
-                        <span class="spinner-border spinner-border-sm me-1" role="status"></span>
-                        Mengunggah file...
-                    </div>
+                    {{-- [DIHAPUS] Loading state ini tidak diperlukan lagi --}}
+                    {{-- <div wire:loading wire:target="file" ...> </div> --}}
+                    
                     <small class="form-hint">
                         Format yang didukung: PDF, DOC, PPT, XLS, Gambar, Video. Maksimal 10MB.
                     </small>
@@ -77,21 +74,9 @@
                     @enderror
                 </div>
 
-                {{-- Blok ini sekarang akan muncul secara instan berkat wire:model.live --}}
-                @if ($file && !$errors->has('file'))
-                    <div class="mb-3">
-                        <label class="form-label">File Terpilih</label>
-                        <div class="alert alert-info py-2">
-                            <div class="d-flex align-items-center">
-                                <i class="ti ti-file-check me-2"></i>
-                                <div>
-                                    <strong>{{ $file->getClientOriginalName() }}</strong>
-                                    ({{ number_format($file->getSize() / 1024, 2) }} KB)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
+                {{-- [DIHAPUS] Blok preview ini dihapus karena $file tidak lagi di-upload live --}}
+                {{-- @if ($file && !$errors->has('file')) ... @endif --}}
+                
             </div>
 
             <div class="card-footer text-end">
@@ -100,12 +85,13 @@
                     <i class="ti ti-x me-1"></i>Batal
                 </a>
                 
+                {{-- [PERUBAHAN] wire:target hanya ke "store" --}}
                 <button type="submit" class="btn btn-primary" wire:loading.attr="disabled"
-                    wire:target="store,file">
-                    <span wire:loading.remove wire:target="store,file">
+                    wire:target="store">
+                    <span wire:loading.remove wire:target="store">
                         <i class="ti ti-device-floppy me-1"></i>Simpan Materi
                     </span>
-                    <span wire:loading wire:target="store,file">
+                    <span wire:loading wire:target="store">
                         <span class="spinner-border spinner-border-sm me-2" role="status"></span>
                         Menyimpan...
                     </span>

@@ -6,13 +6,13 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Training;
 use App\Models\Tasks;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class Create extends Component
 {
     use WithFileUploads;
 
-    // Properti yang akan di-bind ke form
     public $training;
     public $training_id;
     public $title;
@@ -39,16 +39,14 @@ class Create extends Component
         $this->validate();
 
         try {
-            // Simpan ke database terlebih dahulu untuk mendapatkan task_id
             $task = Tasks::create([
                 'training_id' => $this->training_id,
                 'title' => $this->title,
                 'description' => $this->description,
                 'deadline' => $this->deadline,
-                'attachment_path' => null, // akan diupdate jika ada attachment
+                'attachment_path' => null,
             ]);
 
-            // Simpan file jika ada
             if ($this->attachment) {
                 $originalName = $this->attachment->getClientOriginalName();
                 $extension = $this->attachment->getClientOriginalExtension();
@@ -56,11 +54,9 @@ class Create extends Component
                 $folderName = 'trainings/' . $this->training_id . '/task_attachments/' . $task->id . '/';
                 $path = $this->attachment->storeAs($folderName, $uniqueName, 'public');
 
-                // Update task dengan path attachment
                 $task->update(['attachment_path' => $path]);
             }
 
-            // Kirim notifikasi ke member yang diterima
             $training = Training::with(['members.user'])->findOrFail($this->training_id);
             $acceptedMembers = $training->members->where('status', 'accept');
 
@@ -70,10 +66,8 @@ class Create extends Component
                 }
             }
 
-            // Reset form setelah berhasil
             $this->reset(['title', 'description', 'deadline', 'attachment']);
 
-            // Flash message dan redirect
             session()->flash('success', 'Tugas berhasil ditambahkan dan notifikasi telah dikirim ke semua peserta.');
             return redirect()->route('training.tasks', $this->training_id);
         } catch (\Exception $e) {
@@ -85,6 +79,6 @@ class Create extends Component
     {
         return view('livewire.training.tasks.create', [
             'training' => $this->training,
-        ])->layout('layouts.training', ['title' => 'Buat Tugas']);
+        ])->layout('layouts.training', ['title' => 'Buat Tugas', 'training' => $this->training]);
     }
 }
