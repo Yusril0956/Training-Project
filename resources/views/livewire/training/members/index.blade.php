@@ -1,5 +1,5 @@
 
-<div class="page-body">
+<div class="page-body" wire:poll.visible.10s="loadData">
     <div class="container-xl">
         @include('partials._breadcrumb', [
             'items' => [
@@ -185,9 +185,11 @@
                                     <td>
                                         <div class="d-flex flex-column flex-sm-row gap-1">
                                             <button wire:click="acceptMember({{ $pMember->id }})"
-                                                class="btn btn-sm btn-success w-100">Terima</button>
+                                                class="btn btn-sm btn-success w-100"
+                                                onclick="return confirm('Apakah Anda yakin ingin menerima peserta ini?')">Terima</button>
                                             <button wire:click="rejectMember({{ $pMember->id }})"
-                                                class="btn btn-sm btn-danger w-100">Tolak</button>
+                                                class="btn btn-sm btn-danger w-100"
+                                                onclick="return confirm('Apakah Anda yakin ingin menolak peserta ini?')">Tolak</button>
                                         </div>
                                     </td>
                                 </tr>

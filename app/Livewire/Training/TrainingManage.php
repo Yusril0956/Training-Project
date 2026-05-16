@@ -59,13 +59,9 @@ class TrainingManage extends Component
 
         $trainings = $this->trainingService->getTrainingsWithFilters($filters)->paginate(9);
 
-        $jenisTrainings = cache()->remember('jenis_trainings', 3600, function () {
-            return JenisTraining::all();
-        });
+        $jenisTrainings = JenisTraining::all();
 
-        $instructors = cache()->remember('training_instructors', 3600, function () {
-            return $this->trainingService->getInstructors();
-        });
+        $instructors = $this->trainingService->getInstructors();
 
         return view('livewire.training.training-manage', [
             'trainings' => $trainings,

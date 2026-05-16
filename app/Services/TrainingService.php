@@ -6,7 +6,6 @@ use App\Models\Training;
 use App\Models\TrainingMember;
 use App\Models\JenisTraining;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Collection;
 use Exception;
 
@@ -129,9 +128,7 @@ class TrainingService
     public function registerUserForTraining(int $trainingId, int $userId): TrainingMember
     {
         try {
-            $training = Cache::remember("training_{$trainingId}", 300, function () use ($trainingId) {
-                return Training::select(['id', 'status', 'start_date', 'end_date'])->findOrFail($trainingId);
-            });
+            $training = Training::select(['id', 'status', 'start_date', 'end_date'])->findOrFail($trainingId);
 
             if ($training->status === 'close') {
                 throw new Exception('Pendaftaran untuk training ini sudah ditutup.');
@@ -143,16 +140,12 @@ class TrainingService
                     'start_date' => now()->toDateString(),
                     'end_date' => now()->addMonth()->toDateString(),
                 ]);
-                Cache::forget("training_{$trainingId}");
             }
 
             // Check if user is already registered
-            $memberKey = "training_member_{$trainingId}_{$userId}";
-            $existingMember = Cache::remember($memberKey, 300, function () use ($training, $userId) {
-                return TrainingMember::where('training_id', $training->id)
-                    ->where('user_id', $userId)
-                    ->first();
-            });
+            $existingMember = TrainingMember::where('training_id', $training->id)
+                ->where('user_id', $userId)
+                ->first();
 
             if ($existingMember) {
                 throw new Exception('Anda sudah terdaftar sebagai peserta training ini.');
@@ -165,10 +158,6 @@ class TrainingService
                 'status' => 'pending',
                 'series' => 'TRN-' . strtoupper(uniqid()),
             ]);
-
-            // Clear relevant caches
-            Cache::forget($memberKey);
-            Cache::forget("training_dashboard_{$trainingId}");
 
             return $member;
         } catch (Exception $e) {
@@ -205,38 +194,31 @@ class TrainingService
     public function getTrainingDashboardData(int $trainingId): array
     {
         try {
-            // Hapus cache lama agar query baru bisa dieksekusi
-            // Anda bisa hapus baris ini setelah dijalankan sekali
-            Cache::forget("training_dashboard_{$trainingId}");
+            $training = Training::select(['id', 'name', 'description', 'status', 'start_date', 'end_date'])
+                ->withCount([
+                    'members' => function ($query) {
+                        $query->where('status', 'accept');
+                    },
+                    'tasks',
+                    'materis'
+                ])
+                ->with([
+                    'attendanceSessions' => function ($query) {
+                        $query->select(['id', 'training_id', 'date', 'title', 'start_time', 'end_time', 'description'])
+                            ->where('date', '>=', now()->toDateString())
+                            ->orderBy('date', 'asc')
+                            ->limit(3);
+                    }
+                ])
+                ->findOrFail($trainingId);
 
-            return cache()->remember("training_dashboard_{$trainingId}", 300, function () use ($trainingId) {
-
-                $training = Training::select(['id', 'name', 'description', 'status', 'start_date', 'end_date'])
-                    ->withCount([
-                        'members' => function ($query) {
-                            $query->where('status', 'accept');
-                        },
-                        'tasks',
-                        'materis'
-                    ])
-                    ->with([
-                        'attendanceSessions' => function ($query) {
-                            $query->select(['id', 'training_id', 'date', 'title', 'start_time', 'end_time', 'description'])
-                                ->where('date', '>=', now()->toDateString())
-                                ->orderBy('date', 'asc')
-                                ->limit(3);
-                        }
-                    ])
-                    ->findOrFail($trainingId);
-
-                return [
-                    'training' => $training,
-                    'memberCount' => $training->members_count,
-                    'taskCount' => $training->tasks_count,
-                    'materiCount' => $training->materis_count,
-                    'upcomingSessions' => $training->attendanceSessions,
-                ];
-            });
+            return [
+                'training' => $training,
+                'memberCount' => $training->members_count,
+                'taskCount' => $training->tasks_count,
+                'materiCount' => $training->materis_count,
+                'upcomingSessions' => $training->attendanceSessions,
+            ];
         } catch (Exception $e) {
             throw new Exception('Gagal memuat data dashboard: ' . $e->getMessage());
         }
@@ -292,35 +274,13 @@ class TrainingService
      */
     public function getUserTrainingStatuses($trainings, int $userId): array
     {
-        $cacheKey = "user_training_statuses_{$userId}_" . md5(json_encode($trainings->pluck('id')->toArray()));
+        $statuses = [];
+        foreach ($trainings as $training) {
+            $member = $training->members->where('user_id', $userId)->first();
+            $statuses[$training->id] = $member ? $member->status : 'none';
+        }
 
-        return cache()->remember($cacheKey, 300, function () use ($trainings, $userId) {
-            $statuses = [];
-            foreach ($trainings as $training) {
-                $member = $training->members->where('user_id', $userId)->first();
-                $statuses[$training->id] = $member ? $member->status : 'none';
-            }
-            return $statuses;
-        });
-    }
-
-    /**
-     * Clear user training statuses cache
-     * Call this after user registers for a training
-     *
-     * @param int $userId
-     * @return void
-     */
-    public function clearUserTrainingStatusCache(int $userId): void
-    {
-        // Clear all user training status caches by using wildcard-like pattern
-        // Since Laravel cache doesn't support wildcard clear, we'll use tags if available
-        // or simply clear commonly used patterns
-        $cachePrefix = "user_training_statuses_{$userId}";
-        
-        // Get all cache keys that start with this pattern (naive approach)
-        // In production, consider using cache tags or Redis pattern matching
-        \Illuminate\Support\Facades\Cache::flush();
+        return $statuses;
     }
 
     /**

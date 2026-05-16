@@ -56,11 +56,9 @@ class TrainingCreate extends Component
     public function render()
     {
         $jenisTrainings = JenisTraining::all();
-        $instructors = cache()->remember('admin_instructors', 3600, function () {
-            return \App\Models\User::whereHas('roles', function ($q) {
-                $q->where('name', 'Admin');
-            })->get();
-        });
+        $instructors = \App\Models\User::whereHas('roles', function ($q) {
+            $q->where('name', 'Admin');
+        })->get();
 
         return view('livewire.training.training-create', [
             'jenisTrainings' => $jenisTrainings,

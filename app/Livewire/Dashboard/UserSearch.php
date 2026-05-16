@@ -5,8 +5,6 @@ namespace App\Livewire\Dashboard;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
-use App\Models\Role;
-use Illuminate\Support\Facades\Cache;
 use App\Services\AuthService;
 use Illuminate\Support\Str;
 
@@ -113,7 +111,6 @@ class UserSearch extends Component
 
         $this->showModal = false;
         $this->resetPage();
-        $this->clearCache();
     }
 
     public function deleteUser($id)
@@ -123,45 +120,29 @@ class UserSearch extends Component
             return;
         }
         session()->flash('success', 'User berhasil dihapus.');
-        $this->clearCache();
         $this->resetPage();
-    }
-
-    protected function clearCache()
-    {
-        Cache::flush();
     }
 
     public function render()
     {
-        $cacheKey = sprintf(
-            'users_search_%s_role_%s_page_%s_perpage_%s',
-            md5($this->search),
-            $this->role,
-            $this->getPage(),
-            $this->perPage
-        );
+        $query = User::query()
+            ->with('roles:id,name')
+            ->select(['id', 'name', 'email', 'nik', 'created_at']);
 
-        $users = Cache::remember($cacheKey, 300, function () {
-            $query = User::query()
-                ->with('roles:id,name')
-                ->select(['id', 'name', 'email', 'nik', 'created_at']);
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
+            });
+        }
 
-            if ($this->search) {
-                $query->where(function ($q) {
-                    $q->where('name', 'like', '%' . $this->search . '%')
-                        ->orWhere('email', 'like', '%' . $this->search . '%');
-                });
-            }
+        if ($this->role) {
+            $query->whereHas('roles', function ($q) {
+                $q->where('name', $this->role);
+            });
+        }
 
-            if ($this->role) {
-                $query->whereHas('roles', function ($q) {
-                    $q->where('name', $this->role);
-                });
-            }
-
-            return $query->orderBy('created_at', 'desc')->paginate($this->perPage);
-        });
+        $users = $query->orderBy('created_at', 'desc')->paginate($this->perPage);
 
         return view('livewire.dashboard.user-search', [
             'users' => $users,
