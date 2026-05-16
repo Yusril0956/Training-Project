@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Training\Tasks;
 
-use App\Models\Training;
-use App\Models\Tasks;
 use App\Models\TaskSubmission;
-use Livewire\Component;
-use Livewire\WithFileUploads;
+use App\Models\Tasks;
+use App\Models\Training;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Show extends Component
 {
@@ -24,16 +24,22 @@ class Show extends Component
     public $submission_file;
     public $message;
 
-    public string $defaultTabId = 'tab-submit';
+    public string $activeTab = 'submit';
+    public int $submitUploadKey = 0;
+    public int $editUploadKey = 0;
 
     protected $rules = [
-        'submission_file' => 'nullable|file|max:5120', // 5MB
+        'submission_file' => 'nullable|file|max:5120',
         'message' => 'nullable|string|max:1000',
     ];
 
-    protected $listeners = ['fileSubmitted' => 'resetFile'];
+    protected $messages = [
+        'submission_file.required' => 'File tugas wajib diunggah.',
+        'submission_file.max' => 'Ukuran file maksimal 5MB.',
+        'submission_file.file' => 'Yang Anda pilih bukan file valid.',
+    ];
 
-    public function mount($trainingId, $taskId)
+    public function mount($trainingId, $taskId): void
     {
         $this->trainingId = $trainingId;
         $this->taskId = $taskId;
@@ -44,60 +50,37 @@ class Show extends Component
             ->findOrFail($taskId);
 
         $this->loadSubmissions();
-
-        // --- LOGIKA PENENTUAN TAB AKTIF AWAL (Untuk menentukan class 'active' pertama kali di Blade) ---
-        if (Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
-            $this->defaultTabId = 'tab-admin';
-        } elseif ($this->userSubmission) {
-            if ($this->userSubmission->review) {
-                $this->defaultTabId = 'tab-review';
-            } else {
-                $this->defaultTabId = 'tab-view';
-            }
-        } else {
-            $this->defaultTabId = 'tab-submit';
-        }
-
-        // Jika ada session flash sukses (setelah submit/edit), pastikan tab yang terbuka adalah 'view'
-        if (session()->has('success') && $this->userSubmission) {
-            $this->defaultTabId = 'tab-view';
-            // Session tidak perlu dihapus di sini, biarkan blade yang menghapusnya jika perlu.
-        }
+        $this->activeTab = $this->resolveDefaultTab();
     }
 
-    private function loadSubmissions(): void
+    public function setActiveTab(string $tab): void
     {
-        $this->task->refresh();
-        $this->submissions = $this->task->submissions()->with(['user', 'review'])->get();
-        $this->userSubmission = $this->submissions->firstWhere('user_id', Auth::id());
-
-        // Isi properti message untuk form edit/update
-        if ($this->userSubmission) {
-            $this->message = $this->userSubmission->answer;
+        if (!in_array($tab, $this->availableTabs(), true)) {
+            return;
         }
-    }
 
-    private function uploadFile($file): ?string
-    {
-        if (!$file) return null;
+        $this->activeTab = $tab;
 
-        $user = Auth::user();
-        $safeTaskTitle = preg_replace('/[^A-Za-z0-9_\-]/', '_', $this->task->title);
-        $safeUserName = str_replace(' ', '_', $user->name);
+        if ($tab === 'submit') {
+            $this->message = null;
+            $this->clearSubmitUpload();
+            return;
+        }
 
-        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $extension = $file->getClientOriginalExtension();
-        $timestamp = now()->format('YmdHis');
+        if ($tab === 'edit') {
+            $this->message = $this->userSubmission?->answer;
+            $this->clearEditUpload();
+            return;
+        }
 
-        $newFileName = "{$originalName}_{$safeUserName}_{$timestamp}.{$extension}";
-        $folder = "task_submissions/{$safeTaskTitle}";
-
-        return $file->storeAs($folder, $newFileName, 'public');
+        $this->clearSubmitUpload();
+        $this->clearEditUpload();
     }
 
     public function submitTask(): void
     {
-        // ... (Logika submitTask tetap sama) ...
+        $this->activeTab = 'submit';
+
         $this->validate([
             'submission_file' => 'required|file|max:5120',
             'message' => 'nullable|string|max:1000',
@@ -125,15 +108,12 @@ class Show extends Component
                 'submitted_at' => now(),
             ]);
 
-            $this->dispatch('fileSubmitted');
-
             $this->loadSubmissions();
-            // Pindahkan ke tab 'view' setelah submit, Bootstrap akan mengurus tampilannya
-            $this->defaultTabId = 'tab-view';
-            session()->flash('success', 'Tugas berhasil dikirim. Anda dapat melihat kiriman di tab Lihat Kiriman.');
+            $this->message = $this->userSubmission?->answer;
+            $this->clearSubmitUpload();
+            $this->activeTab = $this->resolveDefaultTab();
 
-            // Kirim event untuk mengganti tab secara paksa jika Livewire/Bootstrap tidak sinkron
-            $this->dispatch('show-tab', ['tabId' => 'tab-view']);
+            session()->flash('success', 'Tugas berhasil dikirim.');
         } catch (\Throwable $e) {
             report($e);
             session()->flash('error', 'Gagal mengirim tugas. Silakan coba lagi.');
@@ -142,7 +122,8 @@ class Show extends Component
 
     public function editTask(): void
     {
-        // ... (Logika editTask tetap sama) ...
+        $this->activeTab = 'edit';
+
         $this->validate([
             'submission_file' => 'nullable|file|max:5120',
             'message' => 'nullable|string|max:1000',
@@ -166,56 +147,33 @@ class Show extends Component
             return;
         }
 
-        // Replace file if new uploaded
         if ($this->submission_file) {
             if ($submission->file_path && Storage::disk('public')->exists($submission->file_path)) {
                 Storage::disk('public')->delete($submission->file_path);
             }
+
             $submission->file_path = $this->uploadFile($this->submission_file);
         }
 
-        $submission->update([
-            'answer' => $this->message,
-            'submitted_at' => now(),
-        ]);
+        $submission->answer = $this->message;
+        $submission->submitted_at = now();
+        $submission->save();
 
-        $this->dispatch('fileSubmitted');
-
-        // Pindahkan ke tab 'view' setelah edit
-        $this->defaultTabId = 'tab-view';
         $this->loadSubmissions();
+        $this->message = $this->userSubmission?->answer;
+        $this->clearEditUpload();
+        $this->activeTab = 'view';
 
         session()->flash('success', 'Tugas berhasil diperbarui.');
-
-        // Kirim event untuk mengganti tab secara paksa
-        $this->dispatch('show-tab', ['tabId' => 'tab-view']);
     }
-
-    public function resetFile(): void
-    {
-        $this->reset(['submission_file']);
-    }
-
-    // Menghapus fungsi setActiveTab karena kontrol tab dipegang Bootstrap/Tabler
-    /*
-    public function setActiveTab(string $tab): void
-    {
-        $this->activeTab = $tab;
-        $this->reset(['submission_file']); 
-        if ($tab === 'edit' && $this->userSubmission) {
-            $this->message = $this->userSubmission->answer;
-        }
-    }
-    */
 
     public function render()
     {
         $fileIsImage = false;
+
         if ($this->userSubmission && $this->userSubmission->file_path) {
             $extension = pathinfo($this->userSubmission->file_path, PATHINFO_EXTENSION);
-            if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-                $fileIsImage = true;
-            }
+            $fileIsImage = in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp'], true);
         }
 
         return view('livewire.training.tasks.show', [
@@ -224,10 +182,96 @@ class Show extends Component
             'submissions' => $this->submissions,
             'userSubmission' => $this->userSubmission,
             'fileIsImage' => $fileIsImage,
-            'defaultTabId' => $this->defaultTabId,
+            'activeTab' => $this->activeTab,
         ])->layout('layouts.training', [
             'title' => 'Detail Tugas',
             'training' => $this->training,
         ]);
+    }
+
+    private function loadSubmissions(): void
+    {
+        $this->task = $this->task->fresh(['submissions.user', 'submissions.review']);
+        $this->submissions = $this->task->submissions()->with(['user', 'review'])->get();
+        $this->userSubmission = $this->submissions->firstWhere('user_id', Auth::id());
+
+        if ($this->userSubmission) {
+            $this->message = $this->userSubmission->answer;
+        }
+    }
+
+    private function uploadFile($file): ?string
+    {
+        if (!$file) {
+            return null;
+        }
+
+        $user = Auth::user();
+        $safeTaskTitle = preg_replace('/[^A-Za-z0-9_\-]/', '_', $this->task->title);
+        $safeUserName = str_replace(' ', '_', $user->name);
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $file->getClientOriginalExtension();
+        $timestamp = now()->format('YmdHis');
+
+        $newFileName = "{$originalName}_{$safeUserName}_{$timestamp}.{$extension}";
+        $folder = "task_submissions/{$safeTaskTitle}";
+
+        return $file->storeAs($folder, $newFileName, 'public');
+    }
+
+    private function resolveDefaultTab(): string
+    {
+        if (Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
+            return 'admin';
+        }
+
+        if (!$this->userSubmission) {
+            return 'submit';
+        }
+
+        if ($this->userSubmission->review) {
+            return 'review';
+        }
+
+        return 'view';
+    }
+
+    private function availableTabs(): array
+    {
+        if (Auth::user()->hasAnyRole(['Admin', 'Super Admin'])) {
+            return ['admin'];
+        }
+
+        $tabs = [];
+
+        if (!$this->userSubmission) {
+            $tabs[] = 'submit';
+        }
+
+        if ($this->userSubmission) {
+            $tabs[] = 'view';
+
+            if ($this->task->deadline->isFuture() && !$this->userSubmission->review) {
+                $tabs[] = 'edit';
+            }
+
+            if ($this->userSubmission->review) {
+                $tabs[] = 'review';
+            }
+        }
+
+        return $tabs;
+    }
+
+    private function clearSubmitUpload(): void
+    {
+        $this->reset('submission_file');
+        $this->submitUploadKey++;
+    }
+
+    private function clearEditUpload(): void
+    {
+        $this->reset('submission_file');
+        $this->editUploadKey++;
     }
 }
