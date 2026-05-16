@@ -18,6 +18,9 @@ class TrainingIndex extends Component
 
     protected TrainingService $trainingService;
 
+    // Listen for registration event to refresh component data
+    protected $listeners = ['training-registered' => 'refreshTrainings'];
+
     public function boot(TrainingService $trainingService)
     {
         $this->trainingService = $trainingService;
@@ -38,6 +41,15 @@ class TrainingIndex extends Component
         $this->search = '';
         $this->jenis = '';
         $this->resetPage();
+    }
+
+    /**
+     * Refresh trainings data after registration
+     */
+    public function refreshTrainings()
+    {
+        // Cache will be cleared by TrainingService
+        // Component will re-render with fresh data
     }
 
     public function home($id)
@@ -83,12 +95,17 @@ class TrainingIndex extends Component
     {
         try {
             $this->trainingService->registerUserForTraining($trainingId, Auth::id());
+            
+            // Clear all caches to ensure fresh data
+            $this->trainingService->clearUserTrainingStatusCache(Auth::id());
+            
             session()->flash('success', 'Pendaftaran berhasil! Status Anda sedang menunggu persetujuan admin.');
+            
+            // Dispatch event to trigger component refresh (maintains pagination)
+            $this->dispatch('training-registered');
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
         }
-
-        $this->render(); // Re-render to update the status
     }
 
     public function render()

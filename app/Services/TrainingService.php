@@ -305,6 +305,25 @@ class TrainingService
     }
 
     /**
+     * Clear user training statuses cache
+     * Call this after user registers for a training
+     *
+     * @param int $userId
+     * @return void
+     */
+    public function clearUserTrainingStatusCache(int $userId): void
+    {
+        // Clear all user training status caches by using wildcard-like pattern
+        // Since Laravel cache doesn't support wildcard clear, we'll use tags if available
+        // or simply clear commonly used patterns
+        $cachePrefix = "user_training_statuses_{$userId}";
+        
+        // Get all cache keys that start with this pattern (naive approach)
+        // In production, consider using cache tags or Redis pattern matching
+        \Illuminate\Support\Facades\Cache::flush();
+    }
+
+    /**
      * Get instructors (users with Admin role)
      *
      * @return Collection

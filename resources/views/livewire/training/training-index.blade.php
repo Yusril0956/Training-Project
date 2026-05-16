@@ -179,8 +179,7 @@
                                 @elseif ($isClosed)
                                     <button class="btn btn-secondary w-100" disabled>Pendaftaran Ditutup</button>
                                 @else
-                                    <button wire:click="register({{ $training->id }})" class="btn btn-success w-100">Daftar
-                                        Training</button>
+                                    <button wire:click="register({{ $training->id }})" class="btn btn-success w-100">Daftar Training</button>
                                 @endif
                             @else
                                 <a href="{{ route('login') }}" class="btn btn-primary w-100">Login untuk Daftar</a>
