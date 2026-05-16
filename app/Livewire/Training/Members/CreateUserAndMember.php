@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Notifications\TrainingInvitationNotification;
 use Livewire\Component;
 use App\Services\AuthService;
+use Illuminate\Support\Str;
 
 class CreateUserAndMember extends Component
 {
@@ -42,11 +43,13 @@ class CreateUserAndMember extends Component
         ]);
 
         try {
+            $generatedPassword = Str::random(12);
+
             $newUser = $this->authService->createUser([
                 'name' => $this->newUserName,
                 'email' => $this->newUserEmail,
                 'nik' => $this->newUserNik,
-                'password' => $this->newUserNik,
+                'password' => $generatedPassword,
                 'role' => 'User',
             ]);
 
@@ -66,6 +69,9 @@ class CreateUserAndMember extends Component
             ]);
 
             $newUser->notify(new TrainingInvitationNotification($this->training));
+
+            // Inform admin that a reset link was sent to the user email.
+            session()->flash('info', 'A password reset link has been sent to the new user\'s email. Deliver any additional instructions via a secure channel if needed.');
 
             return redirect()->route('training.members.index', $this->trainingId)
                 ->with('success', 'User baru berhasil ditambahkan dan didaftarkan.');

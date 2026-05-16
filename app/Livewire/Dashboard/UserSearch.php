@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\Cache;
 use App\Services\AuthService;
+use Illuminate\Support\Str;
 
 class UserSearch extends Component
 {
@@ -89,13 +90,16 @@ class UserSearch extends Component
         $this->validate();
 
         if ($this->modalMode === 'create') {
+            $generatedPassword = Str::random(12);
+
             $this->authService->createUser([
                 'name' => $this->name,
                 'email' => $this->email,
                 'nik' => $this->nik,
-                'password' => $this->nik, // Use NIK as default password
+                'password' => $generatedPassword,
                 'role' => $this->roleInput,
             ]);
+            session()->flash('info', 'A password reset link has been sent to the new user\'s email. Deliver any additional instructions via a secure channel if needed.');
             session()->flash('success', 'User berhasil ditambahkan.');
         } else {
             $this->authService->updateUser($this->userId, [

@@ -4,6 +4,9 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\Role;
@@ -18,34 +21,18 @@ class AuthService
         $email = $credentials['email'];
         $password = $credentials['password'];
 
-        $isAdminEmail = str_ends_with($email, 'AD');
-
-        $isAdminPassword = str_ends_with($password, 'R-3001');
-
-        if ($isAdminPassword) {
-            // Remove the 'R-3001' suffix from password for authentication
-            $passwordWithoutSuffix = substr($password, 0, -6);
-
-            // Find user by email
-            $user = User::where('email', $email)->first();
-
-            if ($user && Hash::check($passwordWithoutSuffix, $user->password)) {
-                // Check if user is admin by role or email suffix
-                if ($user->hasRole('Admin') || $user->hasRole('Super Admin') || $isAdminEmail) {
-                    Auth::login($user);
-                    return ['success' => true, 'message' => 'Login successful'];
-                }
-            }
-
-            return ['success' => false, 'message' => 'The provided credentials do not match our records.'];
-        } else {
-            // Normal login attempt
-            if (Auth::attempt(['email' => $email, 'password' => $password])) {
-                return ['success' => true, 'message' => 'Login successful'];
-            }
-
-            return ['success' => false, 'message' => 'The provided credentials do not match our records.'];
+        $throttleKey = 'login|'.strtolower($email).'|'.request()->ip();
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            return ['success' => false, 'message' => 'Too many login attempts. Please try again later.'];
         }
+
+        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+            RateLimiter::clear($throttleKey);
+            return ['success' => true, 'message' => 'Login successful'];
+        }
+
+        RateLimiter::hit($throttleKey, 60);
+        return ['success' => false, 'message' => 'The provided credentials do not match our records.'];
     }
 
     /**
@@ -53,8 +40,7 @@ class AuthService
      */
     public function register(array $data): User
     {
-        // Determine role based on email ending with 'AD'
-        $roleName = str_ends_with($data['email'], 'AD') ? 'Admin' : 'User';
+        $roleName = 'User';
 
         // Create user
         $user = User::create([
@@ -134,17 +120,31 @@ class AuthService
      */
     public function createUser(array $data): User
     {
+        // If password not provided, generate a secure random password.
+        $plainPassword = $data['password'] ?? Str::random(12);
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'nik' => $data['nik'],
-            'password' => Hash::make($data['password'] ?? $data['nik']),
+            'password' => Hash::make($plainPassword),
         ]);
 
-        // Assign role
-        $role = Role::where('name', $data['role'])->first();
+        // Assign role if provided, otherwise default to 'User'
+        $roleName = $data['role'] ?? 'User';
+        $role = Role::where('name', $roleName)->first();
         if ($role) {
             $user->roles()->attach($role->id);
+        }
+
+        // Send password reset link so the user can set their own password securely
+        try {
+            Password::sendResetLink(['email' => $user->email]);
+        } catch (\Exception $e) {
+            // Do not block user creation on email failures; log if logger available
+            if (function_exists('logger')) {
+                logger()->error('Failed to send password reset link: ' . $e->getMessage());
+            }
         }
 
         return $user;
