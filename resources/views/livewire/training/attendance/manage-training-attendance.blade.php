@@ -19,7 +19,8 @@
                             </p>
                         </div>
                         <div class="col-auto ms-auto">
-                            <a href="{{ route('admin.training.attendance.create', $training) }}" class="btn btn-primary">
+                            <div class="btn-list">
+                                <a href="{{ route('admin.training.attendance.create', $training) }}" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
@@ -30,6 +31,14 @@
                                 </svg>
                                 Buat Sesi
                             </a>
+                                <div class="dropdown d-inline-block">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">Export</button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="{{ route('admin.export.attendance', $training->id) }}">Export Semua Absen (Training)</a></li>
+                                        <li><a id="export-current-session" class="dropdown-item" href="#">Export Sesi Aktif</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,3 +219,35 @@
         </div>
     </div>
 </div>
+@push('script')
+    <script>
+        function updateExportCurrentSessionLink() {
+            const activeTab = document.querySelector('.nav-link.active');
+            const exportLink = document.getElementById('export-current-session');
+            if (!exportLink) return;
+            if (activeTab && activeTab.getAttribute('href')) {
+                const href = activeTab.getAttribute('href'); // e.g. #session-123
+                const match = href.match(/session-(\d+)/);
+                if (match) {
+                    const sessionId = match[1];
+                    const base = '{{ route('admin.export.attendance', $training->id) }}';
+                    exportLink.setAttribute('href', base + '?session_id=' + sessionId);
+                    exportLink.setAttribute('target', '_blank');
+                    return;
+                }
+            }
+            // fallback: link to training-wide export
+            exportLink.setAttribute('href', '{{ route('admin.export.attendance', $training->id) }}');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateExportCurrentSessionLink();
+            document.querySelectorAll('.nav-link').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    // slight delay to allow Livewire to set active class
+                    setTimeout(updateExportCurrentSessionLink, 50);
+                });
+            });
+        });
+    </script>
+@endpush

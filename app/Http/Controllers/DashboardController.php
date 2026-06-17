@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\Assignment;
 use App\Models\Certificate;
 use App\Models\Feedback;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use App\Exports\AttendanceExport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 use App\Models\ExternalCertificate;
@@ -107,68 +110,16 @@ class DashboardController extends Controller
      */
     public function exportUsers(Request $request)
     {
-        $query = User::query()->with('roles');
+        $filename = 'users_export_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new UsersExport($request), $filename);
+    }
 
-        // Apply same filters as admin method
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-            });
-        }
-
-        if ($request->filled('role')) {
-            $query->whereHas('roles', function ($q) use ($request) {
-                $q->where('name', $request->role);
-            });
-        }
-
-        $users = $query->get();
-
-        // Create CSV content
-        $filename = 'users_export_' . date('Y-m-d_H-i-s') . '.csv';
-
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-            'Cache-Control' => 'no-cache, no-store, must-revalidate',
-            'Pragma' => 'no-cache',
-            'Expires' => '0'
-        ];
-
-        $callback = function () use ($users) {
-            $file = fopen('php://output', 'w');
-
-            // CSV headers
-            fputcsv($file, [
-                'ID',
-                'Name',
-                'Email',
-                'NIK',
-                'Role',
-                'Status',
-                'Created At',
-                'Updated At'
-            ]);
-
-            // CSV data
-            foreach ($users as $user) {
-                fputcsv($file, [
-                    $user->id,
-                    $user->name,
-                    $user->email,
-                    $user->nik ?? '',
-                    $user->roles->pluck('name')->first() ?? 'User',
-                    $user->status,
-                    $user->created_at->format('Y-m-d H:i:s'),
-                    $user->updated_at->format('Y-m-d H:i:s')
-                ]);
-            }
-
-            fclose($file);
-        };
-
-        return response()->stream($callback, 200, $headers);
+    /**
+     * Export attendance for a training (optionally filtered by session_id).
+     */
+    public function exportAttendance(Request $request, $trainingId)
+    {
+        $filename = 'attendance_export_' . $trainingId . '_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new AttendanceExport($trainingId, $request), $filename);
     }
 }

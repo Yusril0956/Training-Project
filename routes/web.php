@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['check_role:Admin,Super Admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'admin'])->name('index');
         Route::get('/export-users', [DashboardController::class, 'exportUsers'])->name('export.users');
+        Route::get('/export-attendance/{trainingId}', [DashboardController::class, 'exportAttendance'])->name('export.attendance');
         Route::post('/user/add', [DashboardController::class, 'addUser'])->name('user.add');
         Route::delete('/user/{id}', [DashboardController::class, 'deleteUser'])->name('user.delete');
 
